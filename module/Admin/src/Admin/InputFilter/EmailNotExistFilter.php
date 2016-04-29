@@ -14,7 +14,7 @@ class EmailNotExistFilter extends InputFilter
 {
     public function __construct($adapter)
     {
-       /* $this->add(array(
+        $this->add(array(
             'name'       => 'email',
             'required'   => true,
             'validators' => array(
@@ -51,7 +51,7 @@ class EmailNotExistFilter extends InputFilter
                     'name' => 'Digits',
                 ),
             ),
-        ));*/
+        ));
     }
 }
 

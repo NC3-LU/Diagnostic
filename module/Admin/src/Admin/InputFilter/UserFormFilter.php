@@ -14,7 +14,7 @@ class UserFormFilter extends InputFilter
 {
     public function __construct($adapter)
     {
-        /*$this->add(array(
+        $this->add(array(
             'name'       => 'email',
             'required'   => true,
             'validators' => array(
@@ -36,7 +36,7 @@ class UserFormFilter extends InputFilter
                     'name' => 'Digits',
                 ),
             ),
-        ));*/
+        ));
     }
 }
 
