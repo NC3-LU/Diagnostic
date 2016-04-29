@@ -1,0 +1,150 @@
+<?php echo $this->doctype(); ?>
+
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <?php echo $this->headTitle(' - Cases')->setAutoEscape(false) ?>
+
+        <?php echo $this->headMeta()
+            ->appendName('viewport', 'width=device-width, initial-scale=1.0')
+            ->appendHttpEquiv('X-UA-Compatible', 'IE=edge')
+        ?>
+
+        <!-- Le styles -->
+        <?php echo $this->headLink(array('rel' => 'shortcut icon', 'type' => 'image/vnd.microsoft.icon', 'href' => $this->basePath() . '/img/favicon.png'))
+            ->prependStylesheet($this->basePath('css/style.css'))
+            ->prependStylesheet($this->basePath('css/bootstrap-theme.min.css'))
+            ->prependStylesheet($this->basePath('css/bootstrap.min.css'))
+            ->prependStylesheet($this->basePath('css/flag-icon.css')) ?>
+
+        <!-- Scripts -->
+        <?php echo $this->headScript()
+            ->prependFile($this->basePath('js/bootstrap.min.js'))
+            ->prependFile($this->basePath('js/jquery.min.js'))
+            ->prependFile($this->basePath('js/respond.min.js'), 'text/javascript', array('conditional' => 'lt IE 9',))
+            ->prependFile($this->basePath('js/html5shiv.min.js'),   'text/javascript', array('conditional' => 'lt IE 9',))
+        ; ?>
+
+    </head>
+    <body>
+
+    <div id="wrapper">
+        <div id="header">
+            <div class="top-line">&nbsp;</div>
+                <div class="top">
+                    <div class="row">
+                        <div class="col-lg-1"></div>
+                        <div class="col-lg-3"><a href="http://www.cases.lu"><img src="https://www.cases.lu/templates/frontoffice/casesv3/images/logo-web-cases.lu.png" border="0"></a></div>
+                        <div class="col-lg-4 text-center"><h1>DIAGNOSTIC CASES</h1></div>
+                        <div class="col-lg-3 text-right">
+                            <br>
+                            <?php
+                            $locale = $this->plugin('translate')->getTranslator()->getLocale();
+                            if ($this->plugin('translate')->getTranslator()->getLocale() == 'en_EN') {
+                                $frClass = '';
+                                $enClass = 'btn-info';
+                            } else {
+                                $frClass = 'btn-info';
+                                $enClass = '';
+                            }
+                            ?>
+                            <table width="100%">
+                                <tr>
+                                    <td align="left">
+                                        <?php
+                                        $container = new \Zend\Session\Container('user');
+                                        if (($container->offsetExists('admin')) && (! is_null($container->admin)) && ($container->admin == 1)) {
+                                            ?>
+                                            <a href="<?= $this->url('admin',array());?>" class="btn btn-primary"><?= $this->translate('__admin') ?></a>
+                                            <?php
+                                        }
+                                        if (($container->offsetExists('email')) || (! is_null($container->email))) {
+                                            ?>
+                                            <a href="<?= $this->url('diagnostic',array('action'=>'logout'));?>" class="btn btn-danger"><?= $this->translate('__logout') ?></a>
+                                            <?php
+                                        }
+                                        ?>
+                                    </td>
+                                    <td width="75">
+                                        <a href="<?php echo $this->url('diagnostic', ['action' => 'language', 'id' => 1]);?>">
+                                            <button type="submit" name="language" value="fr" class="btn-default btn-blue btn-sm <?= $frClass ?>"><span class="text-uppercase"><span class="flag-icon flag-icon-fr"></span>&nbsp;&nbsp;fr</span></button>
+                                        </a>
+                                    </td>
+                                    <td width="75">
+                                        <a href="<?php echo $this->url('diagnostic', ['action' => 'language', 'id' => 2]);?>">
+                                            <button type="submit" name="language" value="en" class="btn-default btn-blue btn-sm <?= $enClass ?>"><span class="text-uppercase"><span class="flag-icon flag-icon-gb"></span>&nbsp;&nbsp;en</span></button>
+                                        </a>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                        <div class="col-lg-1"></div>
+                    </div>
+                </div>
+
+            <div class="legend">
+                <div class="col-lg-1">
+                </div>
+                <div class="col-lg-10 text-left">
+                    <?php
+                    $routeMatch = $this->getHelperPluginManager()
+                        ->getServiceLocator()
+                        ->get('Application')
+                        ->getMvcEvent()
+                        ->getRouteMatch();
+                    if ($routeMatch) {
+                        $currentModule = $routeMatch->getMatchedRouteName();
+
+                        if ($currentModule == 'admin') {
+                            ?>
+                            <div id="navbar" class="collapse navbar-collapse">
+                                <?= $this->navigation('navigation')
+                                    ->menu()
+                                    ->setMinDepth(0)
+                                    ->setMaxDepth(0)
+                                    ->setUlClass('nav navbar-nav'); ?>
+                            </div>
+                            <?php
+                        }
+                    }
+                    ?>
+                </div>
+                <div class="col-lg-1"></div>
+            </div>
+
+            <br>
+
+            <div>
+                <div class="row">
+                    <div class="col-lg-1"></div>
+                    <div class="col-lg-10">
+                        <?php echo $this->content; ?>
+                    </div>
+                    <div class="col-lg-1"></div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <br>
+
+    <div class="footer">
+    </div>
+
+    <div class="credits-section">
+        <div class="row">
+            <div class="col-md-1"></div>
+            <div class="col-md-4">
+                <div class="footer-credits"><!-- Footer credits -->
+                    2015 &copy; Cases.lu - Tous droits réservés. </div>
+            </div>
+            <div class="col-md-6">
+                <div class="footer-credits"><!-- Footer credits -->
+                    Brought to you by <a href="https://securitymadein.lu/" class="milu-btn"><span style="text-transform:uppercase; color:#fff;">security<span style="color:#00FFF6">made</span>in.<span style="color:#00FFF6">lu</span></span></a>
+                </div>
+            </div>
+            <div class="col-md-1"></div>
+        </div>
+    </div>
+    </body>
+</html>

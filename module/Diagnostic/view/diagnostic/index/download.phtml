@@ -1,0 +1,111 @@
+<?php
+$title = $this->translate('__rapport');
+$this->headTitle($title);
+
+$form->setAttribute('action', $this->url('diagnostic', ['action' => 'download']));
+$form->prepare();
+?>
+<div class="row">
+    <div class="col-lg-3 text-center"></div>
+    <div class="col-lg-6 text-left">
+        <br />
+        <?= $this->form()->openTag($form) ?>
+        <table class="table table-responsive table-borderless">
+            <tr>
+                <td><label><?= $this->translate($form->get('document')->getLabel()) ?></label></td>
+                <td>
+                    <?= $this->formText($form->get('document')) ?>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <?= $this->formElementErrors($form->get('document'), array('class' => 'bg-danger')) ?>
+                </td>
+            </tr>
+            <tr>
+                <td><label><?= $this->translate($form->get('company')->getLabel()) ?></label></td>
+                <td>
+                    <?= $this->formText($form->get('company')) ?>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <?= $this->formElementErrors($form->get('company'), array('class' => 'bg-danger')) ?>
+                </td>
+            </tr>
+            <tr>
+                <td><label><?= $this->translate($form->get('version')->getLabel()) ?></label></td>
+                <td>
+                    <?= $this->formText($form->get('version')) ?>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <?= $this->formElementErrors($form->get('version'), array('class' => 'bg-danger')) ?>
+                </td>
+            </tr>
+            <tr>
+                <td><label><?= $this->translate($form->get('state')->getLabel()) ?></label></td>
+                <td>
+                    <?= $this->formSelect($form->get('state')) ?>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <?= $this->formElementErrors($form->get('state'), array('class' => 'bg-danger')) ?>
+                </td>
+            </tr>
+            <tr>
+                <td><label><?= $this->translate($form->get('classification')->getLabel()) ?></label></td>
+                <td>
+                    <?= $this->formText($form->get('classification')) ?>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <?= $this->formElementErrors($form->get('classification'), array('class' => 'bg-danger')) ?>
+                </td>
+            </tr>
+            <tr>
+                <td><label><?= $this->translate($form->get('consultant')->getLabel()) ?></label></td>
+                <td>
+                    <?= $this->formText($form->get('consultant')) ?>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <?= $this->formElementErrors($form->get('consultant'), array('class' => 'bg-danger')) ?>
+                </td>
+            </tr>
+            <tr>
+                <td><label><?= $this->translate($form->get('client')->getLabel()) ?></label></td>
+                <td>
+                    <?= $this->formText($form->get('client')) ?>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <?= $this->formElementErrors($form->get('client'), array('class' => 'bg-danger')) ?>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2" align="center">
+                    <button type="submit" class="btn btn-success">
+                        <span class="glyphicon glyphicon-download-alt"></span>&nbsp;<?= $this->translate('__download_delivery') ?>
+                    </button>
+                </td>
+            </tr>
+        </table>
+        <?= $this->formHidden($form->get('csrf')) ?>
+        <?= $this->form()->closeTag() ?>
+    </div>
+    <div class="col-lg-3 text-center"></div>
+</div>
+
+<br />
+
+<div class="row">
+    <div class="col-lg-12 text-center">
+        <a href="<?= $this->url('diagnostic',array('action'=>'rapport'));?>" class="btn btn-warning" style="padding: 7px 70px 7px 70px;"><span class="glyphicon glyphicon-step-backward"></span>&nbsp;<?= $this->translate('__back_rapport') ?></a>
+    </div>
+</div>

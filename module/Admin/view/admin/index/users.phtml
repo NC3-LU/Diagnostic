@@ -1,0 +1,78 @@
+<?php
+$title = $this->translate('__users');
+$this->headTitle($title);
+?>
+
+<div class="row">
+    <div class="col-lg-3 text-left">
+        <h2><?= $this->translate('__users') ?></h2>
+        <br />
+        <?php
+        $urlAdd = $this->url('admin', ['action' => 'add-user']);
+        ?>
+        <center>
+            <a href="<?= $urlAdd ?>" style="color: #DF1D31; font-weight: bold;"><span class="glyphicon glyphicon-plus-sign"></span> <?= $this->translate('__add_a_user') ?></a>
+        </center>
+        <br />
+        <table class="table">
+            <?php foreach ($users as $user) :
+                ?>
+                <tr>
+                    <td>
+                        <a href="<?= $this->url('admin', ['action' => 'users', 'id' => $user->getId()]);?>">
+                            <?= $user->getEmail(); ?>
+                        </a>
+                    </td>
+                </tr>
+                <?php
+            endforeach; ?>
+        </table>
+    </div>
+    <?php
+    if (is_null($id)) {
+        ?>
+        <div class="col-lg-9 text-center">
+            <br /><br /><br /><br /><br />
+            <?= $this->translate('__user_choose') ?>
+        </div>
+        <?php
+    } else {
+        ?>
+        <div class="col-lg-9 text-left">
+            <h2><?= $this->translate('__users_details') ?></h2>
+            <?php
+            $form->setAttribute('action', $this->url('admin', array('action' => 'users', 'id' => $id)));
+            $form->prepare();
+
+
+
+            if ($this->current) {
+                $form->get('admin')->setAttribute('disabled', 'disabled');
+            }
+            ?>
+            <br />
+            <?= $this->form()->openTag($form) ?>
+            <table class="table table-responsive table-borderless">
+                <tr>
+                    <td style="width: 200px;"><label><?= $this->translate($form->get('email')->getLabel()) ?></label></td>
+                    <td><?= $this->formText($form->get('email')) ?></td>
+                </tr>
+                <tr>
+                    <td colspan="2"><?= $this->formElementErrors($form->get('email'), array('class' => 'bg-danger')) ?></td>
+                </tr>
+                <tr>
+                    <td><label><?= $this->translate($form->get('admin')->getLabel()) ?></label></td>
+                    <td><?= $this->formCheckbox($form->get('admin')) ?></td>
+                </tr>
+                <tr>
+                    <td colspan="2"><?= $this->formElementErrors($form->get('admin'), array('class' => 'bg-danger')) ?></td>
+                </tr>
+            </table>
+            <?= $this->formHidden($form->get('csrf')) ?>
+            <?= $this->formSubmit($form->get('submit')) ?>
+            <?= $this->form()->closeTag() ?>
+        </div>
+        <?php
+    }
+    ?>
+</div>

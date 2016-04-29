@@ -1,0 +1,92 @@
+<?php
+$title = $this->translate('__diagnostic');
+$this->headTitle($title);
+
+$formUpload->setAttribute('action', $this->url('diagnostic', array('action' => 'index'), array('type' => 'upload')));
+$formUpload->prepare();
+
+$formLogin->setAttribute('action', $this->url('diagnostic', array('action' => 'index')));
+$formLogin->prepare();
+?>
+<br />
+
+<div class="row">
+    <div class="col-lg-12 text-center">
+        <p><?= $this->translate('__welcome') ?></p>
+    </div>
+</div>
+
+<br /><br />
+
+<div class="row">
+    <div class="col-lg-6 text-center">
+        <h2><?= $this->translate('__welcome_upload') ?></h2>
+        <br />
+        <?= $this->form()->openTag($formUpload) ?>
+        <table class="table table-responsive table-borderless">
+            <tr>
+                <td><?= $this->formFile($formUpload->get('file')) ?></td>
+                <td><?= $this->formSubmit($formUpload->get('submit')) ?></td>
+            </tr>
+        </table>
+        <?= $this->formHidden($formUpload->get('csrf')) ?>
+        <?= $this->form()->closeTag() ?>
+    </div>
+
+    <div class="col-lg-6 text-center" style="border-left: 2px solid #0066B2;">
+
+        <?php
+        $container = new \Zend\Session\Container('user');
+        if (($container->offsetExists('email')) || (! is_null($container->email))) {
+            ?>
+            <h2><?= $this->translate('__diagnostic') ?></h2>
+            <br />
+            <center>
+            <table>
+                <tr>
+                    <td style="padding-right: 20px;"><?= $this->translate('__access_diagnostic') ?></label></td>
+                    <td>
+                        <a href="<?= $this->url('diagnostic',array('action'=>'diagnostic'));?>" class="btn btn-primary"><?= $this->translate('__access') ?></a>
+                    </td>
+                </tr>
+            </table>
+            </center>
+            <br><br>
+            <?php
+        } else {
+            ?>
+            <h2><?= $this->translate('__welcome_login') ?></h2>
+            <br />
+            <?= $this->form()->openTag($formLogin) ?>
+            <table class="table table-responsive table-borderless">
+                <tr>
+                    <td><label><?= $this->translate($formLogin->get('email')->getLabel()) ?></label></td>
+                    <td>
+                        <?= $this->formText($formLogin->get('email')) ?>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2"><?= $this->formElementErrors($formLogin->get('email'), array('class' => 'bg-danger')) ?></td>
+                </tr>
+                <tr>
+                    <td><label><?= $this->translate($formLogin->get('password')->getLabel()) ?></label></td>
+                    <td><?= $this->formPassword($formLogin->get('password')) ?></td>
+                </tr>
+                <tr>
+                    <td colspan="2"><?= $this->formElementErrors($formLogin->get('password'), array('class' => 'bg-danger')) ?></td>
+                </tr>
+            </table>
+            <?= $this->formHidden($formLogin->get('csrf')) ?>
+
+            <table class="table table-responsive table-borderless">
+                <tr>
+                    <td class="left"><a href="<?php echo $this->url('diagnostic', array('action'=>'passwordForgotten'));?>"><?= $this->translate('__password_forgotten') ?></a> </td>
+                    <td class="right"><?= $this->formSubmit($formLogin->get('submit')) ?></td>
+                </tr>
+            </table>
+            <?= $this->form()->closeTag() ?>
+            <?php
+        }
+        ?>
+    </div>
+</div>

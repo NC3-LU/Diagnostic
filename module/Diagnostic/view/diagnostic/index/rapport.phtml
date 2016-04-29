@@ -1,0 +1,213 @@
+<?php
+$title = $this->translate('__rapport');
+$this->headTitle($title);
+
+$jsPercents = [];
+$jsCategories = [];
+foreach ($totalCategory as $key => $value) {
+    $jsPercents[] = $value;
+    $jsCategories[] = $this->translate($key);
+}
+
+switch ($total) {
+    case $total < 25:
+        $totalColor = 'danger';
+        break;
+    case $total < 50:
+        $totalColor = 'warning';
+        break;
+    case $total < 75:
+        $totalColor = 'info';
+        break;
+    default:
+        $totalColor = 'success';
+        break;
+}
+
+echo $this->inlineScript()->prependFile($this->basePath('js/Chart.js-master/Chart.js'));
+?>
+
+<style>
+    .chart-legend li span{
+        display: inline-block;
+        width: 12px;
+        height: 12px;
+        margin-right: 5px;
+    }
+</style>
+
+<div class="row">
+    <div class="col-lg-12 text-center bg-<?= $totalColor ?>">
+        <h2><?= ucfirst($this->translate('__results')) ?> : <?php echo $this->escapeHtml($total); ?>/100</h2>
+    </div>
+</div>
+
+<br />
+
+<div class="row">
+    <div class="col-lg-6 text-center" style="background-color: #EEEEEE;">
+        <div class="row">
+            <div class="col-lg-2 text-center"></div>
+            <div class="col-lg-8 text-center">
+                <canvas id="canvas" width="400" height="400"></canvas>
+            </div>
+            <div class="col-lg-2 text-center"></div>
+         </div>
+    </div>
+    <div class="col-lg-6 text-left">
+        <h1><?php echo mb_strtoupper($this->translate($this->escapeHtml('__categories')), 'UTF-8');?></h1>
+        <table class="table">
+            <?php
+            foreach ($totalCategory as $key => $value) :
+                $valueColor = '';
+                if ($value < 25) {
+                    $valueColor = 'text-danger';
+                }
+                if ($value > 75) {
+                    $valueColor = 'text-success';
+                }
+                ?>
+                <tr>
+                    <td class="text-left <?= $valueColor ?>"><?= $this->translate($this->escapeHtml($key)) ?></td>
+                    <td class="text-right <?= $valueColor ?>"><?= (int) $value ?>%</td>
+                </tr>
+            <?php endforeach; ?>
+        </table>
+        <center>
+            <?php
+            $form->setAttribute('action', $this->url('diagnostic', array('action' => 'download')));
+            $form->prepare();
+            echo $this->form()->openTag($form);
+            echo $this->formHidden($form->get('radar'));
+            echo $this->formHidden($form->get('pie'));
+            echo $this->formHidden($form->get('bar'));
+            ?>
+            <br><br>
+            <button type="submit" class="btn btn-warning"  style="padding: 7px 70px 7px 70px;">
+                <span class="glyphicon glyphicon-download-alt"></span>&nbsp;<?= $this->translate('__download_delivery') ?>
+            </button>
+            <?php
+            echo $this->form()->closeTag();
+            ?>
+        </center>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-lg-6 text-left">
+        <h1><?php if (count($recommandations)) echo strtoupper($this->translate($this->escapeHtml('__recommandations')));?></h1>
+        <table class="table">
+            <?php foreach ($recommandations as $recommandation) :
+                if (strlen($recommandation)) {
+                    ?>
+                    <tr>
+                        <td><?= $recommandation; ?></td>
+                    </tr>
+                    <?php
+                }
+            endforeach; ?>
+        </table>
+    </div>
+    <div class="col-lg-6 text-center">
+        <div class="row">
+            <div class="col-lg-2 text-left"></div>
+            <div class="col-lg-8 text-left">
+                <br /><br /><br /><br />
+                <div class="row">
+                    <div class="col-lg-2 text-left"></div>
+                    <div class="col-lg-8 text-left">
+                        <canvas id="canvas2" width="100" height="100"></canvas>
+                        <div id="canvas2-legend" class="chart-legend" ></div>
+                    </div>
+                    <div class="col-lg-2 text-left"></div>
+                </div>
+                <br /><br /><br /><br />
+                <canvas id="canvas3" width="500" height="300"></canvas>
+                <div id="canvas3-legend" class="chart-legend"></div>
+            </div>
+            <div class="col-lg-2 text-left"></div>
+        </div>
+    </div>
+</div>
+
+<div style="width: 100%; height: 100%;">
+    <canvas id="myChart" style="width: 100%; height: auto;"></canvas>
+</div>
+<div id="js-legend" class="chart-legend"></div>
+
+<script>
+    //radar chart
+    var radarChartData = {
+        labels: <?= json_encode($jsCategories) ?>,
+        datasets: [
+            {
+                label: "Cases radar",
+                fillColor: "rgba(91, 192, 222, 0.3)",
+                strokeColor: "rgba(48, 113, 169, 1)",
+                pointColor: "rgba(48, 113, 169, 1)",
+                pointStrokeColor: "#fff",
+                pointStrokeColor: "#fff",
+                pointHighlightFill: "#fff",
+                pointHighlightStroke: "rgba(220,220,220,1)",
+                data: <?= json_encode($jsPercents) ?>
+            }
+        ]
+    };
+
+    var myRadarChart = new Chart(document.getElementById("canvas").getContext("2d")).Radar(radarChartData, {
+        responsive: true,
+        legendTemplate : 'kjlkjllkj',
+        onAnimationComplete : function() {
+            document.querySelector('input[name="radar"]').value = myRadarChart.toBase64Image();
+        }
+    });
+
+
+    //doughnut chart
+    var doughnutChartData =  <?= json_encode($this->categoriesRepartition) ?>;
+
+    var myDoughnutChart = new Chart(document.getElementById("canvas2").getContext("2d")).Doughnut(doughnutChartData,{
+        responsive: true,
+        legendTemplate : "<ul class=\"<%=name.toLowerCase()%>-legend\"><% for (var i=0; i<segments.length; i++){%><li><span style=\"background-color:<%=segments[i].fillColor%>\"></span><%if(segments[i].label){%><%=segments[i].label%><%}%></li><%}%></ul>",
+        onAnimationComplete : function() {
+            document.querySelector('input[name="pie"]').value = myDoughnutChart.toBase64Image();
+        }
+    });
+
+    document.getElementById('canvas2-legend').innerHTML = myDoughnutChart.generateLegend();
+
+
+    //bar chart
+    var barChartData = {
+        labels: [''],
+        datasets: [
+            {
+                label: "Nominal",
+                fillColor: "rgba(220,220,220,0.5)",
+                strokeColor: "rgba(220,220,220,0.8)",
+                highlightFill: "rgba(220,220,220,0.75)",
+                highlightStroke: "rgba(220,220,220,1)",
+                data: [100]
+            },
+            {
+                label: "Actuel",
+                fillColor: "rgba(151,187,205,0.5)",
+                strokeColor: "rgba(151,187,205,0.8)",
+                highlightFill: "rgba(151,187,205,0.75)",
+                highlightStroke: "rgba(151,187,205,1)",
+                data: [<?= $total ?>]
+            }
+        ]
+    };
+
+    var myBarChart = new Chart(document.getElementById("canvas3").getContext("2d")).Bar(barChartData, {
+        responsive: true,
+        tooltipTemplate: "<%= value %>%",
+        onAnimationComplete : function() {
+            document.querySelector('input[name="bar"]').value = myBarChart.toBase64Image();
+        }
+    });
+
+    document.getElementById('canvas3-legend').innerHTML = myBarChart.generateLegend();
+
+</script>

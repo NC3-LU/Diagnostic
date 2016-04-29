@@ -1,0 +1,45 @@
+<?php
+$title = $this->translate('__users');
+$this->headTitle($title);
+?>
+
+<div class="row">
+    <div class="col-lg-12 text-left">
+        <h2><?= $this->translate('__questions') ?></h2>
+        <br />
+        <?php
+        $urlAdd = $this->url('admin', ['action' => 'add-question']);
+        ?>
+        <center>
+            <a href="<?= $urlAdd ?>" style="color: #DF1D31; font-weight: bold;"><span class="glyphicon glyphicon-plus-sign"></span> <?= $this->translate('__add_a_question') ?></a>
+        </center>
+        <br />
+        <table class="table">
+            <tr>
+                <th width="50%"><?= $this->translate('__question'); ?></th>
+                <th><?= $this->translate('__translation_key'); ?></th>
+                <th style="text-align: center"><?= $this->translate('__category'); ?></th>
+                <th style="text-align: center;"><?= $this->translate('__threshold_max'); ?></th>
+                <th style="text-align: center;"><?= $this->translate('__action'); ?></th>
+            </tr>
+            <?php foreach ($questions as $question) :
+                $urlModify = $this->url('admin', ['action' => 'modify-question', 'id' => $question->getId()]);
+                ?>
+                <tr>
+                    <td><?= $this->translate($question->getTranslationKey()); ?></td>
+                    <td><?= $question->getTranslationKey(); ?></td>
+                    <td align="center"><?= $this->translate($question->getCategoryTranslationKey()); ?></td>
+                    <td align="center"><?= $this->translate($question->getThreshold()); ?></td>
+                    <td align="center">
+                        <a href="<?= $urlModify ?>"><span class="glyphicon glyphicon-pencil"></span></a>
+                        <!--
+                        &nbsp; &nbsp;
+                        <a href=""><span class="glyphicon glyphicon-remove"></span></a>
+                        -->
+                    </td>
+                </tr>
+                <?php
+            endforeach; ?>
+        </table>
+    </div>
+</div>

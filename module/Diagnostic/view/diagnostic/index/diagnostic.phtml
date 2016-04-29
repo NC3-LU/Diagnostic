@@ -1,0 +1,167 @@
+<?php
+$title = $this->translate('__diagnostic');
+$this->headTitle($title);
+
+$form->setAttribute('action', $this->url('diagnostic', ['action' => 'diagnostic', 'id' => $id]));
+$form->prepare();
+
+$formUpload->setAttribute('action', $this->url('diagnostic', ['action' => 'diagnostic']));
+$formUpload->prepare();
+
+$currentCategoryId = (array_key_exists($id, $questions)) ? $questions[$id]->getCategoryId() : 1;
+?>
+<div class="row">
+    <div class="col-lg-5">
+        <?= $this->form()->openTag($formUpload) ?>
+        <table class="table table-responsive table-borderless">
+            <tr>
+                <td><?= $this->formFile($formUpload->get('file')) ?></td>
+                <td><?= $this->formSubmit($formUpload->get('submit')) ?></td>
+            </tr>
+        </table>
+
+        <?= $this->formHidden($formUpload->get('csrf')) ?>
+        <?= $this->formElementErrors($formUpload->get('file'), array('class' => 'bg-danger')) ?>
+        <?= $this->form()->closeTag() ?>
+        <div class="row">
+            <div class="col-lg-12 text-left" style="background-color: #EEEEEE; min-height: 600px;">
+                <?php
+                foreach($categories as $categoryId => $category) {
+                    $textClass = ($currentCategoryId == $categoryId) ? 'text-danger' : 'text-success';
+
+                    $nbDone = 0;
+                    $nbUndone = 0;
+                    foreach($questions as $question) {
+                        if ($question->getCategoryId() == $categoryId) {
+                            if (array_key_exists($question->getId(), $result)) {
+                                $nbDone++;
+                            } else {
+                                $nbUndone++;
+                            }
+                        }
+                    }
+
+                    if ($currentCategoryId == $categoryId) {
+                        $textColor = '#DF1D31';
+                    } else if ($nbDone == 0) {
+                        $textColor = 'black';
+                    } else if ($nbUndone == 0) {
+                        $textColor = 'green';
+                    } else {
+                        $textColor = 'grey';
+                    }
+
+                    $titleCategory = $this->translate($category);
+                    ?>
+                    <div class=“container” style="padding-top: 10px;">
+                        <span class="<?= $textClass ?>" style="text-decoration: underline; font-weight: bold; color: <?= $textColor ?>;">
+                            <?= $titleCategory ?>
+                        </span>
+                        <br />
+                        <div class="collapse" style="padding: 5px;">
+                            <?php
+                            foreach($questions as $question) {
+                                if ($question->getCategoryId() == $categoryId) {
+                                    if ($question->getId() == $id) {
+                                        ?>
+                                        <a style="color: black;">
+                                            <strong><?= $this->translate($this->escapeHtml($question->getTranslationKey())) ?></strong>
+                                        </a>
+                                        <?php
+                                        $titleQuestion = $this->translate($this->escapeHtml($question->getTranslationKey()));
+                                        $titleHelp = (is_null($question->getTranslationKeyHelp())) ? '' : $this->translate($this->escapeHtml($question->getTranslationKeyHelp()));
+                                    } else {
+                                        $linkColor = (array_key_exists($question->getId(), $result)) ? 'green' : 'dimgrey';
+                                        ?>
+                                        <a href="<?= $this->url('diagnostic', ['action' => 'diagnostic', 'id' => $question->getId()]) ?>"
+                                           style="color: <?= $linkColor ?>;">
+                                            <?= $this->translate($this->escapeHtml($question->getTranslationKey())) ?>
+                                        </a>
+                                        <?php
+                                    }
+                                    echo '<br />';
+                                }
+                            }
+                            $urlAdd = $this->url('diagnostic', ['action' => 'add-question'], ['query' => ['categoryId' => $categoryId, 'id' => $id]]);
+                            ?>
+                            <br />
+                            <center>
+                            <a href="<?= $urlAdd ?>" style="color: #DF1D31; font-weight: bold;"><span class="glyphicon glyphicon-plus-sign"></span> <?= $this->translate('__add_a_question') ?></a>
+                            </center>
+                        </div>
+                    </div>
+                    <?php
+                }
+                ?>
+                <br />
+            </div>
+        </div>
+
+        <br />
+
+        <div class="row">
+            <div class="col-lg-6 text-center">
+                <a href="<?= $this->url('diagnostic',array('action'=>'rapport'));?>" class="btn btn-warning" style="padding: 7px 70px 7px 70px;"><?= $this->translate('__rapport') ?></a>
+            </div>
+            <div class="col-lg-6 text-center">
+                <a href="<?= $this->url('diagnostic',array('action'=>'export'));?>" class="btn btn-info" style="padding: 7px 70px 7px 70px;"><?= $this->translate('__export') ?></a>
+            </div>
+        </div>
+
+    </div>
+    <div class="col-lg-7 text-left">
+        <h4 style="color: #DF1D31; font-weight: bold;"><?= $this->translate($this->escapeHtml($titleCategory)) ?></h4>
+        <h4 style="color: grey;"><?= $this->escapeHtml($titleQuestion) ?></h4>
+        <br />
+        <?= $this->form()->openTag($form) ?>
+
+        <table class="table table-responsive table-borderless">
+            <tr>
+                <td><label><?= $this->translate($form->get('notes')->getLabel()) ?></label></td>
+                <td><?= $this->formTextarea($form->get('notes')) ?></td>
+            </tr>
+            <tr>
+                <td colspan="2"><hr style="padding: 0px; margin: 0px;"></td>
+            </tr>
+            <tr>
+                <td width="180"><label><?= $this->translate($form->get('maturity')->getLabel()) ?></label></td>
+                <td>
+                    <?= $this->formRadio($form->get('maturity')) ?>
+                    <br>
+                    <span style="color: grey;"><?= $titleHelp ?></span>
+                </td>
+            </tr>
+            <tr>
+                <td><label><?= $this->translate($form->get('maturityTarget')->getLabel()) ?></label></td>
+                <td><?= $this->formRadio($form->get('maturityTarget')) ?></td>
+            </tr>
+            <tr>
+                <td><label><?= $this->translate($form->get('recommandation')->getLabel()) ?></label></td>
+                <td><?= $this->formTextarea($form->get('recommandation')) ?></td>
+            </tr>
+            <tr>
+                <td><label><?= $this->translate($form->get('gravity')->getLabel()) ?></label></td>
+                <td><?= $this->formRadio($form->get('gravity')) ?></td>
+            </tr>
+        </table>
+
+        <center>
+        <?= $this->formHidden($form->get('csrf')) ?>
+        <?= $this->formSubmit($form->get('submit')); ?>
+        <?= $this->form()->closeTag() ?>
+        </center>
+
+    </div>
+</div>
+
+<script>
+    $(document).ready(function(){
+        $(".text-success").click(function(){
+            $(this).siblings(".collapse").collapse("toggle");
+        });
+        $(".text-danger").click(function(){
+            $(this).siblings(".collapse").collapse("toggle");
+        });
+        $(".text-danger").siblings(".collapse").collapse("toggle");
+    });
+</script>

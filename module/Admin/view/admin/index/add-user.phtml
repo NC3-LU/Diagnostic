@@ -1,0 +1,37 @@
+<?php
+$title = $this->translate('__users');
+$this->headTitle($title);
+?>
+
+<div class="row">
+    <div class="col-lg-3 text-left"></div>
+    <div class="col-lg-6 text-left">
+        <h2><?= $this->translate('__add_a_user') ?></h2>
+        <?php
+        $form->setAttribute('action', $this->url('admin', array('action' => 'add-user')));
+        $form->prepare();
+        ?>
+        <br />
+        <?= $this->form()->openTag($form) ?>
+        <table class="table table-responsive table-borderless">
+            <tr>
+                <td><label><?= $this->translate($form->get('email')->getLabel()) ?></label></td>
+                <td><?= $this->formText($form->get('email')) ?></td>
+            </tr>
+            <tr>
+                <td colspan="2"><?= $this->formElementErrors($form->get('email'), array('class' => 'bg-danger')) ?></td>
+            </tr>
+            <tr>
+                <td><label><?= $this->translate($form->get('admin')->getLabel()) ?></label></td>
+                <td><?= $this->formCheckbox($form->get('admin')) ?></td>
+            </tr>
+            <tr>
+                <td colspan="2"><?= $this->formElementErrors($form->get('admin'), array('class' => 'bg-danger')) ?></td>
+            </tr>
+        </table>
+        <?= $this->formHidden($form->get('csrf')) ?>
+        <?= $this->formSubmit($form->get('submit')) ?>
+        <?= $this->form()->closeTag() ?>
+    </div>
+    <div class="col-lg-3 text-left"></div>
+</div>
