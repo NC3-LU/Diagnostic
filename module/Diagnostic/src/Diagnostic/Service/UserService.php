@@ -114,4 +114,14 @@ class UserService implements ServiceLocatorAwareInterface
         $admin = $container->admin;
         return $admin;
     }
+
+    /**
+     * Delete
+     *
+     * @param $id
+     */
+    public function delete($id) {
+        $userGateway = $this->getServiceLocator()->get('Diagnostic\Gateway\UserGateway');
+        $userGateway->delete($id);
+    }
 }

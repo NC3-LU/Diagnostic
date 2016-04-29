@@ -54,9 +54,17 @@
                                         <?php
                                         $container = new \Zend\Session\Container('user');
                                         if (($container->offsetExists('admin')) && (! is_null($container->admin)) && ($container->admin == 1)) {
-                                            ?>
-                                            <a href="<?= $this->url('admin',array());?>" class="btn btn-primary"><?= $this->translate('__admin') ?></a>
-                                            <?php
+                                            if ($this->url() == '/admin') {
+                                                ?>
+                                                <a href="<?= $this->url('diagnostic',array('action'=>'diagnostic')); ?>"
+                                                   class="btn btn-success"><?= $this->translate('__diagnostic') ?></a>
+                                                <?php
+                                            } else {
+                                                ?>
+                                                <a href="<?= $this->url('admin', array()); ?>"
+                                                   class="btn btn-primary"><?= $this->translate('__admin') ?></a>
+                                                <?php
+                                            }
                                         }
                                         if (($container->offsetExists('email')) || (! is_null($container->email))) {
                                             ?>

@@ -2,8 +2,8 @@
 $title = $this->translate('__diagnostic');
 $this->headTitle($title);
 
-$form->setAttribute('action', $this->url('admin', ['action' => 'add-question']));
-$form->prepare();
+$this->form->setAttribute('action', $this->url('admin', ['action' => 'add-question']));
+$this->form->prepare();
 ?>
 <div class="row">
     <div class="col-lg-3 text-center"></div>

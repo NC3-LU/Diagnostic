@@ -90,9 +90,6 @@ class IndexController extends AbstractActionController
     public function addUserAction() {
         $form = $this->getServiceLocator()->get('formElementManager')->get('UserForm');
 
-        $userFormFilter = new UserFormFilter($this->getServiceLocator()->get('Zend\Db\Adapter\Adapter'));
-        $form->setInputFilter($userFormFilter);
-
         $emailNotExistFilter = new EmailNotExistFilter($this->getServiceLocator()->get('Zend\Db\Adapter\Adapter'));
         $form->setInputFilter($emailNotExistFilter);
 
@@ -214,5 +211,35 @@ class IndexController extends AbstractActionController
             'form' => $form,
             'id' => $id,
         ]);
+    }
+
+    /**
+     * Delete user
+     *
+     * @return \Zend\Http\Response
+     * @throws \Exception
+     */
+    public function deleteUserAction() {
+        //id user
+        $id = $this->getEvent()->getRouteMatch()->getParam('id');
+
+        //retrieve users
+        $userService = $this->getServiceLocator()->get('Diagnostic\Service\UserService');
+        $users = $userService->getUsers();
+        $usersIds = [];
+        foreach($users as $user) {
+            $usersIds[] = $user->getId();
+        }
+
+        //security
+        if (!in_array($id, $usersIds)) {
+            throw new \Exception('User not exist');
+        }
+
+        $userService = $this->getServiceLocator()->get('Diagnostic\Service\UserService');
+        $userService->delete($id);
+
+        //redirect
+        return $this->redirect()->toRoute('admin', ['controller' => 'index', 'action' => 'users']);
     }
 }

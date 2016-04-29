@@ -14,7 +14,7 @@ class EmailNotExistFilter extends InputFilter
 {
     public function __construct($adapter)
     {
-        $this->add(array(
+       /* $this->add(array(
             'name'       => 'email',
             'required'   => true,
             'validators' => array(
@@ -28,6 +28,30 @@ class EmailNotExistFilter extends InputFilter
                 ),
             ),
         ));
+
+        $this->add(array(
+            'name'       => 'email',
+            'required'   => true,
+            'validators' => array(
+                array(
+                    'name'    => 'EmailAddress',
+                    'options' => array(
+                        'allow' => Hostname::ALLOW_DNS,
+                        'useMxCheck' => true
+                    ),
+                ),
+            ),
+        ));
+
+        $this->add(array(
+            'name'       => 'admin',
+            'required'   => false,
+            'validators' => array(
+                array(
+                    'name' => 'Digits',
+                ),
+            ),
+        ));*/
     }
 }
 

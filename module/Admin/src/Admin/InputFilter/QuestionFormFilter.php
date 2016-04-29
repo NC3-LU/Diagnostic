@@ -19,20 +19,6 @@ class QuestionFormFilter extends InputFilter
             'required'   => true,
             'validators' => array(
                 array(
-                    'name'    => 'EmailAddress',
-                    'options' => array(
-                        'allow' => Hostname::ALLOW_DNS,
-                        'useMxCheck' => true
-                    ),
-                ),
-            ),
-        ));
-
-        $this->add(array(
-            'name'       => 'translation_key',
-            'required'   => true,
-            'validators' => array(
-                array(
                     'name' => 'Alnum',
                 ),
             ),

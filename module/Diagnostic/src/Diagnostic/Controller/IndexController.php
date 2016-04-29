@@ -288,9 +288,10 @@ class IndexController extends AbstractActionController
     }
 
     /**
-     * Diagnostic
+     * Delete user
      *
-     * @return ViewModel
+     * @return \Zend\Http\Response|ViewModel
+     * @throws \Exception
      */
     public function diagnosticAction() {
 
@@ -304,6 +305,10 @@ class IndexController extends AbstractActionController
         //retrieve questions
         $questionService = $this->getServiceLocator()->get('Diagnostic\Service\QuestionService');
         $questions = $questionService->getQuestions();
+
+        if (!array_key_exists($id, $questions)) {
+            throw new \Exception('Question not exist');
+        }
 
         //retrieve categories
         $categories = [];
@@ -534,8 +539,6 @@ class IndexController extends AbstractActionController
             }
         }
 
-
-
         //translator
         $translator = $this->getServiceLocator()->get('translator');
 
@@ -557,7 +560,7 @@ class IndexController extends AbstractActionController
             $categoriesRepartition[$i]['label'] = $translator->translate($category);
             $categoriesRepartition[$i]['color'] = $categoriesColor[$i]['color'];
             $categoriesRepartition[$i]['highlight'] = $categoriesColor[$i]['highlight'];
-            $categoriesRepartition[$i]['value'] = $categoryNumber / $nbQuestions * 100;
+            $categoriesRepartition[$i]['value'] = round($categoryNumber / $nbQuestions * 100);
             $i++;
         }
 
@@ -657,7 +660,6 @@ class IndexController extends AbstractActionController
         ));
 
     }
-
 
     /**
      * Language

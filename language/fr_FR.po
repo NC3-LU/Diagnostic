@@ -715,3 +715,7 @@ msgstr "Fort"
 msgid "__back_rapport"
 msgstr "Retour au rapport"
 
+#:
+msgid "__delete"
+msgstr "Supprimer"
+

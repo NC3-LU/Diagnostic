@@ -655,3 +655,7 @@ msgstr ""
 msgid "__modify_question"
 msgstr ""
 
+#:
+msgid "__delete"
+msgstr "Delete"
+
