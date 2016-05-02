@@ -43,6 +43,7 @@ $currentCategoryId = (array_key_exists($id, $questions)) ? $questions[$id]->getC
 
                     if ($currentCategoryId == $categoryId) {
                         $textColor = '#DF1D31';
+                        $currentTitleCategory = $this->translate($category);
                     } else if ($nbDone == 0) {
                         $textColor = 'black';
                     } else if ($nbUndone == 0) {
@@ -110,7 +111,7 @@ $currentCategoryId = (array_key_exists($id, $questions)) ? $questions[$id]->getC
 
     </div>
     <div class="col-lg-7 text-left">
-        <h4 style="color: #DF1D31; font-weight: bold;"><?= $this->translate($this->escapeHtml($titleCategory)) ?></h4>
+        <h4 style="color: #DF1D31; font-weight: bold;"><?= $this->translate($this->escapeHtml($currentTitleCategory)) ?></h4>
         <h4 style="color: grey;"><?= $this->escapeHtml($titleQuestion) ?></h4>
         <br />
         <?= $this->form()->openTag($form) ?>

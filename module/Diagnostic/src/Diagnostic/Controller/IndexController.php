@@ -426,7 +426,7 @@ class IndexController extends AbstractActionController
                         $lastId = $question->getId();
                     }
                 }
-                
+
 
                 //retrieve categories
                 $categories = [];
