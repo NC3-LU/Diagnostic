@@ -61,6 +61,7 @@ class QuestionService implements ServiceLocatorAwareInterface
         foreach($questions as $question) {
             $tmpArray[$question->getCategoryId()][$question->getId()] = $question;
         }
+
         ksort($tmpArray);
         $questions = [];
         foreach($tmpArray as $array) {

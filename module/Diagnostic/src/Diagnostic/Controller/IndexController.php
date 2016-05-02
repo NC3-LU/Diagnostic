@@ -420,8 +420,13 @@ class IndexController extends AbstractActionController
                 //retrieve questions
                 $questionService = $this->getServiceLocator()->get('Diagnostic\Service\QuestionService');
                 $questions = $questionService->getQuestions();
-                end($questions);
-                $lastId = key($questions);
+                $lastId = 0;
+                foreach($questions as $question){
+                    if ($question->getId() > $lastId) {
+                        $lastId = $question->getId();
+                    }
+                }
+                
 
                 //retrieve categories
                 $categories = [];
@@ -440,6 +445,8 @@ class IndexController extends AbstractActionController
                     'translation_key_help' => $formData['help'],
                     'ponderation' => $formData['threshold']
                 ]);
+
+
 
                 //record question
                 $questions[] = $questionEntity;
