@@ -317,16 +317,24 @@ class IndexController extends AbstractActionController
         }
 
         //retrieve current question
+        $currentQuestion = false;
         foreach ($questions as $question) {
             if ($question->getId() == $id) {
-                var_dump($question->getId());
-                var_dump($id);
+                $currentQuestion = $question;
                 break;
+
             }
         }
 
+        echo '<pre>';
+        var_dump($currentQuestion);
+        var_dump(current($questions));
+        echo '</pre>';
+
         //next id
-        $nextId = (current($questions)) ? current($questions)->getId() : $id;
+        $nextId = ($currentQuestion) ? $currentQuestion->getId() : $id;
+
+        var_dump($nextId);
 
         //retrieve result
         $container = new Container('diagnostic');
