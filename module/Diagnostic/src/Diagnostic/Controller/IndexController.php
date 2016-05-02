@@ -301,7 +301,7 @@ class IndexController extends AbstractActionController
         }
 
         $id = ($this->getEvent()->getRouteMatch()->getParam('id')) ? $this->getEvent()->getRouteMatch()->getParam('id') : 1;
-        
+
         var_dump($id);
 
         //retrieve questions
@@ -325,10 +325,14 @@ class IndexController extends AbstractActionController
             }
         }
 
+        echo '<pre>';
+        var_dump(current($questions));
+        echo '</pre>';
+
         //next id
         $nextId = (current($questions)) ? current($questions)->getId() : $id;
 
-        var_dump($nextId);
+
 
         //retrieve result
         $container = new Container('diagnostic');
