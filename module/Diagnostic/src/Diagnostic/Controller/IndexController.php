@@ -366,8 +366,12 @@ class IndexController extends AbstractActionController
             $data = $formUpload->getData();
 
             //load json
-            $questionService = $this->getServiceLocator()->get('Diagnostic\Service\QuestionService');
-            $questionService->loadJson(file_get_contents($data["file"]["tmp_name"], true));
+            if ($data["file"]["tmp_name"]) {
+                $questionService = $this->getServiceLocator()->get('Diagnostic\Service\QuestionService');
+                $questionService->loadJson(file_get_contents($data["file"]["tmp_name"], true));
+            } else {
+                throw new \Exception('No file');
+            }
 
             return $this->redirect()->toRoute('diagnostic', ['controller' => 'index', 'action' => 'diagnostic', 'id' => $id]);
         }
