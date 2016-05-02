@@ -302,6 +302,8 @@ class IndexController extends AbstractActionController
 
         $id = ($this->getEvent()->getRouteMatch()->getParam('id')) ? $this->getEvent()->getRouteMatch()->getParam('id') : 1;
 
+        var_dump($id); 
+
         //retrieve questions
         $questionService = $this->getServiceLocator()->get('Diagnostic\Service\QuestionService');
         $questions = $questionService->getQuestions();
