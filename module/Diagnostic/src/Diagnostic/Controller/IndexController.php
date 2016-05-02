@@ -302,8 +302,6 @@ class IndexController extends AbstractActionController
 
         $id = ($this->getEvent()->getRouteMatch()->getParam('id')) ? $this->getEvent()->getRouteMatch()->getParam('id') : 1;
 
-        var_dump($id);
-
         //retrieve questions
         $questionService = $this->getServiceLocator()->get('Diagnostic\Service\QuestionService');
         $questions = $questionService->getQuestions();
@@ -321,18 +319,14 @@ class IndexController extends AbstractActionController
         //retrieve current question
         foreach ($questions as $question) {
             if ($question->getId() == $id) {
+                var_dump($question->getId());
+                var_dump($id);
                 break;
             }
         }
 
-        echo '<pre>';
-        var_dump(current($questions));
-        echo '</pre>';
-
         //next id
         $nextId = (current($questions)) ? current($questions)->getId() : $id;
-
-
 
         //retrieve result
         $container = new Container('diagnostic');
