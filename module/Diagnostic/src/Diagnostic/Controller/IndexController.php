@@ -321,7 +321,7 @@ class IndexController extends AbstractActionController
         foreach ($questions as $question) {
             var_dump($question->getId());
             if ($question->getId() == $id) {
-                $currentQuestion = $question;
+                $currentQuestion = next($questions);
 
                 break;
 
