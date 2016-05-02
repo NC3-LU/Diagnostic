@@ -315,18 +315,20 @@ class IndexController extends AbstractActionController
         foreach ($questions as $question) {
             $categories[$question->getCategoryId()] = $question->getCategoryTranslationKey();
         }
-
+        echo '<pre>';
         //retrieve current question
         $currentQuestion = false;
         foreach ($questions as $question) {
+            var_dump($question->getId());
             if ($question->getId() == $id) {
                 $currentQuestion = $question;
+
                 break;
 
             }
         }
 
-        echo '<pre>';
+
         var_dump($currentQuestion);
         var_dump(current($questions));
         echo '</pre>';
