@@ -659,3 +659,7 @@ msgstr ""
 msgid "__delete"
 msgstr "Delete"
 
+#:
+msgid "__login_error"
+msgstr "Impossible to connect"
+

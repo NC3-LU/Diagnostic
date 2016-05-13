@@ -75,12 +75,21 @@ $formLogin->prepare();
                 <tr>
                     <td colspan="2"><?= $this->formElementErrors($formLogin->get('password'), array('class' => 'bg-danger')) ?></td>
                 </tr>
+                <?php
+                if (strlen($this->message)) {
+                    ?>
+                    <tr>
+                        <td colspan="2" style="color: red;"><strong><?= $this->translate($this->message) ?></strong></td>
+                    </tr>
+                    <?php
+                }
+                ?>
             </table>
             <?= $this->formHidden($formLogin->get('csrf')) ?>
 
             <table class="table table-responsive table-borderless">
                 <tr>
-                    <td class="left"><a href="<?php echo $this->url('diagnostic', array('action'=>'passwordForgotten'));?>"><?= $this->translate('__password_forgotten') ?></a> </td>
+                    <td class="left"><a href="<?php echo $this->url('diagnostic', array('action'=>'passwordForgotten'));?>"><?= $this->translate($this->translate('__password_forgotten')) ?></a> </td>
                     <td class="right"><?= $this->formSubmit($formLogin->get('submit')) ?></td>
                 </tr>
             </table>

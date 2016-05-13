@@ -38,6 +38,8 @@ class IndexController extends AbstractActionController
         $loginFormFilter = new LoginFormFilter($this->getServiceLocator()->get('Zend\Db\Adapter\Adapter'));
         $formLogin->setInputFilter($loginFormFilter);
 
+        $message = '';
+
         //form is post and valid
         $request = $this->getRequest();
         if ($request->isPost()) {
@@ -79,10 +81,10 @@ class IndexController extends AbstractActionController
 
                             return $this->redirect()->toRoute('diagnostic', ['controller' => 'index', 'action' => 'diagnostic']);
                         } else {
-                            return $this->redirect()->toRoute('home', []);
+                            $message = '__login_error';
                         }
                     } else {
-                        return $this->redirect()->toRoute('home', []);
+                        $message = '__login_error';
                     }
                 }
             }
@@ -92,6 +94,7 @@ class IndexController extends AbstractActionController
         return new ViewModel(array(
             'formUpload' => $formUpload,
             'formLogin' => $formLogin,
+            'message' => $message,
         ));
     }
 
