@@ -80,7 +80,6 @@ class QuestionService implements ServiceLocatorAwareInterface
      * @param $json
      */
     public function loadJson($json) {
-
         //encryption key
         $config = $this->getServiceLocator()->get('Config');
         $encryptionKey = $config['encryption_key'];

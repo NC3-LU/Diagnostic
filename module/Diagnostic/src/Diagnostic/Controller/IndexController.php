@@ -503,7 +503,7 @@ class IndexController extends AbstractActionController
         $cryptExport = $blockCipher->encrypt($export);
 
         //create file
-        $filename = date('YmdHis') . '.cases';
+        $filename = 'data/' . date('YmdHis') . '.cases';
         !$handle = fopen($filename, 'w');
         fwrite($handle, $cryptExport);
         fclose($handle);
