@@ -53,7 +53,7 @@ class IndexController extends AbstractActionController
                 if ($formUpload->isValid()) {
 
                     $data = $formUpload->getData();
-                    
+
                     //load json
                     if ($data["file"]["tmp_name"]) {
                         $questionService = $this->getServiceLocator()->get('Diagnostic\Service\QuestionService');

@@ -57,7 +57,7 @@ class PasswordStrength extends AbstractValidator
             $isValid = false;
         }
 
-        if (!preg_match('/[$&#@*%£"\[\](){}?;+=]/', $value)) {
+        if (!preg_match('/[\W]/', $value)) {
             $this->error(self::SPECIAL);
             $isValid = false;
         }
