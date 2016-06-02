@@ -24,18 +24,17 @@ $this->headTitle($title);
             </tr>
             <?php foreach ($questions as $question) :
                 $urlModify = $this->url('admin', ['action' => 'modify-question', 'id' => $question->getId()]);
+                $urlDelete = $this->url('admin', ['action' => 'delete-question', 'id' => $question->getId()]);
                 ?>
                 <tr>
                     <td><?= $this->translate($question->getTranslationKey()); ?></td>
                     <td><?= $question->getTranslationKey(); ?></td>
                     <td align="center"><?= $this->translate($question->getCategoryTranslationKey()); ?></td>
-                    <td align="center"><?= $this->translate($question->getThreshold()); ?></td>
+                    <td align="center"><?= $question->getThreshold(); ?></td>
                     <td align="center">
                         <a href="<?= $urlModify ?>"><span class="glyphicon glyphicon-pencil"></span></a>
-                        <!--
-                        &nbsp; &nbsp;
-                        <a href=""><span class="glyphicon glyphicon-remove"></span></a>
-                        -->
+                        &nbsp;&nbsp;
+                        <a href="<?= $urlDelete ?>"><span class="glyphicon glyphicon-remove"></span></a>
                     </td>
                 </tr>
                 <?php

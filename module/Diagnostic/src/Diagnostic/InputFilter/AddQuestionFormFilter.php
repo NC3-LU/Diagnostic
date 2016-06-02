@@ -20,7 +20,7 @@ class AddQuestionFormFilter extends InputFilter
                 array(
                     'name'    => 'StringLength',
                     'options' => array(
-                        'min' => 8
+                        'min' => 6
                     ),
                 ),
             ),

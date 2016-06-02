@@ -75,9 +75,28 @@ class QuestionService implements ServiceLocatorAwareInterface
     }
 
     /**
+     * Get Bdd Questions
+     *
+     * @return array
+     * @throws \Exception
+     */
+    public function getBddQuestions() {
+
+        $questionsObject = $this->fetchAllWithCategories();
+
+        $questions = [];
+        foreach($questionsObject as $question) {
+            $questions[$question->getId()] = $question;
+        }
+
+        return $questions;
+    }
+
+    /**
      * Load Json
      *
      * @param $json
+     * @return bool
      */
     public function loadJson($json) {
         //encryption key
@@ -93,20 +112,33 @@ class QuestionService implements ServiceLocatorAwareInterface
 
         //result
         $result = [];
-        foreach($data['result'] as $key => $value) {
-            $result[$key] = (array) $value;
+        if (array_key_exists('result', $data)) {
+            foreach ($data['result'] as $key => $value) {
+                $result[$key] = (array)$value;
+            }
         }
-        $container = new Container('diagnostic');
-        $container->result = $result;
 
         //questions
         $questions = [];
-        foreach($data['questions'] as $key => $value) {
-            $questionEntity = $this->getServiceLocator()->get('Diagnostic\Model\QuestionEntity');
-            $questionEntity->exchangeArray($value);
-            $questions[$key] = $questionEntity;
+        if (array_key_exists('questions', $data)) {
+            foreach ($data['questions'] as $key => $value) {
+                $questionEntity = $this->getServiceLocator()->get('Diagnostic\Model\QuestionEntity');
+                $questionEntity->exchangeArray($value);
+                $questions[$key] = $questionEntity;
+            }
         }
-        $container->questions = $questions;
+
+
+
+        if (count($questions)) {
+            $container = new Container('diagnostic');
+            $container->result = $result;
+            $container->questions = $questions;
+
+            return true;
+        } else {
+            return false;
+        }
     }
 
     /**
@@ -152,6 +184,16 @@ class QuestionService implements ServiceLocatorAwareInterface
         unset($data['id']);
         $questionGateway = $this->getServiceLocator()->get('Diagnostic\Gateway\QuestionGateway');
         $questionGateway->update($id, $data);
+    }
+
+    /**
+     * Delete
+     *
+     * @param $id
+     */
+    public function delete($id) {
+        $questionGateway = $this->getServiceLocator()->get('Diagnostic\Gateway\QuestionGateway');
+        $questionGateway->delete($id);
     }
 
 }

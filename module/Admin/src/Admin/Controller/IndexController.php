@@ -124,7 +124,7 @@ class IndexController extends AbstractActionController
     public function questionsAction() {
         //retrieve questions
         $questionService = $this->getServiceLocator()->get('Diagnostic\Service\QuestionService');
-        $questions = $questionService->getQuestions();
+        $questions = $questionService->getBddQuestions();
 
         //send to view
         return new ViewModel([
@@ -241,5 +241,34 @@ class IndexController extends AbstractActionController
 
         //redirect
         return $this->redirect()->toRoute('admin', ['controller' => 'index', 'action' => 'users']);
+    }
+
+    /**
+     * Delete question
+     *
+     * @return \Zend\Http\Response
+     * @throws \Exception
+     */
+    public function deleteQuestionAction() {
+        //id user
+        $id = $this->getEvent()->getRouteMatch()->getParam('id');
+
+        //retrieve bdd questions
+        $questionService = $this->getServiceLocator()->get('Diagnostic\Service\QuestionService');
+        $questions = $questionService->getBddQuestions();
+        $questionsIds = [];
+        foreach($questions as $question) {
+            $questionsIds[] = $question->getId();
+        }
+
+        //security
+        if (!in_array($id, $questionsIds)) {
+            throw new \Exception('Question not exist');
+        }
+
+        $questionService->delete($id);
+
+        //redirect
+        return $this->redirect()->toRoute('admin', ['controller' => 'index', 'action' => 'questions']);
     }
 }

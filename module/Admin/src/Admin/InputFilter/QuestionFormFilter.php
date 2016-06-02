@@ -19,7 +19,10 @@ class QuestionFormFilter extends InputFilter
             'required'   => true,
             'validators' => array(
                 array(
-                    'name' => 'Alnum',
+                    'name'    => 'StringLength',
+                    'options' => array(
+                        'min' => 6
+                    ),
                 ),
             ),
         ));

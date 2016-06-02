@@ -41,6 +41,7 @@ class IndexController extends AbstractActionController
         $message = '';
 
         //form is post and valid
+        $errorMessage = '';
         $request = $this->getRequest();
         if ($request->isPost()) {
 
@@ -56,14 +57,19 @@ class IndexController extends AbstractActionController
 
                     //load json
                     if ($data["file"]["tmp_name"]) {
-                        $questionService = $this->getServiceLocator()->get('Diagnostic\Service\QuestionService');
-                        $questionService->loadJson(file_get_contents($data["file"]["tmp_name"], true));
-                    } else {
-                        throw new \Exception('No file');
-                    }
 
-                    //redirect
-                    return $this->redirect()->toRoute('diagnostic', ['controller' => 'index', 'action' => 'rapport']);
+                        $questionService = $this->getServiceLocator()->get('Diagnostic\Service\QuestionService');
+                        $successUpload = $questionService->loadJson(file_get_contents($data["file"]["tmp_name"], true));
+
+                        if ($successUpload) {
+                            return $this->redirect()->toRoute('diagnostic', ['controller' => 'index', 'action' => 'rapport']);
+                        } else {
+                            $errorMessage = '__error_file';
+                        }
+
+                    } else {
+                        $errorMessage = '__no_file';
+                    }
                 }
 
             } else {
@@ -99,6 +105,7 @@ class IndexController extends AbstractActionController
             'formUpload' => $formUpload,
             'formLogin' => $formLogin,
             'message' => $message,
+            'errorMessage' => $errorMessage,
         ));
     }
 
@@ -369,23 +376,29 @@ class IndexController extends AbstractActionController
             $request->getFiles()->toArray()
         ));
 
+        $errorMessage = '';
         if ($formUpload->isValid()) {
             $data = $formUpload->getData();
 
             //load json
             if ($data["file"]["tmp_name"]) {
                 $questionService = $this->getServiceLocator()->get('Diagnostic\Service\QuestionService');
-                $questionService->loadJson(file_get_contents($data["file"]["tmp_name"], true));
-            } else {
-                throw new \Exception('No file');
-            }
 
-            return $this->redirect()->toRoute('diagnostic', ['controller' => 'index', 'action' => 'diagnostic', 'id' => $id]);
+                $successUpload = $questionService->loadJson(file_get_contents($data["file"]["tmp_name"], true));
+
+                if ($successUpload) {
+                    return $this->redirect()->toRoute('diagnostic', ['controller' => 'index', 'action' => 'diagnostic', 'id' => $id]);
+                } else {
+                    $errorMessage = '__error_file';
+                }
+            } else {
+                $errorMessage = '__no_file';
+            }
         }
 
         //populate
         $diagnosticEntity = $this->getServiceLocator()->get('Diagnostic\Model\DiagnosticEntity');
-        $binding = (array_key_exists($id, $result)) ? $result[$id] : ['maturity' => 0, 'maturityTarget' => 3, 'gravity' => 2];
+        $binding = (array_key_exists($id, $result)) ? $result[$id] : ['maturity' => 3, 'maturityTarget' => 3, 'gravity' => 2];
         $diagnosticEntity->exchangeArray($binding);
         $form->bind($diagnosticEntity);
 
@@ -397,6 +410,7 @@ class IndexController extends AbstractActionController
             'form' => $form,
             'formUpload' => $formUpload,
             'id' => $id,
+            'errorMessage' => $errorMessage,
         ));
     }
 

@@ -28,6 +28,15 @@ $formLogin->prepare();
                 <td><?= $this->formFile($formUpload->get('file')) ?></td>
                 <td><?= $this->formSubmit($formUpload->get('submit')) ?></td>
             </tr>
+            <?php
+            if ($this->errorMessage) {
+                ?>
+                <tr>
+                    <td colspan="2" class="bg-danger text-danger"><?= $this->translate($this->errorMessage) ?></td>
+                </tr>
+                <?php
+            }
+            ?>
         </table>
         <?= $this->formHidden($formUpload->get('csrf')) ?>
         <?= $this->form()->closeTag() ?>

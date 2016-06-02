@@ -656,10 +656,82 @@ msgid "__modify_question"
 msgstr ""
 
 #:
+msgid "__admin"
+msgstr "Administration"
+
+#:
+msgid "__document_name"
+msgstr "Document name"
+
+#:
+msgid "__company"
+msgstr "Company"
+
+#:
+msgid "__version"
+msgstr "Version"
+
+#:
+msgid "__state"
+msgstr "State"
+
+#:
+msgid "__classification"
+msgstr "Classification"
+
+#:
+msgid "__consultant"
+msgstr "Consultant"
+
+#:
+msgid "__client"
+msgstr "Client"
+
+#:
+msgid "__download_delivery"
+msgstr "Download delivery"
+
+#:
+msgid "__draft"
+msgstr "Draft"
+
+#:
+msgid "__final"
+msgstr "Final"
+
+#:
+msgid "__low"
+msgstr "Low"
+
+#:
+msgid "__medium"
+msgstr "Medium"
+
+#:
+msgid "__strong"
+msgstr "Strong"
+
+#:
+msgid "__back_rapport"
+msgstr "Back to rapport"
+
+#:
+msgid "__back"
+msgstr "Back"
+
+#:
 msgid "__delete"
 msgstr "Delete"
 
 #:
 msgid "__login_error"
 msgstr "Impossible to connect"
+
+#:
+msgid "__no_file"
+msgstr "File missing"
+
+#:
+msgid "__error_file"
+msgstr "File not valid"
 
