@@ -85,11 +85,18 @@ echo $this->inlineScript()->prependFile($this->basePath('js/Chart.js-master/Char
             <br><br>
             <table style="width: 100%">
                 <tr>
-                    <td align="center">
-                        <button type="submit" class="btn btn-warning"  style="padding: 7px 70px 7px 70px;">
-                            <span class="glyphicon glyphicon-download-alt"></span>&nbsp;<?= $this->translate('__download_delivery') ?>
-                        </button>
-                    </td>
+                    <?php
+                    if ($total) {
+                        ?>
+                        <td align="center">
+                            <button type="submit" class="btn btn-warning" style="padding: 7px 70px 7px 70px;">
+                                <span
+                                    class="glyphicon glyphicon-download-alt"></span>&nbsp;<?= $this->translate('__download_delivery') ?>
+                            </button>
+                        </td>
+                        <?php
+                    }
+                    ?>
                     <td align="center">
                         <a href="<?= $this->url('diagnostic',array('action'=>'diagnostic'));?>" class="btn btn-info" style="padding: 7px 70px 7px 70px;"><span class="glyphicon glyphicon-backward"></span>&nbsp;<?= $this->translate('__back') ?></a>
                     </td>

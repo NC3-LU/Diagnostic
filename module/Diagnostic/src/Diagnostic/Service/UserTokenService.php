@@ -37,6 +37,9 @@ class UserTokenService implements ServiceLocatorAwareInterface
         $userTokenGateway = $this->getServiceLocator()->get('Diagnostic\Gateway\UserTokenGateway');
         $userTokenGateway->insert($userTokenEntity);
 
+        //delete old tokens
+        $userTokenGateway->deleteOld();
+
         return $userTokenEntity;
     }
 
@@ -60,5 +63,16 @@ class UserTokenService implements ServiceLocatorAwareInterface
     public function delete($token) {
         $userTokenGateway = $this->getServiceLocator()->get('Diagnostic\Gateway\UserTokenGateway');
         $userTokenGateway->delete($token);
+    }
+
+    /**
+     * Delete By Email
+     *
+     * @param $email
+     */
+    public function deleteByEmail($email) {
+        $userTokenGateway = $this->getServiceLocator()->get('Diagnostic\Gateway\UserTokenGateway');
+        $userTokenGateway->deleteByEmail($email);
+
     }
 }

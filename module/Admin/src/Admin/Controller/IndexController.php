@@ -51,7 +51,9 @@ class IndexController extends AbstractActionController
 
             $currentUser = $userService->getUserById($id);
 
+            $userToModify = null;
             foreach ($currentUser as $user) {
+                $userToModify = $user;
                 if ($user->getId() == $id) {
                     $form->bind($user);
                     if ($user->getEmail() == $currentEmail) {
@@ -63,11 +65,23 @@ class IndexController extends AbstractActionController
             //form is post and valid
             $request = $this->getRequest();
             if ($request->isPost()) {
+
+                if ($request->getPost('email') != $userToModify->email) {
+                    $emailNotExistFilter = new EmailNotExistFilter($this->getServiceLocator()->get('Zend\Db\Adapter\Adapter'));
+                    $form->setInputFilter($emailNotExistFilter);
+                }
+
                 $form->setData($request->getPost());
+
+                $emailUserToModify = $userToModify->email;
                 if ($form->isValid()) {
                     $formData = $form->getData();
                     if (is_null($formData->admin)) {
                         unset($formData->admin);
+                    }
+                    if ($request->getPost('email') != $emailUserToModify) {
+                        $userTokenService = $this->getServiceLocator()->get('Diagnostic\Service\UserTokenService');
+                        $userTokenService->deleteByEmail($emailUserToModify);
                     }
                     $userService->update($id, (array) $formData);
 

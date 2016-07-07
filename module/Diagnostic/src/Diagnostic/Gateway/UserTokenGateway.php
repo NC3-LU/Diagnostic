@@ -34,4 +34,25 @@ class UserTokenGateway extends AbstractGateway
     public function delete($token) {
         $this->tableGateway->delete(array('token' => $token));
     }
+
+    /**
+     * Delete Old
+     */
+    public function deleteOld() {
+        $query = $this->tableGateway
+            ->getSql()
+            ->delete()
+            ->where(['limit_timestamp < ?' => (int) time()]);
+
+        $this->tableGateway->deleteWith($query);
+    }
+
+    /**
+     * Delete By Email
+     *
+     * @param $email
+     */
+    public function deleteByEmail($email) {
+        $this->tableGateway->delete(array('user_email' => $email));
+    }
 }
