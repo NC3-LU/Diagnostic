@@ -31,6 +31,7 @@ class CalculService implements ServiceLocatorAwareInterface
         $globalThreshold = [];
         $recommandations = [];
         foreach ($questions as $questionId =>$question) {
+
             $categoryId = $question->getCategoryId();
             $threshold = $question->getThreshold();
 
@@ -39,6 +40,10 @@ class CalculService implements ServiceLocatorAwareInterface
                 $recommandations[$question->getId()] = [
                     'recommandation' => $results[$questionId]['recommandation'],
                     'threshold' => $threshold,
+                    'domaine' => $question->getCategoryTranslationKey(),
+                    'gravity' => '/img/gravity_' . $results[$questionId]['gravity'] . '.png',
+                    'maturity' => $this->getImgMaturity($results[$questionId]['maturity']),
+                    'maturityTarget' => $this->getImgMaturity($results[$questionId]['maturityTarget']),
                 ];
 
                 $totalPoints += $points;
@@ -64,7 +69,7 @@ class CalculService implements ServiceLocatorAwareInterface
         asort($tmpArray);
         $recommandationsSort = [];
         foreach($tmpArray as $questionId => $value) {
-            $recommandationsSort[$questionId] = $recommandations[$questionId]['recommandation'];
+            $recommandationsSort[$questionId] = $recommandations[$questionId];
         }
 
         return [
@@ -72,5 +77,31 @@ class CalculService implements ServiceLocatorAwareInterface
             'totalCategory' => $totalCategory,
             'recommandations' => $recommandationsSort,
         ];
+    }
+
+    /**
+     * Get Img Maturity
+     *
+     * @param $maturity
+     * @return string
+     */
+    public function getImgMaturity($maturity) {
+
+        switch ($maturity) {
+            case 3:
+                $img = '/img/mat_ok.png';
+                break;
+            case 2:
+                $img = '/img/mat_moyen.png';
+                break;
+            case 1:
+                $img = '/img/mat_plan.png';
+                break;
+            case 0:
+                $img = '/img/mat_none.png';
+                break;
+        }
+
+        return $img;
     }
 }

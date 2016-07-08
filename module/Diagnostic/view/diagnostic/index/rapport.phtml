@@ -111,17 +111,63 @@ echo $this->inlineScript()->prependFile($this->basePath('js/Chart.js-master/Char
 
 <div class="row">
     <div class="col-lg-6 text-left">
-        <h1><?php if (count($recommandations)) echo strtoupper($this->translate($this->escapeHtml('__recommandations')));?></h1>
-        <table class="table">
-            <?php foreach ($recommandations as $recommandation) :
-                if (strlen($recommandation)) {
+        <h1><?php if (count($this->recommandations)) echo strtoupper($this->translate($this->escapeHtml('__recommandations')));?></h1>
+        <table class="table table-striped table-hover">
+            <tr class="info">
+                <th><?= $this->translate('__recommandation'); ?></th>
+                <th><?= $this->translate('__category'); ?></th>
+                <th style="text-align: center"><?= $this->translate('__gravity'); ?></th>
+                <th style="text-align: center" width="100"><?= $this->translate('__goal'); ?></th>
+            </tr>
+            <?php foreach ($this->recommandations as $recommandation) :
+                if (strlen($recommandation['recommandation'])) {
                     ?>
                     <tr>
-                        <td><?= $recommandation; ?></td>
+                        <td><?= $recommandation['recommandation']; ?></td>
+                        <td><?= $this->translate($recommandation['domaine']); ?></td>
+                        <td style="text-align: center;"><img src="<?= $recommandation['gravity']; ?>" /></td>
+                        <td style="text-align: center;"><img src="<?= $recommandation['maturity'] ?>" />&nbsp;<span class="glyphicon glyphicon-arrow-right"></span>&nbsp;<img src="<?= $recommandation['maturityTarget'] ?>" /></td>
                     </tr>
                     <?php
                 }
             endforeach; ?>
+        </table>
+        <br />
+        <table class="table table-borderless">
+            <tr>
+                <th><?= $this->translate('__maturity_levels') ?></th>
+                <th>&nbsp; &nbsp;</th>
+                <th><?= $this->translate('__gravity_levels') ?></th>
+            </tr>
+            <tr>
+                <td style="vertical-align: top;">
+                    <table class="table" style="background-color: lightgrey; border: 1px solid darkgrey;">
+                        <tr>
+                            <td><img src="/img/mat_none.png" /></td>
+                            <td><?= $this->translate('__maturity_none') ?></td>
+                            <td><img src="/img/mat_plan.png" /></td>
+                            <td><?= $this->translate('__maturity_plan') ?></td>
+                            <td><img src="/img/mat_moyen.png" /></td>
+                            <td><?= $this->translate('__maturity_medium') ?></td>
+                            <td><img src="/img/mat_ok.png" /></td>
+                            <td><?= $this->translate('__maturity_ok') ?></td>
+                        </tr>
+                    </table>
+                </td>
+                <td></td>
+                <td>
+                    <table class="table" style="background-color: lightgrey; border: 1px solid darkgrey;">
+                        <tr>
+                            <td><img src="/img/gravity_1.png" /></td>
+                            <td><?= $this->translate('__low') ?></td>
+                            <td><img src="/img/gravity_2.png" /></td>
+                            <td><?= $this->translate('__medium') ?></td>
+                            <td><img src="/img/gravity_3.png" /></td>
+                            <td><?= $this->translate('__strong') ?></td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
         </table>
     </div>
     <div class="col-lg-6 text-center">

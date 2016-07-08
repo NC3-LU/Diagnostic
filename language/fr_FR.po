@@ -735,3 +735,31 @@ msgstr "Fichier manquant"
 msgid "__error_file"
 msgstr "Fichier non valide"
 
+#:
+msgid "__goal"
+msgstr "Objectif"
+
+#:
+msgid "__maturity_levels"
+msgstr "Niveaux de maturité"
+
+#:
+msgid "__gravity_levels"
+msgstr "Niveaux de gravité"
+
+#:
+msgid "__maturity_none"
+msgstr "Non géré"
+
+#:
+msgid "__maturity_plan"
+msgstr "Prévu"
+
+#:
+msgid "__maturity_medium"
+msgstr "+/- géré"
+
+#:
+msgid "__maturity_ok"
+msgstr "Géré"
+

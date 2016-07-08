@@ -735,3 +735,31 @@ msgstr "File missing"
 msgid "__error_file"
 msgstr "File not valid"
 
+#:
+msgid "__goal"
+msgstr "Goal"
+
+#:
+msgid "__maturity_levels"
+msgstr "Maturity levels"
+
+#:
+msgid "__gravity_levels"
+msgstr "Gravity levels"
+
+#:
+msgid "__maturity_none"
+msgstr "Not manage"
+
+#:
+msgid "__maturity_plan"
+msgstr "Plan"
+
+#:
+msgid "__maturity_medium"
+msgstr "+/- manage"
+
+#:
+msgid "__maturity_ok"
+msgstr "Manage"
+
