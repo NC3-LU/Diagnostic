@@ -9,7 +9,8 @@
     "homepage": "http://framework.zend.com/",
     "require": {
         "php": ">=5.5",
-        "zendframework/zendframework": "2.5.1",
-        "phpoffice/phpword": "dev-master"
+        "zendframework/zendframework": "2.4.9",
+       	"zendframework/zend-escaper": "2.4.9",
+	 "phpoffice/phpword": "dev-develop"
     }
 }
