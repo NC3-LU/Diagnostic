@@ -638,32 +638,17 @@ class IndexController extends AbstractActionController
 
                 $container = new Container('diagnostic');
 
-                //radar
-                $radar_base64 = $postData['radar'];
-                $radar_base64 = str_replace('data:image/png;base64,', '', $radar_base64);
-                $radarname = 'data/img/radar-' . time() . '.png';
-                $handle = fopen($radarname, 'wb');
-                fwrite($handle, base64_decode($radar_base64));
-                fclose($handle);
-                $container->radar = $radarname;
+                $imgs = ['radar', 'pie', 'bar'];
 
-                //pie
-                $pie_base64 = $postData['pie'];
-                $pie_base64 = str_replace('data:image/png;base64,', '', $pie_base64);
-                $piename = 'data/img/pie-' . time() . '.png';
-                $handle = fopen($piename, 'wb');
-                fwrite($handle, base64_decode($pie_base64));
-                fclose($handle);
-                $container->pie = $piename;
-
-                //bar
-                $bar_base64 = $postData['bar'];
-                $bar_base64 = str_replace('data:image/png;base64,', '', $bar_base64);
-                $barname = 'data/img/bar-' . time() . '.png';
-                $handle = fopen($barname, 'wb');
-                fwrite($handle, base64_decode($bar_base64));
-                fclose($handle);
-                $container->bar = $barname;
+                foreach($imgs as $img) {
+                    $imgbase64 = $postData[$img];
+                    $imgbase64 = str_replace('data:image/png;base64,', '', $imgbase64);
+                    $name =  'data/img/' . $img . '-' . time() . '.png';
+                    $handle = fopen($name, 'wb');
+                    fwrite($handle, base64_decode($imgbase64));
+                    fclose($handle);
+                    $container->$img = $name;
+                }
 
             } else {
                 $form->setData($postData);
