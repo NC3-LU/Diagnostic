@@ -30,24 +30,27 @@ class CalculService implements ServiceLocatorAwareInterface
         $globalPoints = [];
         $globalThreshold = [];
         $recommandations = [];
-        foreach ($results as $key => $result) {
-            $categoryId = $questions[$key]->getCategoryId();
-            $points = $result['maturity'] * $questions[$key]->getThreshold();
-            $threshold = $questions[$key]->getThreshold();
+        foreach ($questions as $questionId =>$question) {
+            $categoryId = $question->getCategoryId();
+            $threshold = $question->getThreshold();
 
-            $recommandations[$questions[$key]->getId()] = [
-                'recommandation' => $result['recommandation'],
-                'threshold' => $questions[$key]->getThreshold(),
-            ];
+            if (array_key_exists($questionId, $results)) {
+                $points = $results[$questionId]['maturity'] * $threshold;
+                $recommandations[$question->getId()] = [
+                    'recommandation' => $results[$questionId]['recommandation'],
+                    'threshold' => $threshold,
+                ];
 
-            $totalPoints += $points;
+                $totalPoints += $points;
+                $globalPoints[$categoryId] = array_key_exists($categoryId, $globalPoints) ? $globalPoints[$categoryId] + $points : $points;
+            }
+
             $totalThreshold += $threshold;
-
-            $globalPoints[$categoryId] = array_key_exists($categoryId, $globalPoints) ? $globalPoints[$categoryId] + $points : $points;
             $globalThreshold[$categoryId] = array_key_exists($categoryId, $globalThreshold) ? $globalThreshold[$categoryId] + $threshold : $threshold;
         }
 
         $total = ($totalThreshold) ? round($totalPoints / $totalThreshold * 100 / 3) : 0;
+
         $totalCategory = [];
         foreach($globalPoints as $categoryId => $points) {
             $totalCategory[$categoryId] = round($points / $globalThreshold[$categoryId] * 100 / 3);
