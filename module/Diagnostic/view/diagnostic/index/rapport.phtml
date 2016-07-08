@@ -9,14 +9,14 @@ foreach ($totalCategory as $key => $value) {
     $jsCategories[] = $this->translate($key);
 }
 
-switch ($total) {
-    case $total < 25:
+switch (true) {
+    case ($total < 25):
         $totalColor = 'danger';
         break;
-    case $total < 50:
+    case ($total < 50):
         $totalColor = 'warning';
         break;
-    case $total < 75:
+    case ($total < 75):
         $totalColor = 'info';
         break;
     default:
@@ -86,7 +86,7 @@ echo $this->inlineScript()->prependFile($this->basePath('js/Chart.js-master/Char
             <table style="width: 100%">
                 <tr>
                     <?php
-                    if ($total) {
+                    if ($this->download) {
                         ?>
                         <td align="center">
                             <button type="submit" class="btn btn-warning" style="padding: 7px 70px 7px 70px;">
@@ -141,7 +141,7 @@ echo $this->inlineScript()->prependFile($this->basePath('js/Chart.js-master/Char
             </tr>
             <tr>
                 <td style="vertical-align: top;">
-                    <table class="table" style="background-color: lightgrey; border: 1px solid darkgrey;">
+                    <table class="table" style="background-color: lightgrey; border: 1px solid darkgrey; height: 45px;">
                         <tr>
                             <td><img src="/img/mat_none.png" /></td>
                             <td><?= $this->translate('__maturity_none') ?></td>
@@ -156,7 +156,7 @@ echo $this->inlineScript()->prependFile($this->basePath('js/Chart.js-master/Char
                 </td>
                 <td></td>
                 <td>
-                    <table class="table" style="background-color: lightgrey; border: 1px solid darkgrey;">
+                    <table class="table" style="background-color: lightgrey; border: 1px solid darkgrey; height: 45px;">
                         <tr>
                             <td><img src="/img/gravity_1.png" /></td>
                             <td><?= $this->translate('__low') ?></td>
@@ -178,6 +178,8 @@ echo $this->inlineScript()->prependFile($this->basePath('js/Chart.js-master/Char
                 <div class="row">
                     <div class="col-lg-2 text-left"></div>
                     <div class="col-lg-8 text-left">
+                        <center><?= $this->translate('__doughnut_legend') ?></center>
+                        <br />
                         <canvas id="canvas2" width="100" height="100"></canvas>
                         <div id="canvas2-legend" class="chart-legend" ></div>
                     </div>

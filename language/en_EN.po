@@ -763,3 +763,7 @@ msgstr "+/- manage"
 msgid "__maturity_ok"
 msgstr "Manage"
 
+#:
+msgid "__doughnut_legend"
+msgstr "Pondération par catégorie"
+

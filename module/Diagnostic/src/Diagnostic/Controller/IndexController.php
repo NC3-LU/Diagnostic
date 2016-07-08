@@ -554,6 +554,10 @@ class IndexController extends AbstractActionController
         //form
         $form = $this->getServiceLocator()->get('formElementManager')->get('LinkDownloadForm');
 
+        //retrieve results and questions
+        $container = new Container('diagnostic');
+        $results = ($container->offsetExists('result')) ? $container->result : [];
+
         //calcul
         $calculService = $this->getServiceLocator()->get('Diagnostic\Service\CalculService');
         $calculResults = $calculService->calcul();
@@ -612,6 +616,7 @@ class IndexController extends AbstractActionController
             'totalCategory' => $categories,
             'recommandations' => $calculResults['recommandations'],
             'categoriesRepartition' => $categoriesRepartition,
+            'download' => (count($results)) ? true : false,
         ));
     }
 
