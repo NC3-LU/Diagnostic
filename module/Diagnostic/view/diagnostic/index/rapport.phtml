@@ -13,8 +13,8 @@ $rgbaColorDangerBorder = 'rgba(228, 185, 185, 1)';
 $rgbaColorDanger = 'rgba(242, 222, 222, 1)';
 $rgbaColorWarningBorder = 'rgba(247, 236, 181, 1)';
 $rgbaColorWarning = 'rgba(252, 248, 227, 1)';
-$rgbaColorInfoBorder = 'rgba(175, 217, 238, 1)';
-$rgbaColorInfo = 'rgba(217, 237, 247, 1)';
+$rgbaColorInfoBorder = 'rgba(250, 226, 72, 1)';
+$rgbaColorInfo = 'rgba(245, 241, 130, 1)';
 $rgbaColorSuccessBorder = 'rgba(193, 226, 179, 1)';
 $rgbaColorSuccess = 'rgba(223, 240, 216, 1)';
 
@@ -88,8 +88,42 @@ echo $this->inlineScript()->prependFile($this->basePath('js/Chart.js-master/Char
 </style>
 
 <div class="row">
-    <div class="col-lg-12 text-center bg-<?= $totalColor ?>">
+    <div class="col-lg-3 text-left">
+        <?php
+        if ($this->download) {
+            $form->setAttribute('action', $this->url('diagnostic', array('action' => 'download')));
+            $form->prepare();
+            echo $this->form()->openTag($form);
+            echo $this->formHidden($form->get('radar'));
+            echo $this->formHidden($form->get('pie'));
+            echo $this->formHidden($form->get('bar'));
+            ?>
+            <button type="submit" class="btn btn-warning" style="padding: 7px 70px 7px 70px; margin-top: 15px;">
+                <span class="glyphicon glyphicon-download-alt"></span>&nbsp;<?= $this->translate('__download_delivery') ?>
+            </button>
+            <?php
+            echo $this->form()->closeTag();
+        }
+        ?>
+    </div>
+    <div class="col-lg-5 text-center bg-<?= $totalColor ?>">
         <h2><?= ucfirst($this->translate('__results')) ?> : <?php echo $this->escapeHtml($total); ?>/100</h2>
+    </div>
+    <div class="col-lg-4 text-left">
+        <table style="width: 100%; margin-top: 15px;">
+            <tr>
+                <td align="center">
+                    <a href="<?= $this->url('diagnostic',array('action'=>'diagnostic'));?>" class="btn btn-info" style="padding: 7px 70px 7px 70px;">
+                        <span class="glyphicon glyphicon-backward"></span>&nbsp;<?= $this->translate('__back') ?>
+                    </a>
+                </td>
+                <td align="center">
+                    <a href="<?= $this->url('diagnostic',array('action'=>'index'));?>" class="btn btn-default" style="padding: 7px 70px 7px 70px;">
+                        <span class="glyphicon glyphicon-home"></span>&nbsp;<?= $this->translate('__home') ?>
+                    </a>
+                </td>
+            </tr>
+        </table>
     </div>
 </div>
 
@@ -125,45 +159,7 @@ echo $this->inlineScript()->prependFile($this->basePath('js/Chart.js-master/Char
                 </tr>
             <?php endforeach; ?>
         </table>
-        <center>
-            <?php
-            $form->setAttribute('action', $this->url('diagnostic', array('action' => 'download')));
-            $form->prepare();
-            echo $this->form()->openTag($form);
-            echo $this->formHidden($form->get('radar'));
-            echo $this->formHidden($form->get('pie'));
-            echo $this->formHidden($form->get('bar'));
-            ?>
-            <br><br>
-            <table style="width: 100%">
-                <tr>
-                    <?php
-                    if ($this->download) {
-                        ?>
-                        <td align="center">
-                            <button type="submit" class="btn btn-warning" style="padding: 7px 70px 7px 70px;">
-                                <span class="glyphicon glyphicon-download-alt"></span>&nbsp;<?= $this->translate('__download_delivery') ?>
-                            </button>
-                        </td>
-                        <?php
-                    }
-                    ?>
-                    <td align="center">
-                        <a href="<?= $this->url('diagnostic',array('action'=>'diagnostic'));?>" class="btn btn-info" style="padding: 7px 70px 7px 70px;">
-                            <span class="glyphicon glyphicon-backward"></span>&nbsp;<?= $this->translate('__back') ?>
-                        </a>
-                    </td>
-                    <td align="center">
-                        <a href="<?= $this->url('diagnostic',array('action'=>'index'));?>" class="btn btn-default" style="padding: 7px 70px 7px 70px;">
-                            <span class="glyphicon glyphicon-home"></span>&nbsp;<?= $this->translate('__home') ?>
-                        </a>
-                    </td>
-                </tr>
-            </table>
-            <?php
-            echo $this->form()->closeTag();
-            ?>
-        </center>
+
     </div>
 </div>
 
@@ -174,7 +170,7 @@ echo $this->inlineScript()->prependFile($this->basePath('js/Chart.js-master/Char
             echo '<h1>' . ucfirst($this->translate($this->escapeHtml('__recommandations'))) . '</h1>';
             ?>
             <table class="table table-striped table-hover">
-                <tr class="info">
+                <tr class="bg-<?= $totalColor ?>">
                     <th><?= $this->translate('__recommandation'); ?></th>
                     <th><?= $this->translate('__category'); ?></th>
                     <th style="text-align: center"><?= $this->translate('__gravity'); ?></th>
@@ -186,8 +182,8 @@ echo $this->inlineScript()->prependFile($this->basePath('js/Chart.js-master/Char
                         <tr>
                             <td style="text-align: left;"><?= $recommandation['recommandation']; ?></td>
                             <td style="text-align: left;"><?= $this->translate($recommandation['domaine']); ?></td>
-                            <td style="text-align: center;"><img src="<?= $recommandation['gravity']; ?>" /></td>
-                            <td style="text-align: center;"><img src="<?= $recommandation['maturity'] ?>" />&nbsp;<span class="glyphicon glyphicon-arrow-right"></span>&nbsp;<img src="<?= $recommandation['maturityTarget'] ?>" /></td>
+                            <td style="text-align: center;"><img src="<?= $recommandation['gravity-img']; ?>" /></td>
+                            <td style="text-align: center;"><img src="<?= $recommandation['maturity-img'] ?>" />&nbsp;<span class="glyphicon glyphicon-arrow-right"></span>&nbsp;<img src="<?= $recommandation['maturityTarget-img'] ?>" /></td>
                         </tr>
                         <?php
                     }
@@ -321,16 +317,16 @@ echo $this->inlineScript()->prependFile($this->basePath('js/Chart.js-master/Char
                 label: "<?= $this->translate('__actual') ?>",
                 fillColor: "<?= $chartColor ?>",
                 strokeColor: "<?= $chartColorBorder ?>",
-                highlightFill: "rgba(220,220,220,0.75)",
-                highlightStroke: "rgba(220,220,220,1)",
+                highlightFill: "<?= $chartColor ?>",
+                highlightStroke: "<?= $chartColorBorder ?>",
                 data: [<?= $this->total ?>]
             },
             {
                 label: "<?= $this->translate('__target') ?>",
                 fillColor: "<?= $chartTargetColor ?>",
                 strokeColor: "<?= $chartTargetColorBorder ?>",
-                highlightFill: "rgba(151,187,205,0.75)",
-                highlightStroke: "rgba(151,187,205,1)",
+                highlightFill: "<?= $chartTargetColor ?>",
+                highlightStroke: "<?= $chartTargetColorBorder ?>",
                 data: [<?= $this->totalTarget ?>]
             }
         ]

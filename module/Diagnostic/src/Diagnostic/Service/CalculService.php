@@ -44,15 +44,18 @@ class CalculService implements ServiceLocatorAwareInterface
                         'recommandation' => $results[$questionId]['recommandation'],
                         'threshold' => $threshold,
                         'domaine' => $question->getCategoryTranslationKey(),
-                        'gravity' => '/img/gravity_' . $results[$questionId]['gravity'] . '.png',
-                        'maturity' => $this->getImgMaturity($results[$questionId]['maturity']),
-                        'maturityTarget' => $this->getImgMaturity($results[$questionId]['maturityTarget']),
+                        'gravity-img' => '/img/gravity_' . $results[$questionId]['gravity'] . '.png',
+                        'gravity' => $results[$questionId]['gravity'],
+                        'maturity' => $results[$questionId]['maturity'],
+                        'maturity-img' => $this->getImgMaturity($results[$questionId]['maturity']),
+                        'maturityTarget' => $results[$questionId]['maturityTarget'],
+                        'maturityTarget-img' => $this->getImgMaturity($results[$questionId]['maturityTarget']),
                     ];
 
                     $totalPoints += $points;
                     $totalPointsTarget += $pointsTarget;
                     $globalPoints[$categoryId] = array_key_exists($categoryId, $globalPoints) ? $globalPoints[$categoryId] + $points : $points;
-                    
+
                     $totalThreshold += $threshold;
                     $globalThreshold[$categoryId] = array_key_exists($categoryId, $globalThreshold) ? $globalThreshold[$categoryId] + $threshold : $threshold;
                 }
@@ -67,23 +70,38 @@ class CalculService implements ServiceLocatorAwareInterface
             $totalCategory[$categoryId] = round($points / $globalThreshold[$categoryId] * 100 / 3);
         }
 
-        //order recommandation by threshold
-        $tmpArray = [];
-        foreach($recommandations as $questionId => $recommandation) {
-            $tmpArray[$questionId] = $recommandation['threshold'];
-        }
-        asort($tmpArray);
-        $recommandationsSort = [];
-        foreach($tmpArray as $questionId => $value) {
-            $recommandationsSort[$questionId] = $recommandations[$questionId];
-        }
+        $recommandations = $this->sortArray($recommandations, 'maturityTarget');
+        $recommandations = $this->sortArray($recommandations, 'maturity');
+        $recommandations = $this->sortArray($recommandations, 'gravity');
 
         return [
             'total' => $total,
             'totalTarget' => $totalTarget,
             'totalCategory' => $totalCategory,
-            'recommandations' => $recommandationsSort,
+            'recommandations' => $recommandations,
         ];
+    }
+
+    /**
+     * Sort Array
+     *
+     * @param $recommandations
+     * @param $field
+     * @return array
+     */
+    public function sortArray($recommandations, $field) {
+        $tmpArray = [];
+        foreach($recommandations as $questionId => $recommandation) {
+            $tmpArray[$questionId] = $recommandation[$field];
+        }
+        arsort($tmpArray);
+
+        $recommandationsSort = [];
+        foreach($tmpArray as $questionId => $value) {
+            $recommandationsSort[$questionId] = $recommandations[$questionId];
+        }
+
+        return $recommandationsSort;
     }
 
     /**
