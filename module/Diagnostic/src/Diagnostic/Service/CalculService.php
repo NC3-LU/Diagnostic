@@ -50,6 +50,7 @@ class CalculService implements ServiceLocatorAwareInterface
                         'maturity-img' => $this->getImgMaturity($results[$questionId]['maturity']),
                         'maturityTarget' => $results[$questionId]['maturityTarget'],
                         'maturityTarget-img' => $this->getImgMaturity($results[$questionId]['maturityTarget']),
+                        'notes' => $results[$questionId]['notes']
                     ];
 
                     $totalPoints += $points;

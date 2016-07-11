@@ -668,14 +668,13 @@ class IndexController extends AbstractActionController
                     $questionService = $this->getServiceLocator()->get('Diagnostic\Service\QuestionService');
                     $questions = $questionService->getQuestions();
 
-                    //retrieve result
-                    $container = new Container('diagnostic');
-                    $results = $container->result;
-
                     $translator = $this->getServiceLocator()->get('translator');
 
-                    $word = new TemplateProcessorService('data/resources/modele_v0.21.docx');
-                    $word->generateWord($data, $questions, $results, $translator);
+                    $calculService = $this->getServiceLocator()->get('Diagnostic\Service\CalculService');
+                    $calculResults = $calculService->calcul();
+
+                    $word = new TemplateProcessorService('data/resources/modele_v0.22tpe.docx');
+                    $word->generateWord($data, $questions, $calculResults['recommandations'], $translator);
                 }
             }
         }
@@ -687,6 +686,10 @@ class IndexController extends AbstractActionController
 
     }
 
+    /**
+     * New diagnostic
+     * @return \Zend\Http\Response
+     */
     public function newDiagnosticAction() {
 
         $container = new Container('user');
