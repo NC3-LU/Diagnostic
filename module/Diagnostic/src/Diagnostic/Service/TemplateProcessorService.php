@@ -115,15 +115,39 @@ class TemplateProcessorService extends TemplateProcessor implements ServiceLocat
 
         $i = 1;
         foreach ($results as $result) {
+            $maturity = '__maturity_none';
+            switch ($result['maturity']) {
+                case 1:
+                    $maturity = $translator->translate('__maturity_ok');
+                    break;
+                case 2:
+                    $maturity = $translator->translate('__maturity_medium');
+                    break;
+                case 3:
+                    $maturity = $translator->translate('__maturity_plan');
+                    break;
+            }
             $name = 'RECOMM_CURR_MAT#' . $i;
-            $this->setValue($name, $result['maturity']);
+            $this->setValue($name, $maturity);
             $i++;
         }
 
         $i = 1;
-        foreach ($results as $result) {
+        foreach ($results as $result) {$maturity = '__maturity_none';
+            $maturityTarget = '__maturity_none';
+            switch ($result['maturityTarget']) {
+                case 1:
+                    $maturityTarget = $translator->translate('__maturity_ok');
+                    break;
+                case 2:
+                    $maturityTarget = $translator->translate('__maturity_medium');
+                    break;
+                case 3:
+                    $maturityTarget = $translator->translate('__maturity_plan');
+                    break;
+            }
             $name = 'RECOMM_TARG_MAT#' . $i;
-            $this->setValue($name, $result['maturityTarget']);
+            $this->setValue($name, $maturityTarget);
             $i++;
         }
 
