@@ -686,6 +686,30 @@ class IndexController extends AbstractActionController
 
     }
 
+    public function newDiagnosticAction() {
+
+        $container = new Container('user');
+        $email = $container->email;
+        $admin = $container->admin;
+
+        $container = new Container('diagnostic');
+        $language = $container->language;
+
+
+        $container->getManager()->getStorage()->clear();
+
+        $container = new Container('user');
+        $container->email = $email;
+        $container->admin = $admin;
+
+        $container = new Container('diagnostic');
+        $container->language = $language;
+
+        //redirection
+        return $this->redirect()->toRoute('diagnostic', ['controller' => 'index', 'action' => 'diagnostic']);
+
+    }
+
     /**
      * Language
      */

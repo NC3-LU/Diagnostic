@@ -765,5 +765,21 @@ msgstr "Manage"
 
 #:
 msgid "__doughnut_legend"
-msgstr "Pondération par catégorie"
+msgstr ""
+
+#:
+msgid "__riks_cartography"
+msgstr ""
+
+#:
+msgid "__maturity_evolution"
+msgstr ""
+
+#:
+msgid "__home"
+msgstr "Home"
+
+#:
+msgid "__new_diagnostic"
+msgstr "New diagnostic"
 

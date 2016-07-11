@@ -46,16 +46,17 @@ echo $this->inlineScript()->prependFile($this->basePath('js/Chart.js-master/Char
 
 <div class="row">
     <div class="col-lg-6 text-center" style="background-color: #EEEEEE;">
+        <h1><?php echo ucfirst($this->translate($this->escapeHtml('__riks_cartography')));?></h1>
         <div class="row">
             <div class="col-lg-2 text-center"></div>
             <div class="col-lg-8 text-center">
-                <canvas id="canvas" width="400" height="400"></canvas>
+                <canvas id="canvas" width="500" height="400"></canvas>
             </div>
             <div class="col-lg-2 text-center"></div>
          </div>
     </div>
-    <div class="col-lg-6 text-left">
-        <h1><?php echo mb_strtoupper($this->translate($this->escapeHtml('__categories')), 'UTF-8');?></h1>
+    <div class="col-lg-6 text-center">
+        <h1><?php echo ucfirst($this->translate($this->escapeHtml('__categories')));?></h1>
         <table class="table">
             <?php
             foreach ($totalCategory as $key => $value) :
@@ -90,15 +91,21 @@ echo $this->inlineScript()->prependFile($this->basePath('js/Chart.js-master/Char
                         ?>
                         <td align="center">
                             <button type="submit" class="btn btn-warning" style="padding: 7px 70px 7px 70px;">
-                                <span
-                                    class="glyphicon glyphicon-download-alt"></span>&nbsp;<?= $this->translate('__download_delivery') ?>
+                                <span class="glyphicon glyphicon-download-alt"></span>&nbsp;<?= $this->translate('__download_delivery') ?>
                             </button>
                         </td>
                         <?php
                     }
                     ?>
                     <td align="center">
-                        <a href="<?= $this->url('diagnostic',array('action'=>'diagnostic'));?>" class="btn btn-info" style="padding: 7px 70px 7px 70px;"><span class="glyphicon glyphicon-backward"></span>&nbsp;<?= $this->translate('__back') ?></a>
+                        <a href="<?= $this->url('diagnostic',array('action'=>'diagnostic'));?>" class="btn btn-info" style="padding: 7px 70px 7px 70px;">
+                            <span class="glyphicon glyphicon-backward"></span>&nbsp;<?= $this->translate('__back') ?>
+                        </a>
+                    </td>
+                    <td align="center">
+                        <a href="<?= $this->url('diagnostic',array('action'=>'index'));?>" class="btn btn-default" style="padding: 7px 70px 7px 70px;">
+                            <span class="glyphicon glyphicon-home"></span>&nbsp;<?= $this->translate('__home') ?>
+                        </a>
                     </td>
                 </tr>
             </table>
@@ -110,8 +117,8 @@ echo $this->inlineScript()->prependFile($this->basePath('js/Chart.js-master/Char
 </div>
 
 <div class="row">
-    <div class="col-lg-6 text-left">
-        <h1><?php if (count($this->recommandations)) echo strtoupper($this->translate($this->escapeHtml('__recommandations')));?></h1>
+    <div class="col-lg-6 text-center">
+        <h1><?php if (count($this->recommandations)) echo ucfirst($this->translate($this->escapeHtml('__recommandations')));?></h1>
         <table class="table table-striped table-hover">
             <tr class="info">
                 <th><?= $this->translate('__recommandation'); ?></th>
@@ -123,8 +130,8 @@ echo $this->inlineScript()->prependFile($this->basePath('js/Chart.js-master/Char
                 if (strlen($recommandation['recommandation'])) {
                     ?>
                     <tr>
-                        <td><?= $recommandation['recommandation']; ?></td>
-                        <td><?= $this->translate($recommandation['domaine']); ?></td>
+                        <td style="text-align: left;"><?= $recommandation['recommandation']; ?></td>
+                        <td style="text-align: left;"><?= $this->translate($recommandation['domaine']); ?></td>
                         <td style="text-align: center;"><img src="<?= $recommandation['gravity']; ?>" /></td>
                         <td style="text-align: center;"><img src="<?= $recommandation['maturity'] ?>" />&nbsp;<span class="glyphicon glyphicon-arrow-right"></span>&nbsp;<img src="<?= $recommandation['maturityTarget'] ?>" /></td>
                     </tr>
@@ -171,23 +178,31 @@ echo $this->inlineScript()->prependFile($this->basePath('js/Chart.js-master/Char
         </table>
     </div>
     <div class="col-lg-6 text-center">
+
+        <h1><?php echo ucfirst($this->translate($this->escapeHtml('__doughnut_legend')));?></h1>
         <div class="row">
             <div class="col-lg-2 text-left"></div>
             <div class="col-lg-8 text-left">
-                <br /><br /><br /><br />
+                <br />
+                <canvas id="canvas3" width="500" height="300"></canvas>
+                <div id="canvas3-legend" class="chart-legend"></div>
+            </div>
+            <div class="col-lg-2 text-left"></div>
+        </div>
+        <br />
+        <h1><?php echo ucfirst($this->translate($this->escapeHtml('__maturity_evolution')));?></h1>
+        <div class="row">
+            <div class="col-lg-2 text-left"></div>
+            <div class="col-lg-8 text-left">
+                <br /><br /><br />
                 <div class="row">
                     <div class="col-lg-2 text-left"></div>
                     <div class="col-lg-8 text-left">
-                        <center><?= $this->translate('__doughnut_legend') ?></center>
-                        <br />
                         <canvas id="canvas2" width="100" height="100"></canvas>
                         <div id="canvas2-legend" class="chart-legend" ></div>
                     </div>
                     <div class="col-lg-2 text-left"></div>
                 </div>
-                <br /><br /><br /><br />
-                <canvas id="canvas3" width="500" height="300"></canvas>
-                <div id="canvas3-legend" class="chart-legend"></div>
             </div>
             <div class="col-lg-2 text-left"></div>
         </div>
@@ -219,8 +234,7 @@ echo $this->inlineScript()->prependFile($this->basePath('js/Chart.js-master/Char
     };
 
     var myRadarChart = new Chart(document.getElementById("canvas").getContext("2d")).Radar(radarChartData, {
-        responsive: true,
-        legendTemplate : 'kjlkjllkj',
+        responsive: false,
         onAnimationComplete : function() {
             document.querySelector('input[name="radar"]').value = myRadarChart.toBase64Image();
         }

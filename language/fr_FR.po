@@ -197,7 +197,7 @@ msgstr "Des backups sont-ils effectués régulièrement ? Sont-ils délocalisés
 
 #: 
 msgid "__question39"
-msgstr "Comment gérez-vous la classification, le stockage et la destruction des données physiques ?"
+msgstr "Comment gérez-vous le stockage et la destruction des données physiques ?"
 
 #: 
 msgid "__question40"
@@ -766,4 +766,20 @@ msgstr "Géré"
 #:
 msgid "__doughnut_legend"
 msgstr "Pondération par catégorie"
+
+#:
+msgid "__riks_cartography"
+msgstr "Cartographie des risques"
+
+#:
+msgid "__maturity_evolution"
+msgstr "Evolution de la maturité"
+
+#:
+msgid "__home"
+msgstr "Accueil"
+
+#:
+msgid "__new_diagnostic"
+msgstr "Nouveau diagnostic"
 

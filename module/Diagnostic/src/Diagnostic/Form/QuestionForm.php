@@ -24,19 +24,19 @@ class QuestionForm extends Form
                 'value_options' => [
                     3 => [
                         'value' => '3',
-                        'label_attributes' => array('class' => 'maticon matok', 'title' => 'Géré'),
+                        'label_attributes' => array('class' => 'maticon matok', 'title' => '__maturity_ok'),
                     ],
                     2 => [
                         'value' => '2',
-                        'label_attributes' => array('class' => 'maticon matmoyen', 'title' => '+/_ géré'),
+                        'label_attributes' => array('class' => 'maticon matmoyen', 'title' => '__maturity_medium'),
                     ],
                     1 => [
                         'value' => '1',
-                        'label_attributes' => array('class' => 'maticon matplan', 'title' => 'Prévu'),
+                        'label_attributes' => array('class' => 'maticon matplan', 'title' => '__maturity_plan'),
                     ],
                     0 => [
                         'value' => '0',
-                        'label_attributes' => array('class' => 'maticon matnone', 'title' => 'Non géré'),
+                        'label_attributes' => array('class' => 'maticon matnone', 'title' => '__maturity_none'),
                     ]
                 ],
                 'label_attributes' => array(
@@ -56,11 +56,11 @@ class QuestionForm extends Form
                 'value_options' => [
                     3 => [
                         'value' => '3',
-                        'label_attributes' => array('class' => 'maticon matok', 'title' => 'Géré'),
+                        'label_attributes' => array('class' => 'maticon matok', 'title' => '__maturity_ok'),
                     ],
                     2 => [
                         'value' => '2',
-                        'label_attributes' => array('class' => 'maticon matmoyen', 'title' => '+/_ géré'),
+                        'label_attributes' => array('class' => 'maticon matmoyen', 'title' => '__maturity_medium'),
                     ],
                 ],
                 'label_attributes' => array(
@@ -91,15 +91,15 @@ class QuestionForm extends Form
                 'value_options' => [
                     1 => [
                         'value' => '1',
-                        'label_attributes' => array('class' => 'maticon gravity1', 'title' => 'Faible'),
+                        'label_attributes' => array('class' => 'maticon gravity1', 'title' => '__low'),
                     ],
                     2 => [
                         'value' => '2',
-                        'label_attributes' => array('class' => 'maticon gravity2', 'title' => 'Moyen'),
+                        'label_attributes' => array('class' => 'maticon gravity2', 'title' => '__medium'),
                     ],
                     3 => [
                         'value' => '3',
-                        'label_attributes' => array('class' => 'maticon gravity3', 'title' => 'Grave'),
+                        'label_attributes' => array('class' => 'maticon gravity3', 'title' => '__strong'),
                     ],
                 ],
                 'label_attributes' => array(
