@@ -783,3 +783,11 @@ msgstr "Home"
 msgid "__new_diagnostic"
 msgstr "New diagnostic"
 
+#:
+msgid "__actual"
+msgstr ""
+
+#:
+msgid "__target"
+msgstr ""
+

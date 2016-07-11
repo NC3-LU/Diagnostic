@@ -613,6 +613,7 @@ class IndexController extends AbstractActionController
         return new ViewModel(array(
             'form' => $form,
             'total' => $calculResults['total'],
+            'totalTarget' => $calculResults['totalTarget'],
             'totalCategory' => $categories,
             'recommandations' => $calculResults['recommandations'],
             'categoriesRepartition' => $categoriesRepartition,

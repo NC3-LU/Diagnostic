@@ -783,3 +783,11 @@ msgstr "Accueil"
 msgid "__new_diagnostic"
 msgstr "Nouveau diagnostic"
 
+#:
+msgid "__actual"
+msgstr "Actuelle"
+
+#:
+msgid "__target"
+msgstr "Visée"
+

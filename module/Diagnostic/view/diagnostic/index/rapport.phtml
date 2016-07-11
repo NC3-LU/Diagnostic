@@ -9,18 +9,69 @@ foreach ($totalCategory as $key => $value) {
     $jsCategories[] = $this->translate($key);
 }
 
+$rgbaColorDangerBorder = 'rgba(228, 185, 185, 1)';
+$rgbaColorDanger = 'rgba(242, 222, 222, 1)';
+$rgbaColorWarningBorder = 'rgba(247, 236, 181, 1)';
+$rgbaColorWarning = 'rgba(252, 248, 227, 1)';
+$rgbaColorInfoBorder = 'rgba(175, 217, 238, 1)';
+$rgbaColorInfo = 'rgba(217, 237, 247, 1)';
+$rgbaColorSuccessBorder = 'rgba(193, 226, 179, 1)';
+$rgbaColorSuccess = 'rgba(223, 240, 216, 1)';
+
 switch (true) {
-    case ($total < 25):
+    case ($this->total < 25):
         $totalColor = 'danger';
+        $chartColor = $rgbaColorDanger;
+        $chartColorBorder = $rgbaColorDangerBorder;
         break;
-    case ($total < 50):
+    case ($this->total < 50):
         $totalColor = 'warning';
+        $chartColor = $rgbaColorWarning;
+        $chartColorBorder = $rgbaColorWarningBorder;
         break;
-    case ($total < 75):
+    case ($this->total < 75):
         $totalColor = 'info';
+        $chartColor = $rgbaColorInfo;
+        $chartColorBorder = $rgbaColorInfoBorder;
         break;
     default:
         $totalColor = 'success';
+        $chartColor = $rgbaColorSuccess;
+        $chartColorBorder = $rgbaColorSuccessBorder;
+        break;
+}
+
+switch (true) {
+    case ($this->totalTarget < 25):
+        $chartTargetColor = $rgbaColorDanger;
+        $chartTargetColorBorder = $rgbaColorDangerBorder;
+        break;
+    case ($this->totalTarget < 50):
+        if (($this->total >=25 ) && ($this->total < 50)) {
+            $chartTargetColor = $rgbaColorDanger;
+            $chartTargetColorBorder = $rgbaColorDangerBorder;
+        } else {
+            $chartTargetColor = $rgbaColorWarning;
+            $chartTargetColorBorder = $rgbaColorWarningBorder;
+        }
+        break;
+    case ($this->totalTarget < 75):
+        if (($this->total >=50 ) && ($this->total < 75)) {
+            $chartTargetColor = $rgbaColorWarning;
+            $chartTargetColorBorder = $rgbaColorWarningBorder;
+        } else {
+            $chartTargetColor = $rgbaColorInfo;
+            $chartTargetColorBorder = $rgbaColorInfoBorder;
+        }
+        break;
+    default:
+        if (($this->total >=75 )) {
+            $chartTargetColor = $rgbaColorInfo;
+            $chartTargetColorBorder = $rgbaColorInfoBorder;
+        } else {
+            $chartTargetColor = $rgbaColorSuccess;
+            $chartTargetColorBorder = $rgbaColorSuccessBorder;
+        }
         break;
 }
 
@@ -186,7 +237,7 @@ echo $this->inlineScript()->prependFile($this->basePath('js/Chart.js-master/Char
     </div>
     <div class="col-lg-6 text-center">
 
-        <h1><?php echo ucfirst($this->translate($this->escapeHtml('__doughnut_legend')));?></h1>
+        <h1><?php echo ucfirst($this->translate($this->escapeHtml('__maturity_evolution')));?></h1>
         <div class="row">
             <div class="col-lg-2 text-left"></div>
             <div class="col-lg-8 text-left">
@@ -197,7 +248,7 @@ echo $this->inlineScript()->prependFile($this->basePath('js/Chart.js-master/Char
             <div class="col-lg-2 text-left"></div>
         </div>
         <br />
-        <h1><?php echo ucfirst($this->translate($this->escapeHtml('__maturity_evolution')));?></h1>
+        <h1><?php echo ucfirst($this->translate($this->escapeHtml('__doughnut_legend')));?></h1>
         <div class="row">
             <div class="col-lg-2 text-left"></div>
             <div class="col-lg-8 text-left">
@@ -267,20 +318,20 @@ echo $this->inlineScript()->prependFile($this->basePath('js/Chart.js-master/Char
         labels: [''],
         datasets: [
             {
-                label: "Nominal",
-                fillColor: "rgba(220,220,220,0.5)",
-                strokeColor: "rgba(220,220,220,0.8)",
+                label: "<?= $this->translate('__actual') ?>",
+                fillColor: "<?= $chartColor ?>",
+                strokeColor: "<?= $chartColorBorder ?>",
                 highlightFill: "rgba(220,220,220,0.75)",
                 highlightStroke: "rgba(220,220,220,1)",
-                data: [100]
+                data: [<?= $this->total ?>]
             },
             {
-                label: "Actuel",
-                fillColor: "rgba(151,187,205,0.5)",
-                strokeColor: "rgba(151,187,205,0.8)",
+                label: "<?= $this->translate('__target') ?>",
+                fillColor: "<?= $chartTargetColor ?>",
+                strokeColor: "<?= $chartTargetColorBorder ?>",
                 highlightFill: "rgba(151,187,205,0.75)",
                 highlightStroke: "rgba(151,187,205,1)",
-                data: [<?= $total ?>]
+                data: [<?= $this->totalTarget ?>]
             }
         ]
     };

@@ -26,6 +26,7 @@ class CalculService implements ServiceLocatorAwareInterface
         $results = ($container->offsetExists('result')) ? $container->result : [];
 
         $totalPoints = 0;
+        $totalPointsTarget = 0;
         $totalThreshold = 0;
         $globalPoints = [];
         $globalThreshold = [];
@@ -36,25 +37,30 @@ class CalculService implements ServiceLocatorAwareInterface
             $threshold = $question->getThreshold();
 
             if (array_key_exists($questionId, $results)) {
-                $points = $results[$questionId]['maturity'] * $threshold;
-                $recommandations[$question->getId()] = [
-                    'recommandation' => $results[$questionId]['recommandation'],
-                    'threshold' => $threshold,
-                    'domaine' => $question->getCategoryTranslationKey(),
-                    'gravity' => '/img/gravity_' . $results[$questionId]['gravity'] . '.png',
-                    'maturity' => $this->getImgMaturity($results[$questionId]['maturity']),
-                    'maturityTarget' => $this->getImgMaturity($results[$questionId]['maturityTarget']),
-                ];
+                if (strlen($results[$questionId]['notes'])) {
+                    $points = $results[$questionId]['maturity'] * $threshold;
+                    $pointsTarget = $results[$questionId]['maturityTarget'] * $threshold;
+                    $recommandations[$question->getId()] = [
+                        'recommandation' => $results[$questionId]['recommandation'],
+                        'threshold' => $threshold,
+                        'domaine' => $question->getCategoryTranslationKey(),
+                        'gravity' => '/img/gravity_' . $results[$questionId]['gravity'] . '.png',
+                        'maturity' => $this->getImgMaturity($results[$questionId]['maturity']),
+                        'maturityTarget' => $this->getImgMaturity($results[$questionId]['maturityTarget']),
+                    ];
 
-                $totalPoints += $points;
-                $globalPoints[$categoryId] = array_key_exists($categoryId, $globalPoints) ? $globalPoints[$categoryId] + $points : $points;
+                    $totalPoints += $points;
+                    $totalPointsTarget += $pointsTarget;
+                    $globalPoints[$categoryId] = array_key_exists($categoryId, $globalPoints) ? $globalPoints[$categoryId] + $points : $points;
+                    
+                    $totalThreshold += $threshold;
+                    $globalThreshold[$categoryId] = array_key_exists($categoryId, $globalThreshold) ? $globalThreshold[$categoryId] + $threshold : $threshold;
+                }
             }
-
-            $totalThreshold += $threshold;
-            $globalThreshold[$categoryId] = array_key_exists($categoryId, $globalThreshold) ? $globalThreshold[$categoryId] + $threshold : $threshold;
         }
 
         $total = ($totalThreshold) ? round($totalPoints / $totalThreshold * 100 / 3) : 0;
+        $totalTarget = ($totalThreshold) ? round($totalPointsTarget / $totalThreshold * 100 / 3) : 0;
 
         $totalCategory = [];
         foreach($globalPoints as $categoryId => $points) {
@@ -74,6 +80,7 @@ class CalculService implements ServiceLocatorAwareInterface
 
         return [
             'total' => $total,
+            'totalTarget' => $totalTarget,
             'totalCategory' => $totalCategory,
             'recommandations' => $recommandationsSort,
         ];
