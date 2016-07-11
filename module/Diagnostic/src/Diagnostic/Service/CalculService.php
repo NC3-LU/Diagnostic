@@ -68,7 +68,7 @@ class CalculService implements ServiceLocatorAwareInterface
 
         $totalCategory = [];
         foreach($globalPoints as $categoryId => $points) {
-            $totalCategory[$categoryId] = round($points / $globalThreshold[$categoryId] * 100 / 3);
+            $totalCategory[$categoryId] = ($totalThreshold) ? round($points / $globalThreshold[$categoryId] * 100 / 3) : 0;
         }
 
         $recommandations = $this->sortArray($recommandations, 'maturityTarget');
