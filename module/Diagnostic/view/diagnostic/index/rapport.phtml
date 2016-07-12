@@ -90,19 +90,23 @@ echo $this->inlineScript()->prependFile($this->basePath('js/Chart.js-master/Char
 <div class="row">
     <div class="col-lg-3 text-left">
         <?php
-        if ($this->download) {
-            $form->setAttribute('action', $this->url('diagnostic', array('action' => 'download')));
-            $form->prepare();
-            echo $this->form()->openTag($form);
-            echo $this->formHidden($form->get('radar'));
-            echo $this->formHidden($form->get('pie'));
-            echo $this->formHidden($form->get('bar'));
-            ?>
-            <button type="submit" class="btn btn-warning" style="padding: 7px 70px 7px 70px; margin-top: 15px;">
-                <span class="glyphicon glyphicon-download-alt"></span>&nbsp;<?= $this->translate('__download_delivery') ?>
-            </button>
-            <?php
-            echo $this->form()->closeTag();
+        $container = new \Zend\Session\Container('user');
+        if (($container->offsetExists('email')) || (! is_null($container->email))) {
+            if ($this->download) {
+                $form->setAttribute('action', $this->url('diagnostic', array('action' => 'download')));
+                $form->prepare();
+                echo $this->form()->openTag($form);
+                echo $this->formHidden($form->get('radar'));
+                echo $this->formHidden($form->get('pie'));
+                echo $this->formHidden($form->get('bar'));
+                ?>
+                <button type="submit" class="btn btn-warning" style="padding: 7px 70px 7px 70px; margin-top: 15px;">
+                    <span
+                        class="glyphicon glyphicon-download-alt"></span>&nbsp;<?= $this->translate('__download_delivery') ?>
+                </button>
+                <?php
+                echo $this->form()->closeTag();
+            }
         }
         ?>
     </div>
