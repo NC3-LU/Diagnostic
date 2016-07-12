@@ -599,7 +599,7 @@ class IndexController extends AbstractActionController
             $categoriesRepartition[$i]['label'] = $translator->translate($category);
             $categoriesRepartition[$i]['color'] = $categoriesColor[$i]['color'];
             $categoriesRepartition[$i]['highlight'] = $categoriesColor[$i]['highlight'];
-            $categoriesRepartition[$i]['value'] = round($categoryNumber / $nbQuestions * 100);
+            $categoriesRepartition[$i]['value'] = $categoryNumber;
             $i++;
         }
 

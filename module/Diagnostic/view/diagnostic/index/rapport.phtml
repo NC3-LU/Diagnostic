@@ -76,6 +76,10 @@ switch (true) {
 }
 
 echo $this->inlineScript()->prependFile($this->basePath('js/Chart.js-master/Chart.js'));
+
+foreach($categoriesRepartition as $key => $category) {
+    $categoriesRepartition[$key]['value'] = 10;
+}
 ?>
 
 <style>
@@ -86,7 +90,6 @@ echo $this->inlineScript()->prependFile($this->basePath('js/Chart.js-master/Char
         margin-right: 5px;
     }
 </style>
-
 <div class="row">
     <div class="col-lg-3 text-left">
         <?php
@@ -250,19 +253,19 @@ echo $this->inlineScript()->prependFile($this->basePath('js/Chart.js-master/Char
         <br />
         <h1><?php echo ucfirst($this->translate($this->escapeHtml('__doughnut_legend')));?></h1>
         <div class="row">
-            <div class="col-lg-2 text-left"></div>
-            <div class="col-lg-8 text-left">
+            <div class="col-lg-1 text-left"></div>
+            <div class="col-lg-10 text-left">
                 <br /><br />
                 <div class="row">
                     <div class="col-lg-2 text-left"></div>
                     <div class="col-lg-8 text-left">
-                        <canvas id="canvas2" width="100" height="100"></canvas>
+                        <canvas id="canvas2" width="300" height="300"></canvas>
                         <div id="canvas2-legend" class="chart-legend" ></div>
                     </div>
                     <div class="col-lg-2 text-left"></div>
                 </div>
             </div>
-            <div class="col-lg-2 text-left"></div>
+            <div class="col-lg-1 text-left"></div>
         </div>
     </div>
 </div>
@@ -300,10 +303,32 @@ echo $this->inlineScript()->prependFile($this->basePath('js/Chart.js-master/Char
 
 
     //doughnut chart
-    var doughnutChartData =  <?= json_encode($this->categoriesRepartition) ?>;
+    var doughnutChartData =  <?= json_encode($categoriesRepartition) ?>;
+
+    var doughnutChartData = {
+        labels: [''],
+        datasets: [
+            {
+                label: "<?= $this->translate('__actual') ?>",
+                fillColor: "<?= $chartColor ?>",
+                strokeColor: "<?= $chartColorBorder ?>",
+                highlightFill: "<?= $chartColor ?>",
+                highlightStroke: "<?= $chartColorBorder ?>",
+                data: [<?= $this->total ?>]
+            },
+            {
+                label: "<?= $this->translate('__target') ?>",
+                fillColor: "<?= $chartTargetColor ?>",
+                strokeColor: "<?= $chartTargetColorBorder ?>",
+                highlightFill: "<?= $chartTargetColor ?>",
+                highlightStroke: "<?= $chartTargetColorBorder ?>",
+                data: [<?= $this->totalTarget ?>]
+            }
+        ]
+    };
 
     var myDoughnutChart = new Chart(document.getElementById("canvas2").getContext("2d")).Doughnut(doughnutChartData,{
-        responsive: true,
+        responsive: false,
         legendTemplate : "<ul class=\"<%=name.toLowerCase()%>-legend\"><% for (var i=0; i<segments.length; i++){%><li><span style=\"background-color:<%=segments[i].fillColor%>\"></span><%if(segments[i].label){%><%=segments[i].label%><%}%></li><%}%></ul>",
         onAnimationComplete : function() {
             document.querySelector('input[name="pie"]').value = myDoughnutChart.toBase64Image();
