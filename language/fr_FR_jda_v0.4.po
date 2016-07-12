@@ -49,7 +49,7 @@ msgstr "Quels sont les mécanismes de sécurité existants (autres que technique
 
 #: 
 msgid "__question1help"
-msgstr "Existe-t-il ?Une politique de sécuritéUne charte utilisateur ou administrateurDes procédures (backup par ex.)Des consignes internesEtc."
+msgstr "Existe-t-il ?<br>- Une politique de sécurité<br>- Une charte utilisateur ou administrateur<br>- Des procédures (backup par ex.)<br>- Des consignes internes<br>- Etc."
 
 #: 
 msgid "__question2"
@@ -81,14 +81,14 @@ msgstr "Le personnel a-t-il suivi des formations récemment ?"
 
 #: 
 msgid "__question5help"
-msgstr "Culture de la formation ?Sensibilité à la sécurité ?"
+msgstr "Culture de la formation ?<br>Sensibilité à la sécurité ?"
 
 #: 
 msgid "__question6"
 msgstr "Gestion de la rotation de personnel ?"
 #: 
 msgid "__question6help"
-msgstr "Rotation importante ?Coordination RH et IT ?"
+msgstr "Rotation importante ?<br>Coordination RH et IT ?"
 
 #: 
 msgid "__question7"
@@ -96,7 +96,7 @@ msgstr "Les responsabilités IT et éventuellement sécurité sont-elles défini
 
 #: 
 msgid "__question7help"
-msgstr "En interne ? En externe ?Poste spécifique ?"
+msgstr "En interne ? En externe ?<br>Poste spécifique ?"
 
 #: 
 msgid "__question8"
@@ -104,7 +104,7 @@ msgstr "Du matériel est-il fourni à certains employés pour accomplir leur mis
 
 #: 
 msgid "__question8help"
-msgstr "Inventaire de matériel ?Accusé de réception ?"
+msgstr "Inventaire de matériel ?<br>Accusé de réception ?"
 
 #: 
 msgid "__question9"
@@ -136,7 +136,7 @@ msgstr "Comment s'organise l’entretien (nettoyage) des locaux ?"
 
 #: 
 msgid "__question12help"
-msgstr "Accès aux zones sensibles ?Pendant les heures de bureau ?Société externe ?"
+msgstr "Accès aux zones sensibles ?<br>Pendant les heures de bureau ?<br>Société externe ?"
 
 #: 
 msgid "__question13"
@@ -144,7 +144,7 @@ msgstr "Les visiteurs peuvent-ils circuler librement dans les bâtiments ?"
 
 #: 
 msgid "__question13help"
-msgstr "Circulation accompagnée ?Registre de visiteurs ?Badge ? "
+msgstr "Circulation accompagnée ?<br>Registre de visiteurs ?<br>Badge ? "
 
 #: 
 msgid "__question14"
@@ -168,7 +168,7 @@ msgstr "Les locaux à accès restreints sont-ils protégés ?"
 
 #: 
 msgid "__question16help"
-msgstr "Salle informatique ? Salle d'archives ?La sécurité est-elle suffisante ?"
+msgstr "Salle informatique ? Salle d'archives ?<br>La sécurité est-elle suffisante ?"
 
 #: 
 msgid "__question17"
@@ -176,7 +176,7 @@ msgstr "Y-a-t-il un système d'alimentation sans interruption ?"
 
 #: 
 msgid "__question17help"
-msgstr "Temps de maintien ?Maintenance et test ?Équipements branchés ?"
+msgstr "Temps de maintien ?<br>Maintenance et test ?<br>Équipements branchés ?"
 
 #: 
 msgid "__question18"
@@ -184,7 +184,7 @@ msgstr "Comment sont attribués les accès logiques ?"
 
 #: 
 msgid "__question18help"
-msgstr "Bonne gestion des autorisations ?(Besoin d'en connaître, respect du principe des 4 yeux, etc.)"
+msgstr "Bonne gestion des autorisations ?<br>(Besoin d'en connaître, respect du principe des 4 yeux, etc.)"
 
 #: 
 msgid "__question19"
@@ -192,7 +192,7 @@ msgstr "Comment est géré l'authentification des utilisateurs ?"
 
 #: 
 msgid "__question19help"
-msgstr "Mots de passe ? Authentification forte ?Bonne gestion ?"
+msgstr "Mots de passe ? Authentification forte ?<br>Bonne gestion ?"
 
 #: 
 msgid "__question20"
@@ -208,7 +208,7 @@ msgstr "Comment est géré le réseau Wifi ?"
 
 #: 
 msgid "__question21help"
-msgstr "Procédure de demande d’accès ?Ségrégation du réseau local interne ?Durée limitée?"
+msgstr "Procédure de demande d’accès ?<br>Ségrégation du réseau local interne ?<br>Durée limitée?"
 
 #: 
 msgid "__question22"
@@ -224,7 +224,7 @@ msgstr "Comment sont gérés les postes du travail des utilisateurs ?"
 
 #: 
 msgid "__question23help"
-msgstr "Mise à jour système d'exploitation ? logiciels ?Droits admin ?"
+msgstr "Mise à jour système d'exploitation ? logiciels ?<br>Droits admin ?"
 
 #: 
 msgid "__question24"
@@ -247,7 +247,7 @@ msgid "__question26"
 msgstr "Comment sont gérés les backups ?"
 #: 
 msgid "__question26help"
-msgstr "Bonnes pratiques concernant les backups ?ExhaustivitéPériodicitéRétentionStockage hors ligneDélocalisationTestEtc."
+msgstr "Bonnes pratiques concernant les backups ?<br>- Exhaustivité<br>- Périodicité<br>- Rétention<br>- Stockage hors ligne<br>- Délocalisation<br>- Test<<br>- Etc."
 
 #: 
 msgid "__question27"
@@ -255,7 +255,7 @@ msgstr "Comment gérez-vous le stockage et la destruction des documents physique
 
 #: 
 msgid "__question27help"
-msgstr "Où ils sont stockés ?Utilisation de broyeur ?Politique de bureau propre ?"
+msgstr "Où ils sont stockés ?<br>Utilisation de broyeur ?<br>Politique de bureau propre ?"
 
 #: 
 msgid "__question28"
@@ -287,7 +287,7 @@ msgstr "Y-a-t-il une gestion des incidents ?"
 
 #: 
 msgid "__question31help"
-msgstr "Les personnes sont-elles sensibilisées ?À qui s'adresser et comment ?"
+msgstr "Les personnes sont-elles sensibilisées ?<br>À qui s'adresser et comment ?"
 
 #: 
 msgid "__question32"
@@ -355,7 +355,7 @@ msgstr "Changer de mot de passe"
 
 #: 
 msgid "__message_password"
-msgstr "Vous allez recevoir un mail à cette adresse vous stipulant la manoeuvre à suivre pour changer de mot de passe.Attention ! ce mail n'est valable que 24h."
+msgstr "Vous allez recevoir un mail à cette adresse vous stipulant la manoeuvre à suivre pour changer de mot de passe.<br /><strong>Attention !</strong> ce mail n'est valable que 24h."
 
 #: 
 msgid "__receive_mail_password"
