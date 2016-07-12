@@ -248,7 +248,7 @@ msgid "__question26"
 msgstr "Comment sont gérés les backups ?"
 #: 
 msgid "__question26help"
-msgstr "Bonnes pratiques concernant les backups ?<br>- Exhaustivité<br>- Périodicité<br>- Rétention<br>- Stockage hors ligne<br>- Délocalisation<br>- Test<br>- Etc."
+msgstr "Bonnes pratiques concernant les backups ?<br>Exhaustivité<br>Périodicité<br>Rétention<br>Stockage hors ligne<br>Délocalisation<br>Test<br>Etc."
 
 #: 
 msgid "__question27"
