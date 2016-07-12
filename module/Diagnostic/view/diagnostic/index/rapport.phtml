@@ -76,10 +76,6 @@ switch (true) {
 }
 
 echo $this->inlineScript()->prependFile($this->basePath('js/Chart.js-master/Chart.js'));
-
-foreach($categoriesRepartition as $key => $category) {
-    $categoriesRepartition[$key]['value'] = 10;
-}
 ?>
 
 <style>
@@ -304,28 +300,6 @@ foreach($categoriesRepartition as $key => $category) {
 
     //doughnut chart
     var doughnutChartData =  <?= json_encode($categoriesRepartition) ?>;
-
-    var doughnutChartData = {
-        labels: [''],
-        datasets: [
-            {
-                label: "<?= $this->translate('__actual') ?>",
-                fillColor: "<?= $chartColor ?>",
-                strokeColor: "<?= $chartColorBorder ?>",
-                highlightFill: "<?= $chartColor ?>",
-                highlightStroke: "<?= $chartColorBorder ?>",
-                data: [<?= $this->total ?>]
-            },
-            {
-                label: "<?= $this->translate('__target') ?>",
-                fillColor: "<?= $chartTargetColor ?>",
-                strokeColor: "<?= $chartTargetColorBorder ?>",
-                highlightFill: "<?= $chartTargetColor ?>",
-                highlightStroke: "<?= $chartTargetColorBorder ?>",
-                data: [<?= $this->totalTarget ?>]
-            }
-        ]
-    };
 
     var myDoughnutChart = new Chart(document.getElementById("canvas2").getContext("2d")).Doughnut(doughnutChartData,{
         responsive: false,
