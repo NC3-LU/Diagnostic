@@ -248,7 +248,7 @@ msgid "__question26"
 msgstr "Comment sont gérés les backups ?"
 #: 
 msgid "__question26help"
-msgstr "Bonnes pratiques concernant les backups ?<br />Exhaustivité<br />Périodicité<br />Rétention<br />Stockage hors ligne<br />Délocalisation<br />Test<br />Etc."
+msgstr "Bonnes pratiques concernant les backups ? (exhaustivité, périodicité, rétention, stockage hors ligne, délocalisation, test, etc."
 
 #: 
 msgid "__question27"
@@ -256,7 +256,7 @@ msgstr "Comment gérez-vous le stockage et la destruction des documents physique
 
 #: 
 msgid "__question27help"
-msgstr "Où ils sont stockés ?<br />Utilisation de broyeur ?<br />Politique de bureau propre ?"
+msgstr "Où ils sont stockés ? Utilisation de broyeur ? Politique de bureau propre ?"
 
 #: 
 msgid "__question28"
@@ -288,7 +288,7 @@ msgstr "Y-a-t-il une gestion des incidents ?"
 
 #: 
 msgid "__question31help"
-msgstr "Les personnes sont-elles sensibilisées ?<br />À qui s'adresser et comment ?"
+msgstr "Les personnes sont-elles sensibilisées ? À qui s'adresser et comment ?"
 
 #: 
 msgid "__question32"
