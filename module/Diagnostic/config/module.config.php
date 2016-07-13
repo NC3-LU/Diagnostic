@@ -81,6 +81,7 @@ return array(
             'PasswordForgottenForm' => 'Diagnostic\Form\PasswordForgottenForm',
             'NewPasswordForm' => 'Diagnostic\Form\NewPasswordForm',
             'QuestionForm' => 'Diagnostic\Form\QuestionForm',
+            'InformationForm' => 'Diagnostic\Form\InformationForm',
             'AddQuestionForm' => 'Diagnostic\Form\AddQuestionForm',
             'DownloadForm' => 'Diagnostic\Form\DownloadForm',
             'LinkDownloadForm' => 'Diagnostic\Form\LinkDownloadForm',

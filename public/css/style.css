@@ -154,6 +154,9 @@ div.container a.brand {
 .recommandation-area {
 	height: 100px  !important;
 }
+.information-area {
+	height: 560px  !important;
+}
 
 .threshold {
 	width: 40px;

@@ -2,13 +2,11 @@
 $title = $this->translate('__diagnostic');
 $this->headTitle($title);
 
-$form->setAttribute('action', $this->url('diagnostic', ['action' => 'diagnostic', 'id' => $id]));
-$form->prepare();
-
 $formUpload->setAttribute('action', $this->url('diagnostic', ['action' => 'diagnostic']));
 $formUpload->prepare();
 
-$currentCategoryId = (array_key_exists($id, $questions)) ? $questions[$id]->getCategoryId() : 1;
+$currentCategoryId = 0;
+$id = 0;
 ?>
 <div class="row">
     <div class="col-lg-5">
@@ -34,9 +32,14 @@ $currentCategoryId = (array_key_exists($id, $questions)) ? $questions[$id]->getC
         <?= $this->form()->closeTag() ?>
         <div class="row">
             <div class="col-lg-12 text-left" style="background-color: #EEEEEE; min-height: 600px;">
-
+                <span style="text-decoration: underline; font-weight: bold;">
+                    <br />
+                    <a style="color: dodgerblue; padding-top: 10px;" href="<?= $this->url('diagnostic', ['action' => 'information', 'id' => 1]) ?>">
+                        <strong><?= $this->translate('__organization_information') ?></strong>
+                    </a>
+                </span>
                 <?php
-                foreach($categories as $categoryId => $category) {
+                foreach($this->categories as $categoryId => $category) {
                     $textClass = ($currentCategoryId == $categoryId) ? 'text-danger' : 'text-success';
 
                     $nbDone = 0;
@@ -126,45 +129,15 @@ $currentCategoryId = (array_key_exists($id, $questions)) ? $questions[$id]->getC
 
     </div>
     <div class="col-lg-7 text-left">
-        <h4 style="color: #DF1D31; font-weight: bold;"><?= $this->translate($this->escapeHtml($currentTitleCategory)) ?></h4>
-        <h4 style="color: grey;"><?= $this->escapeHtml($titleQuestion) ?></h4>
-        <br />
+        <h4 style="color: #DF1D31; font-weight: bold;"><?= $this->translate('__organization_information') ?></h4>
+        <br /><br />
         <?= $this->form()->openTag($form) ?>
-
-        <table class="table table-responsive table-borderless">
-            <tr>
-                <td><label><?= $this->translate($form->get('notes')->getLabel()) ?></label></td>
-                <td><?= $this->formTextarea($form->get('notes')) ?></td>
-            </tr>
-            <tr>
-                <td colspan="2"><hr style="padding: 0px; margin: 0px;"></td>
-            </tr>
-            <tr>
-                <td width="180"><label><?= $this->translate($form->get('maturity')->getLabel()) ?></label></td>
-                <td>
-                    <?= $this->formRadio($form->get('maturity')) ?>
-                    <br>
-                    <span style="color: grey;"><?= $titleHelp ?></span>
-                </td>
-            </tr>
-            <tr>
-                <td><label><?= $this->translate($form->get('maturityTarget')->getLabel()) ?></label></td>
-                <td><?= $this->formRadio($form->get('maturityTarget')) ?></td>
-            </tr>
-            <tr>
-                <td><label><?= $this->translate($form->get('recommandation')->getLabel()) ?></label></td>
-                <td><?= $this->formTextarea($form->get('recommandation')) ?></td>
-            </tr>
-            <tr>
-                <td><label><?= $this->translate($form->get('gravity')->getLabel()) ?></label></td>
-                <td><?= $this->formRadio($form->get('gravity')) ?></td>
-            </tr>
-        </table>
-
+        <?= $this->formTextarea($form->get('information')) ?>
+        <br />
         <center>
-        <?= $this->formHidden($form->get('csrf')) ?>
-        <?= $this->formSubmit($form->get('submit')); ?>
-        <?= $this->form()->closeTag() ?>
+            <?= $this->formHidden($form->get('csrf')) ?>
+            <?= $this->formSubmit($form->get('submit')); ?>
+            <?= $this->form()->closeTag() ?>
         </center>
 
     </div>

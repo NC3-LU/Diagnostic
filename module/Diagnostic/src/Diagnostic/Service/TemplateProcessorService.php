@@ -66,9 +66,9 @@ class TemplateProcessorService extends TemplateProcessor implements ServiceLocat
 
         //image
         $container = new Container('diagnostic');
-        $this->setImageValue('image2.png', $container->pie);
-        $this->setImageValue('image4.png', $container->bar);
-        $this->setImageValue('image6.png', $container->radar);
+        $this->setImageValue('image7.png', $container->bar);
+        $this->setImageValue('image5.png', $container->pie);
+        $this->setImageValue('image9.png', $container->radar);
 
         //number of recommandations
         $nbRecommandations = 0;

@@ -423,6 +423,71 @@ class IndexController extends AbstractActionController
         ));
     }
 
+    public function informationAction() {
+
+        $container = new Container('user');
+        if ((! $container->offsetExists('email')) || (is_null($container->email))) {
+            return $this->redirect()->toRoute('diagnostic', ['controller' => 'index', 'action' => 'index']);
+        }
+
+        //retrieve questions
+        $questionService = $this->getServiceLocator()->get('Diagnostic\Service\QuestionService');
+        $questions = $questionService->getQuestions();
+
+        //retrieve categories
+        $categories = [];
+        foreach ($questions as $question) {
+            $categories[$question->getCategoryId()] = $question->getCategoryTranslationKey();
+        }
+
+        //retrieve result
+        $container = new Container('diagnostic');
+        $result = ($container->offsetExists('result')) ? $container->result : [];
+
+        //form
+        $form = $this->getServiceLocator()->get('formElementManager')->get('InformationForm');
+        $formUpload = $this->getServiceLocator()->get('formElementManager')->get('UploadForm');
+
+        $type = $this->getEvent()->getRouteMatch()->getParam('id');
+
+        $request = $this->getRequest();
+        $formUpload->setData(array_merge_recursive(
+            $request->getPost()->toArray(),
+            $request->getFiles()->toArray()
+        ));
+
+        $errorMessage = '';
+        if ($formUpload->isValid()) {
+            $data = $formUpload->getData();
+
+            //load json
+            if ($data["file"]["tmp_name"]) {
+                $questionService = $this->getServiceLocator()->get('Diagnostic\Service\QuestionService');
+
+                $successUpload = $questionService->loadJson(file_get_contents($data["file"]["tmp_name"], true));
+
+                if ($successUpload) {
+                    return $this->redirect()->toRoute('diagnostic', ['controller' => 'index', 'action' => 'diagnostic', 'id' => $id]);
+                } else {
+                    $errorMessage = '__error_file';
+                }
+            } else {
+                $errorMessage = '__no_file';
+            }
+        }
+
+        //send to view
+        return new ViewModel(array(
+            'questions' => $questions,
+            'categories' => $categories,
+            'result' => $result,
+            'form' => $form,
+            'formUpload' => $formUpload,
+            'errorMessage' => $errorMessage,
+        ));
+
+    }
+
     /**
      * Add a question
      *
@@ -680,7 +745,7 @@ class IndexController extends AbstractActionController
                     $calculService = $this->getServiceLocator()->get('Diagnostic\Service\CalculService');
                     $calculResults = $calculService->calcul();
 
-                    $word = new TemplateProcessorService('data/resources/modele_v0.22tpe.docx');
+                    $word = new TemplateProcessorService('data/resources/modele_v0.4jro.docx');
                     $word->generateWord($data, $questions, $calculResults['recommandations'], $translator);
                 }
             }
