@@ -116,7 +116,16 @@ echo $this->inlineScript()->prependFile($this->basePath('js/Chart.js-master/Char
         <table style="width: 100%; margin-top: 15px;">
             <tr>
                 <td align="center">
-                    <a href="<?= $this->url('diagnostic',array('action'=>'diagnostic'));?>" class="btn btn-info" style="padding: 7px 70px 7px 70px;">
+                    <?php
+
+                    $container = new \Zend\Session\Container('navigation');
+                    if ($container->offsetExists('lastQuestion')) {
+                        $link = $this->url('diagnostic',array('action' => 'diagnostic', 'id' => $container->lastQuestion));
+                    } else {
+                        $link = $this->url('diagnostic',array('action' => 'diagnostic'));
+                    }
+                    ?>
+                    <a href="<?= $link ?>" class="btn btn-info" style="padding: 7px 70px 7px 70px;">
                         <span class="glyphicon glyphicon-backward"></span>&nbsp;<?= $this->translate('__back') ?>
                     </a>
                 </td>

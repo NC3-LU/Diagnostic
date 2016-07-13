@@ -66,89 +66,109 @@ class TemplateProcessorService extends TemplateProcessor implements ServiceLocat
 
         //image
         $container = new Container('diagnostic');
-        $this->setImageValue('image2.png', $container->bar);
-        $this->setImageValue('image4.png', $container->pie);
+        $this->setImageValue('image2.png', $container->pie);
+        $this->setImageValue('image4.png', $container->bar);
         $this->setImageValue('image6.png', $container->radar);
 
+        //number of recommandations
+        $nbRecommandations = 0;
+        foreach ($results as $result) {
+            if ($result['recommandation']) {
+                $nbRecommandations++;
+            }
+        }
+
         //recommandations
-        $this->cloneRow('RECOMM_NUM', count($results));
+        $this->cloneRow('RECOMM_NUM', $nbRecommandations);
 
         $i = 1;
         foreach ($results as $result) {
-            $name = 'RECOMM_NUM#' . $i;
-            $this->setValue($name, $i);
-            $i++;
+            if ($result['recommandation']) {
+                $name = 'RECOMM_NUM#' . $i;
+                $this->setValue($name, $i);
+                $i++;
+            }
         }
 
         $i = 1;
         foreach ($results as $result) {
-            $name = 'RECOMM_TEXT#' . $i;
-            $this->setValue($name, $result['recommandation']);
-            $i++;
+            if ($result['recommandation']) {
+                $name = 'RECOMM_TEXT#' . $i;
+                $this->setValue($name, $result['recommandation']);
+                $i++;
+            }
         }
 
         $i = 1;
         foreach ($results as $questionId => $result) {
-            $name = 'RECOMM_DOM#' . $i;
-            $this->setValue($name, $translator->translate($categories[$questions[$questionId]->getCategoryId()]));
-            $i++;
+            if ($result['recommandation']) {
+                $name = 'RECOMM_DOM#' . $i;
+                $this->setValue($name, $translator->translate($categories[$questions[$questionId]->getCategoryId()]));
+                $i++;
+            }
         }
 
         $i = 1;
         foreach ($results as $result) {
-            $gravity = '';
-            switch ($result['gravity']) {
-                case 1:
-                    $gravity = $translator->translate('__low');
-                    break;
-                case 2:
-                    $gravity = $translator->translate('__medium');
-                    break;
-                case 3:
-                    $gravity = $translator->translate('__strong');
-                    break;
+            if ($result['recommandation']) {
+                $gravity = '';
+                switch ($result['gravity']) {
+                    case 1:
+                        $gravity = $translator->translate('__low');
+                        break;
+                    case 2:
+                        $gravity = $translator->translate('__medium');
+                        break;
+                    case 3:
+                        $gravity = $translator->translate('__strong');
+                        break;
+                }
+                $name = 'RECOMM_GRAV#' . $i;
+                $this->setValue($name, $gravity);
+                $i++;
             }
-            $name = 'RECOMM_GRAV#' . $i;
-            $this->setValue($name, $gravity);
-            $i++;
         }
 
         $i = 1;
         foreach ($results as $result) {
-            $maturity = '__maturity_none';
-            switch ($result['maturity']) {
-                case 1:
-                    $maturity = $translator->translate('__maturity_ok');
-                    break;
-                case 2:
-                    $maturity = $translator->translate('__maturity_medium');
-                    break;
-                case 3:
-                    $maturity = $translator->translate('__maturity_plan');
-                    break;
+            if ($result['recommandation']) {
+                $maturity = $translator->translate('__maturity_none');
+                switch ($result['maturity']) {
+                    case 1:
+                        $maturity = $translator->translate('__maturity_ok');
+                        break;
+                    case 2:
+                        $maturity = $translator->translate('__maturity_medium');
+                        break;
+                    case 3:
+                        $maturity = $translator->translate('__maturity_plan');
+                        break;
+                }
+                $name = 'RECOMM_CURR_MAT#' . $i;
+                $this->setValue($name, $maturity);
+                $i++;
             }
-            $name = 'RECOMM_CURR_MAT#' . $i;
-            $this->setValue($name, $maturity);
-            $i++;
         }
 
         $i = 1;
-        foreach ($results as $result) {$maturity = '__maturity_none';
-            $maturityTarget = '__maturity_none';
-            switch ($result['maturityTarget']) {
-                case 1:
-                    $maturityTarget = $translator->translate('__maturity_ok');
-                    break;
-                case 2:
-                    $maturityTarget = $translator->translate('__maturity_medium');
-                    break;
-                case 3:
-                    $maturityTarget = $translator->translate('__maturity_plan');
-                    break;
+        foreach ($results as $result) {
+            if ($result['recommandation']) {
+                $maturityTarget = $translator->translate('__maturity_none');
+                switch ($result['maturityTarget']) {
+                    case 1:
+                        $maturityTarget = $translator->translate('__maturity_ok');
+                        break;
+                    case 2:
+                        $maturityTarget = $translator->translate('__maturity_medium');
+                        break;
+                    case 3:
+                        $maturityTarget = $translator->translate('__maturity_plan');
+                        break;
+                }
+                $name = 'RECOMM_TARG_MAT#' . $i;
+                $this->setValue($name, $maturityTarget);
+                $i++;
             }
-            $name = 'RECOMM_TARG_MAT#' . $i;
-            $this->setValue($name, $maturityTarget);
-            $i++;
         }
 
         $j = 1;
@@ -188,8 +208,11 @@ class TemplateProcessorService extends TemplateProcessor implements ServiceLocat
             foreach ($results as $questionId => $result) {
                 if ($questions[$questionId]->getCategoryId() == $categoryId) {
                     $name = 'PRISE_NOTE_QUEST_' . $j . '#' . $prise3;
-                    $this->setValue($name, $translator->translate($questions[$questionId]->getTranslationKeyHelp()));
                     $prise3++;
+
+                    if ($questions[$questionId]->getTranslationKeyHelp()) {
+                        $this->setValue($name, strip_tags($translator->translate($questions[$questionId]->getTranslationKeyHelp())));
+                    }
                 }
             }
 

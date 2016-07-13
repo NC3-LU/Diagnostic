@@ -316,6 +316,10 @@ class IndexController extends AbstractActionController
 
         $id = ($this->getEvent()->getRouteMatch()->getParam('id')) ? $this->getEvent()->getRouteMatch()->getParam('id') : 1;
 
+        //save last question
+        $container = new Container('navigation');
+        $container->lastQuestion = $id;
+
         //retrieve questions
         $questionService = $this->getServiceLocator()->get('Diagnostic\Service\QuestionService');
         $questions = $questionService->getQuestions();
@@ -361,6 +365,11 @@ class IndexController extends AbstractActionController
                 $formData = $form->getData();
                 unset($formData['csrf']);
                 unset($formData['submit']);
+
+                //security
+                foreach (array_keys($formData) as $key) {
+                    $formData[$key] = htmlspecialchars($formData[$key]);
+                }
 
                 //record result
                 $result[$id] = $formData;
@@ -671,7 +680,7 @@ class IndexController extends AbstractActionController
                     $calculService = $this->getServiceLocator()->get('Diagnostic\Service\CalculService');
                     $calculResults = $calculService->calcul();
 
-                    $word = new TemplateProcessorService('data/resources/modele_v0.23bjo.docx');
+                    $word = new TemplateProcessorService('data/resources/modele_v0.22tpe.docx');
                     $word->generateWord($data, $questions, $calculResults['recommandations'], $translator);
                 }
             }
