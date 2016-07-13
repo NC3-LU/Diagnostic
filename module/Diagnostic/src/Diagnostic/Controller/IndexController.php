@@ -468,10 +468,8 @@ class IndexController extends AbstractActionController
                     'category_translation_key' => $categories[$categoryId],
                     'translation_key' => $formData['question'],
                     'translation_key_help' => $formData['help'],
-                    'ponderation' => $formData['threshold']
+                    'threshold' => $formData['threshold']
                 ]);
-
-
 
                 //record question
                 $questions[] = $questionEntity;
