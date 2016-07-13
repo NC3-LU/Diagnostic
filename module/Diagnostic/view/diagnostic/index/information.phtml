@@ -2,7 +2,7 @@
 $title = $this->translate('__diagnostic');
 $this->headTitle($title);
 
-$formUpload->setAttribute('action', $this->url('diagnostic', ['action' => 'diagnostic']));
+$formUpload->setAttribute('action', $this->url('diagnostic', ['action' => 'information']));
 $formUpload->prepare();
 
 $currentCategoryId = 0;

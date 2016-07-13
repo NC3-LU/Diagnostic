@@ -50,6 +50,7 @@ return array(
             'Diagnostic\Model\QuestionEntity' => 'Diagnostic\Model\QuestionEntity',
             'Diagnostic\Model\UserEntity' => 'Diagnostic\Model\UserEntity',
             'Diagnostic\Model\DiagnosticEntity' => 'Diagnostic\Model\DiagnosticEntity',
+            'Diagnostic\Model\InformationEntity' => 'Diagnostic\Model\InformationEntity',
             'Diagnostic\Model\UserTokenEntity' => 'Diagnostic\Model\UserTokenEntity',
             'Diagnostic\Service\UserService' => 'Diagnostic\Service\UserService',
             'Diagnostic\Service\QuestionService' => 'Diagnostic\Service\QuestionService',

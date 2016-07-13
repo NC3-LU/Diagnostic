@@ -443,12 +443,37 @@ class IndexController extends AbstractActionController
         //retrieve result
         $container = new Container('diagnostic');
         $result = ($container->offsetExists('result')) ? $container->result : [];
+        $information = ($container->offsetExists('information')) ? $container->information : [];
 
         //form
         $form = $this->getServiceLocator()->get('formElementManager')->get('InformationForm');
         $formUpload = $this->getServiceLocator()->get('formElementManager')->get('UploadForm');
 
         $type = $this->getEvent()->getRouteMatch()->getParam('id');
+
+        //form is post and valid
+        $request = $this->getRequest();
+        if ($request->isPost()) {
+            $form->setData($request->getPost());
+            if ($form->isValid()) {
+                //format result
+                $formData = $form->getData();
+                unset($formData['csrf']);
+                unset($formData['submit']);
+
+                //security
+                foreach (array_keys($formData) as $key) {
+                    $formData[$key] = htmlspecialchars($formData[$key]);
+                }
+
+                //record information
+                $information['organization'] = $formData['information'];
+                $container->information = $information;
+
+                //redirect
+                return $this->redirect()->toRoute('diagnostic', ['controller' => 'index', 'action' => 'diagnostic']);
+            }
+        }
 
         $request = $this->getRequest();
         $formUpload->setData(array_merge_recursive(
@@ -475,6 +500,12 @@ class IndexController extends AbstractActionController
                 $errorMessage = '__no_file';
             }
         }
+
+        //populate
+        $informationEntity = $this->getServiceLocator()->get('Diagnostic\Model\InformationEntity');
+        $binding = (array_key_exists('organization', $information)) ? ['information' => $information['organization']] : [];
+        $informationEntity->exchangeArray($binding);
+        $form->bind($informationEntity);
 
         //send to view
         return new ViewModel(array(
@@ -745,7 +776,7 @@ class IndexController extends AbstractActionController
                     $calculService = $this->getServiceLocator()->get('Diagnostic\Service\CalculService');
                     $calculResults = $calculService->calcul();
 
-                    $word = new TemplateProcessorService('data/resources/modele_v0.4jro.docx');
+                    $word = new TemplateProcessorService('data/resources/modele_v0.5jro.docx');
                     $word->generateWord($data, $questions, $calculResults['recommandations'], $translator);
                 }
             }
