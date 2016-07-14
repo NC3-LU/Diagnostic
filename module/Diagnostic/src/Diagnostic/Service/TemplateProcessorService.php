@@ -268,21 +268,20 @@ class TemplateProcessorService extends TemplateProcessor implements ServiceLocat
             $prise9 = 1;
             foreach ($results as $questionId => $result) {
                 if ($questions[$questionId]->getCategoryId() == $categoryId) {
-                    $maturityTarget = $translator->translate('__maturity_none');
-                    switch ($result['maturityTarget']) {
-                        case 1:
-                            $maturityTarget = $translator->translate('__maturity_plan');
-                            break;
-                        case 2:
-                            $maturityTarget = $translator->translate('__maturity_medium');
-                            break;
-                        case 3:
-                            $maturityTarget = $translator->translate('__maturity_ok');
-                            break;
-                    }
-                    $name = 'PRISE_NOTE_TARG_MAT_' . $j . '#' . $prise9;
-                    $this->setValue($name, $maturityTarget);
+                    $name = 'PRISE_NOTE_TARG_1_' . $j . '#' . $prise9;
+                    $value = ($result['maturityTarget'] == 2) ? 'X' : '';
+                    $this->setValue($name, $value);
                     $prise9++;
+                }
+            }
+
+            $prise10 = 1;
+            foreach ($results as $questionId => $result) {
+                if ($questions[$questionId]->getCategoryId() == $categoryId) {
+                    $name = 'PRISE_NOTE_TARG_2_' . $j . '#' . $prise10;
+                    $value = ($result['maturityTarget'] == 3) ? 'X' : '';
+                    $this->setValue($name, $value);
+                    $prise10++;
                 }
             }
 

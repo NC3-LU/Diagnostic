@@ -118,6 +118,12 @@ class QuestionService implements ServiceLocatorAwareInterface
             }
         }
 
+        //information
+        $information = [];
+        if (array_key_exists('information', $data)) {
+            $information = (array) $data['information'];
+        }
+
         //questions
         $questions = [];
         if (array_key_exists('questions', $data)) {
@@ -128,11 +134,10 @@ class QuestionService implements ServiceLocatorAwareInterface
             }
         }
 
-
-
         if (count($questions)) {
             $container = new Container('diagnostic');
             $container->result = $result;
+            $container->information = $information;
             $container->questions = $questions;
 
             return true;

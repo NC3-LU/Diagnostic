@@ -2,7 +2,7 @@
 $title = $this->translate('__diagnostic');
 $this->headTitle($title);
 
-$formUpload->setAttribute('action', $this->url('diagnostic', ['action' => 'information']));
+$formUpload->setAttribute('action', $this->url('diagnostic', ['action' => 'information', 'id' => 1]));
 $formUpload->prepare();
 
 $currentCategoryId = 0;
@@ -135,7 +135,10 @@ $id = 0;
 
     </div>
     <div class="col-lg-7 text-left">
-        <h4 style="color: #DF1D31; font-weight: bold;"><?= $this->translate('__organization_information') ?></h4>
+        <?php
+        $title = ($this->type == 1) ? $this->translate('__organization_information') : $this->translate('__evaluation_synthesis');
+        ?>
+        <h4 style="color: #DF1D31; font-weight: bold;"><?= $title ?></h4>
         <br /><br />
         <?= $this->form()->openTag($form) ?>
         <?= $this->formTextarea($form->get('information')) ?>

@@ -314,7 +314,11 @@ class IndexController extends AbstractActionController
             return $this->redirect()->toRoute('diagnostic', ['controller' => 'index', 'action' => 'index']);
         }
 
-        $id = ($this->getEvent()->getRouteMatch()->getParam('id')) ? $this->getEvent()->getRouteMatch()->getParam('id') : 1;
+        if (! $this->getEvent()->getRouteMatch()->getParam('id')) {
+            return $this->redirect()->toRoute('diagnostic', ['controller' => 'index', 'action' => 'information', 'id' => 1]);
+        }
+
+        $id = ($this->getEvent()->getRouteMatch()->getParam('id'));
 
         //save last question
         $container = new Container('navigation');
@@ -381,31 +385,6 @@ class IndexController extends AbstractActionController
             }
         }
 
-        $formUpload->setData(array_merge_recursive(
-            $request->getPost()->toArray(),
-            $request->getFiles()->toArray()
-        ));
-
-        $errorMessage = '';
-        if ($formUpload->isValid()) {
-            $data = $formUpload->getData();
-
-            //load json
-            if ($data["file"]["tmp_name"]) {
-                $questionService = $this->getServiceLocator()->get('Diagnostic\Service\QuestionService');
-
-                $successUpload = $questionService->loadJson(file_get_contents($data["file"]["tmp_name"], true));
-
-                if ($successUpload) {
-                    return $this->redirect()->toRoute('diagnostic', ['controller' => 'index', 'action' => 'diagnostic', 'id' => $id]);
-                } else {
-                    $errorMessage = '__error_file';
-                }
-            } else {
-                $errorMessage = '__no_file';
-            }
-        }
-
         //populate
         $diagnosticEntity = $this->getServiceLocator()->get('Diagnostic\Model\DiagnosticEntity');
         $binding = (array_key_exists($id, $result)) ? $result[$id] : ['maturity' => 3, 'maturityTarget' => 3, 'gravity' => 2];
@@ -421,7 +400,6 @@ class IndexController extends AbstractActionController
             'form' => $form,
             'formUpload' => $formUpload,
             'id' => $id,
-            'errorMessage' => $errorMessage,
         ));
     }
 
@@ -455,56 +433,63 @@ class IndexController extends AbstractActionController
         $informationKey = ($type == 2) ? 'synthesis' : 'organization';
 
         //form is post and valid
+        $errorMessage = '';
         $request = $this->getRequest();
         if ($request->isPost()) {
-            $form->setData($request->getPost());
-            if ($form->isValid()) {
-                //format result
-                $formData = $form->getData();
-                unset($formData['csrf']);
-                unset($formData['submit']);
 
-                //security
-                foreach (array_keys($formData) as $key) {
-                    $formData[$key] = htmlspecialchars($formData[$key]);
+            if (count($request->getFiles())) {
+                $formUpload->setData(array_merge_recursive(
+                    $request->getPost()->toArray(),
+                    $request->getFiles()->toArray()
+                ));
+
+                if ($formUpload->isValid()) {
+
+                    $data = $formUpload->getData();
+
+                    //load json
+                    if ($data["file"]["tmp_name"]) {
+
+                        $questionService = $this->getServiceLocator()->get('Diagnostic\Service\QuestionService');
+                        $successUpload = $questionService->loadJson(file_get_contents($data["file"]["tmp_name"], true));
+
+                        if ($successUpload) {
+                            return $this->redirect()->toRoute('diagnostic', ['controller' => 'index', 'action' => 'information', 'id' => 1]);
+                        } else {
+                            $errorMessage = '__error_file';
+                        }
+
+                    } else {
+                        $errorMessage = '__no_file';
+                    }
                 }
 
-                //record information
-                $information[$informationKey] = $formData['information'];
-                $container->information = $information;
-
-                //redirect
-                if ($type == 1) {
-                    return $this->redirect()->toRoute('diagnostic', ['controller' => 'index', 'action' => 'diagnostic']);
-                } else {
-                    return $this->redirect()->toRoute('diagnostic', ['controller' => 'index', 'action' => 'information', 'id' => $type]);
-                }
-            }
-        }
-
-        $request = $this->getRequest();
-        $formUpload->setData(array_merge_recursive(
-            $request->getPost()->toArray(),
-            $request->getFiles()->toArray()
-        ));
-
-        $errorMessage = '';
-        if ($formUpload->isValid()) {
-            $data = $formUpload->getData();
-
-            //load json
-            if ($data["file"]["tmp_name"]) {
-                $questionService = $this->getServiceLocator()->get('Diagnostic\Service\QuestionService');
-
-                $successUpload = $questionService->loadJson(file_get_contents($data["file"]["tmp_name"], true));
-
-                if ($successUpload) {
-                    return $this->redirect()->toRoute('diagnostic', ['controller' => 'index', 'action' => 'diagnostic', 'id' => $id]);
-                } else {
-                    $errorMessage = '__error_file';
-                }
             } else {
-                $errorMessage = '__no_file';
+
+                $form->setData($request->getPost());
+                if ($form->isValid()) {
+                    //format result
+                    $formData = $form->getData();
+                    unset($formData['csrf']);
+                    unset($formData['submit']);
+
+                    //security
+                    foreach (array_keys($formData) as $key) {
+                        $formData[$key] = htmlspecialchars($formData[$key]);
+                    }
+
+                    //record information
+                    $information[$informationKey] = $formData['information'];
+                    $container->information = $information;
+
+
+                    //redirect
+                    if ($type == 1) {
+                        return $this->redirect()->toRoute('diagnostic', ['controller' => 'index', 'action' => 'diagnostic', 'id' => 1]);
+                    } else {
+                        return $this->redirect()->toRoute('diagnostic', ['controller' => 'index', 'action' => 'information', 'id' => $type]);
+                    }
+                }
             }
         }
 
@@ -521,6 +506,7 @@ class IndexController extends AbstractActionController
             'result' => $result,
             'information' => $information,
             'form' => $form,
+            'type' => $type,
             'formUpload' => $formUpload,
             'errorMessage' => $errorMessage,
         ));
@@ -612,6 +598,7 @@ class IndexController extends AbstractActionController
         //retrieve result
         $container = new Container('diagnostic');
         $result = ($container->offsetExists('result')) ? $container->result : [];
+        $information = ($container->offsetExists('information')) ? $container->information : [];
 
         //retrieve questions
         $questionService = $this->getServiceLocator()->get('Diagnostic\Service\QuestionService');
@@ -620,6 +607,7 @@ class IndexController extends AbstractActionController
         //format result
         $export = [
             'result' => $result,
+            'information' => $information,
             'questions' => $questions
         ];
         $export = json_encode($export);
@@ -784,7 +772,7 @@ class IndexController extends AbstractActionController
                     $calculService = $this->getServiceLocator()->get('Diagnostic\Service\CalculService');
                     $calculResults = $calculService->calcul();
 
-                    $word = new TemplateProcessorService('data/resources/modele_v0.6jro.docx');
+                    $word = new TemplateProcessorService('data/resources/modele_v0.7.docx');
                     $word->generateWord($data, $questions, $calculResults['recommandations'], $translator);
                 }
             }

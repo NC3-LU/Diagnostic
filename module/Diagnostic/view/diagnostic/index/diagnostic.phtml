@@ -5,7 +5,7 @@ $this->headTitle($title);
 $form->setAttribute('action', $this->url('diagnostic', ['action' => 'diagnostic', 'id' => $id]));
 $form->prepare();
 
-$formUpload->setAttribute('action', $this->url('diagnostic', ['action' => 'diagnostic']));
+$formUpload->setAttribute('action', $this->url('diagnostic', ['action' => 'information', 'id' => 1]));
 $formUpload->prepare();
 
 $currentCategoryId = (array_key_exists($id, $questions)) ? $questions[$id]->getCategoryId() : 1;
