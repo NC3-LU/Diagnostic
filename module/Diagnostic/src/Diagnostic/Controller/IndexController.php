@@ -350,6 +350,7 @@ class IndexController extends AbstractActionController
         //retrieve result
         $container = new Container('diagnostic');
         $result = ($container->offsetExists('result')) ? $container->result : [];
+        $information = ($container->offsetExists('information')) ? $container->information : [];
 
         //form
         $form = $this->getServiceLocator()->get('formElementManager')->get('QuestionForm');
@@ -416,6 +417,7 @@ class IndexController extends AbstractActionController
             'questions' => $questions,
             'categories' => $categories,
             'result' => $result,
+            'information' => $information,
             'form' => $form,
             'formUpload' => $formUpload,
             'id' => $id,
@@ -450,6 +452,7 @@ class IndexController extends AbstractActionController
         $formUpload = $this->getServiceLocator()->get('formElementManager')->get('UploadForm');
 
         $type = $this->getEvent()->getRouteMatch()->getParam('id');
+        $informationKey = ($type == 2) ? 'synthesis' : 'organization';
 
         //form is post and valid
         $request = $this->getRequest();
@@ -467,11 +470,15 @@ class IndexController extends AbstractActionController
                 }
 
                 //record information
-                $information['organization'] = $formData['information'];
+                $information[$informationKey] = $formData['information'];
                 $container->information = $information;
 
                 //redirect
-                return $this->redirect()->toRoute('diagnostic', ['controller' => 'index', 'action' => 'diagnostic']);
+                if ($type == 1) {
+                    return $this->redirect()->toRoute('diagnostic', ['controller' => 'index', 'action' => 'diagnostic']);
+                } else {
+                    return $this->redirect()->toRoute('diagnostic', ['controller' => 'index', 'action' => 'information', 'id' => $type]);
+                }
             }
         }
 
@@ -503,7 +510,7 @@ class IndexController extends AbstractActionController
 
         //populate
         $informationEntity = $this->getServiceLocator()->get('Diagnostic\Model\InformationEntity');
-        $binding = (array_key_exists('organization', $information)) ? ['information' => $information['organization']] : [];
+        $binding = (array_key_exists($informationKey, $information)) ? ['information' => $information[$informationKey]] : [];
         $informationEntity->exchangeArray($binding);
         $form->bind($informationEntity);
 
@@ -512,6 +519,7 @@ class IndexController extends AbstractActionController
             'questions' => $questions,
             'categories' => $categories,
             'result' => $result,
+            'information' => $information,
             'form' => $form,
             'formUpload' => $formUpload,
             'errorMessage' => $errorMessage,

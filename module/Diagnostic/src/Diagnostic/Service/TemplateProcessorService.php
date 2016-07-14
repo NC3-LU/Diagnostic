@@ -135,13 +135,13 @@ class TemplateProcessorService extends TemplateProcessor implements ServiceLocat
                 $maturity = $translator->translate('__maturity_none');
                 switch ($result['maturity']) {
                     case 1:
-                        $maturity = $translator->translate('__maturity_ok');
+                        $maturity = $translator->translate('__maturity_plan');
                         break;
                     case 2:
                         $maturity = $translator->translate('__maturity_medium');
                         break;
                     case 3:
-                        $maturity = $translator->translate('__maturity_plan');
+                        $maturity = $translator->translate('__maturity_ok');
                         break;
                 }
                 $name = 'RECOMM_CURR_MAT#' . $i;
@@ -156,13 +156,13 @@ class TemplateProcessorService extends TemplateProcessor implements ServiceLocat
                 $maturityTarget = $translator->translate('__maturity_none');
                 switch ($result['maturityTarget']) {
                     case 1:
-                        $maturityTarget = $translator->translate('__maturity_ok');
+                        $maturityTarget = $translator->translate('__maturity_plan');
                         break;
                     case 2:
                         $maturityTarget = $translator->translate('__maturity_medium');
                         break;
                     case 3:
-                        $maturityTarget = $translator->translate('__maturity_plan');
+                        $maturityTarget = $translator->translate('__maturity_ok');
                         break;
                 }
                 $name = 'RECOMM_TARG_MAT#' . $i;
@@ -268,8 +268,20 @@ class TemplateProcessorService extends TemplateProcessor implements ServiceLocat
             $prise9 = 1;
             foreach ($results as $questionId => $result) {
                 if ($questions[$questionId]->getCategoryId() == $categoryId) {
+                    $maturityTarget = $translator->translate('__maturity_none');
+                    switch ($result['maturityTarget']) {
+                        case 1:
+                            $maturityTarget = $translator->translate('__maturity_plan');
+                            break;
+                        case 2:
+                            $maturityTarget = $translator->translate('__maturity_medium');
+                            break;
+                        case 3:
+                            $maturityTarget = $translator->translate('__maturity_ok');
+                            break;
+                    }
                     $name = 'PRISE_NOTE_TARG_MAT_' . $j . '#' . $prise9;
-                    $this->setValue($name, $result['maturityTarget']);
+                    $this->setValue($name, $maturityTarget);
                     $prise9++;
                 }
             }

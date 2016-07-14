@@ -34,7 +34,7 @@ $id = 0;
             <div class="col-lg-12 text-left" style="background-color: #EEEEEE; min-height: 600px;">
                 <span style="text-decoration: underline; font-weight: bold;">
                     <br />
-                    <a style="color: dodgerblue; padding-top: 10px;" href="<?= $this->url('diagnostic', ['action' => 'information', 'id' => 1]) ?>">
+                    <a style="color: <?= (strlen($this->information['organization'])) ? 'green' : 'dodgerblue' ?>; padding-top: 10px;" href="<?= $this->url('diagnostic', ['action' => 'information', 'id' => 1]) ?>">
                         <strong><?= $this->translate('__organization_information') ?></strong>
                     </a>
                 </span>
@@ -114,7 +114,7 @@ $id = 0;
                 ?>
                 <span style="text-decoration: underline; font-weight: bold;">
                     <br />
-                    <a style="color: dodgerblue; padding-top: 10px;" href="<?= $this->url('diagnostic', ['action' => 'information', 'id' => 2]) ?>">
+                    <a style="color: <?= (strlen($this->information['synthesis'])) ? 'green' : 'dodgerblue' ?>; padding-top: 10px;" href="<?= $this->url('diagnostic', ['action' => 'information', 'id' => 2]) ?>">
                         <strong><?= $this->translate('__evaluation_synthesis') ?></strong>
                     </a>
                 </span>
