@@ -522,7 +522,7 @@ class IndexController extends AbstractActionController
         $id = $this->getRequest()->getQuery()->get('id');
         $categoryId = $this->getRequest()->getQuery()->get('categoryId');
 
-        if ((!$id) || (!$categoryId)) {
+        if (!$categoryId) {
             return $this->redirect()->toRoute('diagnostic', ['controller' => 'index', 'action' => 'diagnostic']);
         }
 
@@ -551,7 +551,6 @@ class IndexController extends AbstractActionController
                     }
                 }
 
-
                 //retrieve categories
                 $categories = [];
                 foreach ($questions as $question) {
@@ -567,7 +566,8 @@ class IndexController extends AbstractActionController
                     'category_translation_key' => $categories[$categoryId],
                     'translation_key' => $formData['question'],
                     'translation_key_help' => $formData['help'],
-                    'threshold' => $formData['threshold']
+                    'threshold' => $formData['threshold'],
+                    'new' => true,
                 ]);
 
                 //record question
@@ -586,6 +586,44 @@ class IndexController extends AbstractActionController
             'id' => $id,
             'categoryId' => $categoryId,
         ));
+    }
+
+    public function deleteQuestionAction(){
+
+        $id = $this->getEvent()->getRouteMatch()->getParam('id');
+
+        if (!$id) {
+            return $this->redirect()->toRoute('diagnostic', ['controller' => 'index', 'action' => 'information', 'id' => 1]);
+        }
+
+        //retrieve questions
+        $questionService = $this->getServiceLocator()->get('Diagnostic\Service\QuestionService');
+        $questions = $questionService->getQuestions();
+
+        //retrieve result
+        $container = new Container('diagnostic');
+        $result = ($container->offsetExists('result')) ? $container->result : [];
+
+        //retrieve current question
+        $nextQuestion = false;
+        foreach ($questions as $question) {
+            $nextQuestion = next($questions);
+            if ($question->getId() == $id) {
+                break;
+
+            }
+        }
+
+        //next id
+        $nextId = ($nextQuestion) ? $nextQuestion->getId() : $id;
+
+        unset($questions[$id]);
+        unset($result[$id]);
+
+        $container->questions = $questions;
+        $container->result = $result;
+
+        return $this->redirect()->toRoute('diagnostic', ['controller' => 'index', 'action' => 'diagnostic', 'id' => $nextId]);
     }
 
     /**

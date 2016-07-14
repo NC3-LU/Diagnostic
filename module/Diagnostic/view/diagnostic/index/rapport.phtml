@@ -259,13 +259,15 @@ echo $this->inlineScript()->prependFile($this->basePath('js/Chart.js-master/Char
         <h1><?php echo ucfirst($this->translate($this->escapeHtml('__doughnut_legend')));?></h1>
         <div class="row">
             <div class="col-lg-1 text-left"></div>
-            <div class="col-lg-10 text-left">
+            <div class="col-lg-10 text-center">
                 <br /><br />
                 <div class="row">
                     <div class="col-lg-2 text-left"></div>
                     <div class="col-lg-8 text-left">
-                        <canvas id="canvas2" width="300" height="300"></canvas>
-                        <div id="canvas2-legend" class="chart-legend" ></div>
+                        <center>
+                        <canvas id="canvas2" width="250" height="250"></canvas>
+                        </center>
+                        <div id="canvas2-legend" class="chart-legend" style="margin-left: 30px; margin-top: 20px;" ></div>
                     </div>
                     <div class="col-lg-2 text-left"></div>
                 </div>

@@ -84,6 +84,14 @@ $currentCategoryId = (array_key_exists($id, $questions)) ? $questions[$id]->getC
                                             <strong><?= $this->translate($this->escapeHtml($question->getTranslationKey())) ?></strong>
                                         </a>
                                         <?php
+                                        if ($question->getNew()) {
+                                            ?>
+                                            &nbsp;
+                                            <a href="<?= $this->url('diagnostic', ['action' => 'delete-question', 'id' => $question->getId()]) ?>" style="color: #DF1D31;">
+                                                <span class="glyphicon glyphicon-remove"></span>
+                                            </a>
+                                            <?php
+                                        }
                                         $titleQuestion = $this->translate($this->escapeHtml($question->getTranslationKey()));
                                         $titleHelp = (is_null($question->getTranslationKeyHelp())) ? '' : $this->translate($this->escapeHtml($question->getTranslationKeyHelp()));
                                     } else {
@@ -99,6 +107,14 @@ $currentCategoryId = (array_key_exists($id, $questions)) ? $questions[$id]->getC
                                             <?= $this->translate($this->escapeHtml($question->getTranslationKey())) ?>
                                         </a>
                                         <?php
+                                        if ($question->getNew()) {
+                                            ?>
+                                            &nbsp;
+                                            <a href="<?= $this->url('diagnostic', ['action' => 'delete-question', 'id' => $question->getId()]) ?>" style="color: #DF1D31;">
+                                                <span class="glyphicon glyphicon-remove"></span>
+                                            </a>
+                                            <?php
+                                        }
                                     }
                                     echo '<br />';
                                 }

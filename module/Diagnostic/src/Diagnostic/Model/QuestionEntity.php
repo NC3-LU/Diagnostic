@@ -40,6 +40,11 @@ class QuestionEntity
     public $threshold;
 
     /**
+     * New
+     */
+    public $new= false;
+
+    /**
      * @return mixed
      */
     public function getId()
@@ -148,6 +153,24 @@ class QuestionEntity
     }
 
     /**
+     * @return mixed
+     */
+    public function getNew()
+    {
+        return $this->new;
+    }
+
+    /**
+     * @param mixed $new
+     * @return QuestionEntity
+     */
+    public function setNew($new)
+    {
+        $this->new = $new;
+        return $this;
+    }
+
+    /**
      * @param array $data
      */
     public function exchangeArray($data)
@@ -168,6 +191,7 @@ class QuestionEntity
         $this->translation_key  = (isset($data['translation_key'])) ? $data['translation_key'] : null;
         $this->translation_key_help  = (isset($data['translation_key_help'])) ? $data['translation_key_help'] : null;
         $this->threshold  = (isset($data['threshold'])) ? $data['threshold'] : null;
+        $this->new  = (isset($data['new'])) ? $data['new'] : false;
     }
 
     /**

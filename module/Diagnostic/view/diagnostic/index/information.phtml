@@ -82,6 +82,14 @@ $id = 0;
                                             <strong><?= $this->translate($this->escapeHtml($question->getTranslationKey())) ?></strong>
                                         </a>
                                         <?php
+                                        if ($question->getNew()) {
+                                            ?>
+                                            &nbsp;
+                                            <a href="<?= $this->url('diagnostic', ['action' => 'delete-question', 'id' => $question->getId()]) ?>" style="color: #DF1D31;">
+                                                <span class="glyphicon glyphicon-remove"></span>
+                                            </a>
+                                            <?php
+                                        }
                                         $titleQuestion = $this->translate($this->escapeHtml($question->getTranslationKey()));
                                         $titleHelp = (is_null($question->getTranslationKeyHelp())) ? '' : $this->translate($this->escapeHtml($question->getTranslationKeyHelp()));
                                     } else {
@@ -97,6 +105,14 @@ $id = 0;
                                             <?= $this->translate($this->escapeHtml($question->getTranslationKey())) ?>
                                         </a>
                                         <?php
+                                        if ($question->getNew()) {
+                                            ?>
+                                            &nbsp;
+                                            <a href="<?= $this->url('diagnostic', ['action' => 'delete-question', 'id' => $question->getId()]) ?>" style="color: #DF1D31;">
+                                                <span class="glyphicon glyphicon-remove"></span>
+                                            </a>
+                                            <?php
+                                        }
                                     }
                                     echo '<br />';
                                 }
