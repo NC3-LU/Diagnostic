@@ -43,7 +43,7 @@ class TemplateProcessorService extends TemplateProcessor implements ServiceLocat
      * @param $data
      * @throws \PhpOffice\PhpWord\Exception\Exception
      */
-    public function generateWord($data, $questions, $results, $translator) {
+    public function generateWord($data, $questions, $results, $information, $translator) {
 
         $data['date'] = date('Y/m/d');
 
@@ -68,7 +68,7 @@ class TemplateProcessorService extends TemplateProcessor implements ServiceLocat
         $container = new Container('diagnostic');
         $this->setImageValue('image7.png', $container->bar);
         $this->setImageValue('image5.png', $container->pie);
-        $this->setImageValue('image9.png', $container->radar);
+        $this->setImageValue('image8.png', $container->radar);
 
         //number of recommandations
         $nbRecommandations = 0;
@@ -77,6 +77,9 @@ class TemplateProcessorService extends TemplateProcessor implements ServiceLocat
                 $nbRecommandations++;
             }
         }
+
+        $this->setValue('ORGANIZATION_INFORMATION', $information['organization']);
+        $this->setValue('EVALUATION_SYNTHESYS', $information['synthesis']);
 
         //recommandations
         $this->cloneRow('RECOMM_NUM', $nbRecommandations);
@@ -220,7 +223,7 @@ class TemplateProcessorService extends TemplateProcessor implements ServiceLocat
             foreach ($results as $questionId => $result) {
                 if ($questions[$questionId]->getCategoryId() == $categoryId) {
                     $name = 'PRISE_NOTE_1_' . $j . '#' . $prise4;
-                    $value = ($result['maturity'] == 0) ? 'X' : '';
+                    $value = ($result['maturity'] == 3) ? 'X' : '';
                     $this->setValue($name, $value);
                     $prise4++;
                 }
@@ -230,7 +233,7 @@ class TemplateProcessorService extends TemplateProcessor implements ServiceLocat
             foreach ($results as $questionId => $result) {
                 if ($questions[$questionId]->getCategoryId() == $categoryId) {
                     $name = 'PRISE_NOTE_2_' . $j . '#' . $prise5;
-                    $value = ($result['maturity'] == 1) ? 'X' : '';
+                    $value = ($result['maturity'] == 2) ? 'X' : '';
                     $this->setValue($name, $value);
                     $prise5++;
                 }
@@ -240,7 +243,7 @@ class TemplateProcessorService extends TemplateProcessor implements ServiceLocat
             foreach ($results as $questionId => $result) {
                 if ($questions[$questionId]->getCategoryId() == $categoryId) {
                     $name = 'PRISE_NOTE_3_' . $j . '#' . $prise6;
-                    $value = ($result['maturity'] == 2) ? 'X' : '';
+                    $value = ($result['maturity'] == 1) ? 'X' : '';
                     $this->setValue($name, $value);
                     $prise6++;
                 }
@@ -250,7 +253,7 @@ class TemplateProcessorService extends TemplateProcessor implements ServiceLocat
             foreach ($results as $questionId => $result) {
                 if ($questions[$questionId]->getCategoryId() == $categoryId) {
                     $name = 'PRISE_NOTE_4_' . $j . '#' . $prise7;
-                    $value = ($result['maturity'] == 3) ? 'X' : '';
+                    $value = ($result['maturity'] == 0) ? 'X' : '';
                     $this->setValue($name, $value);
                     $prise7++;
                 }
@@ -269,7 +272,7 @@ class TemplateProcessorService extends TemplateProcessor implements ServiceLocat
             foreach ($results as $questionId => $result) {
                 if ($questions[$questionId]->getCategoryId() == $categoryId) {
                     $name = 'PRISE_NOTE_TARG_1_' . $j . '#' . $prise9;
-                    $value = ($result['maturityTarget'] == 2) ? 'X' : '';
+                    $value = ($result['maturityTarget'] == 3) ? 'X' : '';
                     $this->setValue($name, $value);
                     $prise9++;
                 }
@@ -279,7 +282,7 @@ class TemplateProcessorService extends TemplateProcessor implements ServiceLocat
             foreach ($results as $questionId => $result) {
                 if ($questions[$questionId]->getCategoryId() == $categoryId) {
                     $name = 'PRISE_NOTE_TARG_2_' . $j . '#' . $prise10;
-                    $value = ($result['maturityTarget'] == 3) ? 'X' : '';
+                    $value = ($result['maturityTarget'] == 2) ? 'X' : '';
                     $this->setValue($name, $value);
                     $prise10++;
                 }

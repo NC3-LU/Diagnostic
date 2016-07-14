@@ -735,6 +735,10 @@ class IndexController extends AbstractActionController
         $downloadFilter = new DownloadFormFilter($this->getServiceLocator()->get('Zend\Db\Adapter\Adapter'));
         $form->setInputFilter($downloadFilter);
 
+        //retrieve information
+        $container = new Container('diagnostic');
+        $information = ($container->offsetExists('information')) ? $container->information : [];
+
         //form is post and valid
         $request = $this->getRequest();
         if ($request->isPost()) {
@@ -772,8 +776,8 @@ class IndexController extends AbstractActionController
                     $calculService = $this->getServiceLocator()->get('Diagnostic\Service\CalculService');
                     $calculResults = $calculService->calcul();
 
-                    $word = new TemplateProcessorService('data/resources/modele_v0.7.docx');
-                    $word->generateWord($data, $questions, $calculResults['recommandations'], $translator);
+                    $word = new TemplateProcessorService('data/resources/modele_v0.8.docx');
+                    $word->generateWord($data, $questions, $calculResults['recommandations'], $information,  $translator);
                 }
             }
         }
