@@ -791,3 +791,11 @@ msgstr ""
 msgid "__target"
 msgstr ""
 
+#:
+msgid "__organization_information"
+msgstr ""
+
+#:
+msgid "__evaluation_synthesis"
+msgstr ""
+
