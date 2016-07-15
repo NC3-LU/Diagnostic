@@ -729,7 +729,6 @@ class IndexController extends AbstractActionController
             ['color' => '#B266FF', 'highlight' => '#CC99FF'],
             ['color' => '#FF66FF', 'highlight' => '#FF99FF'],
         ];
-        $nbQuestions = count($questions);
         $categoriesRepartition = [];
         $i = 0;
         foreach($numberByCategories as $category => $categoryNumber) {
@@ -745,6 +744,7 @@ class IndexController extends AbstractActionController
         foreach ($categories as $key => $category) {
             $categories[$key] = (array_key_exists($category, $calculResults['totalCategory'])) ? (int) $calculResults['totalCategory'][$category] : 0;
         }
+
 
         //send to view
         return new ViewModel(array(
@@ -814,8 +814,8 @@ class IndexController extends AbstractActionController
                     $calculService = $this->getServiceLocator()->get('Diagnostic\Service\CalculService');
                     $calculResults = $calculService->calcul();
 
-                    $word = new TemplateProcessorService('data/resources/modele_v1.0.docx');
-                    $word->generateWord($data, $questions, $calculResults['recommandations'], $information,  $translator);
+                    $word = new TemplateProcessorService('data/resources/modele_v1.1.docx');
+                    $word->generateWord($data, $questions, $calculResults, $information,  $translator);
                 }
             }
         }

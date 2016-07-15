@@ -51,8 +51,10 @@ class TemplateProcessorService extends TemplateProcessor implements ServiceLocat
         $filepath = 'data/results/' . $filename;
 
         //retrieve categories
+        $categories = [];
         $numberByCategories = [];
         foreach ($questions as $question) {
+            $categories[$question->getCategoryId()] = $question->getCategoryTranslationKey();
             if (array_key_exists($question->getCategoryTranslationKey(), $numberByCategories)) {
                 $numberByCategories[$question->getCategoryTranslationKey()] = $numberByCategories[$question->getCategoryTranslationKey()] + 1;
             } else {
@@ -60,13 +62,23 @@ class TemplateProcessorService extends TemplateProcessor implements ServiceLocat
             }
         }
 
-        $i = 1;
-        $categories = [];
+        //categories repartition
+        $categoriesRepartition = [];
+        $i = 0;
         foreach($numberByCategories as $category => $categoryNumber) {
-            $categories[$i]['label'] = $category;
-            $categories[$i]['percent'] = $categoryNumber;
+            $categoriesRepartition[$i]['label'] = $translator->translate($category);
+            $categoriesRepartition[$i]['value'] = $categoryNumber;
             $i++;
         }
+
+        foreach ($categories as $id => $label) {
+            $categories[$id] = [
+                'label' => $label,
+                'percent' => (array_key_exists($id, $results['totalCategory'])) ? (int) $results['totalCategory'][$id] : 0
+            ];
+        }
+
+        $recommandations = $results['recommandations'];
 
         //create word
         foreach ($data as $key => $value) {
@@ -84,8 +96,8 @@ class TemplateProcessorService extends TemplateProcessor implements ServiceLocat
 
         //number of recommandations
         $nbRecommandations = 0;
-        foreach ($results as $result) {
-            if ($result['recommandation']) {
+        foreach ($recommandations as $recommandation) {
+            if ($recommandation['recommandation']) {
                 $nbRecommandations++;
             }
         }
@@ -97,37 +109,34 @@ class TemplateProcessorService extends TemplateProcessor implements ServiceLocat
         $this->cloneRow('RECOMM_NUM', $nbRecommandations);
 
         $i = 1;
-        foreach ($results as $result) {
-            if ($result['recommandation']) {
-                $name = 'RECOMM_NUM#' . $i;
-                $this->setValue($name, $i);
+        foreach ($recommandations as $recommandation) {
+            if ($recommandation['recommandation']) {
+                $this->setValue('RECOMM_NUM#' . $i, $i);
                 $i++;
             }
         }
 
         $i = 1;
-        foreach ($results as $result) {
-            if ($result['recommandation']) {
-                $name = 'RECOMM_TEXT#' . $i;
-                $this->setValue($name, $result['recommandation']);
+        foreach ($recommandations as $recommandation) {
+            if ($recommandation['recommandation']) {
+                $this->setValue('RECOMM_TEXT#' . $i, $recommandation['recommandation']);
                 $i++;
             }
         }
 
         $i = 1;
-        foreach ($results as $questionId => $result) {
-            if ($result['recommandation']) {
-                $name = 'RECOMM_DOM#' . $i;
-                $this->setValue($name, $translator->translate($categories[$questions[$questionId]->getCategoryId()]['label']));
+        foreach ($recommandations as $questionId => $recommandation) {
+            if ($recommandation['recommandation']) {
+                $this->setValue('RECOMM_DOM#' . $i, $translator->translate($categories[$questions[$questionId]->getCategoryId()]['label']));
                 $i++;
             }
         }
 
         $i = 1;
-        foreach ($results as $result) {
-            if ($result['recommandation']) {
+        foreach ($recommandations as $recommandation) {
+            if ($recommandation['recommandation']) {
                 $gravity = '';
-                switch ($result['gravity']) {
+                switch ($recommandation['gravity']) {
                     case 1:
                         $gravity = $translator->translate('__low');
                         break;
@@ -138,17 +147,16 @@ class TemplateProcessorService extends TemplateProcessor implements ServiceLocat
                         $gravity = $translator->translate('__strong');
                         break;
                 }
-                $name = 'RECOMM_GRAV#' . $i;
-                $this->setValue($name, $gravity);
+                $this->setValue('RECOMM_GRAV#' . $i, $gravity);
                 $i++;
             }
         }
 
         $i = 1;
-        foreach ($results as $result) {
-            if ($result['recommandation']) {
+        foreach ($recommandations as $recommandation) {
+            if ($recommandation['recommandation']) {
                 $maturity = $translator->translate('__maturity_none');
-                switch ($result['maturity']) {
+                switch ($recommandation['maturity']) {
                     case 1:
                         $maturity = $translator->translate('__maturity_plan');
                         break;
@@ -159,17 +167,16 @@ class TemplateProcessorService extends TemplateProcessor implements ServiceLocat
                         $maturity = $translator->translate('__maturity_ok');
                         break;
                 }
-                $name = 'RECOMM_CURR_MAT#' . $i;
-                $this->setValue($name, $maturity);
+                $this->setValue('RECOMM_CURR_MAT#' . $i, $maturity);
                 $i++;
             }
         }
 
         $i = 1;
-        foreach ($results as $result) {
-            if ($result['recommandation']) {
+        foreach ($recommandations as $recommandation) {
+            if ($recommandation['recommandation']) {
                 $maturityTarget = $translator->translate('__maturity_none');
-                switch ($result['maturityTarget']) {
+                switch ($recommandation['maturityTarget']) {
                     case 1:
                         $maturityTarget = $translator->translate('__maturity_plan');
                         break;
@@ -180,8 +187,7 @@ class TemplateProcessorService extends TemplateProcessor implements ServiceLocat
                         $maturityTarget = $translator->translate('__maturity_ok');
                         break;
                 }
-                $name = 'RECOMM_TARG_MAT#' . $i;
-                $this->setValue($name, $maturityTarget);
+                $this->setValue('RECOMM_TARG_MAT#' . $i, $maturityTarget);
                 $i++;
             }
         }
@@ -190,7 +196,7 @@ class TemplateProcessorService extends TemplateProcessor implements ServiceLocat
         foreach ($categories as $categoryId => $category) {
 
             $nbCategoryResults = 0;
-            foreach ($results as $questionId => $result) {
+            foreach ($recommandations as $questionId => $recommandation) {
                 if ($questions[$questionId]->getCategoryId() == $categoryId) {
                     $nbCategoryResults++;
                 }
@@ -202,7 +208,7 @@ class TemplateProcessorService extends TemplateProcessor implements ServiceLocat
             $this->cloneRow('PRISE_NOTE_TO_COLLECT_' . $j, $nbCategoryResults);
 
             $prise1 = 1;
-            foreach ($results as $questionId => $result) {
+            foreach ($recommandations as $questionId => $recommandation) {
                 if ($questions[$questionId]->getCategoryId() == $categoryId) {
                     $name = 'PRISE_NOTE_TO_COLLECT_' . $j . '#' . $prise1;
                     $this->setValue($name, $translator->translate($questions[$questionId]->getTranslationKey()));
@@ -211,16 +217,16 @@ class TemplateProcessorService extends TemplateProcessor implements ServiceLocat
             }
 
             $prise2 = 1;
-            foreach ($results as $questionId => $result) {
+            foreach ($recommandations as $questionId => $recommandation) {
                 if ($questions[$questionId]->getCategoryId() == $categoryId) {
                     $name = 'PRISE_NOTE_COLLECT_' . $j . '#' . $prise2;
-                    $this->setValue($name, $result['notes']);
+                    $this->setValue($name, $recommandation['notes']);
                     $prise2++;
                 }
             }
 
             $prise3 = 1;
-            foreach ($results as $questionId => $result) {
+            foreach ($recommandations as $questionId => $recommandation) {
                 if ($questions[$questionId]->getCategoryId() == $categoryId) {
                     $name = 'PRISE_NOTE_QUEST_' . $j . '#' . $prise3;
                     $prise3++;
@@ -232,69 +238,69 @@ class TemplateProcessorService extends TemplateProcessor implements ServiceLocat
             }
 
             $prise4 = 1;
-            foreach ($results as $questionId => $result) {
+            foreach ($recommandations as $questionId => $recommandation) {
                 if ($questions[$questionId]->getCategoryId() == $categoryId) {
                     $name = 'PRISE_NOTE_1_' . $j . '#' . $prise4;
-                    $value = ($result['maturity'] == 3) ? 'X' : '';
+                    $value = ($recommandation['maturity'] == 3) ? 'X' : '';
                     $this->setValue($name, $value);
                     $prise4++;
                 }
             }
 
             $prise5 = 1;
-            foreach ($results as $questionId => $result) {
+            foreach ($recommandations as $questionId => $recommandation) {
                 if ($questions[$questionId]->getCategoryId() == $categoryId) {
                     $name = 'PRISE_NOTE_2_' . $j . '#' . $prise5;
-                    $value = ($result['maturity'] == 2) ? 'X' : '';
+                    $value = ($recommandation['maturity'] == 2) ? 'X' : '';
                     $this->setValue($name, $value);
                     $prise5++;
                 }
             }
 
             $prise6 = 1;
-            foreach ($results as $questionId => $result) {
+            foreach ($recommandations as $questionId => $recommandation) {
                 if ($questions[$questionId]->getCategoryId() == $categoryId) {
                     $name = 'PRISE_NOTE_3_' . $j . '#' . $prise6;
-                    $value = ($result['maturity'] == 1) ? 'X' : '';
+                    $value = ($recommandation['maturity'] == 1) ? 'X' : '';
                     $this->setValue($name, $value);
                     $prise6++;
                 }
             }
 
             $prise7 = 1;
-            foreach ($results as $questionId => $result) {
+            foreach ($recommandations as $questionId => $recommandation) {
                 if ($questions[$questionId]->getCategoryId() == $categoryId) {
                     $name = 'PRISE_NOTE_4_' . $j . '#' . $prise7;
-                    $value = ($result['maturity'] == 0) ? 'X' : '';
+                    $value = ($recommandation['maturity'] == 0) ? 'X' : '';
                     $this->setValue($name, $value);
                     $prise7++;
                 }
             }
 
             $prise8 = 1;
-            foreach ($results as $questionId => $result) {
+            foreach ($recommandations as $questionId => $recommandation) {
                 if ($questions[$questionId]->getCategoryId() == $categoryId) {
                     $name = 'PRISE_NOTE_RECOMM_' . $j . '#' . $prise8;
-                    $this->setValue($name, $result['recommandation']);
+                    $this->setValue($name, $recommandation['recommandation']);
                     $prise8++;
                 }
             }
 
             $prise9 = 1;
-            foreach ($results as $questionId => $result) {
+            foreach ($recommandations as $questionId => $recommandation) {
                 if ($questions[$questionId]->getCategoryId() == $categoryId) {
                     $name = 'PRISE_NOTE_TARG_1_' . $j . '#' . $prise9;
-                    $value = ($result['maturityTarget'] == 3) ? 'X' : '';
+                    $value = ($recommandation['maturityTarget'] == 3) ? 'X' : '';
                     $this->setValue($name, $value);
                     $prise9++;
                 }
             }
 
             $prise10 = 1;
-            foreach ($results as $questionId => $result) {
+            foreach ($recommandations as $questionId => $recommandation) {
                 if ($questions[$questionId]->getCategoryId() == $categoryId) {
                     $name = 'PRISE_NOTE_TARG_2_' . $j . '#' . $prise10;
-                    $value = ($result['maturityTarget'] == 2) ? 'X' : '';
+                    $value = ($recommandation['maturityTarget'] == 2) ? 'X' : '';
                     $this->setValue($name, $value);
                     $prise10++;
                 }
