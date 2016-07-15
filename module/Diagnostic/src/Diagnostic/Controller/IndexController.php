@@ -738,13 +738,13 @@ class IndexController extends AbstractActionController
             $categoriesRepartition[$i]['value'] = $categoryNumber;
             $i++;
         }
-
         $categories = array_flip($categories);
+        $categoriesTarget = $categories;
 
         foreach ($categories as $key => $category) {
             $categories[$key] = (array_key_exists($category, $calculResults['totalCategory'])) ? (int) $calculResults['totalCategory'][$category] : 0;
+            $categoriesTarget[$key] = (array_key_exists($category, $calculResults['totalCategoryTarget'])) ? (int) $calculResults['totalCategoryTarget'][$category] : 0;
         }
-
 
         //send to view
         return new ViewModel(array(
@@ -752,6 +752,7 @@ class IndexController extends AbstractActionController
             'total' => $calculResults['total'],
             'totalTarget' => $calculResults['totalTarget'],
             'totalCategory' => $categories,
+            'totalCategoryTarget' => $categoriesTarget,
             'recommandations' => $calculResults['recommandations'],
             'categoriesRepartition' => $categoriesRepartition,
             'download' => (count($results)) ? true : false,
@@ -814,7 +815,7 @@ class IndexController extends AbstractActionController
                     $calculService = $this->getServiceLocator()->get('Diagnostic\Service\CalculService');
                     $calculResults = $calculService->calcul();
 
-                    $word = new TemplateProcessorService('data/resources/modele_v1.1.docx');
+                    $word = new TemplateProcessorService('data/resources/modele_v1.3.docx');
                     $word->generateWord($data, $questions, $calculResults, $information,  $translator);
                 }
             }

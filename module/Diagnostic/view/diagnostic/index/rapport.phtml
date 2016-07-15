@@ -4,9 +4,14 @@ $this->headTitle($title);
 
 $jsPercents = [];
 $jsCategories = [];
-foreach ($totalCategory as $key => $value) {
+foreach ($this->totalCategory as $key => $value) {
     $jsPercents[] = $value;
     $jsCategories[] = $this->translate($key);
+}
+
+$jsPercentsTarget = [];
+foreach ($this->totalCategoryTarget as $key => $value) {
+    $jsPercentsTarget[] = $value;
 }
 
 $rgbaColorDangerBorder = 'rgba(228, 185, 185, 1)';
@@ -20,57 +25,53 @@ $rgbaColorSuccess = 'rgba(223, 240, 216, 1)';
 
 switch (true) {
     case ($this->total < 25):
-        $totalColor = 'danger';
-        $chartColor = $rgbaColorDanger;
-        $chartColorBorder = $rgbaColorDangerBorder;
+        $backgroundColor = $rgbaColorDanger;
+        $backgroundColorBorder = $rgbaColorDangerBorder;
         break;
     case ($this->total < 50):
-        $totalColor = 'warning';
-        $chartColor = $rgbaColorWarning;
-        $chartColorBorder = $rgbaColorWarningBorder;
+        $backgroundColor = $rgbaColorWarning;
+        $backgroundColorBorder = $rgbaColorWarningBorder;
         break;
     case ($this->total < 75):
-        $totalColor = 'info';
-        $chartColor = $rgbaColorInfo;
-        $chartColorBorder = $rgbaColorInfoBorder;
+        $backgroundColor = $rgbaColorInfo;
+        $backgroundColorBorder = $rgbaColorInfoBorder;
         break;
     default:
-        $totalColor = 'success';
-        $chartColor = $rgbaColorSuccess;
-        $chartColorBorder = $rgbaColorSuccessBorder;
+        $backgroundColor = $rgbaColorSuccess;
+        $backgroundColorBorder = $rgbaColorSuccessBorder;
         break;
 }
 
 switch (true) {
     case ($this->totalTarget < 25):
-        $chartTargetColor = $rgbaColorDanger;
-        $chartTargetColorBorder = $rgbaColorDangerBorder;
+        $backgroundTargetColor = $rgbaColorDanger;
+        $backgroundTargetColorBorder = $rgbaColorDangerBorder;
         break;
     case ($this->totalTarget < 50):
         if (($this->total >=25 ) && ($this->total < 50)) {
-            $chartTargetColor = $rgbaColorDanger;
-            $chartTargetColorBorder = $rgbaColorDangerBorder;
+            $backgroundTargetColor = $rgbaColorDanger;
+            $backgroundTargetColorBorder = $rgbaColorDangerBorder;
         } else {
-            $chartTargetColor = $rgbaColorWarning;
-            $chartTargetColorBorder = $rgbaColorWarningBorder;
+            $backgroundTargetColor = $rgbaColorWarning;
+            $backgroundTargetColorBorder = $rgbaColorWarningBorder;
         }
         break;
     case ($this->totalTarget < 75):
         if (($this->total >=50 ) && ($this->total < 75)) {
-            $chartTargetColor = $rgbaColorWarning;
-            $chartTargetColorBorder = $rgbaColorWarningBorder;
+            $backgroundTargetColor = $rgbaColorWarning;
+            $backgroundTargetColorBorder = $rgbaColorWarningBorder;
         } else {
-            $chartTargetColor = $rgbaColorInfo;
-            $chartTargetColorBorder = $rgbaColorInfoBorder;
+            $backgroundTargetColor = $rgbaColorInfo;
+            $backgroundTargetColorBorder = $rgbaColorInfoBorder;
         }
         break;
     default:
         if (($this->total >=75 )) {
-            $chartTargetColor = $rgbaColorInfo;
-            $chartTargetColorBorder = $rgbaColorInfoBorder;
+            $backgroundTargetColor = $rgbaColorInfo;
+            $backgroundTargetColorBorder = $rgbaColorInfoBorder;
         } else {
-            $chartTargetColor = $rgbaColorSuccess;
-            $chartTargetColorBorder = $rgbaColorSuccessBorder;
+            $backgroundTargetColor = $rgbaColorSuccess;
+            $backgroundTargetColorBorder = $rgbaColorSuccessBorder;
         }
         break;
 }
@@ -109,7 +110,7 @@ echo $this->inlineScript()->prependFile($this->basePath('js/Chart.js-master/Char
         }
         ?>
     </div>
-    <div class="col-lg-5 text-center bg-<?= $totalColor ?>">
+    <div class="col-lg-5 text-center" style="background: <?= $backgroundColor ?>">
         <h2><?= ucfirst($this->translate('__results')) ?> : <?php echo $this->escapeHtml($total); ?>/100</h2>
     </div>
     <div class="col-lg-4 text-left">
@@ -241,13 +242,13 @@ echo $this->inlineScript()->prependFile($this->basePath('js/Chart.js-master/Char
 
         <h1><?php echo ucfirst($this->translate($this->escapeHtml('__maturity_evolution')));?></h1>
         <div class="row">
-            <div class="col-lg-2 text-left"></div>
-            <div class="col-lg-8 text-left">
+            <div class="col-lg-3 text-left"></div>
+            <div class="col-lg-6 text-left">
                 <br />
-                <canvas id="canvas3" width="500" height="300"></canvas>
+                <canvas id="canvas3" width="300" height="200"></canvas>
                 <div id="canvas3-legend" class="chart-legend"></div>
             </div>
-            <div class="col-lg-2 text-left"></div>
+            <div class="col-lg-3 text-left"></div>
         </div>
         <br />
         <h1><?php echo ucfirst($this->translate($this->escapeHtml('__doughnut_legend')));?></h1>
@@ -283,15 +284,43 @@ echo $this->inlineScript()->prependFile($this->basePath('js/Chart.js-master/Char
         datasets: [
             {
                 label: "Cases radar",
-                fillColor: "rgba(91, 192, 222, 0.3)",
-                strokeColor: "rgba(48, 113, 169, 1)",
-                pointColor: "rgba(48, 113, 169, 1)",
+                fillColor: "<?= $backgroundColor ?>",
+                strokeColor: "<?= $backgroundColorBorder ?>",
+                pointColor: "<?= $backgroundColorBorder ?>",
                 pointStrokeColor: "#fff",
                 pointStrokeColor: "#fff",
                 pointHighlightFill: "#fff",
                 pointHighlightStroke: "rgba(220,220,220,1)",
                 data: <?= json_encode($jsPercents) ?>
             }
+        ]
+    };
+
+    var radarChartData = {
+        labels: <?= json_encode($jsCategories) ?>,
+        datasets: [
+            {
+                label: "Visée",
+                fillColor: "<?= $backgroundTargetColor ?>",
+                strokeColor: "<?= $backgroundTargetColorBorder ?>",
+                pointColor: "<?= $backgroundTargetColorBorder ?>",
+                pointStrokeColor: "#fff",
+                pointStrokeColor: "#fff",
+                pointHighlightFill: "#fff",
+                pointHighlightStroke: "rgba(220,220,220,1)",
+                data: <?= json_encode($jsPercentsTarget) ?>
+            },
+            {
+                label: "Actuel",
+                fillColor: "<?= $backgroundColor ?>",
+                strokeColor: "<?= $backgroundColorBorder ?>",
+                pointColor: "<?= $backgroundColorBorder ?>",
+                pointStrokeColor: "#fff",
+                pointStrokeColor: "#fff",
+                pointHighlightFill: "#fff",
+                pointHighlightStroke: "rgba(220,220,220,1)",
+                data: <?= json_encode($jsPercents) ?>
+            },
         ]
     };
 
@@ -323,18 +352,18 @@ echo $this->inlineScript()->prependFile($this->basePath('js/Chart.js-master/Char
         datasets: [
             {
                 label: "<?= $this->translate('__actual') ?>",
-                fillColor: "<?= $chartColor ?>",
-                strokeColor: "<?= $chartColorBorder ?>",
-                highlightFill: "<?= $chartColor ?>",
-                highlightStroke: "<?= $chartColorBorder ?>",
+                fillColor: "<?= $backgroundColor ?>",
+                strokeColor: "<?= $backgroundColorBorder ?>",
+                highlightFill: "<?= $backgroundColor ?>",
+                highlightStroke: "<?= $backgroundColorBorder ?>",
                 data: [<?= $this->total ?>]
             },
             {
                 label: "<?= $this->translate('__target') ?>",
-                fillColor: "<?= $chartTargetColor ?>",
-                strokeColor: "<?= $chartTargetColorBorder ?>",
-                highlightFill: "<?= $chartTargetColor ?>",
-                highlightStroke: "<?= $chartTargetColorBorder ?>",
+                fillColor: "<?= $backgroundTargetColor ?>",
+                strokeColor: "<?= $backgroundTargetColorBorder ?>",
+                highlightFill: "<?= $backgroundTargetColor ?>",
+                highlightStroke: "<?= $backgroundTargetColorBorder ?>",
                 data: [<?= $this->totalTarget ?>]
             }
         ]

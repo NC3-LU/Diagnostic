@@ -29,9 +29,10 @@ class CalculService implements ServiceLocatorAwareInterface
         $totalPointsTarget = 0;
         $totalThreshold = 0;
         $globalPoints = [];
+        $globalPointsTarget = [];
         $globalThreshold = [];
         $recommandations = [];
-        foreach ($questions as $questionId =>$question) {
+        foreach ($questions as $questionId => $question) {
 
             $categoryId = $question->getCategoryId();
             $threshold = $question->getThreshold();
@@ -56,9 +57,10 @@ class CalculService implements ServiceLocatorAwareInterface
                     $totalPoints += $points;
                     $totalPointsTarget += $pointsTarget;
                     $globalPoints[$categoryId] = array_key_exists($categoryId, $globalPoints) ? $globalPoints[$categoryId] + $points : $points;
+                    $globalPointsTarget[$categoryId] = array_key_exists($categoryId, $globalPointsTarget) ? $globalPointsTarget[$categoryId] + $pointsTarget : (int) $pointsTarget;
 
                     $totalThreshold += $threshold;
-                    $globalThreshold[$categoryId] = array_key_exists($categoryId, $globalThreshold) ? $globalThreshold[$categoryId] + $threshold : $threshold;
+                    $globalThreshold[$categoryId] = array_key_exists($categoryId, $globalThreshold) ? $globalThreshold[$categoryId] + $threshold : (int) $threshold;
                 }
             }
         }
@@ -71,6 +73,11 @@ class CalculService implements ServiceLocatorAwareInterface
             $totalCategory[$categoryId] = ($globalThreshold[$categoryId]) ? round($points / $globalThreshold[$categoryId] * 100 / 3) : 0;
         }
 
+        $totalCategoryTarget = [];
+        foreach($globalPointsTarget as $categoryId => $pointsTarget) {
+            $totalCategoryTarget[$categoryId] = ($globalThreshold[$categoryId]) ? round($pointsTarget / $globalThreshold[$categoryId] * 100 / 3) : 0;
+        }
+
         $recommandations = $this->sortArray($recommandations, 'maturityTarget');
         $recommandations = $this->sortArray($recommandations, 'maturity');
         $recommandations = $this->sortArray($recommandations, 'gravity');
@@ -79,6 +86,7 @@ class CalculService implements ServiceLocatorAwareInterface
             'total' => $total,
             'totalTarget' => $totalTarget,
             'totalCategory' => $totalCategory,
+            'totalCategoryTarget' => $totalCategoryTarget,
             'recommandations' => $recommandations,
         ];
     }
