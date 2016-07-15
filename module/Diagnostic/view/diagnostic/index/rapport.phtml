@@ -148,21 +148,20 @@ echo $this->inlineScript()->prependFile($this->basePath('js/Chart.js-master/Char
         <canvas id="canvas" width="600" height="400"></canvas>
     </div>
     <div class="col-lg-6 text-center">
-        <h1><?php echo ucfirst($this->translate($this->escapeHtml('__categories')));?></h1>
+        <h1><?php echo ucfirst($this->translate($this->escapeHtml('__categories_maturities')));?></h1>
         <table class="table table-striped table-hover">
+            <tr class="bg-<?= $totalColor ?>">
+                <th><?= $this->translate('__category'); ?></th>
+                <th style="text-align: center"><?= $this->translate('__actual'); ?></th>
+                <th style="text-align: center"><?= $this->translate('__target'); ?></th>
+            </tr>
             <?php
             foreach ($totalCategory as $key => $value) :
-                $valueColor = '';
-                if ($value < 25) {
-                    $valueColor = 'text-danger';
-                }
-                if ($value > 75) {
-                    $valueColor = 'text-success';
-                }
                 ?>
                 <tr>
-                    <td class="text-left <?= $valueColor ?>"><?= $this->translate($this->escapeHtml($key)) ?></td>
-                    <td class="text-right <?= $valueColor ?>"><?= (int) $value ?>%</td>
+                    <td class="text-left"><?= $this->translate($this->escapeHtml($key)) ?></td>
+                    <td class="text-center"><?= (int) $value ?>%</td>
+                    <td class="text-center"><?= (int) $this->totalCategoryTarget[$key] ?>%</td>
                 </tr>
             <?php endforeach; ?>
         </table>

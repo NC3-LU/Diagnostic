@@ -799,3 +799,7 @@ msgstr ""
 msgid "__evaluation_synthesis"
 msgstr ""
 
+#:
+msgid "__categories_maturities"
+msgstr "Maturités des catégories"
+

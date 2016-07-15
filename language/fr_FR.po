@@ -653,3 +653,7 @@ msgstr "Informations sur l'organisme"
 msgid "__evaluation_synthesis"
 msgstr "Synthèse sur l'évaluation"
 
+#:
+msgid "__categories_maturities"
+msgstr "Maturités par catégories"
+
