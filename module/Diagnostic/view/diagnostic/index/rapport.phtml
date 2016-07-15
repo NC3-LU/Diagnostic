@@ -148,7 +148,7 @@ echo $this->inlineScript()->prependFile($this->basePath('js/Chart.js-master/Char
     </div>
     <div class="col-lg-6 text-center">
         <h1><?php echo ucfirst($this->translate($this->escapeHtml('__categories')));?></h1>
-        <table class="table">
+        <table class="table table-striped table-hover">
             <?php
             foreach ($totalCategory as $key => $value) :
                 $valueColor = '';
