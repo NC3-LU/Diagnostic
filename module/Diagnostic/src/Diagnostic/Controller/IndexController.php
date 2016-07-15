@@ -815,7 +815,7 @@ class IndexController extends AbstractActionController
                     $calculService = $this->getServiceLocator()->get('Diagnostic\Service\CalculService');
                     $calculResults = $calculService->calcul();
 
-                    $word = new TemplateProcessorService('data/resources/modele_v1.3.docx');
+                    $word = new TemplateProcessorService('data/resources/modele_v1.4.docx');
                     $word->generateWord($data, $questions, $calculResults, $information,  $translator);
                 }
             }

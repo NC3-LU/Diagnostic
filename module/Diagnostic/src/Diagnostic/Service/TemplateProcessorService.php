@@ -74,7 +74,8 @@ class TemplateProcessorService extends TemplateProcessor implements ServiceLocat
         foreach ($categories as $id => $label) {
             $categories[$id] = [
                 'label' => $label,
-                'percent' => (array_key_exists($id, $results['totalCategory'])) ? (int) $results['totalCategory'][$id] : 0
+                'percent' => (array_key_exists($id, $results['totalCategory'])) ? (int) $results['totalCategory'][$id] : 0,
+                'percentTarget' => (array_key_exists($id, $results['totalCategoryTarget'])) ? (int) $results['totalCategoryTarget'][$id] : 0,
             ];
         }
 
@@ -205,6 +206,7 @@ class TemplateProcessorService extends TemplateProcessor implements ServiceLocat
 
             $this->setValue('PRISE_NOTE_CATEG_' . $j, $translator->translate($category['label']));
             $this->setValue('CATEG__PERCENT_' . $j, $category['percent'] . '%');
+            $this->setValue('CATEG__PERCENT_TARG_' . $j, $category['percentTarget'] . '%');
 
             $this->cloneRow('PRISE_NOTE_TO_COLLECT_' . $j, $nbCategoryResults);
 
