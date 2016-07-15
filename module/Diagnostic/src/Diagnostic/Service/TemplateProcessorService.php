@@ -51,9 +51,21 @@ class TemplateProcessorService extends TemplateProcessor implements ServiceLocat
         $filepath = 'data/results/' . $filename;
 
         //retrieve categories
-        $categories = [];
+        $numberByCategories = [];
         foreach ($questions as $question) {
-            $categories[$question->getCategoryId()] = $question->getCategoryTranslationKey();
+            if (array_key_exists($question->getCategoryTranslationKey(), $numberByCategories)) {
+                $numberByCategories[$question->getCategoryTranslationKey()] = $numberByCategories[$question->getCategoryTranslationKey()] + 1;
+            } else {
+                $numberByCategories[$question->getCategoryTranslationKey()] = 1;
+            }
+        }
+
+        $i = 1;
+        $categories = [];
+        foreach($numberByCategories as $category => $categoryNumber) {
+            $categories[$i]['label'] = $category;
+            $categories[$i]['percent'] = $categoryNumber;
+            $i++;
         }
 
         //create word
@@ -106,7 +118,7 @@ class TemplateProcessorService extends TemplateProcessor implements ServiceLocat
         foreach ($results as $questionId => $result) {
             if ($result['recommandation']) {
                 $name = 'RECOMM_DOM#' . $i;
-                $this->setValue($name, $translator->translate($categories[$questions[$questionId]->getCategoryId()]));
+                $this->setValue($name, $translator->translate($categories[$questions[$questionId]->getCategoryId()]['label']));
                 $i++;
             }
         }
@@ -177,15 +189,15 @@ class TemplateProcessorService extends TemplateProcessor implements ServiceLocat
         $j = 1;
         foreach ($categories as $categoryId => $category) {
 
-            $name = 'PRISE_NOTE_CATEG_' . $j;
-            $this->setValue($name, $translator->translate($category));
-
             $nbCategoryResults = 0;
             foreach ($results as $questionId => $result) {
                 if ($questions[$questionId]->getCategoryId() == $categoryId) {
                     $nbCategoryResults++;
                 }
             }
+
+            $this->setValue('PRISE_NOTE_CATEG_' . $j, $translator->translate($category['label']));
+            $this->setValue('CATEG__PERCENT_' . $j, $category['percent'] . '%');
 
             $this->cloneRow('PRISE_NOTE_TO_COLLECT_' . $j, $nbCategoryResults);
 
