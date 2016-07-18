@@ -47,613 +47,462 @@ msgstr ""
 msgid "__question1"
 msgstr ""
 
+#:
+msgid "__question1help"
+msgstr ""
+
 #: 
 msgid "__question2"
+msgstr ""
+
+#:
+msgid "__question2help"
 msgstr ""
 
 #: 
 msgid "__question3"
 msgstr ""
 
+#:
+msgid "__question3help"
+msgstr ""
+
 #: 
 msgid "__question4"
+msgstr ""
+
+#:
+msgid "__question4help"
 msgstr ""
 
 #: 
 msgid "__question5"
 msgstr ""
 
+#:
+msgid "__question5help"
+msgstr ""
+
 #: 
 msgid "__question6"
+msgstr ""
+
+#:
+msgid "__question6help"
 msgstr ""
 
 #: 
 msgid "__question7"
 msgstr ""
 
+#:
+msgid "__question7help"
+msgstr ""
+
 #: 
 msgid "__question8"
+msgstr ""
+
+#:
+msgid "__question8help"
 msgstr ""
 
 #: 
 msgid "__question9"
 msgstr ""
 
+#:
+msgid "__question9help"
+msgstr ""
+
 #: 
 msgid "__question10"
+msgstr ""
+
+#:
+msgid "__question10help"
 msgstr ""
 
 #: 
 msgid "__question11"
 msgstr ""
 
+#:
+msgid "__question11help"
+msgstr ""
+
 #: 
 msgid "__question12"
+msgstr ""
+
+#:
+msgid "__question12help"
 msgstr ""
 
 #: 
 msgid "__question13"
 msgstr ""
 
+#:
+msgid "__question13help"
+msgstr ""
+
 #: 
 msgid "__question14"
+msgstr ""
+
+#:
+msgid "__question14help"
 msgstr ""
 
 #: 
 msgid "__question15"
 msgstr ""
 
+#:
+msgid "__question15help"
+msgstr ""
+
 #: 
 msgid "__question16"
+msgstr ""
+
+#:
+msgid "__question16help"
 msgstr ""
 
 #: 
 msgid "__question17"
 msgstr ""
 
+#:
+msgid "__question17help"
+msgstr ""
+
 #: 
 msgid "__question18"
+msgstr ""
+
+#:
+msgid "__question18help"
 msgstr ""
 
 #: 
 msgid "__question19"
 msgstr ""
 
+#:
+msgid "__question19help"
+msgstr ""
+
 #: 
 msgid "__question20"
+msgstr ""
+
+#:
+msgid "__question20help"
 msgstr ""
 
 #: 
 msgid "__question21"
 msgstr ""
 
+#:
+msgid "__question21help"
+msgstr ""
+
 #: 
 msgid "__question22"
+msgstr ""
+
+#:
+msgid "__question22help"
 msgstr ""
 
 #: 
 msgid "__question23"
 msgstr ""
 
+#:
+msgid "__question23help"
+msgstr ""
+
 #: 
 msgid "__question24"
+msgstr ""
+
+#:
+msgid "__question24help"
 msgstr ""
 
 #: 
 msgid "__question25"
 msgstr ""
 
+#:
+msgid "__question25help"
+msgstr ""
+
 #: 
 msgid "__question26"
+msgstr ""
+
+#:
+msgid "__question26help"
 msgstr ""
 
 #: 
 msgid "__question27"
 msgstr ""
 
+#:
+msgid "__question27help"
+msgstr ""
+
 #: 
 msgid "__question28"
+msgstr ""
+
+#:
+msgid "__question28help"
 msgstr ""
 
 #: 
 msgid "__question29"
 msgstr ""
 
+#:
+msgid "__question29help"
+msgstr ""
+
 #: 
 msgid "__question30"
+msgstr ""
+
+#:
+msgid "__question30help"
 msgstr ""
 
 #: 
 msgid "__question31"
 msgstr ""
 
-#: 
-msgid "__question32"
-msgstr ""
-
-#: 
-msgid "__question33"
-msgstr ""
-
-#: 
-msgid "__question34"
-msgstr ""
-
-#: 
-msgid "__question35"
-msgstr ""
-
-#: 
-msgid "__question36"
-msgstr ""
-
-#: 
-msgid "__question37"
-msgstr ""
-
-#: 
-msgid "__question38"
-msgstr ""
-
-#: 
-msgid "__question39"
-msgstr ""
-
-#: 
-msgid "__question40"
-msgstr ""
-
-#: 
-msgid "__question41"
-msgstr ""
-
-#: 
-msgid "__question42"
-msgstr ""
-
-#: 
-msgid "__question43"
-msgstr ""
-
-#: 
-msgid "__question44"
-msgstr ""
-
-#: 
-msgid "__question45"
-msgstr ""
-
-#: 
-msgid "__question46"
-msgstr ""
-
-#: 
-msgid "__question47"
-msgstr ""
-
-#: 
-msgid "__question48"
-msgstr ""
-
-#: 
-msgid "__question49"
-msgstr ""
-
-#: 
-msgid "__question50"
-msgstr ""
-
-#: 
-msgid "__welcome"
-msgstr ""
-
-#: 
-msgid "__welcome_upload"
-msgstr ""
-
-#: 
-msgid "__welcome_login"
-msgstr ""
-
-#: 
-msgid "__file_to_upload"
-msgstr ""
-
-#: 
-msgid "__upload"
-msgstr ""
-
-#: 
-msgid "__login"
-msgstr ""
-
-#: 
-msgid "__password"
-msgstr ""
-
-#: 
-msgid "__log_in"
-msgstr ""
-
-#: 
-msgid "__email"
-msgstr ""
-
-#: 
-msgid "__logout"
-msgstr ""
-
-#: 
-msgid "__password_forgotten"
-msgstr ""
-
-#: 
-msgid "__new_password"
-msgstr ""
-
-#: 
-msgid "__confirm_password"
-msgstr ""
-
-#: 
-msgid "__change_password"
-msgstr ""
-
-#: 
-msgid "__message_password"
-msgstr ""
-
-#: 
-msgid "__receive_mail_password"
-msgstr ""
-
-#: 
-msgid "__maturity"
-msgstr ""
-
-#: 
-msgid "__maturity_target"
-msgstr ""
-
-#: 
-msgid "__recommandation"
-msgstr ""
-
-#: 
-msgid "__gravity"
-msgstr ""
-
-#: 
-msgid "__comment"
-msgstr ""
-
-#: 
-msgid "__record"
-msgstr ""
-
-#: 
-msgid "__notes"
-msgstr ""
-
-#: 
-msgid "__record_continue"
-msgstr ""
-
-#: 
-msgid "__add_a_question"
-msgstr ""
-
-#: 
-msgid "__add"
-msgstr ""
-
-#: 
-msgid "__question"
-msgstr ""
-
-#: 
-msgid "__question1help"
-msgstr ""
-
-#: 
-msgid "__question2help"
-msgstr ""
-
-#: 
-msgid "__question3help"
-msgstr ""
-
-#: 
-msgid "__question4help"
-msgstr ""
-
-#: 
-msgid "__question5help"
-msgstr ""
-
-#: 
-msgid "__question6help"
-msgstr ""
-
-#: 
-msgid "__question7help"
-msgstr ""
-
-#: 
-msgid "__question8help"
-msgstr ""
-
-#: 
-msgid "__question9help"
-msgstr ""
-
-#: 
-msgid "__question10help"
-msgstr ""
-
-#: 
-msgid "__question11help"
-msgstr ""
-
-#: 
-msgid "__question12help"
-msgstr ""
-
-#: 
-msgid "__question13help"
-msgstr ""
-
-#: 
-msgid "__question14help"
-msgstr ""
-
-#: 
-msgid "__question15help"
-msgstr ""
-
-#: 
-msgid "__question16help"
-msgstr ""
-
-#: 
-msgid "__question17help"
-msgstr ""
-
-#: 
-msgid "__question18help"
-msgstr ""
-
-#: 
-msgid "__question19help"
-msgstr ""
-
-#: 
-msgid "__question20help"
-msgstr ""
-
-#: 
-msgid "__question21help"
-msgstr ""
-
-#: 
-msgid "__question22help"
-msgstr ""
-
-#: 
-msgid "__question23help"
-msgstr ""
-
-#: 
-msgid "__question24help"
-msgstr ""
-
-#: 
-msgid "__question25help"
-msgstr ""
-
-#: 
-msgid "__question26help"
-msgstr ""
-
-#: 
-msgid "__question27help"
-msgstr ""
-
-#: 
-msgid "__question28help"
-msgstr ""
-
-#: 
-msgid "__question29help"
-msgstr ""
-
-#: 
-msgid "__question30help"
-msgstr ""
-
-#: 
+#:
 msgid "__question31help"
 msgstr ""
 
-#: 
-msgid "__question32help"
-msgstr ""
 
 #: 
-msgid "__question33help"
-msgstr ""
+msgid "__welcome"
+msgstr "Welcome to Cases Diagnostic"
 
 #: 
-msgid "__question34help"
+msgid "__welcome_upload"
+msgstr "Upload a file"
+
+#:
+msgid "__welcome_login"
+msgstr "Make a diagnostic"
+
+#:
+msgid "__file_to_upload"
+msgstr "File to upload"
+
+#:
+msgid "__upload"
+msgstr "Upload"
+
+#:
+msgid "__login"
+msgstr "Login"
+
+#:
+msgid "__password"
+msgstr "Password"
+
+#:
+msgid "__log_in"
+msgstr "Login"
+
+#:
+msgid "__email"
+msgstr "Email"
+
+#:
+msgid "__logout"
+msgstr "Logout"
+
+#:
+msgid "__password_forgotten"
+msgstr "Password forgotten ?"
+
+#:
+msgid "__new_password"
+msgstr "New password"
+
+#:
+msgid "__confirm_password"
+msgstr "Confirmation"
+
+#:
+msgid "__change_password"
+msgstr "Change password"
+
+#:
+msgid "__message_password"
 msgstr ""
 
-#: 
-msgid "__question35help"
-msgstr ""
+#:
+msgid "__receive_mail_password"
+msgstr "Receive the mail"
 
-#: 
-msgid "__question36help"
-msgstr ""
+#:
+msgid "__maturity"
+msgstr "Maturity"
 
-#: 
-msgid "__question37help"
-msgstr ""
+#:
+msgid "__maturity_target"
+msgstr "Target maturity"
 
-#: 
-msgid "__question38help"
-msgstr ""
+#:
+msgid "__recommandation"
+msgstr "Recommandation"
 
-#: 
-msgid "__question39help"
-msgstr ""
+#:
+msgid "__gravity"
+msgstr "Gravity"
 
-#: 
-msgid "__question40help"
-msgstr ""
+#:
+msgid "__comment"
+msgstr "Comment"
 
-#: 
-msgid "__question41help"
-msgstr ""
+#:
+msgid "__record"
+msgstr "Record"
 
-#: 
-msgid "__question42help"
-msgstr ""
+#:
+msgid "__notes"
+msgstr "Notes"
 
-#: 
-msgid "__question43help"
-msgstr ""
+#:
+msgid "__record_continue"
+msgstr "Record and continue"
 
-#: 
-msgid "__question44help"
-msgstr ""
+#:
+msgid "__add_a_question"
+msgstr "Add a question"
 
-#: 
-msgid "__question45help"
-msgstr ""
+#:
+msgid "__add"
+msgstr "Add"
 
-#: 
-msgid "__question46help"
-msgstr ""
+#:
+msgid "__question"
+msgstr "Question"
 
-#: 
-msgid "__question47help"
-msgstr ""
-
-#: 
-msgid "__question48help"
-msgstr ""
-
-#: 
-msgid "__question49help"
-msgstr ""
-
-#: 
-msgid "__question50help"
-msgstr ""
-
-#: 
+#:
 msgid "__export"
-msgstr ""
+msgstr "Export"
 
-#: 
+#:
 msgid "__access"
-msgstr ""
+msgstr "Access"
 
-#: 
+#:
 msgid "__access_diagnostic"
-msgstr ""
+msgstr "Access to diagnostic"
 
-#: 
+#:
 msgid "__help"
-msgstr ""
+msgstr "Help"
 
-#: 
+#:
 msgid "__threshold_max"
-msgstr ""
+msgstr "Threshold max"
 
-#: 
+#:
 msgid "__rapport"
-msgstr ""
+msgstr "Rapport"
 
-#: 
+#:
 msgid "__mail_password_forgotten_subject"
-msgstr ""
+msgstr "Diagnostic Cases - Password forgotten"
 
-#: 
+#:
 msgid "__mail_password_forgotten_content1"
 msgstr ""
 
-#: 
+#:
 msgid "__mail_password_forgotten_content2"
 msgstr ""
 
-#: 
+#:
 msgid "__mail_password_forgotten_content3"
 msgstr ""
 
-#: 
+#:
 msgid "__mail_password_forgotten_link"
-msgstr ""
+msgstr "NEW PASSWORD"
 
-#: 
+#:
 msgid "__results"
-msgstr ""
+msgstr "Results"
 
-#: 
+#:
 msgid "__categories"
-msgstr ""
+msgstr "Categories"
 
-#: 
+#:
 msgid "__recommandations"
-msgstr ""
+msgstr "Recommandations"
 
-#: 
+#:
 msgid "__users"
-msgstr ""
+msgstr "Users"
 
-#: 
+#:
 msgid "__add_a_user"
-msgstr ""
+msgstr "Add a user"
 
-#: 
+#:
 msgid "__user_choose"
-msgstr ""
+msgstr "Choose a user"
 
-#: 
+#:
 msgid "__administrator"
-msgstr ""
+msgstr "Administrator"
 
-#: 
+#:
 msgid "__users_details"
-msgstr ""
+msgstr "User details"
 
-#: 
+#:
 msgid "__modify"
-msgstr ""
+msgstr "Modify"
 
-#: 
+#:
 msgid "__questions"
-msgstr ""
+msgstr "Questions"
 
-#: 
+#:
 msgid "__translation_key"
-msgstr ""
+msgstr "Translation key"
 
-#: 
+#:
 msgid "__category"
-msgstr ""
+msgstr "Category"
 
-#: 
+#:
 msgid "__threshold"
-msgstr ""
+msgstr "Threshold"
 
-#: 
+#:
 msgid "__action"
-msgstr ""
+msgstr "Action"
 
-#: 
+#:
 msgid "__modify_question"
-msgstr ""
+msgstr "Modify the question"
 
 #:
 msgid "__admin"
@@ -665,7 +514,7 @@ msgstr "Document name"
 
 #:
 msgid "__company"
-msgstr "Company"
+msgstr "Campany"
 
 #:
 msgid "__version"
@@ -689,7 +538,7 @@ msgstr "Client"
 
 #:
 msgid "__download_delivery"
-msgstr "Download delivery"
+msgstr "Dowload delivery"
 
 #:
 msgid "__draft"
@@ -725,7 +574,7 @@ msgstr "Delete"
 
 #:
 msgid "__login_error"
-msgstr "Impossible to connect"
+msgstr ""
 
 #:
 msgid "__no_file"
@@ -733,7 +582,7 @@ msgstr "File missing"
 
 #:
 msgid "__error_file"
-msgstr "File not valid"
+msgstr "Not valid file"
 
 #:
 msgid "__goal"
@@ -773,7 +622,7 @@ msgstr ""
 
 #:
 msgid "__maturity_evolution"
-msgstr ""
+msgstr "Maturity evolution"
 
 #:
 msgid "__home"
@@ -785,21 +634,20 @@ msgstr "New diagnostic"
 
 #:
 msgid "__actual"
-msgstr ""
+msgstr "Actual"
 
 #:
 msgid "__target"
-msgstr ""
+msgstr "Target"
 
 #:
 msgid "__organization_information"
-msgstr ""
+msgstr "Organization information"
 
 #:
 msgid "__evaluation_synthesis"
-msgstr ""
+msgstr "Synthesis evaluation"
 
 #:
 msgid "__categories_maturities"
-msgstr "Maturités des catégories"
-
+msgstr ""

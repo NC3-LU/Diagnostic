@@ -354,7 +354,7 @@ class IndexController extends AbstractActionController
         //retrieve result
         $container = new Container('diagnostic');
         $result = ($container->offsetExists('result')) ? $container->result : [];
-        $information = ($container->offsetExists('information')) ? $container->information : [];
+        $information = ($container->offsetExists('information')) ? $container->information : ['organization' => '', 'synthesis' => ''];
 
         //form
         $form = $this->getServiceLocator()->get('formElementManager')->get('QuestionForm');
@@ -403,6 +403,11 @@ class IndexController extends AbstractActionController
         ));
     }
 
+    /**
+     * Information
+     *
+     * @return \Zend\Http\Response|ViewModel
+     */
     public function informationAction() {
 
         $container = new Container('user');
@@ -423,7 +428,7 @@ class IndexController extends AbstractActionController
         //retrieve result
         $container = new Container('diagnostic');
         $result = ($container->offsetExists('result')) ? $container->result : [];
-        $information = ($container->offsetExists('information')) ? $container->information : [];
+        $information = ($container->offsetExists('information')) ? $container->information : ['organization' => '', 'synthesis' => ''];
 
         //form
         $form = $this->getServiceLocator()->get('formElementManager')->get('InformationForm');

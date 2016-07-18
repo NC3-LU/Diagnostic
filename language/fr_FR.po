@@ -657,3 +657,31 @@ msgstr "Synthèse sur l'évaluation"
 msgid "__categories_maturities"
 msgstr "Maturités par catégories"
 
+#:
+msgid "Value is required and can't be empty"
+msgstr "La valeur est requise et ne peut pas être vide"
+
+#:
+msgid "The input is not a valid email address. Use the basic format local-part@hostname"
+msgstr "La valeur n'est pas une adresse email valide. Utilisez le format local-part@hostname"
+
+#:
+msgid "password must contain at least one uppercase letter"
+msgstr "Le mot de passe doit contenir au moins une majuscule"
+
+#:
+msgid "password must contain at least one digit character"
+msgstr "Le mot de passe doit contenir au moins un chiffre"
+
+#:
+msgid "password must contain at least one special character"
+msgstr "Le mot de passe doit contenir au moins un caractère spécial"
+
+#:
+msgid "password must be at least 8 characters in length"
+msgstr "Le mot de passe doit contenir au moins 8 caractères"
+
+#:
+msgid "The two given tokens do not match"
+msgstr "Le mot de passe et la confirmation doivent être identiques"
+
