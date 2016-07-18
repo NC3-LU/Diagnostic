@@ -11,6 +11,6 @@
         "php": ">=5.5",
         "zendframework/zendframework": "2.4.9",
        	"zendframework/zend-escaper": "2.4.9",
-	 "phpoffice/phpword": "dev-develop"
+	    "phpoffice/phpword": "dev-develop"
     }
 }
