@@ -76,17 +76,23 @@ $id = 0;
                         <div class="collapse" style="padding: 5px;">
                             <?php
                             foreach($questions as $question) {
+                                $nb = $nbDone + $nbUndone;
                                 if ($question->getCategoryId() == $categoryId) {
                                     if ($question->getId() == $id) {
                                         ?>
                                         <a style="color: black;">
                                             <strong><?= $this->translate($this->escapeHtml($question->getTranslationKey())) ?></strong>
                                         </a>
-                                        &nbsp;
-                                        <a href="<?= $this->url('diagnostic', ['action' => 'delete-question', 'id' => $question->getId()]) ?>" style="color: #DF1D31;">
-                                            <span class="glyphicon glyphicon-remove"></span>
-                                        </a>
                                         <?php
+                                        if ($nb > 1) {
+                                            ?>
+                                            &nbsp;
+                                            <a href="<?= $this->url('diagnostic', ['action' => 'delete-question', 'id' => $question->getId()]) ?>"
+                                               style="color: #DF1D31;">
+                                                <span class="glyphicon glyphicon-remove"></span>
+                                            </a>
+                                            <?php
+                                        }
                                         $titleQuestion = $this->translate($this->escapeHtml($question->getTranslationKey()));
                                         $titleHelp = (is_null($question->getTranslationKeyHelp())) ? '' : $this->translate($this->escapeHtml($question->getTranslationKeyHelp()));
                                     } else {
@@ -101,11 +107,16 @@ $id = 0;
                                            style="color: <?= $linkColor ?>;">
                                             <?= $this->translate($this->escapeHtml($question->getTranslationKey())) ?>
                                         </a>
-                                        &nbsp;
-                                        <a href="<?= $this->url('diagnostic', ['action' => 'delete-question', 'id' => $question->getId()]) ?>" style="color: #DF1D31;">
-                                            <span class="glyphicon glyphicon-remove"></span>
-                                        </a>
                                         <?php
+                                        if ($nb > 1) {
+                                            ?>
+                                            &nbsp;
+                                            <a href="<?= $this->url('diagnostic', ['action' => 'delete-question', 'id' => $question->getId()]) ?>"
+                                               style="color: #DF1D31;">
+                                                <span class="glyphicon glyphicon-remove"></span>
+                                            </a>
+                                            <?php
+                                        }
                                     }
                                     echo '<br />';
                                 }

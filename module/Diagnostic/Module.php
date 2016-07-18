@@ -9,6 +9,7 @@
 
 namespace Diagnostic;
 
+use Diagnostic\Gateway\CategoryGateway;
 use Diagnostic\Gateway\QuestionGateway;
 use Diagnostic\Gateway\UserGateway;
 use Diagnostic\Gateway\UserTokenGateway;

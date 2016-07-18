@@ -592,6 +592,7 @@ class IndexController extends AbstractActionController
 
         $id = $this->getEvent()->getRouteMatch()->getParam('id');
 
+        //no id
         if (!$id) {
             return $this->redirect()->toRoute('diagnostic', ['controller' => 'index', 'action' => 'information', 'id' => 1]);
         }
@@ -606,12 +607,30 @@ class IndexController extends AbstractActionController
 
         //retrieve current question
         $nextQuestion = false;
+        $currentQuestion = false;
         foreach ($questions as $question) {
             $nextQuestion = next($questions);
             if ($question->getId() == $id) {
+                $currentQuestion = $question;
                 break;
 
             }
+        }
+
+        //no question
+        if (!$currentQuestion) {
+            return $this->redirect()->toRoute('diagnostic', ['controller' => 'index', 'action' => 'diagnostic', 'id' => $id]);
+        }
+
+        //verify not the last for the category
+        $nbQuestionsForTheCurrentCategory = 0;
+        foreach ($questions as $question) {
+            if ($question->getCategoryId() == $currentQuestion->getCategoryId()) {
+                $nbQuestionsForTheCurrentCategory++;
+            }
+        }
+        if ($nbQuestionsForTheCurrentCategory < 2) {
+            return $this->redirect()->toRoute('diagnostic', ['controller' => 'index', 'action' => 'diagnostic', 'id' => $id]);
         }
 
         //next id

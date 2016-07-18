@@ -47,16 +47,16 @@ return array(
 
     'service_manager' => array(
         'invokables' => array(
-            'Diagnostic\Model\QuestionEntity' => 'Diagnostic\Model\QuestionEntity',
-            'Diagnostic\Model\UserEntity' => 'Diagnostic\Model\UserEntity',
             'Diagnostic\Model\DiagnosticEntity' => 'Diagnostic\Model\DiagnosticEntity',
             'Diagnostic\Model\InformationEntity' => 'Diagnostic\Model\InformationEntity',
+            'Diagnostic\Model\QuestionEntity' => 'Diagnostic\Model\QuestionEntity',
+            'Diagnostic\Model\UserEntity' => 'Diagnostic\Model\UserEntity',
             'Diagnostic\Model\UserTokenEntity' => 'Diagnostic\Model\UserTokenEntity',
-            'Diagnostic\Service\UserService' => 'Diagnostic\Service\UserService',
-            'Diagnostic\Service\QuestionService' => 'Diagnostic\Service\QuestionService',
-            'Diagnostic\Service\UserTokenService' => 'Diagnostic\Service\UserTokenService',
-            'Diagnostic\Service\MailService' => 'Diagnostic\Service\MailService',
             'Diagnostic\Service\CalculService' => 'Diagnostic\Service\CalculService',
+            'Diagnostic\Service\MailService' => 'Diagnostic\Service\MailService',
+            'Diagnostic\Service\QuestionService' => 'Diagnostic\Service\QuestionService',
+            'Diagnostic\Service\UserService' => 'Diagnostic\Service\UserService',
+            'Diagnostic\Service\UserTokenService' => 'Diagnostic\Service\UserTokenService',
             'Diagnostic\Service\Mime\Part' => 'Zend\Mime\Part',
             'Diagnostic\Service\Mime\Message' => 'Zend\Mime\Message',
             'Diagnostic\Service\Mail\Message' => 'Zend\Mail\Message',
