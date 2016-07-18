@@ -482,10 +482,16 @@ class IndexController extends AbstractActionController
                     $information[$informationKey] = $formData['information'];
                     $container->information = $information;
 
+                    //retrieve first question
+                    $firstId = false;
+                    foreach ($questions as $key => $question) {
+                        $firstId = $key;
+                        break;
+                    }
 
                     //redirect
                     if ($type == 1) {
-                        return $this->redirect()->toRoute('diagnostic', ['controller' => 'index', 'action' => 'diagnostic', 'id' => 1]);
+                        return $this->redirect()->toRoute('diagnostic', ['controller' => 'index', 'action' => 'diagnostic', 'id' => $firstId]);
                     } else {
                         return $this->redirect()->toRoute('diagnostic', ['controller' => 'index', 'action' => 'information', 'id' => $type]);
                     }
