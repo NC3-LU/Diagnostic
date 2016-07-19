@@ -129,7 +129,7 @@ echo $this->inlineScript()->prependFile($this->basePath('js/Chart.js-master/Char
                     if (strlen($recommandation['recommandation'])) {
                         ?>
                         <tr>
-                            <td style="text-align: left;"><?= $recommandation['recommandation']; ?></td>
+                            <td style="text-align: left;"><?= htmlspecialchars($recommandation['recommandation']); ?></td>
                             <td style="text-align: left;"><?= $this->translate($recommandation['domaine']); ?></td>
                             <td style="text-align: center;"><img src="<?= $recommandation['gravity-img']; ?>" /></td>
                             <td style="text-align: center;"><img src="<?= $recommandation['maturity-img'] ?>" />&nbsp;<span class="glyphicon glyphicon-arrow-right"></span>&nbsp;<img src="<?= $recommandation['maturityTarget-img'] ?>" /></td>

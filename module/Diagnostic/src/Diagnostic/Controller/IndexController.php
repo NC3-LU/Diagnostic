@@ -98,6 +98,12 @@ class IndexController extends AbstractActionController
                     }
                 }
             }
+        } else {
+            //clear session
+            $container = new Container('user');
+            if ((!$container->offsetExists('email')) || (is_null($container->email))) {
+                $container->getManager()->getStorage()->clear();
+            }
         }
 
         //send to view
