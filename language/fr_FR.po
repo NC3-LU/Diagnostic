@@ -188,7 +188,7 @@ msgstr "Bonne gestion des autorisations ?<br>(Besoin d'en connaître, respect du
 
 #: 
 msgid "__question19"
-msgstr "Comment est géré l'authentification des utilisateurs ?"
+msgstr "Comment est gérée l'authentification des utilisateurs ?"
 
 #: 
 msgid "__question19help"
