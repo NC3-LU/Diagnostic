@@ -9,292 +9,299 @@ msgstr ""
 
 #: 
 msgid "__diagnostic"
-msgstr "Diagnostic"
+msgstr "Diagnosis"
 
 #: 
 msgid "__category1"
-msgstr ""
+msgstr "Awareness of security and compliance"
 
 #: 
 msgid "__category2"
-msgstr ""
+msgstr "Employee management"
 
 #: 
 msgid "__category3"
-msgstr ""
+msgstr "Third-party management"
 
 #: 
 msgid "__category4"
-msgstr ""
+msgstr "Physical and environment security"
 
 #: 
 msgid "__category5"
-msgstr ""
+msgstr "Access control"
 
 #: 
 msgid "__category6"
-msgstr ""
+msgstr "IS infrastructure and composition"
 
 #: 
 msgid "__category7"
-msgstr ""
+msgstr "Information system"
 
 #: 
 msgid "__category8"
-msgstr ""
+msgstr "Incident and business continuity "
 
 #: 
 msgid "__question1"
-msgstr ""
+msgstr "What security mechanisms already exist (other than technical mechanisms)?"
 
 #:
 msgid "__question1help"
-msgstr ""
+msgstr "Is there:<br><ul><li>a security policy?</li><li>a user or administrator charter?</li><li>procedures (e.g. back-up)?</li><li>in-house instructions?</li><li>etc</li></ul>"
 
 #: 
 msgid "__question2"
-msgstr ""
+msgstr "What is the core business? The most sensitive processes/items of information?"
 
 #:
 msgid "__question2help"
-msgstr ""
+msgstr "Conscious of major assets? (services, processes, information, etc)"
 
 #: 
 msgid "__question3"
-msgstr ""
+msgstr "What compliance obligations does the job involve?"
 
 #:
 msgid "__question3help"
-msgstr ""
+msgstr "Awareness and observance of compliance issues?"
 
 #: 
 msgid "__question4"
-msgstr ""
+msgstr "Compliance with legislation on personal data?"
 
 #:
 msgid "__question4help"
-msgstr ""
+msgstr "Knowledge of the Law of 2 August 2002 or of the GDPR?"
 
 #: 
 msgid "__question5"
-msgstr ""
+msgstr "Have staff members been on training courses recently?"
 
 #:
 msgid "__question5help"
-msgstr ""
+msgstr "Training culture?<br>Awareness of security issues?"
 
 #: 
 msgid "__question6"
-msgstr ""
+msgstr "Management of staff turnover?"
 
 #:
 msgid "__question6help"
-msgstr ""
+msgstr "Rapid turnover?<br>HR and IT coordination?"
 
 #: 
 msgid "__question7"
-msgstr ""
+msgstr "Are IT responsibilities (and possibly security responsibilities) defined?"
 
 #:
 msgid "__question7help"
-msgstr ""
+msgstr "Internally? Externally?<br>Specific post?"
 
 #: 
 msgid "__question8"
-msgstr ""
+msgstr "Is any hardware supplied to certain employees for work purposes?"
 
 #:
 msgid "__question8help"
-msgstr ""
+msgstr "Hardware inventory?<br>Acknowledgement of receipt?"
 
 #: 
 msgid "__question9"
-msgstr ""
+msgstr "Does tele-working exist?"
 
 #:
 msgid "__question9help"
-msgstr ""
+msgstr "No tele-working, or good management of tele-working environment?"
 
 #: 
 msgid "__question10"
-msgstr ""
+msgstr "Have service providers signed confidentiality agreements?"
 
 #:
 msgid "__question10help"
-msgstr ""
+msgstr "NDAs signed?"
 
 #: 
 msgid "__question11"
-msgstr ""
+msgstr "Do service providers give formal undertaking regarding quality of services?"
 
 #:
 msgid "__question11help"
-msgstr ""
+msgstr "SLAs signed for vital services?"
 
 #: 
 msgid "__question12"
-msgstr ""
+msgstr "How is premises maintenance (cleaning) organised?"
 
 #:
 msgid "__question12help"
-msgstr ""
+msgstr "Access to sensitive areas?<br>During office hours?<br>External company?"
 
 #: 
 msgid "__question13"
-msgstr ""
+msgstr "Are visitors able to move freely throughout the buildings?"
 
 #:
 msgid "__question13help"
-msgstr ""
+msgstr "Accompanied movement?<br>Visitors' register?<br>Badge?"
 
 #: 
 msgid "__question14"
-msgstr ""
+msgstr "How is physical access attributed?"
 
 #:
 msgid "__question14help"
-msgstr ""
+msgstr "Good management of authorisations? (need to know, four eyes principle, etc)"
 
 #: 
 msgid "__question15"
-msgstr ""
+msgstr "Are access points to the premises controlled?"
 
 #:
 msgid "__question15help"
-msgstr ""
+msgstr "Good management of access control? (key, badge, etc)"
 
 #: 
 msgid "__question16"
-msgstr ""
+msgstr "Are restricted-access premises protected?"
 
 #:
 msgid "__question16help"
-msgstr ""
+msgstr "IT area? Archive area?<br>Is security sufficient?"
 
 #: 
 msgid "__question17"
-msgstr ""
+msgstr "Is there an uninterruptible power supply?"
 
 #:
 msgid "__question17help"
-msgstr ""
+msgstr "Maintenance times?<br>Maintenance and testing?<br>Connected devices?"
 
 #: 
 msgid "__question18"
-msgstr ""
+msgstr "How is logical access attributed?"
 
 #:
 msgid "__question18help"
-msgstr ""
+msgstr "Good management of authorisations?<br> (need to know, four eyes principle, etc)"
 
 #: 
 msgid "__question19"
-msgstr ""
+msgstr "How is user authentication managed? "
 
 #:
 msgid "__question19help"
-msgstr ""
+msgstr "Passwords? Strong authentication?<br>Good management?"
 
 #: 
 msgid "__question20"
-msgstr ""
+msgstr "How is the internal network constructed (LAN)?"
 
 #:
 msgid "__question20help"
-msgstr ""
+msgstr "Good network architecture? (segregation, DMZ, firewall, etc)"
 
 #: 
 msgid "__question21"
-msgstr ""
+msgstr "How is the WiFi network managed?"
 
 #:
 msgid "__question21help"
-msgstr ""
+msgstr "Procedure for requesting access?<br>Segregated from internal local network?<br>Limited duration?"
 
 #: 
 msgid "__question22"
-msgstr ""
+msgstr "Do suppliers have the possibility of carrying out tele-maintenance?"
 
 #:
 msgid "__question22help"
-msgstr ""
+msgstr "Tele-maintenance management non-existent or good?"
 
 #: 
 msgid "__question23"
-msgstr ""
+msgstr "How are user work-stations managed?"
 
 #:
 msgid "__question23help"
-msgstr ""
+msgstr "Updating of operating system? Of software?<br>Admin rights?"
 
 #: 
 msgid "__question24"
-msgstr ""
+msgstr "What are the rules for managing server updates?"
 
 #:
 msgid "__question24help"
-msgstr ""
+msgstr "Good management of updates? Periodicity?"
 
 #: 
 msgid "__question25"
-msgstr ""
+msgstr "What is the anti-virus management method?"
 
 #:
 msgid "__question25help"
-msgstr ""
+msgstr "Anti-virus management good?"
 
 #: 
 msgid "__question26"
-msgstr ""
+msgstr "How are back-ups managed?"
 
 #:
 msgid "__question26help"
-msgstr ""
+msgstr "Good practices regarding back-ups? <br><ul><li>Exhaustiveness</li><li>Periodicity</li><li>Retention</li><li>Off-line storage</li><li>Delocalisation</li><li>Test</li><li>etc</li></ul>"
 
 #: 
 msgid "__question27"
-msgstr ""
+msgstr "How do you manage the storage and the destruction of physical documents?"
 
 #:
 msgid "__question27help"
-msgstr ""
+msgstr "Where are they stored?<br>Is a shredder used?<br>Clean desk policy?"
 
 #: 
 msgid "__question28"
-msgstr ""
+msgstr "Is personal use of tools provided regulated/tolerated?"
 
 #:
 msgid "__question28help"
-msgstr ""
+msgstr "Regulated use?"
 
 #: 
 msgid "__question29"
-msgstr ""
+msgstr "Is e-mail a work tool?"
 
 #:
 msgid "__question29help"
-msgstr ""
+msgstr "Transfer of sensitive information?"
 
 #: 
 msgid "__question30"
-msgstr ""
+msgstr "How do you manage the disposal of hardware?"
 
 #:
 msgid "__question30help"
-msgstr ""
+msgstr "User work-stations? Servers? etc"
 
 #: 
 msgid "__question31"
-msgstr ""
+msgstr "Is any incident management in place?"
 
 #:
 msgid "__question31help"
-msgstr ""
+msgstr "Have people been made aware?<br>Who to contact, and how?"
 
+#:
+msgid "__question32"
+msgstr "Is there a recovery plan?"
+
+#:
+msgid "__question32help"
+msgstr "Outline or comprehensive?"
 
 #: 
 msgid "__welcome"
-msgstr "Welcome to Cases Diagnostic"
+msgstr "Welcome to CASES Diagnostic"
 
 #: 
 msgid "__welcome_upload"
@@ -302,7 +309,7 @@ msgstr "Upload a file"
 
 #:
 msgid "__welcome_login"
-msgstr "Make a diagnostic"
+msgstr "Create a diagnosis"
 
 #:
 msgid "__file_to_upload"
@@ -314,7 +321,7 @@ msgstr "Upload"
 
 #:
 msgid "__login"
-msgstr "Login"
+msgstr "Log-in"
 
 #:
 msgid "__password"
@@ -322,19 +329,19 @@ msgstr "Password"
 
 #:
 msgid "__log_in"
-msgstr "Login"
+msgstr "Log in"
 
 #:
 msgid "__email"
-msgstr "Email"
+msgstr "Email address"
 
 #:
 msgid "__logout"
-msgstr "Logout"
+msgstr "Log out"
 
 #:
 msgid "__password_forgotten"
-msgstr "Password forgotten ?"
+msgstr "Forgotten your password?"
 
 #:
 msgid "__new_password"
@@ -342,7 +349,7 @@ msgstr "New password"
 
 #:
 msgid "__confirm_password"
-msgstr "Confirmation"
+msgstr "Confirm new password"
 
 #:
 msgid "__change_password"
@@ -350,11 +357,11 @@ msgstr "Change password"
 
 #:
 msgid "__message_password"
-msgstr ""
+msgstr "An e-mail will be sent to you at this address explaining how to change your password.<br /><strong>Note</strong> that the e-mail is only valid for 24 hours."
 
 #:
 msgid "__receive_mail_password"
-msgstr "Receive the mail"
+msgstr "Receive e-mail"
 
 #:
 msgid "__maturity"
@@ -362,11 +369,11 @@ msgstr "Maturity"
 
 #:
 msgid "__maturity_target"
-msgstr "Target maturity"
+msgstr "Maturity target"
 
 #:
 msgid "__recommandation"
-msgstr "Recommandation"
+msgstr "Recommendation"
 
 #:
 msgid "__gravity"
@@ -410,7 +417,7 @@ msgstr "Access"
 
 #:
 msgid "__access_diagnostic"
-msgstr "Access to diagnostic"
+msgstr "Access diagnosis"
 
 #:
 msgid "__help"
@@ -418,27 +425,27 @@ msgstr "Help"
 
 #:
 msgid "__threshold_max"
-msgstr "Threshold max"
+msgstr "Upper threshold"
 
 #:
 msgid "__rapport"
-msgstr "Rapport"
+msgstr "Report"
 
 #:
 msgid "__mail_password_forgotten_subject"
-msgstr "Diagnostic Cases - Password forgotten"
+msgstr "CASES diagnosis - password forgotten"
 
 #:
 msgid "__mail_password_forgotten_content1"
-msgstr ""
+msgstr "You have forgotten your password for the <strong>CASES diagnosis</strong>"
 
 #:
 msgid "__mail_password_forgotten_content2"
-msgstr ""
+msgstr "To create a new password, please click on the button below:"
 
 #:
 msgid "__mail_password_forgotten_content3"
-msgstr ""
+msgstr "If this e-mail does not concern you, please ignore this message"
 
 #:
 msgid "__mail_password_forgotten_link"
@@ -454,7 +461,7 @@ msgstr "Categories"
 
 #:
 msgid "__recommandations"
-msgstr "Recommandations"
+msgstr "Recommendations"
 
 #:
 msgid "__users"
@@ -466,7 +473,7 @@ msgstr "Add a user"
 
 #:
 msgid "__user_choose"
-msgstr "Choose a user"
+msgstr "Select a user"
 
 #:
 msgid "__administrator"
@@ -478,7 +485,7 @@ msgstr "User details"
 
 #:
 msgid "__modify"
-msgstr "Modify"
+msgstr "Change"
 
 #:
 msgid "__questions"
@@ -502,7 +509,7 @@ msgstr "Action"
 
 #:
 msgid "__modify_question"
-msgstr "Modify the question"
+msgstr "Change question"
 
 #:
 msgid "__admin"
@@ -538,7 +545,7 @@ msgstr "Client"
 
 #:
 msgid "__download_delivery"
-msgstr "Dowload delivery"
+msgstr "Download deliverable"
 
 #:
 msgid "__draft"
@@ -562,7 +569,7 @@ msgstr "Strong"
 
 #:
 msgid "__back_rapport"
-msgstr "Back to rapport"
+msgstr "Back to report"
 
 #:
 msgid "__back"
@@ -574,7 +581,7 @@ msgstr "Delete"
 
 #:
 msgid "__login_error"
-msgstr ""
+msgstr "Impossible to log in"
 
 #:
 msgid "__no_file"
@@ -582,7 +589,7 @@ msgstr "File missing"
 
 #:
 msgid "__error_file"
-msgstr "Not valid file"
+msgstr "File invalid"
 
 #:
 msgid "__goal"
@@ -598,11 +605,11 @@ msgstr "Gravity levels"
 
 #:
 msgid "__maturity_none"
-msgstr "Not manage"
+msgstr "Not managed"
 
 #:
 msgid "__maturity_plan"
-msgstr "Plan"
+msgstr "Scheduled"
 
 #:
 msgid "__maturity_medium"
@@ -610,19 +617,19 @@ msgstr "+/- manage"
 
 #:
 msgid "__maturity_ok"
-msgstr "Manage"
+msgstr "Managed"
 
 #:
 msgid "__doughnut_legend"
-msgstr ""
+msgstr "Weighting by category"
 
 #:
 msgid "__riks_cartography"
-msgstr ""
+msgstr "Risk cartography"
 
 #:
 msgid "__maturity_evolution"
-msgstr "Maturity evolution"
+msgstr "Evolution of maturity"
 
 #:
 msgid "__home"
@@ -630,11 +637,11 @@ msgstr "Home"
 
 #:
 msgid "__new_diagnostic"
-msgstr "New diagnostic"
+msgstr "New diagnosis"
 
 #:
 msgid "__actual"
-msgstr "Actual"
+msgstr "Current"
 
 #:
 msgid "__target"
@@ -642,12 +649,12 @@ msgstr "Target"
 
 #:
 msgid "__organization_information"
-msgstr "Organization information"
+msgstr "Information about organisation"
 
 #:
 msgid "__evaluation_synthesis"
-msgstr "Synthesis evaluation"
+msgstr "Summary of evaluation"
 
 #:
 msgid "__categories_maturities"
-msgstr ""
+msgstr "Maturities by category"
