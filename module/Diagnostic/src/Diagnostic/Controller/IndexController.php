@@ -99,11 +99,17 @@ class IndexController extends AbstractActionController
                 }
             }
         } else {
+            $container = new Container('diagnostic');
+            $language = $container->language;
+
             //clear session
             $container = new Container('user');
             if ((!$container->offsetExists('email')) || (is_null($container->email))) {
                 $container->getManager()->getStorage()->clear();
             }
+
+            $container = new Container('diagnostic');
+            $container->language = $language;
         }
 
         //send to view
