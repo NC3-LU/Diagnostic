@@ -220,7 +220,7 @@ msgstr "Pas ou bonne gestion de la télémaintenance ?"
 
 #: 
 msgid "__question23"
-msgstr "Comment sont gérés les postes du travail des utilisateurs ?"
+msgstr "Comment sont gérés les postes de travail des utilisateurs ?"
 
 #: 
 msgid "__question23help"
