@@ -8,7 +8,7 @@
     ],
     "homepage": "http://framework.zend.com/",
     "require": {
-        "php": ">=5.5",
+        "php": ">=7.0",
         "zendframework/zendframework": "2.4.9",
        	"zendframework/zend-escaper": "2.4.9",
 	    "phpoffice/phpword": "dev-develop"

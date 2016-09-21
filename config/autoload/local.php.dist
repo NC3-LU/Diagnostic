@@ -16,4 +16,8 @@ return array(
         'username' => '********',
         'password' => '********',
     ),
+    'encryption_key' => '*****',
+    'mail' => 'info@cases.lu',
+    'mail_name' => 'Cases',
+    'domain' => 'diagnostic.cases.lu',
 );
