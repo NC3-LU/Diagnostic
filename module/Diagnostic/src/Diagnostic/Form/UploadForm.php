@@ -32,7 +32,7 @@ class UploadForm extends Form
             'name' => 'csrf',
             'options' => array(
                 'csrf_options' => array(
-                    'timeout' => 600
+                    'timeout' => 3600
                 )
             )
         ));

@@ -421,7 +421,6 @@ class IndexController extends AbstractActionController
      * @return \Zend\Http\Response|ViewModel
      */
     public function informationAction() {
-
         $container = new Container('user');
         if ((! $container->offsetExists('email')) || (is_null($container->email))) {
             return $this->redirect()->toRoute('diagnostic', ['controller' => 'index', 'action' => 'index']);
@@ -448,6 +447,7 @@ class IndexController extends AbstractActionController
 
         $type = $this->getEvent()->getRouteMatch()->getParam('id');
         $informationKey = ($type == 2) ? 'synthesis' : 'organization';
+
 
         //form is post and valid
         $errorMessage = '';
@@ -482,9 +482,9 @@ class IndexController extends AbstractActionController
                 }
 
             } else {
-
                 $form->setData($request->getPost());
                 if ($form->isValid()) {
+
                     //format result
                     $formData = $form->getData();
                     unset($formData['csrf']);
@@ -499,13 +499,13 @@ class IndexController extends AbstractActionController
                     $information[$informationKey] = $formData['information'];
                     $container->information = $information;
 
+
                     //retrieve first question
                     $firstId = false;
                     foreach ($questions as $key => $question) {
                         $firstId = $key;
                         break;
                     }
-
                     //redirect
                     if ($type == 1) {
                         return $this->redirect()->toRoute('diagnostic', ['controller' => 'index', 'action' => 'diagnostic', 'id' => $firstId]);
