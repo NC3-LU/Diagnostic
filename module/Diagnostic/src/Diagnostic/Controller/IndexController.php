@@ -227,7 +227,7 @@ class IndexController extends AbstractActionController
                         <p>' . $translator->translate('__mail_password_forgotten_content2') . '</p>
                         <br>
                         <div style="width: 500px; text-align: center">
-                            <a href="' . $config['domain'] . '/diagnostic/new-password?token=' . htmlentities($token) . '" class="btn btn-primary" style="text-decoration: none;"><strong>' . $translator->translate('__mail_password_forgotten_link') . '</strong></a>
+                            <a href="http://' . $config['domain'] . '/diagnostic/new-password?token=' . htmlentities($token) . '" class="btn btn-primary" style="text-decoration: none;"><strong>' . $translator->translate('__mail_password_forgotten_link') . '</strong></a>
                         </div>
                         <br>
                         <p>' . $translator->translate('__mail_password_forgotten_content3') . '</p>
