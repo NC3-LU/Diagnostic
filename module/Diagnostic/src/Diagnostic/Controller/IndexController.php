@@ -174,6 +174,29 @@ class IndexController extends AbstractActionController
 
                     $config = $this->getServiceLocator()->get('Config');
 
+                    // Determine HTTP/HTTPS proto, and HTTP_HOST
+                    if (isset($_SERVER['X_FORWARDED_PROTO'])) {
+                        $proto = strtolower($_SERVER['X_FORWARDED_PROTO']);
+                    } else if (isset($_SERVER['X_URL_SCHEME'])) {
+                        $proto = strtolower($_SERVER['X_URL_SCHEME']);
+                    } else if (isset($_SERVER['X_FORWARDED_SSL'])) {
+                        $proto = (strtolower($_SERVER['X_FORWARDED_SSL']) == 'on') ? 'https' : 'http';
+                    } else if (isset($_SERVER['FRONT_END_HTTPS'])) { // Microsoft variant
+                        $proto = (strtolower($_SERVER['FRONT_END_HTTPS']) == 'on') ? 'https' : 'http';
+                    } else if (isset($_SERVER['HTTPS'])) {
+                        $proto = 'https';
+                    } else {
+                        $proto = 'http';
+                    }
+
+                    if (isset($_SERVER['X_FORWARDED_HOST'])) {
+                        $host = $_SERVER['X_FORWARDED_HOST'];
+                    } else {
+                        $host = $_SERVER['HTTP_HOST'];
+                    }
+
+                    $link = $proto . '://' . $host . '/diagnostic/new-password?token=' . htmlentities($token);
+
                     $content = '
                         <style>
                         .btn {display: inline-block;padding: 6px 12px;margin-bottom: 0;font-size: 14px;font-weight: normal;line-height: 1.42857143;text-align: center;white-space: nowrap;vertical-align: middle;cursor: pointer;background-image: none;border: 1px solid transparent;border-radius: 4px;}
@@ -227,7 +250,7 @@ class IndexController extends AbstractActionController
                         <p>' . $translator->translate('__mail_password_forgotten_content2') . '</p>
                         <br>
                         <div style="width: 500px; text-align: center">
-                            <a href="http://' . $config['domain'] . '/diagnostic/new-password?token=' . htmlentities($token) . '" class="btn btn-primary" style="text-decoration: none;"><strong>' . $translator->translate('__mail_password_forgotten_link') . '</strong></a>
+                            <a href="' . $link . '" class="btn btn-primary" style="text-decoration: none;"><strong>' . $translator->translate('__mail_password_forgotten_link') . '</strong></a>
                         </div>
                         <br>
                         <p>' . $translator->translate('__mail_password_forgotten_content3') . '</p>

@@ -1,6 +1,9 @@
 <?php
 namespace Diagnostic\Service;
 
+use Zend\Mail\Message;
+use Zend\Mail\Transport\Sendmail;
+use Zend\Mime\Part;
 use Zend\ServiceManager\ServiceLocatorAwareInterface;
 use Zend\ServiceManager\ServiceLocatorAwareTrait;
 
@@ -14,7 +17,6 @@ class MailService implements ServiceLocatorAwareInterface
 {
     use ServiceLocatorAwareTrait;
 
-
     /**
      * Send
      *
@@ -25,43 +27,20 @@ class MailService implements ServiceLocatorAwareInterface
 
         $config = $this->getServiceLocator()->get('Config');
 
-/*
-        $html = $this->getServiceLocator()->get('Diagnostic\Service\Mime\Part');
+        $html = new Part($message);
         $html->type = "text/html";
 
-        $body = $this->getServiceLocator()->get('Diagnostic\Service\Mime\message');
-
-        $options = $this->getServiceLocator()->get('Diagnostic\Service\Mail\Transport\SmtpOptions');
-        $options->setFromArray($config['smtp']);
-
-
-        $html->setContent($message);
-
+        $body = new \Zend\Mime\Message();
         $body->setParts(array($html));
 
-        $mailMessage = $this->getServiceLocator()->get('Diagnostic\Service\Mail\Message');
-        $mailMessage->addFrom($config['mail'], $config['mail_name'])
-            ->addTo($email)
-            ->setSubject($subject)
-            ->setBody($body);
+        $message = new Message();
+        $message->setBody($body);
+        $message->setFrom($config['mail'], $config['mail_name']);
+        $message->addTo($email, $email);
+        $message->setSubject($subject);
 
-
-        //smtp transport
-        $transport = $this->getServiceLocator()->get('Diagnostic\Service\Mail\Transport\Smtp');
-        $transport->setOptions($options);
-        $transport->send($mailMessage);
-
-        //echo $mailMessage->toString();
-*/
-
-        $headers  = 'MIME-Version: 1.0' . "\r\n";
-        $headers .= 'Content-type: text/html; charset=utf-8' . "\r\n";
-        //$headers .= 'To: ' . $email . "\r\n";
-        $headers .= 'From: ' . $config['mail_name'] . '<' . $config['mail'] . '>' . "\r\n";
-
-
-        // Envoi
-        mail($email, $subject, $message, $headers);
+        $transport = new Sendmail();
+        $transport->send($message);
     }
 
 }
