@@ -9,44 +9,44 @@
 
 namespace Diagnostic;
 
-return array(
-    'controllers' => array(
-        'invokables' => array(
+return [
+    'controllers' => [
+        'invokables' => [
             'Diagnostic\Controller\Index' => 'Diagnostic\Controller\IndexController',
-        ),
-    ),
+        ],
+    ],
 
-    'router' => array(
-        'routes' => array(
-            'home' => array(
+    'router' => [
+        'routes' => [
+            'home' => [
                 'type' => 'Zend\Mvc\Router\Http\Literal',
-                'options' => array(
-                    'route'    => '/',
-                    'defaults' => array(
+                'options' => [
+                    'route' => '/',
+                    'defaults' => [
                         'controller' => 'Diagnostic\Controller\Index',
-                        'action'     => 'index',
-                    ),
-                ),
-            ),
-            'diagnostic' => array(
-                'type'    => 'segment',
-                'options' => array(
-                    'route'    => '/diagnostic[/:action][/:id]',
-                    'constraints' => array(
+                        'action' => 'index',
+                    ],
+                ],
+            ],
+            'diagnostic' => [
+                'type' => 'segment',
+                'options' => [
+                    'route' => '/diagnostic[/:action][/:id]',
+                    'constraints' => [
                         'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
-                        'id'     => '[0-9]+',
-                    ),
-                    'defaults' => array(
+                        'id' => '[0-9]+',
+                    ],
+                    'defaults' => [
                         'controller' => 'Diagnostic\Controller\Index',
-                        'action'     => 'index',
-                    ),
-                ),
-            ),
-        ),
-    ),
+                        'action' => 'index',
+                    ],
+                ],
+            ],
+        ],
+    ],
 
-    'service_manager' => array(
-        'invokables' => array(
+    'service_manager' => [
+        'invokables' => [
             'Diagnostic\Model\DiagnosticEntity' => 'Diagnostic\Model\DiagnosticEntity',
             'Diagnostic\Model\InformationEntity' => 'Diagnostic\Model\InformationEntity',
             'Diagnostic\Model\QuestionEntity' => 'Diagnostic\Model\QuestionEntity',
@@ -62,21 +62,21 @@ return array(
             'Diagnostic\Service\Mail\Message' => 'Zend\Mail\Message',
             'Diagnostic\Service\Mail\Transport\Smtp' => 'Zend\Mail\Transport\Smtp',
             'Diagnostic\Service\Mail\Transport\SmtpOptions' => 'Zend\Mail\Transport\SmtpOptions',
-        ),
-        'abstract_factories' => array(
+        ],
+        'abstract_factories' => [
             'Zend\Cache\Service\StorageCacheAbstractServiceFactory',
             'Zend\Log\LoggerAbstractServiceFactory',
-        ),
-        'factories' => array(
+        ],
+        'factories' => [
             'translator' => 'Zend\Mvc\Service\TranslatorServiceFactory',
             'navigation' => 'Zend\Navigation\Service\DefaultNavigationFactory',
-        ),
-        'shared' => array(
+        ],
+        'shared' => [
             'Diagnostic\Model\QuestionEntity' => false,
-        ),
-    ),
-    'form_elements' => array(
-        'invokables' => array(
+        ],
+    ],
+    'form_elements' => [
+        'invokables' => [
             'UploadForm' => 'Diagnostic\Form\UploadForm',
             'LoginForm' => 'Diagnostic\Form\LoginForm',
             'PasswordForgottenForm' => 'Diagnostic\Form\PasswordForgottenForm',
@@ -86,55 +86,54 @@ return array(
             'AddQuestionForm' => 'Diagnostic\Form\AddQuestionForm',
             'DownloadForm' => 'Diagnostic\Form\DownloadForm',
             'LinkDownloadForm' => 'Diagnostic\Form\LinkDownloadForm',
-        ),
-    ),
-    'view_manager' => array(
+        ],
+    ],
+    'view_manager' => [
         'display_not_found_reason' => true,
-        'display_exceptions'       => true,
-        'doctype'                  => 'HTML5',
-        'not_found_template'       => 'error/404',
-        'exception_template'       => 'error/index',
-        'template_map' => array(
-            'layout/layout'           => __DIR__ . '/../view/layout/layout.phtml',
+        'display_exceptions' => true,
+        'doctype' => 'HTML5',
+        'not_found_template' => 'error/404',
+        'exception_template' => 'error/index',
+        'template_map' => [
+            'layout/layout' => __DIR__ . '/../view/layout/layout.phtml',
             'application/index/index' => __DIR__ . '/../view/application/index/index.phtml',
-            'error/404'               => __DIR__ . '/../view/error/404.phtml',
-            'error/index'             => __DIR__ . '/../view/error/index.phtml',
-        ),
-        'template_path_stack' => array(
+            'error/404' => __DIR__ . '/../view/error/404.phtml',
+            'error/index' => __DIR__ . '/../view/error/index.phtml',
+        ],
+        'template_path_stack' => [
             __DIR__ . '/../view',
-        ),
-    ),
+        ],
+    ],
     // Placeholder for console routes
-    'console' => array(
-        'router' => array(
-            'routes' => array(
-            ),
-        ),
-    ),
+    'console' => [
+        'router' => [
+            'routes' => [],
+        ],
+    ],
 
-    'translator' => array(
+    'translator' => [
         'locale' => 'fr_FR',
-        'translation_file_patterns' => array(
-            array(
-                'type'     => 'gettext',
+        'translation_file_patterns' => [
+            [
+                'type' => 'gettext',
                 'base_dir' => __DIR__ . '/../../../language',
-                'pattern'  => '%s.mo',
-            ),
-        ),
-    ),
+                'pattern' => '%s.mo',
+            ],
+        ],
+    ],
 
-    'navigation' => array(
-        'default' => array(
-            array(
+    'navigation' => [
+        'default' => [
+            [
                 'label' => '__users',
                 'route' => 'admin',
                 'action' => 'users',
-            ),
-            array(
+            ],
+            [
                 'label' => '__questions',
                 'route' => 'admin',
                 'action' => 'questions',
-            ),
-        ),
-    ),
-);
+            ],
+        ],
+    ],
+];

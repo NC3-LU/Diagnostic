@@ -23,7 +23,8 @@ class MailService implements ServiceLocatorAwareInterface
      * @return \Zend\Db\ResultSet\ResultSet
      * @throws \Exception
      */
-    public function send($email, $subject, $message) {
+    public function send($email, $subject, $message)
+    {
 
         $config = $this->getServiceLocator()->get('Config');
 
@@ -31,7 +32,7 @@ class MailService implements ServiceLocatorAwareInterface
         $html->type = "text/html";
 
         $body = new \Zend\Mime\Message();
-        $body->setParts(array($html));
+        $body->setParts([$html]);
 
         $message = new Message();
         $message->setBody($body);

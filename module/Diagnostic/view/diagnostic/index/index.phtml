@@ -9,12 +9,12 @@ $formLogin->setAttribute('action', $this->url('diagnostic', array('action' => 'i
 $formLogin->prepare();
 ?>
 
-<br /><br />
+<br/><br/>
 
 <div class="row">
     <div class="col-lg-6 text-center">
         <h2><?= $this->translate('__welcome_upload') ?></h2>
-        <br />
+        <br/>
         <?= $this->form()->openTag($formUpload) ?>
         <table class="table table-responsive table-borderless">
             <tr>
@@ -39,29 +39,31 @@ $formLogin->prepare();
 
         <?php
         $container = new \Zend\Session\Container('user');
-        if (($container->offsetExists('email')) || (! is_null($container->email))) {
+        if (($container->offsetExists('email')) || (!is_null($container->email))) {
             ?>
             <h2><?= $this->translate('__diagnostic') ?></h2>
-            <br />
+            <br/>
             <center>
-            <table>
-                <tr>
-                    <td>
-                        <a href="<?= $this->url('diagnostic',array('action'=>'diagnostic'));?>" class="btn btn-info"><?= $this->translate('__access_diagnostic') ?></a>
-                    </td>
-                    <td width="10%"></td>
-                    <td>
-                        <a href="<?= $this->url('diagnostic',array('action'=>'new-diagnostic'));?>" class="btn btn-default"><?= $this->translate('__new_diagnostic') ?></a>
-                    </td>
-                </tr>
-            </table>
+                <table>
+                    <tr>
+                        <td>
+                            <a href="<?= $this->url('diagnostic', array('action' => 'diagnostic')); ?>"
+                               class="btn btn-info"><?= $this->translate('__access_diagnostic') ?></a>
+                        </td>
+                        <td width="10%"></td>
+                        <td>
+                            <a href="<?= $this->url('diagnostic', array('action' => 'new-diagnostic')); ?>"
+                               class="btn btn-default"><?= $this->translate('__new_diagnostic') ?></a>
+                        </td>
+                    </tr>
+                </table>
             </center>
             <br><br>
             <?php
         } else {
             ?>
             <h2><?= $this->translate('__welcome_login') ?></h2>
-            <br />
+            <br/>
             <?= $this->form()->openTag($formLogin) ?>
             <table class="table table-responsive table-borderless">
                 <tr>
@@ -84,7 +86,8 @@ $formLogin->prepare();
                 if (strlen($this->message)) {
                     ?>
                     <tr>
-                        <td colspan="2" style="color: red;"><strong><?= $this->translate($this->message) ?></strong></td>
+                        <td colspan="2" style="color: red;"><strong><?= $this->translate($this->message) ?></strong>
+                        </td>
                     </tr>
                     <?php
                 }
@@ -94,7 +97,9 @@ $formLogin->prepare();
 
             <table class="table table-responsive table-borderless">
                 <tr>
-                    <td class="left"><a href="<?php echo $this->url('diagnostic', array('action'=>'passwordForgotten'));?>"><?= $this->translate($this->translate('__password_forgotten')) ?></a> </td>
+                    <td class="left"><a
+                                href="<?php echo $this->url('diagnostic', array('action' => 'passwordForgotten')); ?>"><?= $this->translate($this->translate('__password_forgotten')) ?></a>
+                    </td>
                     <td class="right"><?= $this->formSubmit($formLogin->get('submit')) ?></td>
                 </tr>
             </table>

@@ -83,7 +83,7 @@ class IndexController extends AbstractActionController
                         $userTokenService = $this->getServiceLocator()->get('Diagnostic\Service\UserTokenService');
                         $userTokenService->deleteByEmail($emailUserToModify);
                     }
-                    $userService->update($id, (array) $formData);
+                    $userService->update($id, (array)$formData);
 
                     //redirect
                     return $this->redirect()->toRoute('admin', ['controller' => 'index', 'action' => 'users']);
@@ -101,7 +101,8 @@ class IndexController extends AbstractActionController
      *
      * @return \Zend\Http\Response|ViewModel
      */
-    public function addUserAction() {
+    public function addUserAction()
+    {
         $form = $this->getServiceLocator()->get('formElementManager')->get('UserForm');
 
         $emailNotExistFilter = new EmailNotExistFilter($this->getServiceLocator()->get('Zend\Db\Adapter\Adapter'));
@@ -117,7 +118,7 @@ class IndexController extends AbstractActionController
                 $formData = $form->getData();
 
                 $userService = $this->getServiceLocator()->get('Diagnostic\Service\UserService');
-                $userService->create((array) $formData);
+                $userService->create((array)$formData);
 
                 //redirect
                 return $this->redirect()->toRoute('admin', ['controller' => 'index', 'action' => 'users']);
@@ -135,7 +136,8 @@ class IndexController extends AbstractActionController
      *
      * @return ViewModel
      */
-    public function questionsAction() {
+    public function questionsAction()
+    {
         //retrieve questions
         $questionService = $this->getServiceLocator()->get('Diagnostic\Service\QuestionService');
         $questions = $questionService->getBddQuestions();
@@ -151,7 +153,8 @@ class IndexController extends AbstractActionController
      *
      * @return ViewModel
      */
-    public function addQuestionAction() {
+    public function addQuestionAction()
+    {
         $form = $this->getServiceLocator()->get('formElementManager')->get('AdminQuestionForm');
 
         //form is post and valid
@@ -162,7 +165,7 @@ class IndexController extends AbstractActionController
                 $formData = $form->getData();
 
                 $questionService = $this->getServiceLocator()->get('Diagnostic\Service\QuestionService');
-                $questionService->create((array) $formData);
+                $questionService->create((array)$formData);
 
                 $questionService->resetCache();
 
@@ -183,7 +186,8 @@ class IndexController extends AbstractActionController
      * @return \Zend\Http\Response|ViewModel
      * @throws \Exception
      */
-    public function modifyQuestionAction() {
+    public function modifyQuestionAction()
+    {
 
         $id = $this->getEvent()->getRouteMatch()->getParam('id');
 
@@ -205,7 +209,7 @@ class IndexController extends AbstractActionController
             if ($form->isValid()) {
                 $formData = $form->getData();
 
-                $questionService->update($id, (array) $formData);
+                $questionService->update($id, (array)$formData);
 
                 $questionService->resetCache();
 
@@ -233,7 +237,8 @@ class IndexController extends AbstractActionController
      * @return \Zend\Http\Response
      * @throws \Exception
      */
-    public function deleteUserAction() {
+    public function deleteUserAction()
+    {
         //id user
         $id = $this->getEvent()->getRouteMatch()->getParam('id');
 
@@ -241,7 +246,7 @@ class IndexController extends AbstractActionController
         $userService = $this->getServiceLocator()->get('Diagnostic\Service\UserService');
         $users = $userService->getUsers();
         $usersIds = [];
-        foreach($users as $user) {
+        foreach ($users as $user) {
             $usersIds[] = $user->getId();
         }
 
@@ -263,7 +268,8 @@ class IndexController extends AbstractActionController
      * @return \Zend\Http\Response
      * @throws \Exception
      */
-    public function deleteQuestionAction() {
+    public function deleteQuestionAction()
+    {
         //id user
         $id = $this->getEvent()->getRouteMatch()->getParam('id');
 
@@ -271,7 +277,7 @@ class IndexController extends AbstractActionController
         $questionService = $this->getServiceLocator()->get('Diagnostic\Service\QuestionService');
         $questions = $questionService->getBddQuestions();
         $questionsIds = [];
-        foreach($questions as $question) {
+        foreach ($questions as $question) {
             $questionsIds[] = $question->getId();
         }
 

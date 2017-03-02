@@ -20,7 +20,8 @@ class UserTokenService implements ServiceLocatorAwareInterface
      * @return \Zend\Db\ResultSet\ResultSet
      * @throws \Exception
      */
-    public function saveEntity($email) {
+    public function saveEntity($email)
+    {
 
         //record token
         $userToken = [
@@ -48,7 +49,8 @@ class UserTokenService implements ServiceLocatorAwareInterface
      *
      * @param $token
      */
-    public function getByToken($token) {
+    public function getByToken($token)
+    {
         $userTokenGateway = $this->getServiceLocator()->get('Diagnostic\Gateway\UserTokenGateway');
         $userTokenEntity = $userTokenGateway->getByToken($token);
 
@@ -60,7 +62,8 @@ class UserTokenService implements ServiceLocatorAwareInterface
      *
      * @param $token
      */
-    public function delete($token) {
+    public function delete($token)
+    {
         $userTokenGateway = $this->getServiceLocator()->get('Diagnostic\Gateway\UserTokenGateway');
         $userTokenGateway->delete($token);
     }
@@ -70,7 +73,8 @@ class UserTokenService implements ServiceLocatorAwareInterface
      *
      * @param $email
      */
-    public function deleteByEmail($email) {
+    public function deleteByEmail($email)
+    {
         $userTokenGateway = $this->getServiceLocator()->get('Diagnostic\Gateway\UserTokenGateway');
         $userTokenGateway->deleteByEmail($email);
 

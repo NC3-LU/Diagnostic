@@ -14,38 +14,38 @@ class DownloadFormFilter extends InputFilter
     public function __construct($adapter)
     {
         $this->add(array(
-            'name'       => 'document',
-            'required'   => true,
+            'name' => 'document',
+            'required' => true,
         ));
 
         $this->add(array(
-            'name'       => 'company',
-            'required'   => true,
+            'name' => 'company',
+            'required' => true,
         ));
 
         $this->add(array(
-            'name'       => 'version',
-            'required'   => true,
+            'name' => 'version',
+            'required' => true,
         ));
 
         $this->add(array(
-            'name'       => 'state',
-            'required'   => true,
+            'name' => 'state',
+            'required' => true,
         ));
 
         $this->add(array(
-            'name'       => 'classification',
-            'required'   => true,
+            'name' => 'classification',
+            'required' => true,
         ));
 
         $this->add(array(
-            'name'       => 'consultant',
-            'required'   => true,
+            'name' => 'consultant',
+            'required' => true,
         ));
 
         $this->add(array(
-            'name'       => 'client',
-            'required'   => true,
+            'name' => 'client',
+            'required' => true,
         ));
     }
 }

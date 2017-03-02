@@ -15,7 +15,8 @@ class CalculService implements ServiceLocatorAwareInterface
 {
     use ServiceLocatorAwareTrait;
 
-    public function calcul() {
+    public function calcul()
+    {
 
         //retrieve questions
         $questionService = $this->getServiceLocator()->get('Diagnostic\Service\QuestionService');
@@ -57,10 +58,10 @@ class CalculService implements ServiceLocatorAwareInterface
                     $totalPoints += $points;
                     $totalPointsTarget += $pointsTarget;
                     $globalPoints[$categoryId] = array_key_exists($categoryId, $globalPoints) ? $globalPoints[$categoryId] + $points : $points;
-                    $globalPointsTarget[$categoryId] = array_key_exists($categoryId, $globalPointsTarget) ? $globalPointsTarget[$categoryId] + $pointsTarget : (int) $pointsTarget;
+                    $globalPointsTarget[$categoryId] = array_key_exists($categoryId, $globalPointsTarget) ? $globalPointsTarget[$categoryId] + $pointsTarget : (int)$pointsTarget;
 
                     $totalThreshold += $threshold;
-                    $globalThreshold[$categoryId] = array_key_exists($categoryId, $globalThreshold) ? $globalThreshold[$categoryId] + $threshold : (int) $threshold;
+                    $globalThreshold[$categoryId] = array_key_exists($categoryId, $globalThreshold) ? $globalThreshold[$categoryId] + $threshold : (int)$threshold;
                 }
             }
         }
@@ -69,12 +70,12 @@ class CalculService implements ServiceLocatorAwareInterface
         $totalTarget = ($totalThreshold) ? round($totalPointsTarget / $totalThreshold * 100 / 3) : 0;
 
         $totalCategory = [];
-        foreach($globalPoints as $categoryId => $points) {
+        foreach ($globalPoints as $categoryId => $points) {
             $totalCategory[$categoryId] = ($globalThreshold[$categoryId]) ? round($points / $globalThreshold[$categoryId] * 100 / 3) : 0;
         }
 
         $totalCategoryTarget = [];
-        foreach($globalPointsTarget as $categoryId => $pointsTarget) {
+        foreach ($globalPointsTarget as $categoryId => $pointsTarget) {
             $totalCategoryTarget[$categoryId] = ($globalThreshold[$categoryId]) ? round($pointsTarget / $globalThreshold[$categoryId] * 100 / 3) : 0;
         }
 
@@ -98,15 +99,16 @@ class CalculService implements ServiceLocatorAwareInterface
      * @param $field
      * @return array
      */
-    public function sortArray($recommandations, $field) {
+    public function sortArray($recommandations, $field)
+    {
         $tmpArray = [];
-        foreach($recommandations as $questionId => $recommandation) {
+        foreach ($recommandations as $questionId => $recommandation) {
             $tmpArray[$questionId] = $recommandation[$field];
         }
         arsort($tmpArray);
 
         $recommandationsSort = [];
-        foreach($tmpArray as $questionId => $value) {
+        foreach ($tmpArray as $questionId => $value) {
             $recommandationsSort[$questionId] = $recommandations[$questionId];
         }
 
@@ -119,7 +121,8 @@ class CalculService implements ServiceLocatorAwareInterface
      * @param $maturity
      * @return string
      */
-    public function getImgMaturity($maturity) {
+    public function getImgMaturity($maturity)
+    {
 
         switch ($maturity) {
             case 3:

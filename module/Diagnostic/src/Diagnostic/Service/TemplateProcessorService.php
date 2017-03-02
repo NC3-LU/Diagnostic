@@ -1,5 +1,6 @@
 <?php
 namespace Diagnostic\Service;
+
 use PhpOffice\PhpWord\TemplateProcessor;
 use Zend\ServiceManager\ServiceLocatorAwareInterface;
 use Zend\ServiceManager\ServiceLocatorAwareTrait;
@@ -25,8 +26,7 @@ class TemplateProcessorService extends TemplateProcessor implements ServiceLocat
     public function setImageValue($search, $replace)
     {
         // Sanity check
-        if (!file_exists($replace))
-        {
+        if (!file_exists($replace)) {
             return;
         }
 
@@ -43,7 +43,8 @@ class TemplateProcessorService extends TemplateProcessor implements ServiceLocat
      * @param $data
      * @throws \PhpOffice\PhpWord\Exception\Exception
      */
-    public function generateWord($data, $questions, $results, $information, $translator) {
+    public function generateWord($data, $questions, $results, $information, $translator)
+    {
 
         $data['date'] = date('Y/m/d');
 
@@ -65,7 +66,7 @@ class TemplateProcessorService extends TemplateProcessor implements ServiceLocat
         //categories repartition
         $categoriesRepartition = [];
         $i = 0;
-        foreach($numberByCategories as $category => $categoryNumber) {
+        foreach ($numberByCategories as $category => $categoryNumber) {
             $categoriesRepartition[$i]['label'] = $translator->translate($category);
             $categoriesRepartition[$i]['value'] = $categoryNumber;
             $i++;
@@ -74,8 +75,8 @@ class TemplateProcessorService extends TemplateProcessor implements ServiceLocat
         foreach ($categories as $id => $label) {
             $categories[$id] = [
                 'label' => $label,
-                'percent' => (array_key_exists($id, $results['totalCategory'])) ? (int) $results['totalCategory'][$id] : 0,
-                'percentTarget' => (array_key_exists($id, $results['totalCategoryTarget'])) ? (int) $results['totalCategoryTarget'][$id] : 0,
+                'percent' => (array_key_exists($id, $results['totalCategory'])) ? (int)$results['totalCategory'][$id] : 0,
+                'percentTarget' => (array_key_exists($id, $results['totalCategoryTarget'])) ? (int)$results['totalCategoryTarget'][$id] : 0,
             ];
         }
 

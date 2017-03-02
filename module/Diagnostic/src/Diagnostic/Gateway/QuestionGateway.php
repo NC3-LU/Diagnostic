@@ -17,13 +17,14 @@ class QuestionGateway extends AbstractGateway
      *
      * @return null|\Zend\Db\ResultSet\ResultSetInterface
      */
-    public function fetchAllWithCategories() {
+    public function fetchAllWithCategories()
+    {
 
         $select = $this->tableGateway
             ->getSql()
             ->select()
             ->columns(['id', 'category_id', 'translation_key', 'translation_key_help' => new Expression('CONCAT(questions.translation_key, \'help\')'), 'threshold'])
-            ->join('categories', 'categories.id = category_id', array('category_translation_key' => 'translation_key'), 'left');
+            ->join('categories', 'categories.id = category_id', ['category_translation_key' => 'translation_key'], 'left');
 
         $resultSet = $this->tableGateway->selectWith($select);
 
@@ -36,7 +37,8 @@ class QuestionGateway extends AbstractGateway
      * @param $id
      * @return null|\Zend\Db\ResultSet\ResultSetInterface
      */
-    public function getQuestionById($id){
+    public function getQuestionById($id)
+    {
 
         $select = $this->tableGateway
             ->getSql()
@@ -56,10 +58,10 @@ class QuestionGateway extends AbstractGateway
      */
     public function update($id, $data)
     {
-        $this->tableGateway->update(array(
+        $this->tableGateway->update([
             'category_id' => $data['category_id'],
             'translation_key' => $data['translation_key'],
             'threshold' => $data['threshold']
-        ), array('id' => $id));
+        ], ['id' => $id]);
     }
 }

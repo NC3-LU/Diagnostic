@@ -9,50 +9,49 @@
 
 namespace Admin;
 
-return array(
-    'controllers' => array(
-        'invokables' => array(
+return [
+    'controllers' => [
+        'invokables' => [
             'Admin\Controller\Index' => 'Admin\Controller\IndexController',
-        ),
-    ),
+        ],
+    ],
 
-    'router' => array(
-        'routes' => array(
-            'admin' => array(
-                'type'    => 'segment',
-                'options' => array(
-                    'route'    => '/admin[/:action][/:id]',
-                    'constraints' => array(
+    'router' => [
+        'routes' => [
+            'admin' => [
+                'type' => 'segment',
+                'options' => [
+                    'route' => '/admin[/:action][/:id]',
+                    'constraints' => [
                         'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
-                        'id'     => '[0-9]+',
-                    ),
-                    'defaults' => array(
+                        'id' => '[0-9]+',
+                    ],
+                    'defaults' => [
                         'controller' => 'Admin\Controller\Index',
-                        'action'     => 'users',
-                    ),
-                ),
-            ),
-        ),
-    ),
+                        'action' => 'users',
+                    ],
+                ],
+            ],
+        ],
+    ],
 
-    'view_manager' => array(
-        'template_path_stack' => array(
+    'view_manager' => [
+        'template_path_stack' => [
             __DIR__ . '/../view',
-        ),
-    ),
+        ],
+    ],
 
-    'service_manager' => array(
-        'invokables' => array(
-        ),
-    ),
+    'service_manager' => [
+        'invokables' => [],
+    ],
 
-    'form_elements' => array(
-        'factories' => array(
+    'form_elements' => [
+        'factories' => [
             'AdminQuestionForm' => 'Admin\Factory\QuestionFormFactory',
-        ),
-        'invokables' => array(
+        ],
+        'invokables' => [
             'UserForm' => 'Admin\Form\UserForm',
             'NewQuestionForm' => 'Admin\Form\QuestionForm',
-        ),
-    ),
-);
+        ],
+    ],
+];

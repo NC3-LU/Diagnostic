@@ -14,7 +14,8 @@ class UserTokenGateway extends AbstractGateway
      *
      * @return null|\Zend\Db\ResultSet\ResultSetInterface
      */
-    public function getByToken($token){
+    public function getByToken($token)
+    {
 
         $select = $this->tableGateway
             ->getSql()
@@ -31,18 +32,20 @@ class UserTokenGateway extends AbstractGateway
      *
      * @param $token
      */
-    public function delete($token) {
-        $this->tableGateway->delete(array('token' => $token));
+    public function delete($token)
+    {
+        $this->tableGateway->delete(['token' => $token]);
     }
 
     /**
      * Delete Old
      */
-    public function deleteOld() {
+    public function deleteOld()
+    {
         $query = $this->tableGateway
             ->getSql()
             ->delete()
-            ->where(['limit_timestamp < ?' => (int) time()]);
+            ->where(['limit_timestamp < ?' => (int)time()]);
 
         $this->tableGateway->deleteWith($query);
     }
@@ -52,7 +55,8 @@ class UserTokenGateway extends AbstractGateway
      *
      * @param $email
      */
-    public function deleteByEmail($email) {
-        $this->tableGateway->delete(array('user_email' => $email));
+    public function deleteByEmail($email)
+    {
+        $this->tableGateway->delete(['user_email' => $email]);
     }
 }

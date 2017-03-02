@@ -14,24 +14,24 @@ class NewPasswordFormFilter extends InputFilter
     public function __construct($adapter)
     {
         $this->add(array(
-            'name'       => 'password',
-            'required'   => true,
+            'name' => 'password',
+            'required' => true,
             'validators' => array(
                 array(
-                    'name'    => 'Diagnostic\Validator\PasswordStrength',
+                    'name' => 'Diagnostic\Validator\PasswordStrength',
                 ),
             ),
         ));
 
         $this->add(array(
-            'name'       => 'password2',
-            'required'   => true,
+            'name' => 'password2',
+            'required' => true,
             'validators' => array(
                 array(
-                    'name'    => 'Diagnostic\Validator\PasswordStrength',
+                    'name' => 'Diagnostic\Validator\PasswordStrength',
                 ),
                 array(
-                    'name'    => 'Identical',
+                    'name' => 'Identical',
                     'options' => array(
                         'token' => 'password',
                     ),

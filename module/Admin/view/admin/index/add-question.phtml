@@ -9,7 +9,7 @@ $this->form->prepare();
     <div class="col-lg-3 text-center"></div>
     <div class="col-lg-6 text-left">
         <h2><?= $this->translate('__add_a_question') ?></h2>
-        <br />
+        <br/>
         <?= $this->form()->openTag($form) ?>
         <table class="table table-responsive table-borderless">
             <tr>
@@ -20,7 +20,7 @@ $this->form->prepare();
             </tr>
             <tr>
                 <td colspan="2">
-                    <?= $this->formElementErrors($form->get('translation_key'), array('class' => 'bg-danger')) ?>
+                    <?= $this->formElementErrors($form->get('translation_key'), ['class' => 'bg-danger']) ?>
                 </td>
             </tr>
             <tr>
@@ -37,8 +37,8 @@ $this->form->prepare();
             </tr>
             <tr>
                 <td colspan="2">
-                    <?= $this->formElementErrors($form->get('category_id'), array('class' => 'bg-danger')) ?>
-                    <?= $this->formElementErrors($form->get('threshold'), array('class' => 'bg-danger')) ?>
+                    <?= $this->formElementErrors($form->get('category_id'), ['class' => 'bg-danger']) ?>
+                    <?= $this->formElementErrors($form->get('threshold'), ['class' => 'bg-danger']) ?>
                     <?= $this->formSubmit($form->get('submit')) ?>
                 </td>
             </tr>

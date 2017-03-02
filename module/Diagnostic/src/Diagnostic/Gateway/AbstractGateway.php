@@ -73,6 +73,6 @@ abstract class AbstractGateway implements ServiceLocatorAwareInterface
      */
     public function delete($id)
     {
-        $this->tableGateway->delete(array('id' => (int) $id));
+        $this->tableGateway->delete(['id' => (int)$id]);
     }
 }

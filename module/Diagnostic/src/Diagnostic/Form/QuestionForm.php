@@ -40,11 +40,11 @@ class QuestionForm extends Form
                     ]
                 ],
                 'label_attributes' => array(
-                    'class'  => 'radio-inline'
+                    'class' => 'radio-inline'
                 ),
             ),
             'attributes' => array(
-                'class'  => 'radio'
+                'class' => 'radio'
             ),
         ));
 
@@ -64,11 +64,11 @@ class QuestionForm extends Form
                     ],
                 ],
                 'label_attributes' => array(
-                    'class'  => 'radio-inline'
+                    'class' => 'radio-inline'
                 ),
             ),
             'attributes' => array(
-                'class'  => 'radio'
+                'class' => 'radio'
             ),
         ));
 
@@ -103,11 +103,11 @@ class QuestionForm extends Form
                     ],
                 ],
                 'label_attributes' => array(
-                    'class'  => 'radio-inline'
+                    'class' => 'radio-inline'
                 ),
             ),
             'attributes' => array(
-                'class'  => 'radio'
+                'class' => 'radio'
             ),
         ));
 

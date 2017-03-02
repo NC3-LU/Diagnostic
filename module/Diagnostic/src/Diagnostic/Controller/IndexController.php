@@ -113,12 +113,12 @@ class IndexController extends AbstractActionController
         }
 
         //send to view
-        return new ViewModel(array(
+        return new ViewModel([
             'formUpload' => $formUpload,
             'formLogin' => $formLogin,
             'message' => $message,
             'errorMessage' => $errorMessage,
-        ));
+        ]);
     }
 
     /**
@@ -126,7 +126,8 @@ class IndexController extends AbstractActionController
      *
      * @return \Zend\Http\Response
      */
-    public function logoutAction() {
+    public function logoutAction()
+    {
         //clear session
         $container = new Container('user');
         $container->getManager()->getStorage()->clear();
@@ -139,7 +140,8 @@ class IndexController extends AbstractActionController
      *
      * @return \Zend\Http\Response|ViewModel
      */
-    public function passwordForgottenAction() {
+    public function passwordForgottenAction()
+    {
         //form
         $form = $this->getServiceLocator()->get('formElementManager')->get('PasswordForgottenForm');
 
@@ -276,7 +278,8 @@ class IndexController extends AbstractActionController
      *
      * @return ViewModel
      */
-    public function newPasswordAction() {
+    public function newPasswordAction()
+    {
 
         //retrieve token
         $token = $this->getRequest()->getQuery('token');
@@ -285,7 +288,7 @@ class IndexController extends AbstractActionController
 
         $validToken = false;
         foreach ($userTokenEntity as $userToken) {
-            if (time() <= $userToken->getLimitTimestamp()){
+            if (time() <= $userToken->getLimitTimestamp()) {
                 $validToken = true;
             }
         }
@@ -321,10 +324,10 @@ class IndexController extends AbstractActionController
             }
 
             //send to view
-            return new ViewModel(array(
+            return new ViewModel([
                 'form' => $form,
                 'token' => $token,
-            ));
+            ]);
         } else {
 
             //redirect
@@ -340,14 +343,15 @@ class IndexController extends AbstractActionController
      * @return \Zend\Http\Response|ViewModel
      * @throws \Exception
      */
-    public function diagnosticAction() {
+    public function diagnosticAction()
+    {
 
         $container = new Container('user');
-        if ((! $container->offsetExists('email')) || (is_null($container->email))) {
+        if ((!$container->offsetExists('email')) || (is_null($container->email))) {
             return $this->redirect()->toRoute('diagnostic', ['controller' => 'index', 'action' => 'index']);
         }
 
-        if (! $this->getEvent()->getRouteMatch()->getParam('id')) {
+        if (!$this->getEvent()->getRouteMatch()->getParam('id')) {
             return $this->redirect()->toRoute('diagnostic', ['controller' => 'index', 'action' => 'information', 'id' => 1]);
         }
 
@@ -425,7 +429,7 @@ class IndexController extends AbstractActionController
         $form->bind($diagnosticEntity);
 
         //send to view
-        return new ViewModel(array(
+        return new ViewModel([
             'questions' => $questions,
             'categories' => $categories,
             'result' => $result,
@@ -433,7 +437,7 @@ class IndexController extends AbstractActionController
             'form' => $form,
             'formUpload' => $formUpload,
             'id' => $id,
-        ));
+        ]);
     }
 
     /**
@@ -441,9 +445,10 @@ class IndexController extends AbstractActionController
      *
      * @return \Zend\Http\Response|ViewModel
      */
-    public function informationAction() {
+    public function informationAction()
+    {
         $container = new Container('user');
-        if ((! $container->offsetExists('email')) || (is_null($container->email))) {
+        if ((!$container->offsetExists('email')) || (is_null($container->email))) {
             return $this->redirect()->toRoute('diagnostic', ['controller' => 'index', 'action' => 'index']);
         }
 
@@ -544,7 +549,7 @@ class IndexController extends AbstractActionController
         $form->bind($informationEntity);
 
         //send to view
-        return new ViewModel(array(
+        return new ViewModel([
             'questions' => $questions,
             'categories' => $categories,
             'result' => $result,
@@ -553,7 +558,7 @@ class IndexController extends AbstractActionController
             'type' => $type,
             'formUpload' => $formUpload,
             'errorMessage' => $errorMessage,
-        ));
+        ]);
 
     }
 
@@ -562,7 +567,8 @@ class IndexController extends AbstractActionController
      *
      * @return \Zend\Http\Response|ViewModel
      */
-    public function addQuestionAction() {
+    public function addQuestionAction()
+    {
         $id = $this->getRequest()->getQuery()->get('id');
         $categoryId = $this->getRequest()->getQuery()->get('categoryId');
 
@@ -589,7 +595,7 @@ class IndexController extends AbstractActionController
                 $questionService = $this->getServiceLocator()->get('Diagnostic\Service\QuestionService');
                 $questions = $questionService->getQuestions();
                 $lastId = 0;
-                foreach($questions as $question){
+                foreach ($questions as $question) {
                     if ($question->getId() > $lastId) {
                         $lastId = $question->getId();
                     }
@@ -605,7 +611,7 @@ class IndexController extends AbstractActionController
                 $newId = $lastId + 1;
                 $questionEntity = $this->getServiceLocator()->get('Diagnostic\Model\QuestionEntity');
                 $questionEntity->exchangeArray([
-                    'id' => (string) $newId,
+                    'id' => (string)$newId,
                     'category_id' => $categoryId,
                     'category_translation_key' => $categories[$categoryId],
                     'translation_key' => $formData['question'],
@@ -625,14 +631,15 @@ class IndexController extends AbstractActionController
         }
 
         //send to view
-        return new ViewModel(array(
+        return new ViewModel([
             'form' => $form,
             'id' => $id,
             'categoryId' => $categoryId,
-        ));
+        ]);
     }
 
-    public function deleteQuestionAction(){
+    public function deleteQuestionAction()
+    {
 
         $id = $this->getEvent()->getRouteMatch()->getParam('id');
 
@@ -694,7 +701,8 @@ class IndexController extends AbstractActionController
      *
      * @return ViewModel
      */
-    public function exportAction() {
+    public function exportAction()
+    {
 
         //retrieve result
         $container = new Container('diagnostic');
@@ -719,7 +727,7 @@ class IndexController extends AbstractActionController
 
 
         //encrypt result
-        $blockCipher = BlockCipher::factory('mcrypt', array('algo' => 'aes'));
+        $blockCipher = BlockCipher::factory('mcrypt', ['algo' => 'aes']);
         $blockCipher->setKey($encryptionKey);
         $cryptExport = $blockCipher->encrypt($export);
 
@@ -731,7 +739,7 @@ class IndexController extends AbstractActionController
 
         header("Cache-Control: public");
         header("Content-Description: File Transfer");
-        header("Content-Length: ". filesize("$filename").";");
+        header("Content-Length: " . filesize("$filename") . ";");
         header("Content-Disposition: attachment; filename=$filename");
         header("Content-Type: application/octet-stream; ");
         header("Content-Transfer-Encoding: binary");
@@ -751,7 +759,8 @@ class IndexController extends AbstractActionController
      *
      * @return ViewModel
      */
-    public function rapportAction() {
+    public function rapportAction()
+    {
 
         //form
         $form = $this->getServiceLocator()->get('formElementManager')->get('LinkDownloadForm');
@@ -796,7 +805,7 @@ class IndexController extends AbstractActionController
         ];
         $categoriesRepartition = [];
         $i = 0;
-        foreach($numberByCategories as $category => $categoryNumber) {
+        foreach ($numberByCategories as $category => $categoryNumber) {
             $categoriesRepartition[$i]['label'] = $translator->translate($category);
             $categoriesRepartition[$i]['color'] = $categoriesColor[$i]['color'];
             $categoriesRepartition[$i]['highlight'] = $categoriesColor[$i]['highlight'];
@@ -807,12 +816,12 @@ class IndexController extends AbstractActionController
         $categoriesTarget = $categories;
 
         foreach ($categories as $key => $category) {
-            $categories[$key] = (array_key_exists($category, $calculResults['totalCategory'])) ? (int) $calculResults['totalCategory'][$category] : 0;
-            $categoriesTarget[$key] = (array_key_exists($category, $calculResults['totalCategoryTarget'])) ? (int) $calculResults['totalCategoryTarget'][$category] : 0;
+            $categories[$key] = (array_key_exists($category, $calculResults['totalCategory'])) ? (int)$calculResults['totalCategory'][$category] : 0;
+            $categoriesTarget[$key] = (array_key_exists($category, $calculResults['totalCategoryTarget'])) ? (int)$calculResults['totalCategoryTarget'][$category] : 0;
         }
 
         //send to view
-        return new ViewModel(array(
+        return new ViewModel([
             'form' => $form,
             'total' => $calculResults['total'],
             'totalTarget' => $calculResults['totalTarget'],
@@ -821,7 +830,7 @@ class IndexController extends AbstractActionController
             'recommandations' => $calculResults['recommandations'],
             'categoriesRepartition' => $categoriesRepartition,
             'download' => (count($results)) ? true : false,
-        ));
+        ]);
     }
 
 
@@ -831,7 +840,8 @@ class IndexController extends AbstractActionController
      * @return ViewModel
      * @throws \PhpOffice\PhpWord\Exception\Exception
      */
-    public function downloadAction() {
+    public function downloadAction()
+    {
         //form
         $form = $this->getServiceLocator()->get('formElementManager')->get('DownloadForm');
 
@@ -853,10 +863,10 @@ class IndexController extends AbstractActionController
 
                 $imgs = ['radar', 'pie', 'bar'];
 
-                foreach($imgs as $img) {
+                foreach ($imgs as $img) {
                     $imgbase64 = $postData[$img];
                     $imgbase64 = str_replace('data:image/png;base64,', '', $imgbase64);
-                    $name =  'data/img/' . $img . '-' . time() . '.png';
+                    $name = 'data/img/' . $img . '-' . time() . '.png';
                     $handle = fopen($name, 'wb');
                     fwrite($handle, base64_decode($imgbase64));
                     fclose($handle);
@@ -881,15 +891,15 @@ class IndexController extends AbstractActionController
                     $calculResults = $calculService->calcul();
 
                     $word = new TemplateProcessorService('data/resources/modele_v1.4.docx');
-                    $word->generateWord($data, $questions, $calculResults, $information,  $translator);
+                    $word->generateWord($data, $questions, $calculResults, $information, $translator);
                 }
             }
         }
 
         //send to view
-        return new ViewModel(array(
+        return new ViewModel([
             'form' => $form,
-        ));
+        ]);
 
     }
 
@@ -897,7 +907,8 @@ class IndexController extends AbstractActionController
      * New diagnostic
      * @return \Zend\Http\Response
      */
-    public function newDiagnosticAction() {
+    public function newDiagnosticAction()
+    {
 
         $container = new Container('user');
         $email = $container->email;
@@ -924,7 +935,8 @@ class IndexController extends AbstractActionController
     /**
      * Language
      */
-    public function languageAction() {
+    public function languageAction()
+    {
 
         $id = $this->getEvent()->getRouteMatch()->getParam('id');
 

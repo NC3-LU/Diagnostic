@@ -18,7 +18,7 @@ class Module
 {
     public function onBootstrap(MvcEvent $e)
     {
-        $eventManager        = $e->getApplication()->getEventManager();
+        $eventManager = $e->getApplication()->getEventManager();
         $moduleRouteListener = new ModuleRouteListener();
         $moduleRouteListener->attach($eventManager);
 
@@ -38,7 +38,7 @@ class Module
 
             if ((!$admin) && ($moduleName == 'Admin')) {
 
-                $url = $e->getRouter()->assemble(array(), array('name' => 'diagnostic'));
+                $url = $e->getRouter()->assemble([], ['name' => 'diagnostic']);
 
                 $response = $e->getResponse();
                 $response->getHeaders()->addHeaderLine('Location', $url);
@@ -64,19 +64,17 @@ class Module
 
     public function getAutoloaderConfig()
     {
-        return array(
-            'Zend\Loader\StandardAutoloader' => array(
-                'namespaces' => array(
+        return [
+            'Zend\Loader\StandardAutoloader' => [
+                'namespaces' => [
                     __NAMESPACE__ => __DIR__ . '/src/' . __NAMESPACE__,
-                ),
-            ),
-        );
+                ],
+            ],
+        ];
     }
 
     public function getServiceConfig()
     {
-        return array(
-
-        );
+        return [];
     }
 }

@@ -22,7 +22,8 @@ class UserService implements ServiceLocatorAwareInterface
      * @return \Zend\Db\ResultSet\ResultSet
      * @throws \Exception
      */
-    public function getUserByEmail($email) {
+    public function getUserByEmail($email)
+    {
         if ($this->getServiceLocator()->has('Diagnostic\Gateway\UserGateway')) {
 
             $tableGateway = $this->getServiceLocator()->get('Diagnostic\Gateway\UserGateway');
@@ -40,7 +41,8 @@ class UserService implements ServiceLocatorAwareInterface
      * @return \Zend\Db\ResultSet\ResultSet
      * @throws \Exception
      */
-    public function getUsers() {
+    public function getUsers()
+    {
         if ($this->getServiceLocator()->has('Diagnostic\Gateway\UserGateway')) {
 
             $tableGateway = $this->getServiceLocator()->get('Diagnostic\Gateway\UserGateway');
@@ -55,7 +57,8 @@ class UserService implements ServiceLocatorAwareInterface
      * @return \Zend\Db\ResultSet\ResultSet
      * @throws \Exception
      */
-    public function getUserById($id) {
+    public function getUserById($id)
+    {
         if ($this->getServiceLocator()->has('Diagnostic\Gateway\UserGateway')) {
 
             $tableGateway = $this->getServiceLocator()->get('Diagnostic\Gateway\UserGateway');
@@ -70,7 +73,8 @@ class UserService implements ServiceLocatorAwareInterface
      * @param $email
      * @param $password
      */
-    public function updatePassword($email, $password) {
+    public function updatePassword($email, $password)
+    {
         //encryption
         $bcrypt = new Bcrypt();
         $passwordCrypt = $bcrypt->create($password);
@@ -86,7 +90,8 @@ class UserService implements ServiceLocatorAwareInterface
      * @param $id
      * @param $data
      */
-    public function update($id, $data) {
+    public function update($id, $data)
+    {
         unset($data['id']);
         unset($data['password']);
         $userGateway = $this->getServiceLocator()->get('Diagnostic\Gateway\UserGateway');
@@ -98,7 +103,8 @@ class UserService implements ServiceLocatorAwareInterface
      *
      * @param $data
      */
-    public function create($data) {
+    public function create($data)
+    {
         $data['password'] = '';
         $userGateway = $this->getServiceLocator()->get('Diagnostic\Gateway\UserGateway');
         $userGateway->insert($data);
@@ -109,7 +115,8 @@ class UserService implements ServiceLocatorAwareInterface
      *
      * @return mixed
      */
-    public function isAdmin() {
+    public function isAdmin()
+    {
         $container = new Container('user');
         $admin = $container->admin;
         return $admin;
@@ -120,7 +127,8 @@ class UserService implements ServiceLocatorAwareInterface
      *
      * @param $id
      */
-    public function delete($id) {
+    public function delete($id)
+    {
         $userGateway = $this->getServiceLocator()->get('Diagnostic\Gateway\UserGateway');
         $userGateway->delete($id);
     }

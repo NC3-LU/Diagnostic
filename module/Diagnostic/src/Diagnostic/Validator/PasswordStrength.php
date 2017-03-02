@@ -12,18 +12,18 @@ use Zend\Validator\AbstractValidator;
 class PasswordStrength extends AbstractValidator
 {
     const LENGTH = 'length';
-    const UPPER  = 'upper';
-    const LOWER  = 'lower';
-    const DIGIT  = 'digit';
-    const SPECIAL  = 'special';
+    const UPPER = 'upper';
+    const LOWER = 'lower';
+    const DIGIT = 'digit';
+    const SPECIAL = 'special';
 
-    protected $messageTemplates = array(
+    protected $messageTemplates = [
         self::LENGTH => "password must be at least 8 characters in length",
-        self::UPPER  => "password must contain at least one uppercase letter",
-        self::LOWER  => "password must contain at least one lowercase letter",
-        self::DIGIT  => "password must contain at least one digit character",
-        self::SPECIAL  => "password must contain at least one special character"
-    );
+        self::UPPER => "password must contain at least one uppercase letter",
+        self::LOWER => "password must contain at least one lowercase letter",
+        self::DIGIT => "password must contain at least one digit character",
+        self::SPECIAL => "password must contain at least one special character"
+    ];
 
     /**
      * Is Valid
@@ -37,7 +37,7 @@ class PasswordStrength extends AbstractValidator
 
         $isValid = true;
 
-        if (strlen($value) < 8 ) {
+        if (strlen($value) < 8) {
             $this->error(self::LENGTH);
             $isValid = false;
         }

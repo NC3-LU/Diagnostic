@@ -41,7 +41,7 @@ class InformationEntity
             $data = (array)$data;
         }
 
-        $this->information  = (isset($data['information'])) ? $data['information'] : null;
+        $this->information = (isset($data['information'])) ? $data['information'] : null;
     }
 
     /**

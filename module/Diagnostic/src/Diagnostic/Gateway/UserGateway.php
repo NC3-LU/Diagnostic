@@ -14,7 +14,8 @@ class UserGateway extends AbstractGateway
      *
      * @return null|\Zend\Db\ResultSet\ResultSetInterface
      */
-    public function getUserByEmail($email){
+    public function getUserByEmail($email)
+    {
 
         $select = $this->tableGateway
             ->getSql()
@@ -32,7 +33,8 @@ class UserGateway extends AbstractGateway
      * @param $id
      * @return null|\Zend\Db\ResultSet\ResultSetInterface
      */
-    public function getUserById($id){
+    public function getUserById($id)
+    {
 
         $select = $this->tableGateway
             ->getSql()
@@ -49,7 +51,8 @@ class UserGateway extends AbstractGateway
      *
      * @return null|\Zend\Db\ResultSet\ResultSetInterface
      */
-    public function getUsers(){
+    public function getUsers()
+    {
 
         $select = $this->tableGateway
             ->getSql()
@@ -68,7 +71,7 @@ class UserGateway extends AbstractGateway
      */
     public function updatePassword($email, $password)
     {
-        $this->tableGateway->update(array('password' => $password), array('email' => $email));
+        $this->tableGateway->update(['password' => $password], ['email' => $email]);
     }
 
     /**
@@ -85,6 +88,6 @@ class UserGateway extends AbstractGateway
         if (array_key_exists('admin', $data)) {
             $array['admin'] = $data['admin'];
         }
-        $this->tableGateway->update($array, array('id' => $id));
+        $this->tableGateway->update($array, ['id' => $id]);
     }
 }

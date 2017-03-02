@@ -14,43 +14,42 @@ class QuestionFormFilter extends InputFilter
 {
     public function __construct($adapter)
     {
-        $this->add(array(
-            'name'       => 'translation_key',
-            'required'   => true,
-            'validators' => array(
-                array(
-                    'name'    => 'StringLength',
-                    'options' => array(
+        $this->add([
+            'name' => 'translation_key',
+            'required' => true,
+            'validators' => [
+                [
+                    'name' => 'StringLength',
+                    'options' => [
                         'min' => 6
-                    ),
-                ),
-            ),
-        ));
+                    ],
+                ],
+            ],
+        ]);
 
-        $this->add(array(
-            'name'       => 'category_id',
-            'required'   => true,
-            'validators' => array(
-                array(
-                    'name'    => 'Db\RecordExists',
-                    'options' => array(
+        $this->add([
+            'name' => 'category_id',
+            'required' => true,
+            'validators' => [
+                [
+                    'name' => 'Db\RecordExists',
+                    'options' => [
                         'table' => 'categories',
                         'field' => 'id',
                         'adapter' => $adapter
-                    ),
-                ),
-            ),
-        ));
+                    ],
+                ],
+            ],
+        ]);
 
-        $this->add(array(
-            'name'       => 'threshold',
-            'required'   => true,
-            'validators' => array(
-                array(
+        $this->add([
+            'name' => 'threshold',
+            'required' => true,
+            'validators' => [
+                [
                     'name' => 'Digits',
-                ),
-            ),
-        ));
+                ],
+            ],
+        ]);
     }
 }
-

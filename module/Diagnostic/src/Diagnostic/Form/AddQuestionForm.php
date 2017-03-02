@@ -18,8 +18,8 @@ class AddQuestionForm extends Form
     {
 
         $threshold = [];
-        for($i=0; $i<=6; $i++) {
-            $threshold[$i*5] = $i*5;
+        for ($i = 0; $i <= 6; $i++) {
+            $threshold[$i * 5] = $i * 5;
         }
 
         $this->add(array(

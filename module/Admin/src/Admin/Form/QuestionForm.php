@@ -43,65 +43,64 @@ class QuestionForm extends Form
     {
 
         $threshold = [];
-        for($i=0; $i<=6; $i++) {
-            $threshold[$i*5] = $i*5;
+        for ($i = 0; $i <= 6; $i++) {
+            $threshold[$i * 5] = $i * 5;
         }
 
-        $this->add(array(
+        $this->add([
             'name' => 'translation_key',
             'type' => 'Text',
             'required' => true,
-            'options' => array(
+            'options' => [
                 'label' => '__translation_key'
-            ),
-            'attributes' => array(
+            ],
+            'attributes' => [
                 'class' => 'form-control',
-            )
-        ));
+            ]
+        ]);
 
-        $this->add(array(
+        $this->add([
             'name' => 'category_id',
             'type' => 'Select',
-            'options' => array(
+            'options' => [
                 'label' => '__categories',
                 'value_options' => $this->getCategories(),
-            ),
-            'attributes' => array(
+            ],
+            'attributes' => [
                 'class' => 'form-control',
-            ),
-        ));
+            ],
+        ]);
 
-        $this->add(array(
+        $this->add([
             'name' => 'threshold',
             'type' => 'Select',
-            'options' => array(
+            'options' => [
                 'label' => '__threshold_max',
                 'value_options' => $threshold,
-            ),
-            'attributes' => array(
+            ],
+            'attributes' => [
                 'class' => 'form-control threshold',
-            ),
-        ));
+            ],
+        ]);
 
-        $this->add(array(
+        $this->add([
             'type' => 'Csrf',
             'name' => 'csrf',
-            'options' => array(
-                'csrf_options' => array(
+            'options' => [
+                'csrf_options' => [
                     'timeout' => 3600
-                )
-            )
-        ));
+                ]
+            ]
+        ]);
 
-        $this->add(array(
+        $this->add([
             'name' => 'submit',
             'type' => 'Submit',
-            'attributes' => array(
+            'attributes' => [
                 'value' => '__add',
                 'id' => 'submitbutton',
                 'class' => 'btn btn-success',
-            ),
-        ));
+            ],
+        ]);
     }
 }
-

@@ -23,7 +23,8 @@ class QuestionService implements ServiceLocatorAwareInterface
      * @return \Zend\Db\ResultSet\ResultSet
      * @throws \Exception
      */
-    public function fetchAllWithCategories() {
+    public function fetchAllWithCategories()
+    {
 
         if ($this->getServiceLocator()->has('Diagnostic\Gateway\QuestionGateway')) {
 
@@ -42,7 +43,8 @@ class QuestionService implements ServiceLocatorAwareInterface
      * @return array
      * @throws \Exception
      */
-    public function getQuestions() {
+    public function getQuestions()
+    {
         $container = new Container('diagnostic');
         if ($container->offsetExists('questions')) {
             $questions = $container->questions;
@@ -50,7 +52,7 @@ class QuestionService implements ServiceLocatorAwareInterface
             $questionsObject = $this->fetchAllWithCategories();
 
             $questions = [];
-            foreach($questionsObject as $question) {
+            foreach ($questionsObject as $question) {
                 $questions[$question->getId()] = $question;
             }
 
@@ -58,15 +60,15 @@ class QuestionService implements ServiceLocatorAwareInterface
         }
 
         $tmpArray = [];
-        foreach($questions as $question) {
+        foreach ($questions as $question) {
             $tmpArray[$question->getCategoryId()][$question->getId()] = $question;
         }
 
         ksort($tmpArray);
         $questions = [];
-        foreach($tmpArray as $array) {
+        foreach ($tmpArray as $array) {
             ksort($array);
-            foreach($array as $value) {
+            foreach ($array as $value) {
                 $questions[$value->getId()] = $value;
             }
         }
@@ -80,12 +82,13 @@ class QuestionService implements ServiceLocatorAwareInterface
      * @return array
      * @throws \Exception
      */
-    public function getBddQuestions() {
+    public function getBddQuestions()
+    {
 
         $questionsObject = $this->fetchAllWithCategories();
 
         $questions = [];
-        foreach($questionsObject as $question) {
+        foreach ($questionsObject as $question) {
             $questions[$question->getId()] = $question;
         }
 
@@ -98,17 +101,18 @@ class QuestionService implements ServiceLocatorAwareInterface
      * @param $json
      * @return bool
      */
-    public function loadJson($json) {
+    public function loadJson($json)
+    {
         //encryption key
         $config = $this->getServiceLocator()->get('Config');
         $encryptionKey = $config['encryption_key'];
 
         //encrypt result
-        $blockCipher = BlockCipher::factory('mcrypt', array('algo' => 'aes'));
+        $blockCipher = BlockCipher::factory('mcrypt', ['algo' => 'aes']);
         $blockCipher->setKey($encryptionKey);
         $json = $blockCipher->decrypt($json);
 
-        $data = (array) json_decode($json);
+        $data = (array)json_decode($json);
 
         //result
         $result = [];
@@ -121,7 +125,7 @@ class QuestionService implements ServiceLocatorAwareInterface
         //information
         $information = [];
         if (array_key_exists('information', $data)) {
-            $information = (array) $data['information'];
+            $information = (array)$data['information'];
         }
 
         //questions
@@ -151,7 +155,8 @@ class QuestionService implements ServiceLocatorAwareInterface
      *
      * @param $data
      */
-    public function create($data) {
+    public function create($data)
+    {
         $questionGateway = $this->getServiceLocator()->get('Diagnostic\Gateway\QuestionGateway');
         $questionGateway->insert($data);
     }
@@ -159,7 +164,8 @@ class QuestionService implements ServiceLocatorAwareInterface
     /**
      * Reset Cache
      */
-    public function resetCache() {
+    public function resetCache()
+    {
         $container = new Container('diagnostic');
         $container->offsetUnset('questions');
     }
@@ -170,7 +176,8 @@ class QuestionService implements ServiceLocatorAwareInterface
      * @return \Zend\Db\ResultSet\ResultSet
      * @throws \Exception
      */
-    public function getQuestionById($id) {
+    public function getQuestionById($id)
+    {
         if ($this->getServiceLocator()->has('Diagnostic\Gateway\QuestionGateway')) {
 
             $tableGateway = $this->getServiceLocator()->get('Diagnostic\Gateway\QuestionGateway');
@@ -185,7 +192,8 @@ class QuestionService implements ServiceLocatorAwareInterface
      * @param $id
      * @param $data
      */
-    public function update($id, $data) {
+    public function update($id, $data)
+    {
         unset($data['id']);
         $questionGateway = $this->getServiceLocator()->get('Diagnostic\Gateway\QuestionGateway');
         $questionGateway->update($id, $data);
@@ -196,7 +204,8 @@ class QuestionService implements ServiceLocatorAwareInterface
      *
      * @param $id
      */
-    public function delete($id) {
+    public function delete($id)
+    {
         $questionGateway = $this->getServiceLocator()->get('Diagnostic\Gateway\QuestionGateway');
         $questionGateway->delete($id);
     }

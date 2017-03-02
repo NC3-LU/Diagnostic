@@ -14,44 +14,43 @@ class EmailNotExistFilter extends InputFilter
 {
     public function __construct($adapter)
     {
-        $this->add(array(
-            'name'       => 'email',
-            'required'   => true,
-            'validators' => array(
-                array(
-                    'name'    => 'Db\NoRecordExists',
-                    'options' => array(
+        $this->add([
+            'name' => 'email',
+            'required' => true,
+            'validators' => [
+                [
+                    'name' => 'Db\NoRecordExists',
+                    'options' => [
                         'table' => 'users',
                         'field' => 'email',
                         'adapter' => $adapter
-                    ),
-                ),
-            ),
-        ));
+                    ],
+                ],
+            ],
+        ]);
 
-        $this->add(array(
-            'name'       => 'email',
-            'required'   => true,
-            'validators' => array(
-                array(
-                    'name'    => 'EmailAddress',
-                    'options' => array(
+        $this->add([
+            'name' => 'email',
+            'required' => true,
+            'validators' => [
+                [
+                    'name' => 'EmailAddress',
+                    'options' => [
                         'allow' => Hostname::ALLOW_DNS,
                         'useMxCheck' => true
-                    ),
-                ),
-            ),
-        ));
+                    ],
+                ],
+            ],
+        ]);
 
-        $this->add(array(
-            'name'       => 'admin',
-            'required'   => false,
-            'validators' => array(
-                array(
+        $this->add([
+            'name' => 'admin',
+            'required' => false,
+            'validators' => [
+                [
                     'name' => 'Digits',
-                ),
-            ),
-        ));
+                ],
+            ],
+        ]);
     }
 }
-

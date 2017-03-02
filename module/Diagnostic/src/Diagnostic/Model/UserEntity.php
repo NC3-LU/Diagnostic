@@ -117,7 +117,7 @@ class UserEntity
             $this->id = null;
         }
 
-        $this->email  = (isset($data['email'])) ? $data['email'] : null;
+        $this->email = (isset($data['email'])) ? $data['email'] : null;
         $this->password = (isset($data['password'])) ? $data['password'] : null;
         $this->admin = (isset($data['admin'])) ? $data['admin'] : null;
     }

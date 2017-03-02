@@ -42,7 +42,7 @@ class QuestionEntity
     /**
      * New
      */
-    public $new= false;
+    public $new = false;
 
     /**
      * @return mixed
@@ -186,12 +186,12 @@ class QuestionEntity
             $this->id = null;
         }
 
-        $this->category_id  = (isset($data['category_id'])) ? $data['category_id'] : null;
-        $this->category_translation_key  = (isset($data['category_translation_key'])) ? $data['category_translation_key'] : null;
-        $this->translation_key  = (isset($data['translation_key'])) ? $data['translation_key'] : null;
-        $this->translation_key_help  = (isset($data['translation_key_help'])) ? $data['translation_key_help'] : null;
-        $this->threshold  = (isset($data['threshold'])) ? $data['threshold'] : null;
-        $this->new  = (isset($data['new'])) ? $data['new'] : false;
+        $this->category_id = (isset($data['category_id'])) ? $data['category_id'] : null;
+        $this->category_translation_key = (isset($data['category_translation_key'])) ? $data['category_translation_key'] : null;
+        $this->translation_key = (isset($data['translation_key'])) ? $data['translation_key'] : null;
+        $this->translation_key_help = (isset($data['translation_key_help'])) ? $data['translation_key_help'] : null;
+        $this->threshold = (isset($data['threshold'])) ? $data['threshold'] : null;
+        $this->new = (isset($data['new'])) ? $data['new'] : false;
     }
 
     /**

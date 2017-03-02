@@ -36,18 +36,19 @@ $currentCategoryId = (array_key_exists($id, $questions)) ? $questions[$id]->getC
             <div class="col-lg-12 text-left" style="background-color: #EEEEEE; min-height: 600px;">
                 <div style="padding-top: 10px;">
                     <span style="text-decoration: underline; font-weight: bold;">
-                        <a style="color: <?= (strlen($this->information['organization'])) ? 'green' : 'dodgerblue' ?>; padding-top: 10px;" href="<?= $this->url('diagnostic', ['action' => 'information', 'id' => 1]) ?>">
+                        <a style="color: <?= (strlen($this->information['organization'])) ? 'green' : 'dodgerblue' ?>; padding-top: 10px;"
+                           href="<?= $this->url('diagnostic', ['action' => 'information', 'id' => 1]) ?>">
                             <strong><?= $this->translate('__organization_information') ?></strong>
                         </a>
                     </span>
                 </div>
                 <?php
-                foreach($this->categories as $categoryId => $category) {
+                foreach ($this->categories as $categoryId => $category) {
                     $textClass = ($currentCategoryId == $categoryId) ? 'text-danger' : 'text-success';
 
                     $nbDone = 0;
                     $nbUndone = 0;
-                    foreach($questions as $question) {
+                    foreach ($questions as $question) {
                         if ($question->getCategoryId() == $categoryId) {
                             if (array_key_exists($question->getId(), $result)) {
                                 $nbDone++;
@@ -71,13 +72,14 @@ $currentCategoryId = (array_key_exists($id, $questions)) ? $questions[$id]->getC
                     $titleCategory = $this->translate($category);
                     ?>
                     <div class=“container” style="padding-top: 10px;">
-                        <span class="<?= $textClass ?>" style="text-decoration: underline; font-weight: bold; color: <?= $textColor ?>;">
+                        <span class="<?= $textClass ?>"
+                              style="text-decoration: underline; font-weight: bold; color: <?= $textColor ?>;">
                             <?= $titleCategory ?>
                         </span>
-                        <br />
+                        <br/>
                         <div class="collapse" style="padding: 5px;">
                             <?php
-                            foreach($questions as $question) {
+                            foreach ($questions as $question) {
                                 $nb = $nbDone + $nbUndone;
                                 if ($question->getCategoryId() == $categoryId) {
                                     if ($question->getId() == $id) {
@@ -125,9 +127,11 @@ $currentCategoryId = (array_key_exists($id, $questions)) ? $questions[$id]->getC
                             }
                             $urlAdd = $this->url('diagnostic', ['action' => 'add-question'], ['query' => ['categoryId' => $categoryId, 'id' => $id]]);
                             ?>
-                            <br />
+                            <br/>
                             <center>
-                            <a href="<?= $urlAdd ?>" style="color: #DF1D31; font-weight: bold;"><span class="glyphicon glyphicon-plus-sign"></span> <?= $this->translate('__add_a_question') ?></a>
+                                <a href="<?= $urlAdd ?>" style="color: #DF1D31; font-weight: bold;"><span
+                                            class="glyphicon glyphicon-plus-sign"></span> <?= $this->translate('__add_a_question') ?>
+                                </a>
                             </center>
                         </div>
                     </div>
@@ -136,24 +140,27 @@ $currentCategoryId = (array_key_exists($id, $questions)) ? $questions[$id]->getC
                 ?>
                 <div style="padding-top: 10px;">
                     <span style="text-decoration: underline; font-weight: bold; margin-top: 10px;">
-                        <a style="color: <?= (strlen($this->information['synthesis'])) ? 'green' : 'dodgerblue' ?>; padding-top: 10px;" href="<?= $this->url('diagnostic', ['action' => 'information', 'id' => 2]) ?>">
+                        <a style="color: <?= (strlen($this->information['synthesis'])) ? 'green' : 'dodgerblue' ?>; padding-top: 10px;"
+                           href="<?= $this->url('diagnostic', ['action' => 'information', 'id' => 2]) ?>">
                             <strong>
                                 <?= $this->translate('__evaluation_synthesis') ?></strong>
                         </a>
                     </span>
                 </div>
-                <br />
+                <br/>
             </div>
         </div>
 
-        <br />
+        <br/>
 
         <div class="row">
             <div class="col-lg-6 text-center">
-                <a href="<?= $this->url('diagnostic',array('action'=>'rapport'));?>" class="btn btn-warning" style="padding: 7px 70px 7px 70px;"><?= $this->translate('__rapport') ?></a>
+                <a href="<?= $this->url('diagnostic', array('action' => 'rapport')); ?>" class="btn btn-warning"
+                   style="padding: 7px 70px 7px 70px;"><?= $this->translate('__rapport') ?></a>
             </div>
             <div class="col-lg-6 text-center">
-                <a href="<?= $this->url('diagnostic',array('action'=>'export'));?>" class="btn btn-info" style="padding: 7px 70px 7px 70px;"><?= $this->translate('__export') ?></a>
+                <a href="<?= $this->url('diagnostic', array('action' => 'export')); ?>" class="btn btn-info"
+                   style="padding: 7px 70px 7px 70px;"><?= $this->translate('__export') ?></a>
             </div>
         </div>
 
@@ -161,7 +168,7 @@ $currentCategoryId = (array_key_exists($id, $questions)) ? $questions[$id]->getC
     <div class="col-lg-7 text-left">
         <h4 style="color: #DF1D31; font-weight: bold;"><?= $this->translate($this->escapeHtml($currentTitleCategory)) ?></h4>
         <h4 style="color: grey;"><?= $this->escapeHtml($titleQuestion) ?></h4>
-        <br />
+        <br/>
         <?= $this->form()->openTag($form) ?>
 
         <table class="table table-responsive table-borderless">
@@ -170,7 +177,9 @@ $currentCategoryId = (array_key_exists($id, $questions)) ? $questions[$id]->getC
                 <td><?= $this->formTextarea($form->get('notes')) ?></td>
             </tr>
             <tr>
-                <td colspan="2"><hr style="padding: 0px; margin: 0px;"></td>
+                <td colspan="2">
+                    <hr style="padding: 0px; margin: 0px;">
+                </td>
             </tr>
             <tr>
                 <td width="180"><label><?= $this->translate($form->get('maturity')->getLabel()) ?></label></td>
@@ -195,20 +204,20 @@ $currentCategoryId = (array_key_exists($id, $questions)) ? $questions[$id]->getC
         </table>
 
         <center>
-        <?= $this->formHidden($form->get('csrf')) ?>
-        <?= $this->formSubmit($form->get('submit')); ?>
-        <?= $this->form()->closeTag() ?>
+            <?= $this->formHidden($form->get('csrf')) ?>
+            <?= $this->formSubmit($form->get('submit')); ?>
+            <?= $this->form()->closeTag() ?>
         </center>
 
     </div>
 </div>
 
 <script>
-    $(document).ready(function(){
-        $(".text-success").click(function(){
+    $(document).ready(function () {
+        $(".text-success").click(function () {
             $(this).siblings(".collapse").collapse("toggle");
         });
-        $(".text-danger").click(function(){
+        $(".text-danger").click(function () {
             $(this).siblings(".collapse").collapse("toggle");
         });
         $(".text-danger").siblings(".collapse").collapse("toggle");

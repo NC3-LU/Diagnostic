@@ -15,11 +15,11 @@ class LoginFormFilter extends InputFilter
     public function __construct($adapter)
     {
         $this->add(array(
-            'name'       => 'email',
-            'required'   => true,
+            'name' => 'email',
+            'required' => true,
             'validators' => array(
                 array(
-                    'name'    => 'EmailAddress',
+                    'name' => 'EmailAddress',
                     'options' => array(
                         'allow' => Hostname::ALLOW_DNS,
                         'useMxCheck' => true,
@@ -29,11 +29,11 @@ class LoginFormFilter extends InputFilter
         ));
 
         $this->add(array(
-            'name'       => 'password',
-            'required'   => true,
+            'name' => 'password',
+            'required' => true,
             'validators' => array(
                 array(
-                    'name'    => 'Diagnostic\Validator\PasswordStrength',
+                    'name' => 'Diagnostic\Validator\PasswordStrength',
                 ),
             ),
         ));

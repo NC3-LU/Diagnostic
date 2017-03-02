@@ -24,11 +24,11 @@ class Module
 {
     public function onBootstrap(MvcEvent $e)
     {
-        $eventManager        = $e->getApplication()->getEventManager();
+        $eventManager = $e->getApplication()->getEventManager();
         $moduleRouteListener = new ModuleRouteListener();
         $moduleRouteListener->attach($eventManager);
 
-        $translator=$e->getApplication()->getServiceManager()->get('translator');
+        $translator = $e->getApplication()->getServiceManager()->get('translator');
         AbstractValidator::setDefaultTranslator($translator);
 
         $container = new Container('diagnostic');
@@ -44,20 +44,20 @@ class Module
 
     public function getAutoloaderConfig()
     {
-        return array(
-            'Zend\Loader\StandardAutoloader' => array(
-                'namespaces' => array(
+        return [
+            'Zend\Loader\StandardAutoloader' => [
+                'namespaces' => [
                     __NAMESPACE__ => __DIR__ . '/src/' . __NAMESPACE__,
-                ),
-            ),
-        );
+                ],
+            ],
+        ];
     }
 
     public function getServiceConfig()
     {
-        return array(
-            'factories' => array(
-                'Diagnostic\Gateway\QuestionGateway' =>  function($sm) {
+        return [
+            'factories' => [
+                'Diagnostic\Gateway\QuestionGateway' => function ($sm) {
                     $dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
                     $resultSetPrototype = new ResultSet();
                     $resultSetPrototype->setArrayObjectPrototype($sm->get('Diagnostic\Model\QuestionEntity'));
@@ -67,7 +67,7 @@ class Module
 
                     return $table;
                 },
-                'Diagnostic\Gateway\UserGateway' =>  function($sm) {
+                'Diagnostic\Gateway\UserGateway' => function ($sm) {
                     $dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
                     $resultSetPrototype = new ResultSet();
                     $resultSetPrototype->setArrayObjectPrototype($sm->get('Diagnostic\Model\UserEntity'));
@@ -77,7 +77,7 @@ class Module
 
                     return $table;
                 },
-                'Diagnostic\Gateway\UserTokenGateway' =>  function($sm) {
+                'Diagnostic\Gateway\UserTokenGateway' => function ($sm) {
                     $dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
                     $resultSetPrototype = new ResultSet();
                     $resultSetPrototype->setArrayObjectPrototype($sm->get('Diagnostic\Model\UserTokenEntity'));
@@ -87,7 +87,7 @@ class Module
 
                     return $table;
                 },
-            ),
-        );
+            ],
+        ];
     }
 }

@@ -15,11 +15,11 @@ class PasswordForgottenFormFilter extends InputFilter
     public function __construct($adapter)
     {
         $this->add(array(
-            'name'       => 'email',
-            'required'   => true,
+            'name' => 'email',
+            'required' => true,
             'validators' => array(
                 array(
-                    'name'    => 'EmailAddress',
+                    'name' => 'EmailAddress',
                     'options' => array(
                         'allow' => Hostname::ALLOW_DNS,
                         'useMxCheck' => true

@@ -134,11 +134,11 @@ class DiagnosticEntity
             $data = (array)$data;
         }
 
-        $this->maturity  = (isset($data['maturity'])) ? $data['maturity'] : null;
-        $this->maturityTarget  = (isset($data['maturityTarget'])) ? $data['maturityTarget'] : null;
-        $this->recommandation  = (isset($data['recommandation'])) ? $data['recommandation'] : null;
-        $this->gravity  = (isset($data['gravity'])) ? $data['gravity'] : null;
-        $this->notes  = (isset($data['notes'])) ? $data['notes'] : null;
+        $this->maturity = (isset($data['maturity'])) ? $data['maturity'] : null;
+        $this->maturityTarget = (isset($data['maturityTarget'])) ? $data['maturityTarget'] : null;
+        $this->recommandation = (isset($data['recommandation'])) ? $data['recommandation'] : null;
+        $this->gravity = (isset($data['gravity'])) ? $data['gravity'] : null;
+        $this->notes = (isset($data['notes'])) ? $data['notes'] : null;
     }
 
     /**
