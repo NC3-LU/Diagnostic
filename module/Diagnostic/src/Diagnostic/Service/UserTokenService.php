@@ -25,7 +25,7 @@ class UserTokenService implements ServiceLocatorAwareInterface
         //record token
         $userToken = [
             'userEmail' => $email,
-            'token' => uniqid(),
+            'token' => uniqid(bin2hex(openssl_random_pseudo_bytes(rand(20, 40))), true),
             'limitTimestamp' => time() + (24 * 60 * 60),
         ];
 

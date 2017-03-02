@@ -172,8 +172,6 @@ class IndexController extends AbstractActionController
                     //translator
                     $translator = $this->getServiceLocator()->get('translator');
 
-                    $config = $this->getServiceLocator()->get('Config');
-
                     // Determine HTTP/HTTPS proto, and HTTP_HOST
                     if (isset($_SERVER['X_FORWARDED_PROTO'])) {
                         $proto = strtolower($_SERVER['X_FORWARDED_PROTO']);
