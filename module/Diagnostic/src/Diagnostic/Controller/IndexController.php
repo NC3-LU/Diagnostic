@@ -738,6 +738,8 @@ class IndexController extends AbstractActionController
 
         readfile($filename);
 
+        unlink($filename);
+
         $view = new ViewModel();
         $view->setTerminal(true);
 
