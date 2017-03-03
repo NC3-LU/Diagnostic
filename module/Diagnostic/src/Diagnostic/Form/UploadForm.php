@@ -16,36 +16,35 @@ class UploadForm extends Form
      */
     public function init()
     {
-        $this->add(array(
+        $this->add([
             'name' => 'file',
             'type' => 'File',
-            'options' => array(
+            'options' => [
                 'label' => ' '
-            ),
-            'attributes' => array(
+            ],
+            'attributes' => [
                 'class' => 'form-control',
-            )
-        ));
+            ]
+        ]);
 
-        $this->add(array(
+        $this->add([
             'type' => 'Csrf',
             'name' => 'csrf',
-            'options' => array(
-                'csrf_options' => array(
+            'options' => [
+                'csrf_options' => [
                     'timeout' => 3600
-                )
-            )
-        ));
+                ]
+            ]
+        ]);
 
-        $this->add(array(
+        $this->add([
             'name' => 'submit',
             'type' => 'Submit',
-            'attributes' => array(
+            'attributes' => [
                 'value' => '__upload',
                 'id' => 'submitbutton',
                 'class' => 'btn btn-success',
-            ),
-        ));
+            ],
+        ]);
     }
 }
-

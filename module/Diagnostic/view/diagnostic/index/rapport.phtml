@@ -36,7 +36,7 @@ echo $this->inlineScript()->prependFile($this->basePath('js/Chart.js-master/Char
         $container = new \Zend\Session\Container('user');
         if (($container->offsetExists('email')) || (!is_null($container->email))) {
             if ($this->download) {
-                $form->setAttribute('action', $this->url('diagnostic', array('action' => 'download')));
+                $form->setAttribute('action', $this->url('diagnostic', ['action' => 'download']));
                 $form->prepare();
                 echo $this->form()->openTag($form);
                 echo $this->formHidden($form->get('radar'));
@@ -55,7 +55,7 @@ echo $this->inlineScript()->prependFile($this->basePath('js/Chart.js-master/Char
     </div>
     <div class="col-lg-5 text-center bg-info"
     ">
-    <h2><?= ucfirst($this->translate('__results')) ?> : <?php echo $this->escapeHtml($total); ?>/100</h2>
+    <h2><?= ucfirst($this->translate('__results')) ?> : <?= $this->escapeHtml($total); ?>/100</h2>
 </div>
 <div class="col-lg-4 text-left">
     <table style="width: 100%; margin-top: 15px;">
@@ -65,9 +65,9 @@ echo $this->inlineScript()->prependFile($this->basePath('js/Chart.js-master/Char
 
                 $container = new \Zend\Session\Container('navigation');
                 if ($container->offsetExists('lastQuestion')) {
-                    $link = $this->url('diagnostic', array('action' => 'diagnostic', 'id' => $container->lastQuestion));
+                    $link = $this->url('diagnostic', ['action' => 'diagnostic', 'id' => $container->lastQuestion]);
                 } else {
-                    $link = $this->url('diagnostic', array('action' => 'diagnostic'));
+                    $link = $this->url('diagnostic', ['action' => 'diagnostic']);
                 }
                 ?>
                 <a href="<?= $link ?>" class="btn btn-info" style="padding: 7px 70px 7px 70px;">
@@ -75,7 +75,7 @@ echo $this->inlineScript()->prependFile($this->basePath('js/Chart.js-master/Char
                 </a>
             </td>
             <td align="center">
-                <a href="<?= $this->url('diagnostic', array('action' => 'logout')); ?>" class="btn btn-default"
+                <a href="<?= $this->url('diagnostic', ['action' => 'logout']); ?>" class="btn btn-default"
                    style="padding: 7px 70px 7px 70px;">
                     <span class="glyphicon glyphicon-home"></span>&nbsp;<?= $this->translate('__home') ?>
                 </a>

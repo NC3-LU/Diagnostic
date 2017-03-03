@@ -16,36 +16,35 @@ class InformationForm extends Form
      */
     public function init()
     {
-        $this->add(array(
+        $this->add([
             'name' => 'information',
             'type' => 'textarea',
-            'options' => array(
+            'options' => [
                 'label' => '__information'
-            ),
-            'attributes' => array(
+            ],
+            'attributes' => [
                 'class' => 'form-control information-area',
-            )
-        ));
+            ]
+        ]);
 
-        $this->add(array(
+        $this->add([
             'type' => 'Csrf',
             'name' => 'csrf',
-            'options' => array(
-                'csrf_options' => array(
+            'options' => [
+                'csrf_options' => [
                     'timeout' => 3600
-                )
-            )
-        ));
+                ]
+            ]
+        ]);
 
-        $this->add(array(
+        $this->add([
             'name' => 'submit',
             'type' => 'Submit',
-            'attributes' => array(
+            'attributes' => [
                 'value' => '__record_continue',
                 'id' => 'submitbutton',
                 'class' => 'btn btn-success',
-            ),
-        ));
+            ],
+        ]);
     }
 }
-

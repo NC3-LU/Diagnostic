@@ -20,7 +20,7 @@ $form->prepare();
             </tr>
             <tr>
                 <td colspan="2">
-                    <?= $this->formElementErrors($form->get('question'), array('class' => 'bg-danger')) ?>
+                    <?= $this->formElementErrors($form->get('question'), ['class' => 'bg-danger']) ?>
                 </td>
             </tr>
             <tr>
@@ -31,7 +31,7 @@ $form->prepare();
             </tr>
             <tr>
                 <td colspan="2">
-                    <?= $this->formElementErrors($form->get('help'), array('class' => 'bg-danger')) ?>
+                    <?= $this->formElementErrors($form->get('help'), ['class' => 'bg-danger']) ?>
                 </td>
             </tr>
             <tr>
@@ -42,7 +42,7 @@ $form->prepare();
             </tr>
             <tr>
                 <td colspan="2">
-                    <?= $this->formElementErrors($form->get('threshold'), array('class' => 'bg-danger')) ?>
+                    <?= $this->formElementErrors($form->get('threshold'), ['class' => 'bg-danger']) ?>
                     <?= $this->formSubmit($form->get('submit')) ?>
                 </td>
             </tr>

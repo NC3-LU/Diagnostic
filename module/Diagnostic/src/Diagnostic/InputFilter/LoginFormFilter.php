@@ -14,29 +14,28 @@ class LoginFormFilter extends InputFilter
 {
     public function __construct($adapter)
     {
-        $this->add(array(
+        $this->add([
             'name' => 'email',
             'required' => true,
-            'validators' => array(
-                array(
+            'validators' => [
+                [
                     'name' => 'EmailAddress',
-                    'options' => array(
+                    'options' => [
                         'allow' => Hostname::ALLOW_DNS,
                         'useMxCheck' => true,
-                    ),
-                ),
-            ),
-        ));
+                    ],
+                ],
+            ],
+        ]);
 
-        $this->add(array(
+        $this->add([
             'name' => 'password',
             'required' => true,
-            'validators' => array(
-                array(
+            'validators' => [
+                [
                     'name' => 'Diagnostic\Validator\PasswordStrength',
-                ),
-            ),
-        ));
+                ],
+            ],
+        ]);
     }
 }
-

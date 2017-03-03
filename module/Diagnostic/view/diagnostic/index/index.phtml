@@ -2,10 +2,10 @@
 $title = $this->translate('__diagnostic');
 $this->headTitle($title);
 
-$formUpload->setAttribute('action', $this->url('diagnostic', array('action' => 'index'), array('type' => 'upload')));
+$formUpload->setAttribute('action', $this->url('diagnostic', ['action' => 'index'], ['type' => 'upload']));
 $formUpload->prepare();
 
-$formLogin->setAttribute('action', $this->url('diagnostic', array('action' => 'index')));
+$formLogin->setAttribute('action', $this->url('diagnostic', ['action' => 'index']));
 $formLogin->prepare();
 ?>
 
@@ -47,12 +47,12 @@ $formLogin->prepare();
                 <table>
                     <tr>
                         <td>
-                            <a href="<?= $this->url('diagnostic', array('action' => 'diagnostic')); ?>"
+                            <a href="<?= $this->url('diagnostic', ['action' => 'diagnostic']); ?>"
                                class="btn btn-info"><?= $this->translate('__access_diagnostic') ?></a>
                         </td>
                         <td width="10%"></td>
                         <td>
-                            <a href="<?= $this->url('diagnostic', array('action' => 'new-diagnostic')); ?>"
+                            <a href="<?= $this->url('diagnostic', ['action' => 'new-diagnostic']); ?>"
                                class="btn btn-default"><?= $this->translate('__new_diagnostic') ?></a>
                         </td>
                     </tr>
@@ -73,14 +73,14 @@ $formLogin->prepare();
                     </td>
                 </tr>
                 <tr>
-                    <td colspan="2"><?= $this->formElementErrors($formLogin->get('email'), array('class' => 'bg-danger')) ?></td>
+                    <td colspan="2"><?= $this->formElementErrors($formLogin->get('email'), ['class' => 'bg-danger']) ?></td>
                 </tr>
                 <tr>
                     <td><label><?= $this->translate($formLogin->get('password')->getLabel()) ?></label></td>
                     <td><?= $this->formPassword($formLogin->get('password')) ?></td>
                 </tr>
                 <tr>
-                    <td colspan="2"><?= $this->formElementErrors($formLogin->get('password'), array('class' => 'bg-danger')) ?></td>
+                    <td colspan="2"><?= $this->formElementErrors($formLogin->get('password'), ['class' => 'bg-danger']) ?></td>
                 </tr>
                 <?php
                 if (strlen($this->message)) {
@@ -98,7 +98,7 @@ $formLogin->prepare();
             <table class="table table-responsive table-borderless">
                 <tr>
                     <td class="left"><a
-                                href="<?php echo $this->url('diagnostic', array('action' => 'passwordForgotten')); ?>"><?= $this->translate($this->translate('__password_forgotten')) ?></a>
+                                href="<?php echo $this->url('diagnostic', ['action' => 'passwordForgotten']); ?>"><?= $this->translate($this->translate('__password_forgotten')) ?></a>
                     </td>
                     <td class="right"><?= $this->formSubmit($formLogin->get('submit')) ?></td>
                 </tr>

@@ -13,18 +13,17 @@ class AddQuestionFormFilter extends InputFilter
 {
     public function __construct($adapter)
     {
-        $this->add(array(
+        $this->add([
             'name' => 'question',
             'required' => true,
-            'validators' => array(
-                array(
+            'validators' => [
+                [
                     'name' => 'StringLength',
-                    'options' => array(
+                    'options' => [
                         'min' => 6
-                    ),
-                ),
-            ),
-        ));
+                    ],
+                ],
+            ],
+        ]);
     }
 }
-

@@ -19,7 +19,7 @@ $form->prepare();
             </tr>
             <tr>
                 <td colspan="2">
-                    <?= $this->formElementErrors($form->get('document'), array('class' => 'bg-danger')) ?>
+                    <?= $this->formElementErrors($form->get('document'), ['class' => 'bg-danger']) ?>
                 </td>
             </tr>
             <tr>
@@ -30,7 +30,7 @@ $form->prepare();
             </tr>
             <tr>
                 <td colspan="2">
-                    <?= $this->formElementErrors($form->get('company'), array('class' => 'bg-danger')) ?>
+                    <?= $this->formElementErrors($form->get('company'), ['class' => 'bg-danger']) ?>
                 </td>
             </tr>
             <tr>
@@ -41,7 +41,7 @@ $form->prepare();
             </tr>
             <tr>
                 <td colspan="2">
-                    <?= $this->formElementErrors($form->get('version'), array('class' => 'bg-danger')) ?>
+                    <?= $this->formElementErrors($form->get('version'), ['class' => 'bg-danger']) ?>
                 </td>
             </tr>
             <tr>
@@ -52,7 +52,7 @@ $form->prepare();
             </tr>
             <tr>
                 <td colspan="2">
-                    <?= $this->formElementErrors($form->get('state'), array('class' => 'bg-danger')) ?>
+                    <?= $this->formElementErrors($form->get('state'), ['class' => 'bg-danger']) ?>
                 </td>
             </tr>
             <tr>
@@ -63,7 +63,7 @@ $form->prepare();
             </tr>
             <tr>
                 <td colspan="2">
-                    <?= $this->formElementErrors($form->get('classification'), array('class' => 'bg-danger')) ?>
+                    <?= $this->formElementErrors($form->get('classification'), ['class' => 'bg-danger']) ?>
                 </td>
             </tr>
             <tr>
@@ -74,7 +74,7 @@ $form->prepare();
             </tr>
             <tr>
                 <td colspan="2">
-                    <?= $this->formElementErrors($form->get('consultant'), array('class' => 'bg-danger')) ?>
+                    <?= $this->formElementErrors($form->get('consultant'), ['class' => 'bg-danger']) ?>
                 </td>
             </tr>
             <tr>
@@ -85,7 +85,7 @@ $form->prepare();
             </tr>
             <tr>
                 <td colspan="2">
-                    <?= $this->formElementErrors($form->get('client'), array('class' => 'bg-danger')) ?>
+                    <?= $this->formElementErrors($form->get('client'), ['class' => 'bg-danger']) ?>
                 </td>
             </tr>
             <tr>
@@ -106,7 +106,7 @@ $form->prepare();
 
 <div class="row">
     <div class="col-lg-12 text-center">
-        <a href="<?= $this->url('diagnostic', array('action' => 'rapport')); ?>" class="btn btn-warning"
+        <a href="<?= $this->url('diagnostic', ['action' => 'rapport']); ?>" class="btn btn-warning"
            style="padding: 7px 70px 7px 70px;"><span
                     class="glyphicon glyphicon-step-backward"></span>&nbsp;<?= $this->translate('__back_rapport') ?></a>
     </div>

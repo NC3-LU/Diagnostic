@@ -21,108 +21,108 @@ class DownloadForm extends Form
      */
     public function init()
     {
-        $this->add(array(
+        $this->add([
             'name' => 'document',
             'type' => 'Text',
             'required' => true,
-            'options' => array(
+            'options' => [
                 'label' => '__document_name'
-            ),
-            'attributes' => array(
+            ],
+            'attributes' => [
                 'class' => 'form-control',
-            )
-        ));
+            ]
+        ]);
 
-        $this->add(array(
+        $this->add([
             'name' => 'company',
             'type' => 'Text',
             'required' => true,
-            'options' => array(
+            'options' => [
                 'label' => '__company'
-            ),
-            'attributes' => array(
+            ],
+            'attributes' => [
                 'class' => 'form-control',
-            )
-        ));
+            ]
+        ]);
 
-        $this->add(array(
+        $this->add([
             'name' => 'version',
             'type' => 'Text',
             'required' => true,
-            'options' => array(
+            'options' => [
                 'label' => '__version'
-            ),
-            'attributes' => array(
+            ],
+            'attributes' => [
                 'class' => 'form-control',
-            )
-        ));
+            ]
+        ]);
 
-        $this->add(array(
+        $this->add([
             'name' => 'state',
             'type' => 'Select',
-            'options' => array(
+            'options' => [
                 'label' => '__state',
                 'value_options' => $this->state,
-            ),
-            'attributes' => array(
+            ],
+            'attributes' => [
                 'class' => 'form-control',
-            )
-        ));
+            ]
+        ]);
 
-        $this->add(array(
+        $this->add([
             'name' => 'classification',
             'type' => 'Text',
             'required' => true,
-            'options' => array(
+            'options' => [
                 'label' => '__classification'
-            ),
-            'attributes' => array(
+            ],
+            'attributes' => [
                 'class' => 'form-control',
-            )
-        ));
+            ]
+        ]);
 
-        $this->add(array(
+        $this->add([
             'name' => 'consultant',
             'type' => 'Text',
-            'options' => array(
+            'options' => [
                 'label' => '__consultant',
-            ),
-            'attributes' => array(
+            ],
+            'attributes' => [
                 'class' => 'form-control',
-            )
-        ));
+            ]
+        ]);
 
-        $this->add(array(
+        $this->add([
             'name' => 'client',
             'type' => 'Text',
             'required' => true,
-            'options' => array(
+            'options' => [
                 'label' => '__client'
-            ),
-            'attributes' => array(
+            ],
+            'attributes' => [
                 'class' => 'form-control',
-            )
-        ));
+            ]
+        ]);
 
-        $this->add(array(
+        $this->add([
             'type' => 'Csrf',
             'name' => 'csrf',
-            'options' => array(
-                'csrf_options' => array(
+            'options' => [
+                'csrf_options' => [
                     'timeout' => 3600
-                )
-            )
-        ));
+                ]
+            ]
+        ]);
 
-        $this->add(array(
+        $this->add([
             'name' => 'submit',
             'type' => 'Submit',
-            'attributes' => array(
+            'attributes' => [
                 'value' => '__download',
                 'id' => 'submitbutton',
                 'class' => 'btn btn-success',
-            ),
-        ));
+            ],
+        ]);
     }
 }
 

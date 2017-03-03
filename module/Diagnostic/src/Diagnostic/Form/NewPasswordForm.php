@@ -16,49 +16,48 @@ class NewPasswordForm extends Form
      */
     public function init()
     {
-        $this->add(array(
+        $this->add([
             'type' => 'Csrf',
             'name' => 'csrf',
-            'options' => array(
-                'csrf_options' => array(
+            'options' => [
+                'csrf_options' => [
                     'timeout' => 600
-                )
-            )
-        ));
+                ]
+            ]
+        ]);
 
-        $this->add(array(
+        $this->add([
             'name' => 'password',
             'type' => 'Password',
             'required' => true,
-            'options' => array(
+            'options' => [
                 'label' => '__new_password'
-            ),
-            'attributes' => array(
+            ],
+            'attributes' => [
                 'class' => 'form-control',
-            )
-        ));
+            ]
+        ]);
 
-        $this->add(array(
+        $this->add([
             'name' => 'password2',
             'type' => 'Password',
             'required' => true,
-            'options' => array(
+            'options' => [
                 'label' => '__confirm_password'
-            ),
-            'attributes' => array(
+            ],
+            'attributes' => [
                 'class' => 'form-control',
-            )
-        ));
+            ]
+        ]);
 
-        $this->add(array(
+        $this->add([
             'name' => 'submit',
             'type' => 'Submit',
-            'attributes' => array(
+            'attributes' => [
                 'value' => '__change_password',
                 'id' => 'submitbutton',
                 'class' => 'btn btn-primary',
-            )
-        ));
+            ]
+        ]);
     }
 }
-

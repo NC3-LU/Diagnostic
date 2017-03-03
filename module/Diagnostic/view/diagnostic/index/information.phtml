@@ -28,7 +28,7 @@ $id = 0;
         </table>
 
         <?= $this->formHidden($formUpload->get('csrf')) ?>
-        <?= $this->formElementErrors($formUpload->get('file'), array('class' => 'bg-danger')) ?>
+        <?= $this->formElementErrors($formUpload->get('file'), ['class' => 'bg-danger']) ?>
         <?= $this->form()->closeTag() ?>
         <div class="row">
             <div class="col-lg-12 text-left" style="background-color: #EEEEEE; min-height: 600px;">
@@ -153,11 +153,11 @@ $id = 0;
 
         <div class="row">
             <div class="col-lg-6 text-center">
-                <a href="<?= $this->url('diagnostic', array('action' => 'rapport')); ?>" class="btn btn-warning"
+                <a href="<?= $this->url('diagnostic', ['action' => 'rapport']); ?>" class="btn btn-warning"
                    style="padding: 7px 70px 7px 70px;"><?= $this->translate('__rapport') ?></a>
             </div>
             <div class="col-lg-6 text-center">
-                <a href="<?= $this->url('diagnostic', array('action' => 'export')); ?>" class="btn btn-info"
+                <a href="<?= $this->url('diagnostic', ['action' => 'export']); ?>" class="btn btn-info"
                    style="padding: 7px 70px 7px 70px;"><?= $this->translate('__export') ?></a>
             </div>
         </div>

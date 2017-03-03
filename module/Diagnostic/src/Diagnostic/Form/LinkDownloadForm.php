@@ -16,30 +16,29 @@ class LinkDownloadForm extends Form
      */
     public function init()
     {
-        $this->add(array(
+        $this->add([
             'name' => 'radar',
             'type' => 'Hidden',
-        ));
+        ]);
 
-        $this->add(array(
+        $this->add([
             'name' => 'pie',
             'type' => 'Hidden',
-        ));
+        ]);
 
-        $this->add(array(
+        $this->add([
             'name' => 'bar',
             'type' => 'Hidden',
-        ));
+        ]);
 
-        $this->add(array(
+        $this->add([
             'name' => 'submit',
             'type' => 'Submit',
-            'attributes' => array(
+            'attributes' => [
                 'value' => '__download',
                 'id' => 'submitbutton',
                 'class' => 'btn btn-success',
-            ),
-        ));
+            ],
+        ]);
     }
 }
-

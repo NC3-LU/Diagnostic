@@ -16,37 +16,36 @@ class PasswordForgottenForm extends Form
      */
     public function init()
     {
-        $this->add(array(
+        $this->add([
             'type' => 'Csrf',
             'name' => 'csrf',
-            'options' => array(
-                'csrf_options' => array(
+            'options' => [
+                'csrf_options' => [
                     'timeout' => 600
-                )
-            )
-        ));
+                ]
+            ]
+        ]);
 
-        $this->add(array(
+        $this->add([
             'name' => 'email',
             'type' => 'Text',
             'required' => true,
-            'options' => array(
+            'options' => [
                 'label' => '__email'
-            ),
-            'attributes' => array(
+            ],
+            'attributes' => [
                 'class' => 'form-control',
-            )
-        ));
+            ]
+        ]);
 
-        $this->add(array(
+        $this->add([
             'name' => 'submit',
             'type' => 'Submit',
-            'attributes' => array(
+            'attributes' => [
                 'value' => '__receive_mail_password',
                 'id' => 'submitbutton',
                 'class' => 'btn btn-primary',
-            )
-        ));
+            ]
+        ]);
     }
 }
-
