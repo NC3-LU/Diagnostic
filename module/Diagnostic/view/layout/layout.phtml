@@ -51,10 +51,7 @@
                     ?>
                     <table width="100%">
                         <tr>
-                            <td width="150">
-                                &nbsp;
-                            </td>
-                            <td align="left">
+                            <td align="right">
                                 <?php
                                 $container = new \Zend\Session\Container('user');
                                 if (($container->offsetExists('admin')) && (!is_null($container->admin)) && ($container->admin == 1)) {
