@@ -105,8 +105,17 @@ class TemplateProcessorService extends TemplateProcessor implements ServiceLocat
             }
         }
 
-        $this->setValue('ORGANIZATION_INFORMATION', $information['organization']);
-        $this->setValue('EVALUATION_SYNTHESYS', $information['synthesis']);
+        if (isset($information['organization'])) {
+            $this->setValue('ORGANIZATION_INFORMATION', $information['organization']);
+        } else {
+            $this->setValue('ORGANIZATION_INFORMATION', '');
+        }
+
+        if (isset($information['synthesis'])) {
+            $this->setValue('EVALUATION_SYNTHESYS', $information['synthesis']);
+        } else {
+            $this->setValue('EVALUATION_SYNTHESYS', '');
+        }
 
         //recommandations
         $this->cloneRow('RECOMM_NUM', $nbRecommandations);
@@ -323,5 +332,7 @@ class TemplateProcessorService extends TemplateProcessor implements ServiceLocat
         header("Content-Transfer-Encoding: binary");
 
         readfile($filepath);
+
+        unlink($filepath);
     }
 }

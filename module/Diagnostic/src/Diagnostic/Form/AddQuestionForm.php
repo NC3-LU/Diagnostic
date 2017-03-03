@@ -22,61 +22,60 @@ class AddQuestionForm extends Form
             $threshold[$i * 5] = $i * 5;
         }
 
-        $this->add(array(
+        $this->add([
             'name' => 'question',
             'type' => 'Text',
             'required' => true,
-            'options' => array(
+            'options' => [
                 'label' => '__question'
-            ),
-            'attributes' => array(
+            ],
+            'attributes' => [
                 'class' => 'form-control',
-            )
-        ));
+            ]
+        ]);
 
-        $this->add(array(
+        $this->add([
             'name' => 'help',
             'type' => 'Text',
             'required' => true,
-            'options' => array(
+            'options' => [
                 'label' => '__help'
-            ),
-            'attributes' => array(
+            ],
+            'attributes' => [
                 'class' => 'form-control',
-            )
-        ));
+            ]
+        ]);
 
-        $this->add(array(
+        $this->add([
             'name' => 'threshold',
             'type' => 'Select',
-            'options' => array(
+            'options' => [
                 'label' => '__threshold_max',
                 'value_options' => $threshold,
-            ),
-            'attributes' => array(
+            ],
+            'attributes' => [
                 'class' => 'form-control threshold',
-            ),
-        ));
+            ],
+        ]);
 
-        $this->add(array(
+        $this->add([
             'type' => 'Csrf',
             'name' => 'csrf',
-            'options' => array(
-                'csrf_options' => array(
+            'options' => [
+                'csrf_options' => [
                     'timeout' => 3600
-                )
-            )
-        ));
+                ]
+            ]
+        ]);
 
-        $this->add(array(
+        $this->add([
             'name' => 'submit',
             'type' => 'Submit',
-            'attributes' => array(
+            'attributes' => [
                 'value' => '__add',
                 'id' => 'submitbutton',
                 'class' => 'btn btn-success',
-            ),
-        ));
+            ],
+        ]);
     }
 }
-

@@ -877,6 +877,7 @@ class IndexController extends AbstractActionController
                 $form->setData($postData);
                 if ($form->isValid()) {
                     $data = $form->getData();
+
                     //format form data
                     unset($data['csrf']);
                     unset($data['submit']);

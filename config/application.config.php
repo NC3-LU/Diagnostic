@@ -5,7 +5,7 @@
  * @see http://framework.zend.com/manual/current/en/tutorials/config.advanced.html#environment-specific-system-configuration
  * @see http://framework.zend.com/manual/current/en/tutorials/config.advanced.html#environment-specific-application-configuration
  */
-return array(
+return [
     // This should be an array of module namespaces used in the application.
     'modules' => [
         'Diagnostic',
@@ -68,4 +68,4 @@ return array(
    // Initial configuration with which to seed the ServiceManager.
    // Should be compatible with Zend\ServiceManager\Config.
    // 'service_manager' => array(),
-);
+];
