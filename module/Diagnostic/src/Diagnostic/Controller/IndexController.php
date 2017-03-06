@@ -14,16 +14,19 @@ use Diagnostic\InputFilter\DownloadFormFilter;
 use Diagnostic\InputFilter\LoginFormFilter;
 use Diagnostic\InputFilter\NewPasswordFormFilter;
 use Diagnostic\InputFilter\PasswordForgottenFormFilter;
+use Diagnostic\Service\CalculService;
+use Diagnostic\Service\MailService;
+use Diagnostic\Service\QuestionService;
 use Diagnostic\Service\TemplateProcessorService;
+use Diagnostic\Service\UserService;
+use Diagnostic\Service\UserTokenService;
 use Zend\Crypt\BlockCipher;
 use Zend\Crypt\Password\Bcrypt;
-use Zend\Mvc\Controller\AbstractActionController;
 use Zend\Session\Container;
 use Zend\View\Model\ViewModel;
 
-class IndexController extends AbstractActionController
+class IndexController extends AbstractController
 {
-    protected $dbAdapter;
     protected $translator;
     protected $config;
     protected $uploadForm;
@@ -43,28 +46,6 @@ class IndexController extends AbstractActionController
     protected $diagnosticEntity;
     protected $informationEntity;
     protected $questionEntity;
-
-    /**
-     * Get
-     *
-     * @param $value
-     * @return mixed
-     */
-    public function get($value) {
-        return $this->$value;
-    }
-
-    /**
-     * Set
-     *
-     * @param $key
-     * @param $value
-     * @return $this
-     */
-    public function set($key, $value) {
-        $this->$key = $value;
-        return $this;
-    }
 
     /**
      * Index
@@ -101,6 +82,7 @@ class IndexController extends AbstractActionController
                     //load json
                     if ($data["file"]["tmp_name"]) {
 
+                        /** @var QuestionService $questionService */
                         $questionService = $this->get('questionService');
                         $successUpload = $questionService->loadJson(file_get_contents($data["file"]["tmp_name"], true));
 
@@ -121,6 +103,7 @@ class IndexController extends AbstractActionController
 
                     $formData = $formLogin->getData();
 
+                    /** @var UserService $userService */
                     $userService = $this->get('userService');
                     $user = $userService->getUserByEmail($formData['email']);
 
@@ -204,11 +187,13 @@ class IndexController extends AbstractActionController
                 $formData = $form->getData();
 
                 //retrieve user
+                /** @var UserService $userService */
                 $userService = $this->get('userService');
                 $user = $userService->getUserByEmail($formData['email']);
 
                 if (count($user)) {
 
+                    /** @var UserTokenService $userTokenService */
                     $userTokenService = $this->get('userTokenService');
                     $userTokenEntity = $userTokenService->saveEntity($formData['email']);
 
@@ -300,6 +285,7 @@ class IndexController extends AbstractActionController
                         <p><strong>Cases</strong></p>';
 
                     //send mail
+                    /** @var MailService $mailService */
                     $mailService = $this->get('mailService');
                     $mailService->send($formData['email'], $translator->translate('__mail_password_forgotten_subject'), $content);
 
@@ -323,9 +309,10 @@ class IndexController extends AbstractActionController
      */
     public function newPasswordAction()
     {
-
         //retrieve token
         $token = $this->getRequest()->getQuery('token');
+
+        /** @var UserTokenService $userTokenService */
         $userTokenService = $this->get('userTokenService');
         $userTokenEntity = $userTokenService->getByToken($token);
 
@@ -354,6 +341,7 @@ class IndexController extends AbstractActionController
                     $formData = $form->getData();
 
                     //change password
+                    /** @var UserService $userService */
                     $userService = $this->get('userService');
                     $userService->updatePassword($userToken->getUserEmail(), $formData['password']);
 
@@ -372,12 +360,9 @@ class IndexController extends AbstractActionController
                 'token' => $token,
             ]);
         } else {
-
             //redirect
             return $this->redirect()->toRoute('diagnostic', ['controller' => 'index', 'action' => 'index']);
         }
-
-
     }
 
     /**
@@ -388,7 +373,6 @@ class IndexController extends AbstractActionController
      */
     public function diagnosticAction()
     {
-
         $container = new Container('user');
         if ((!$container->offsetExists('email')) || (is_null($container->email))) {
             return $this->redirect()->toRoute('diagnostic', ['controller' => 'index', 'action' => 'index']);
@@ -404,8 +388,8 @@ class IndexController extends AbstractActionController
         $container = new Container('navigation');
         $container->lastQuestion = $id;
 
-
         //retrieve questions
+        /** @var QuestionService $questionService */
         $questionService = $this->get('questionService');
         $questions = $questionService->getQuestions();
 
@@ -497,6 +481,7 @@ class IndexController extends AbstractActionController
         }
 
         //retrieve questions
+        /** @var QuestionService $questionService */
         $questionService = $this->get('questionService');
         $questions = $questionService->getQuestions();
 
@@ -537,6 +522,7 @@ class IndexController extends AbstractActionController
                     //load json
                     if ($data["file"]["tmp_name"]) {
 
+                        /** @var QuestionService $questionService */
                         $questionService = $this->get('questionService');
                         $successUpload = $questionService->loadJson(file_get_contents($data["file"]["tmp_name"], true));
 
@@ -603,7 +589,6 @@ class IndexController extends AbstractActionController
             'formUpload' => $formUpload,
             'errorMessage' => $errorMessage,
         ]);
-
     }
 
     /**
@@ -636,6 +621,7 @@ class IndexController extends AbstractActionController
                 $formData = $form->getData();
 
                 //retrieve questions
+                /** @var QuestionService $questionService */
                 $questionService = $this->get('questionService');
                 $questions = $questionService->getQuestions();
                 $lastId = 0;
@@ -682,9 +668,13 @@ class IndexController extends AbstractActionController
         ]);
     }
 
+    /**
+     * Delete Question
+     *
+     * @return \Zend\Http\Response
+     */
     public function deleteQuestionAction()
     {
-
         $id = $this->getEvent()->getRouteMatch()->getParam('id');
 
         //no id
@@ -693,6 +683,7 @@ class IndexController extends AbstractActionController
         }
 
         //retrieve questions
+        /** @var QuestionService $questionService */
         $questionService = $this->get('questionService');
         $questions = $questionService->getQuestions();
 
@@ -747,13 +738,13 @@ class IndexController extends AbstractActionController
      */
     public function exportAction()
     {
-
         //retrieve result
         $container = new Container('diagnostic');
         $result = ($container->offsetExists('result')) ? $container->result : [];
         $information = ($container->offsetExists('information')) ? $container->information : [];
 
         //retrieve questions
+        /** @var QuestionService $questionService */
         $questionService = $this->get('questionService');
         $questions = $questionService->getQuestions();
 
@@ -805,7 +796,6 @@ class IndexController extends AbstractActionController
      */
     public function rapportAction()
     {
-
         //form
         $form = $this->get('LinkDownloadForm');
 
@@ -814,10 +804,12 @@ class IndexController extends AbstractActionController
         $results = ($container->offsetExists('result')) ? $container->result : [];
 
         //calcul
+        /** @var CalculService $calculService */
         $calculService = $this->get('calculService');
         $calculResults = $calculService->calcul();
 
         //retrieve questions
+        /** @var QuestionService $questionService */
         $questionService = $this->get('Diagnostic\Service\questionService');
         $questions = $questionService->getQuestions();
 
@@ -877,7 +869,6 @@ class IndexController extends AbstractActionController
         ]);
     }
 
-
     /**
      * Download
      *
@@ -927,11 +918,13 @@ class IndexController extends AbstractActionController
                     unset($data['submit']);
 
                     //retrieve questions
+                    /** @var QuestionService $questionService */
                     $questionService = $this->get('questionService');
                     $questions = $questionService->getQuestions();
 
                     $translator = $this->get('translator');
 
+                    /** @var CalculService $calculService */
                     $calculService = $this->get('calculService');
                     $calculResults = $calculService->calcul();
 
@@ -945,7 +938,6 @@ class IndexController extends AbstractActionController
         return new ViewModel([
             'form' => $form,
         ]);
-
     }
 
     /**
@@ -954,14 +946,12 @@ class IndexController extends AbstractActionController
      */
     public function newDiagnosticAction()
     {
-
         $container = new Container('user');
         $email = $container->email;
         $admin = $container->admin;
 
         $container = new Container('diagnostic');
         $language = $container->language;
-
 
         $container->getManager()->getStorage()->clear();
 
@@ -974,7 +964,6 @@ class IndexController extends AbstractActionController
 
         //redirection
         return $this->redirect()->toRoute('diagnostic', ['controller' => 'index', 'action' => 'diagnostic']);
-
     }
 
     /**
@@ -982,7 +971,6 @@ class IndexController extends AbstractActionController
      */
     public function languageAction()
     {
-
         $id = $this->getEvent()->getRouteMatch()->getParam('id');
 
         $container = new Container('diagnostic');

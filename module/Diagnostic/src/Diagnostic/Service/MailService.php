@@ -23,7 +23,6 @@ class MailService extends AbstractService
      */
     public function send($email, $subject, $message)
     {
-
         $config = $this->get('config');
 
         $html = new Part($message);

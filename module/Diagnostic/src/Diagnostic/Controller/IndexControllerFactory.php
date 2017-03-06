@@ -12,7 +12,6 @@ namespace Diagnostic\Controller;
 class IndexControllerFactory extends AbstractControllerFactory
 {
     protected $resources = [
-        'dbAdapter' => 'Zend\Db\Adapter\Adapter',
         'config' => 'Config',
         'translator' => 'translator',
         'questionService' => 'Diagnostic\Service\QuestionService',

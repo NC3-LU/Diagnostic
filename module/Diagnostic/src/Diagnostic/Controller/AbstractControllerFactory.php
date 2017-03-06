@@ -26,6 +26,7 @@ abstract class AbstractControllerFactory implements FactoryInterface
 
         if (class_exists($class)) {
             $controller = new $class();
+            $controller->set('dbAdapter', $serviceLocator->getServiceLocator()->get('Zend\Db\Adapter\Adapter'));
             foreach($this->resources as $key => $resource) {
                 $controller->set($key, $serviceLocator->getServiceLocator()->get($resource));
             }

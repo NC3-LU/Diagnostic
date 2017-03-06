@@ -11,8 +11,8 @@ namespace Admin;
 
 return [
     'controllers' => [
-        'invokables' => [
-            'Admin\Controller\Index' => 'Admin\Controller\IndexController',
+        'factories' => [
+            'Admin\Controller\Index' => 'Admin\Controller\IndexControllerFactory',
         ],
     ],
 
@@ -47,7 +47,7 @@ return [
 
     'form_elements' => [
         'factories' => [
-            'AdminQuestionForm' => 'Admin\Factory\QuestionFormFactory',
+            'AdminQuestionForm' => 'Admin\Form\QuestionFormFactory',
         ],
         'invokables' => [
             'UserForm' => 'Admin\Form\UserForm',

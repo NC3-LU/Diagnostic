@@ -1,7 +1,7 @@
 <?php
-namespace Admin\Factory;
 
-use Admin\Form\QuestionForm;
+namespace Admin\Form;
+
 use Admin\InputFilter\QuestionFormFilter;
 use Zend\ServiceManager\FactoryInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
@@ -38,6 +38,4 @@ class QuestionFormFactory implements FactoryInterface
 
         return $form;
     }
-
-
 }

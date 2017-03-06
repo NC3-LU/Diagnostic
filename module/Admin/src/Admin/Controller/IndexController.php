@@ -9,16 +9,21 @@
 
 namespace Admin\Controller;
 
-
 use Admin\InputFilter\EmailNotExistFilter;
 use Admin\InputFilter\UserCreateFormFilter;
 use Admin\InputFilter\UserFormFilter;
-use Zend\Mvc\Controller\AbstractActionController;
+use Diagnostic\Controller\AbstractController;
 use Zend\Session\Container;
 use Zend\View\Model\ViewModel;
 
-class IndexController extends AbstractActionController
+class IndexController extends AbstractController
 {
+    protected $userService;
+    protected $userTokenService;
+    protected $questionService;
+    protected $userForm;
+    protected $adminQuestionForm;
+
     /**
      * Index
      *
@@ -29,7 +34,7 @@ class IndexController extends AbstractActionController
         $id = $this->getEvent()->getRouteMatch()->getParam('id');
 
         //retrieve users
-        $userService = $this->getServiceLocator()->get('Diagnostic\Service\UserService');
+        $userService = $this->get('userService');
         $users = $userService->getUsers();
 
         //retrieve current user
@@ -42,9 +47,9 @@ class IndexController extends AbstractActionController
         ];
 
         if (!is_null($id)) {
-            $form = $this->getServiceLocator()->get('formElementManager')->get('UserForm');
+            $form = $this-->get('userForm');
 
-            $userFormFilter = new UserFormFilter($this->getServiceLocator()->get('Zend\Db\Adapter\Adapter'));
+            $userFormFilter = new UserFormFilter($this->get('dbAdapter'));
             $form->setInputFilter($userFormFilter);
 
             $arrayView['form'] = $form;
@@ -67,7 +72,7 @@ class IndexController extends AbstractActionController
             if ($request->isPost()) {
 
                 if ($request->getPost('email') != $userToModify->email) {
-                    $emailNotExistFilter = new EmailNotExistFilter($this->getServiceLocator()->get('Zend\Db\Adapter\Adapter'));
+                    $emailNotExistFilter = new EmailNotExistFilter($this->get('dbAdapter'));
                     $form->setInputFilter($emailNotExistFilter);
                 }
 
@@ -80,7 +85,7 @@ class IndexController extends AbstractActionController
                         unset($formData->admin);
                     }
                     if ($request->getPost('email') != $emailUserToModify) {
-                        $userTokenService = $this->getServiceLocator()->get('Diagnostic\Service\UserTokenService');
+                        $userTokenService = $this->get('userTokenService');
                         $userTokenService->deleteByEmail($emailUserToModify);
                     }
                     $userService->update($id, (array)$formData);
@@ -103,9 +108,9 @@ class IndexController extends AbstractActionController
      */
     public function addUserAction()
     {
-        $form = $this->getServiceLocator()->get('formElementManager')->get('UserForm');
+        $form = $this->get('userForm');
 
-        $emailNotExistFilter = new EmailNotExistFilter($this->getServiceLocator()->get('Zend\Db\Adapter\Adapter'));
+        $emailNotExistFilter = new EmailNotExistFilter($this->get('dbAdapter'));
         $form->setInputFilter($emailNotExistFilter);
 
         $form->get('submit')->setValue('__add');
@@ -117,7 +122,7 @@ class IndexController extends AbstractActionController
             if ($form->isValid()) {
                 $formData = $form->getData();
 
-                $userService = $this->getServiceLocator()->get('Diagnostic\Service\UserService');
+                $userService = $this->get('userService');
                 $userService->create((array)$formData);
 
                 //redirect
@@ -139,7 +144,7 @@ class IndexController extends AbstractActionController
     public function questionsAction()
     {
         //retrieve questions
-        $questionService = $this->getServiceLocator()->get('Diagnostic\Service\QuestionService');
+        $questionService = $this->get('questionService');
         $questions = $questionService->getBddQuestions();
 
         //send to view
@@ -155,7 +160,7 @@ class IndexController extends AbstractActionController
      */
     public function addQuestionAction()
     {
-        $form = $this->getServiceLocator()->get('formElementManager')->get('AdminQuestionForm');
+        $form = $this->get('adminQuestionForm');
 
         //form is post and valid
         $request = $this->getRequest();
@@ -164,7 +169,7 @@ class IndexController extends AbstractActionController
             if ($form->isValid()) {
                 $formData = $form->getData();
 
-                $questionService = $this->getServiceLocator()->get('Diagnostic\Service\QuestionService');
+                $questionService = $this->get('questionService');
                 $questionService->create((array)$formData);
 
                 $questionService->resetCache();
@@ -188,18 +193,17 @@ class IndexController extends AbstractActionController
      */
     public function modifyQuestionAction()
     {
-
         $id = $this->getEvent()->getRouteMatch()->getParam('id');
 
         if (is_null($id)) {
             throw new \Exception('Question not exist');
         }
 
-        $form = $this->getServiceLocator()->get('formElementManager')->get('AdminQuestionForm');
+        $form = $this->get('adminQuestionForm');
 
         $form->get('submit')->setValue('__modify');
 
-        $questionService = $this->getServiceLocator()->get('Diagnostic\Service\QuestionService');
+        $questionService = $this->get('questionService');
         $currentQuestion = $questionService->getQuestionById($id);
 
         //form is post and valid
@@ -243,7 +247,7 @@ class IndexController extends AbstractActionController
         $id = $this->getEvent()->getRouteMatch()->getParam('id');
 
         //retrieve users
-        $userService = $this->getServiceLocator()->get('Diagnostic\Service\UserService');
+        $userService = $this->get('userService');
         $users = $userService->getUsers();
         $usersIds = [];
         foreach ($users as $user) {
@@ -255,7 +259,7 @@ class IndexController extends AbstractActionController
             throw new \Exception('User not exist');
         }
 
-        $userService = $this->getServiceLocator()->get('Diagnostic\Service\UserService');
+        $userService = $this->get('userService');
         $userService->delete($id);
 
         //redirect
@@ -274,7 +278,7 @@ class IndexController extends AbstractActionController
         $id = $this->getEvent()->getRouteMatch()->getParam('id');
 
         //retrieve bdd questions
-        $questionService = $this->getServiceLocator()->get('Diagnostic\Service\QuestionService');
+        $questionService = $this->get('questionService');
         $questions = $questionService->getBddQuestions();
         $questionsIds = [];
         foreach ($questions as $question) {
