@@ -1,8 +1,6 @@
 <?php
 namespace Diagnostic\Service;
-
-use Zend\ServiceManager\ServiceLocatorAwareInterface;
-use Zend\ServiceManager\ServiceLocatorAwareTrait;
+use Diagnostic\Gateway\UserTokenGateway;
 
 /**
  * UserTokenService
@@ -10,10 +8,8 @@ use Zend\ServiceManager\ServiceLocatorAwareTrait;
  * @package Diagnostic\Service
  * @author Jerome De Almeida <jerome.dealmeida@vesperiagroup.com>
  */
-class UserTokenService implements ServiceLocatorAwareInterface
+class UserTokenService extends AbstractService
 {
-    use ServiceLocatorAwareTrait;
-
     /**
      * Save Entity
      *
@@ -22,7 +18,6 @@ class UserTokenService implements ServiceLocatorAwareInterface
      */
     public function saveEntity($email)
     {
-
         //record token
         $userToken = [
             'userEmail' => $email,
@@ -31,11 +26,12 @@ class UserTokenService implements ServiceLocatorAwareInterface
         ];
 
         //set user information
-        $userTokenEntity = $this->getServiceLocator()->get('Diagnostic\Model\UserTokenEntity');
+        $userTokenEntity = $this->get('entity');
         $userTokenEntity->exchangeArray($userToken);
 
         //insert user information in db
-        $userTokenGateway = $this->getServiceLocator()->get('Diagnostic\Gateway\UserTokenGateway');
+        /** @var UserTokenGateway $userTokenGateway */
+        $userTokenGateway = $this->get('gateway');
         $userTokenGateway->insert($userTokenEntity);
 
         //delete old tokens
@@ -45,13 +41,15 @@ class UserTokenService implements ServiceLocatorAwareInterface
     }
 
     /**
-     * Get by token
+     * Get By Token
      *
      * @param $token
+     * @return null|\Zend\Db\ResultSet\ResultSetInterface
      */
     public function getByToken($token)
     {
-        $userTokenGateway = $this->getServiceLocator()->get('Diagnostic\Gateway\UserTokenGateway');
+        /** @var UserTokenGateway $userTokenGateway */
+        $userTokenGateway = $this->get('gateway');
         $userTokenEntity = $userTokenGateway->getByToken($token);
 
         return $userTokenEntity;
@@ -64,7 +62,8 @@ class UserTokenService implements ServiceLocatorAwareInterface
      */
     public function delete($token)
     {
-        $userTokenGateway = $this->getServiceLocator()->get('Diagnostic\Gateway\UserTokenGateway');
+        /** @var UserTokenGateway $userTokenGateway */
+        $userTokenGateway = $this->get('gateway');
         $userTokenGateway->delete($token);
     }
 
@@ -75,8 +74,8 @@ class UserTokenService implements ServiceLocatorAwareInterface
      */
     public function deleteByEmail($email)
     {
-        $userTokenGateway = $this->getServiceLocator()->get('Diagnostic\Gateway\UserTokenGateway');
+        /** @var UserTokenGateway $userTokenGateway */
+        $userTokenGateway = $this->get('gateway');
         $userTokenGateway->deleteByEmail($email);
-
     }
 }

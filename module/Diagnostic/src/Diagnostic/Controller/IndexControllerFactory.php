@@ -11,10 +11,23 @@ namespace Diagnostic\Controller;
 
 class IndexControllerFactory extends AbstractControllerFactory
 {
+    protected $resources = [
+        'dbAdapter' => 'Zend\Db\Adapter\Adapter',
+        'config' => 'Config',
+        'translator' => 'translator',
+        'questionService' => 'Diagnostic\Service\QuestionService',
+        'userService' => 'Diagnostic\Service\UserService',
+        'userTokenService' => 'Diagnostic\Service\UserTokenService',
+        'mailService' => 'Diagnostic\Service\MailService',
+        'calculService' => 'Diagnostic\Service\CalculService',
+        'diagnosticEntity' => 'Diagnostic\Model\DiagnosticEntity',
+        'informationEntity' => 'Diagnostic\Model\InformationEntity',
+        'questionEntity' => 'Diagnostic\Model\QuestionEntity'
+    ];
+
     protected $forms = [
         'upload', 'login', 'question', 'information', 'addQuestion',
         'passwordForgotten', 'newPassword', 'linkDownload', 'download'
     ];
-    protected $services = ['question', 'user', 'userToken', 'mail', 'calcul'];
-    protected $entities = ['diagnostic', 'information', 'question'];
+
 }

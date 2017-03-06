@@ -1,9 +1,8 @@
 <?php
 namespace Diagnostic\Service;
 
+use Diagnostic\Gateway\UserGateway;
 use Zend\Crypt\Password\Bcrypt;
-use Zend\ServiceManager\ServiceLocatorAwareInterface;
-use Zend\ServiceManager\ServiceLocatorAwareTrait;
 use Zend\Session\Container;
 
 /**
@@ -12,9 +11,8 @@ use Zend\Session\Container;
  * @package Diagnostic\Service
  * @author Jerome De Almeida <jerome.dealmeida@vesperiagroup.com>
  */
-class UserService implements ServiceLocatorAwareInterface
+class UserService extends AbstractService
 {
-    use ServiceLocatorAwareTrait;
 
     /**
      * Get user by email
@@ -24,15 +22,10 @@ class UserService implements ServiceLocatorAwareInterface
      */
     public function getUserByEmail($email)
     {
-        if ($this->getServiceLocator()->has('Diagnostic\Gateway\UserGateway')) {
+        /** @var UserGateway $tableGateway */
+        $tableGateway = $this->get('gateway');
 
-            $tableGateway = $this->getServiceLocator()->get('Diagnostic\Gateway\UserGateway');
-
-            return $tableGateway->getUserByEmail($email);
-
-        } else {
-            throw new \Exception('User Gateway not found');
-        }
+        return $tableGateway->getUserByEmail($email);
     }
 
     /**
@@ -43,12 +36,10 @@ class UserService implements ServiceLocatorAwareInterface
      */
     public function getUsers()
     {
-        if ($this->getServiceLocator()->has('Diagnostic\Gateway\UserGateway')) {
+        /** @var UserGateway $tableGateway */
+        $tableGateway = $this->get('gateway');
 
-            $tableGateway = $this->getServiceLocator()->get('Diagnostic\Gateway\UserGateway');
-
-            return $tableGateway->getUsers();
-        }
+        return $tableGateway->getUsers();
     }
 
     /**
@@ -59,12 +50,10 @@ class UserService implements ServiceLocatorAwareInterface
      */
     public function getUserById($id)
     {
-        if ($this->getServiceLocator()->has('Diagnostic\Gateway\UserGateway')) {
+        /** @var UserGateway $tableGateway */
+        $tableGateway = $this->get('gateway');
 
-            $tableGateway = $this->getServiceLocator()->get('Diagnostic\Gateway\UserGateway');
-
-            return $tableGateway->getUserById($id);
-        }
+        return $tableGateway->getUserById($id);
     }
 
     /**
@@ -80,7 +69,8 @@ class UserService implements ServiceLocatorAwareInterface
         $passwordCrypt = $bcrypt->create($password);
 
         //update password
-        $userGateway = $this->getServiceLocator()->get('Diagnostic\Gateway\UserGateway');
+        /** @var UserGateway $tableGateway */
+        $userGateway = $this->get('gateway');
         $userGateway->updatePassword($email, $passwordCrypt);
     }
 
@@ -94,7 +84,9 @@ class UserService implements ServiceLocatorAwareInterface
     {
         unset($data['id']);
         unset($data['password']);
-        $userGateway = $this->getServiceLocator()->get('Diagnostic\Gateway\UserGateway');
+
+        /** @var UserGateway $tableGateway */
+        $userGateway = $this->get('gateway');
         $userGateway->update($id, $data);
     }
 
@@ -106,7 +98,9 @@ class UserService implements ServiceLocatorAwareInterface
     public function create($data)
     {
         $data['password'] = '';
-        $userGateway = $this->getServiceLocator()->get('Diagnostic\Gateway\UserGateway');
+
+        /** @var UserGateway $tableGateway */
+        $userGateway = $this->get('gateway');
         $userGateway->insert($data);
     }
 
@@ -129,7 +123,8 @@ class UserService implements ServiceLocatorAwareInterface
      */
     public function delete($id)
     {
-        $userGateway = $this->getServiceLocator()->get('Diagnostic\Gateway\UserGateway');
+        /** @var UserGateway $tableGateway */
+        $userGateway = $this->get('gateway');
         $userGateway->delete($id);
     }
 }

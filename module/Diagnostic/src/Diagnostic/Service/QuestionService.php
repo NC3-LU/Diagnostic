@@ -2,8 +2,6 @@
 namespace Diagnostic\Service;
 
 use Zend\Crypt\BlockCipher;
-use Zend\ServiceManager\ServiceLocatorAwareInterface;
-use Zend\ServiceManager\ServiceLocatorAwareTrait;
 use Zend\Session\Container;
 
 /**
@@ -12,10 +10,9 @@ use Zend\Session\Container;
  * @package Diagnostic\Service
  * @author Jerome De Almeida <jerome.dealmeida@vesperiagroup.com>
  */
-class QuestionService implements ServiceLocatorAwareInterface
+class QuestionService extends AbstractService
 {
-    use ServiceLocatorAwareTrait;
-
+    protected $config;
 
     /**
      * Fetch all with categories
@@ -25,16 +22,9 @@ class QuestionService implements ServiceLocatorAwareInterface
      */
     public function fetchAllWithCategories()
     {
+        $tableGateway = $this->get('gateway');
 
-        if ($this->getServiceLocator()->has('Diagnostic\Gateway\QuestionGateway')) {
-
-            $tableGateway = $this->getServiceLocator()->get('Diagnostic\Gateway\QuestionGateway');
-
-            return $tableGateway->fetchAllWithCategories();
-
-        } else {
-            throw new \Exception('Question Gateway not found');
-        }
+        return $tableGateway->fetchAllWithCategories();
     }
 
     /**
@@ -46,9 +36,9 @@ class QuestionService implements ServiceLocatorAwareInterface
     public function getQuestions()
     {
         $container = new Container('diagnostic');
-        if ($container->offsetExists('questions')) {
+        /*if ($container->offsetExists('questions')) {
             $questions = $container->questions;
-        } else {
+        } else {*/
             $questionsObject = $this->fetchAllWithCategories();
 
             $questions = [];
@@ -57,7 +47,7 @@ class QuestionService implements ServiceLocatorAwareInterface
             }
 
             $container->questions = $questions;
-        }
+        //}
 
         $tmpArray = [];
         foreach ($questions as $question) {
@@ -104,7 +94,7 @@ class QuestionService implements ServiceLocatorAwareInterface
     public function loadJson($json)
     {
         //encryption key
-        $config = $this->getServiceLocator()->get('Config');
+        $config = $this->get('Config');
         $encryptionKey = $config['encryption_key'];
 
         //encrypt result
@@ -132,7 +122,7 @@ class QuestionService implements ServiceLocatorAwareInterface
         $questions = [];
         if (array_key_exists('questions', $data)) {
             foreach ($data['questions'] as $key => $value) {
-                $questionEntity = $this->getServiceLocator()->get('Diagnostic\Model\QuestionEntity');
+                $questionEntity = $this->get('entity');
                 $questionEntity->exchangeArray($value);
                 $questions[$key] = $questionEntity;
             }
@@ -157,7 +147,7 @@ class QuestionService implements ServiceLocatorAwareInterface
      */
     public function create($data)
     {
-        $questionGateway = $this->getServiceLocator()->get('Diagnostic\Gateway\QuestionGateway');
+        $questionGateway = $this->get('gateway');
         $questionGateway->insert($data);
     }
 
@@ -178,12 +168,9 @@ class QuestionService implements ServiceLocatorAwareInterface
      */
     public function getQuestionById($id)
     {
-        if ($this->getServiceLocator()->has('Diagnostic\Gateway\QuestionGateway')) {
+        $tableGateway = $this->get('gateway');
 
-            $tableGateway = $this->getServiceLocator()->get('Diagnostic\Gateway\QuestionGateway');
-
-            return $tableGateway->getQuestionById($id);
-        }
+        return $tableGateway->getQuestionById($id);
     }
 
     /**
@@ -195,7 +182,7 @@ class QuestionService implements ServiceLocatorAwareInterface
     public function update($id, $data)
     {
         unset($data['id']);
-        $questionGateway = $this->getServiceLocator()->get('Diagnostic\Gateway\QuestionGateway');
+        $questionGateway = $this->get('gateway');
         $questionGateway->update($id, $data);
     }
 
@@ -206,8 +193,7 @@ class QuestionService implements ServiceLocatorAwareInterface
      */
     public function delete($id)
     {
-        $questionGateway = $this->getServiceLocator()->get('Diagnostic\Gateway\QuestionGateway');
+        $questionGateway = $this->get('gateway');
         $questionGateway->delete($id);
     }
-
 }

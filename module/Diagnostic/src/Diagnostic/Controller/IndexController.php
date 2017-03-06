@@ -404,6 +404,7 @@ class IndexController extends AbstractActionController
         $container = new Container('navigation');
         $container->lastQuestion = $id;
 
+
         //retrieve questions
         $questionService = $this->get('questionService');
         $questions = $questionService->getQuestions();

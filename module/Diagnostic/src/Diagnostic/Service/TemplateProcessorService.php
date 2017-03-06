@@ -18,6 +18,28 @@ class TemplateProcessorService extends TemplateProcessor implements ServiceLocat
     use ServiceLocatorAwareTrait;
 
     /**
+     * Get
+     *
+     * @param $value
+     * @return mixed
+     */
+    public function get($value) {
+        return $this->$value;
+    }
+
+    /**
+     * Set
+     *
+     * @param $key
+     * @param $value
+     * @return $this
+     */
+    public function set($key, $value) {
+        $this->$key = $value;
+        return $this;
+    }
+
+    /**
      * Set a new image
      *
      * @param string $search

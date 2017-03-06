@@ -4,8 +4,6 @@ namespace Diagnostic\Service;
 use Zend\Mail\Message;
 use Zend\Mail\Transport\Sendmail;
 use Zend\Mime\Part;
-use Zend\ServiceManager\ServiceLocatorAwareInterface;
-use Zend\ServiceManager\ServiceLocatorAwareTrait;
 
 /**
  * MailService
@@ -13,9 +11,9 @@ use Zend\ServiceManager\ServiceLocatorAwareTrait;
  * @package Diagnostic\Service
  * @author Jerome De Almeida <jerome.dealmeida@vesperiagroup.com>
  */
-class MailService implements ServiceLocatorAwareInterface
+class MailService extends AbstractService
 {
-    use ServiceLocatorAwareTrait;
+    protected $config;
 
     /**
      * Send
@@ -26,7 +24,7 @@ class MailService implements ServiceLocatorAwareInterface
     public function send($email, $subject, $message)
     {
 
-        $config = $this->getServiceLocator()->get('Config');
+        $config = $this->get('config');
 
         $html = new Part($message);
         $html->type = "text/html";

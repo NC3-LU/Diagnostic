@@ -7,14 +7,13 @@
  * @license   http://framework.zend.com/license/new-bsd New BSD License
  */
 
-namespace Diagnostic\Controller;
+namespace Diagnostic\Service;
 
 use Zend\ServiceManager\FactoryInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
 
-abstract class AbstractControllerFactory implements FactoryInterface
+abstract class AbstractServiceFactory implements FactoryInterface
 {
-    protected $forms = [];
     protected $resources = [];
 
     /**
@@ -25,15 +24,12 @@ abstract class AbstractControllerFactory implements FactoryInterface
         $class = substr(get_class($this), 0, -7);
 
         if (class_exists($class)) {
-            $controller = new $class();
+            $service = new $class();
             foreach($this->resources as $key => $resource) {
-                $controller->set($key, $serviceLocator->getServiceLocator()->get($resource));
-            }
-            foreach ($this->forms as $form) {
-                $controller->set($form . 'Form', $serviceLocator->getServiceLocator()->get('formElementManager')->get(ucfirst($form) . 'Form'));
+                $service->set($key, $serviceLocator->get($resource));
             }
 
-            return $controller;
+            return $service;
         } else {
             return false;
         }

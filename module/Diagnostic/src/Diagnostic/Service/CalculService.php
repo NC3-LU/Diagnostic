@@ -1,8 +1,6 @@
 <?php
 namespace Diagnostic\Service;
 
-use Zend\ServiceManager\ServiceLocatorAwareInterface;
-use Zend\ServiceManager\ServiceLocatorAwareTrait;
 use Zend\Session\Container;
 
 /**
@@ -11,15 +9,15 @@ use Zend\Session\Container;
  * @package Diagnostic\Service
  * @author Jerome De Almeida <jerome.dealmeida@vesperiagroup.com>
  */
-class CalculService implements ServiceLocatorAwareInterface
+class CalculService extends AbstractService
 {
-    use ServiceLocatorAwareTrait;
+
+    protected $questionService;
 
     public function calcul()
     {
-
         //retrieve questions
-        $questionService = $this->getServiceLocator()->get('Diagnostic\Service\QuestionService');
+        $questionService = $this->get('questionService');
         $questions = $questionService->getQuestions();
 
         //retrieve results and questions

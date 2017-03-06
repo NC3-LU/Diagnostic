@@ -55,11 +55,6 @@ return [
             'Diagnostic\Model\QuestionEntity' => 'Diagnostic\Model\QuestionEntity',
             'Diagnostic\Model\UserEntity' => 'Diagnostic\Model\UserEntity',
             'Diagnostic\Model\UserTokenEntity' => 'Diagnostic\Model\UserTokenEntity',
-            'Diagnostic\Service\CalculService' => 'Diagnostic\Service\CalculService',
-            'Diagnostic\Service\MailService' => 'Diagnostic\Service\MailService',
-            'Diagnostic\Service\QuestionService' => 'Diagnostic\Service\QuestionService',
-            'Diagnostic\Service\UserService' => 'Diagnostic\Service\UserService',
-            'Diagnostic\Service\UserTokenService' => 'Diagnostic\Service\UserTokenService',
             'Diagnostic\Service\Mime\Part' => 'Zend\Mime\Part',
             'Diagnostic\Service\Mime\Message' => 'Zend\Mime\Message',
             'Diagnostic\Service\Mail\Message' => 'Zend\Mail\Message',
@@ -73,6 +68,11 @@ return [
         'factories' => [
             'translator' => 'Zend\Mvc\Service\TranslatorServiceFactory',
             'navigation' => 'Zend\Navigation\Service\DefaultNavigationFactory',
+            'Diagnostic\Service\QuestionService' => 'Diagnostic\Service\QuestionServiceFactory',
+            'Diagnostic\Service\CalculService' => 'Diagnostic\Service\CalculServiceFactory',
+            'Diagnostic\Service\MailService' => 'Diagnostic\Service\MailServiceFactory',
+            'Diagnostic\Service\UserService' => 'Diagnostic\Service\UserServiceFactory',
+            'Diagnostic\Service\UserTokenService' => 'Diagnostic\Service\UserTokenServiceFactory',
         ],
         'shared' => [
             'Diagnostic\Model\QuestionEntity' => false,
