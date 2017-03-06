@@ -23,6 +23,49 @@ use Zend\View\Model\ViewModel;
 
 class IndexController extends AbstractActionController
 {
+    protected $dbAdapter;
+    protected $translator;
+    protected $config;
+    protected $uploadForm;
+    protected $loginForm;
+    protected $questionForm;
+    protected $informationForm;
+    protected $addQuestionForm;
+    protected $passwordForgottenForm;
+    protected $newPasswordForm;
+    protected $linkDownloadForm;
+    protected $downloadForm;
+    protected $questionService;
+    protected $userService;
+    protected $userTokenService;
+    protected $mailService;
+    protected $calculService;
+    protected $diagnosticEntity;
+    protected $informationEntity;
+    protected $questionEntity;
+
+    /**
+     * Get
+     *
+     * @param $value
+     * @return mixed
+     */
+    public function get($value) {
+        return $this->$value;
+    }
+
+    /**
+     * Set
+     *
+     * @param $key
+     * @param $value
+     * @return $this
+     */
+    public function set($key, $value) {
+        $this->$key = $value;
+        return $this;
+    }
+
     /**
      * Index
      *
@@ -31,11 +74,11 @@ class IndexController extends AbstractActionController
     public function indexAction()
     {
         //form
-        $formUpload = $this->getServiceLocator()->get('formElementManager')->get('UploadForm');
-        $formLogin = $this->getServiceLocator()->get('formElementManager')->get('LoginForm');
+        $formUpload = $this->get('uploadForm');
+        $formLogin = $this->get('loginForm');
 
         //input filter
-        $loginFormFilter = new LoginFormFilter($this->getServiceLocator()->get('Zend\Db\Adapter\Adapter'));
+        $loginFormFilter = new LoginFormFilter($this->get('dbAdapter'));
         $formLogin->setInputFilter($loginFormFilter);
 
         $message = '';
@@ -58,7 +101,7 @@ class IndexController extends AbstractActionController
                     //load json
                     if ($data["file"]["tmp_name"]) {
 
-                        $questionService = $this->getServiceLocator()->get('Diagnostic\Service\QuestionService');
+                        $questionService = $this->get('questionService');
                         $successUpload = $questionService->loadJson(file_get_contents($data["file"]["tmp_name"], true));
 
                         if ($successUpload) {
@@ -78,7 +121,7 @@ class IndexController extends AbstractActionController
 
                     $formData = $formLogin->getData();
 
-                    $userService = $this->getServiceLocator()->get('Diagnostic\Service\UserService');
+                    $userService = $this->get('userService');
                     $user = $userService->getUserByEmail($formData['email']);
 
                     if (count($user)) {
@@ -143,10 +186,10 @@ class IndexController extends AbstractActionController
     public function passwordForgottenAction()
     {
         //form
-        $form = $this->getServiceLocator()->get('formElementManager')->get('PasswordForgottenForm');
+        $form = $this->get('passwordForgottenForm');
 
         //input filter
-        $emailFilter = new PasswordForgottenFormFilter($this->getServiceLocator()->get('Zend\Db\Adapter\Adapter'));
+        $emailFilter = new PasswordForgottenFormFilter($this->get('dbAdapter'));
         $form->setInputFilter($emailFilter);
 
         $view = new ViewModel([
@@ -161,18 +204,18 @@ class IndexController extends AbstractActionController
                 $formData = $form->getData();
 
                 //retrieve user
-                $userService = $this->getServiceLocator()->get('Diagnostic\Service\UserService');
+                $userService = $this->get('userService');
                 $user = $userService->getUserByEmail($formData['email']);
 
                 if (count($user)) {
 
-                    $userTokenService = $this->getServiceLocator()->get('Diagnostic\Service\UserTokenService');
+                    $userTokenService = $this->get('userTokenService');
                     $userTokenEntity = $userTokenService->saveEntity($formData['email']);
 
                     $token = $userTokenEntity->getToken();
 
                     //translator
-                    $translator = $this->getServiceLocator()->get('translator');
+                    $translator = $this->get('translator');
 
                     // Determine HTTP/HTTPS proto, and HTTP_HOST
                     if (isset($_SERVER['X_FORWARDED_PROTO'])) {
@@ -257,7 +300,7 @@ class IndexController extends AbstractActionController
                         <p><strong>Cases</strong></p>';
 
                     //send mail
-                    $mailService = $this->getServiceLocator()->get('Diagnostic\Service\MailService');
+                    $mailService = $this->get('mailService');
                     $mailService->send($formData['email'], $translator->translate('__mail_password_forgotten_subject'), $content);
 
                     //redirect
@@ -283,7 +326,7 @@ class IndexController extends AbstractActionController
 
         //retrieve token
         $token = $this->getRequest()->getQuery('token');
-        $userTokenService = $this->getServiceLocator()->get('Diagnostic\Service\UserTokenService');
+        $userTokenService = $this->get('userTokenService');
         $userTokenEntity = $userTokenService->getByToken($token);
 
         $validToken = false;
@@ -296,10 +339,10 @@ class IndexController extends AbstractActionController
         if ($validToken) {
 
             //form
-            $form = $this->getServiceLocator()->get('formElementManager')->get('NewPasswordForm');
+            $form = $this->get('newPasswordForm');
 
             //input filter
-            $newPasswordFormFilter = new NewPasswordFormFilter($this->getServiceLocator()->get('Zend\Db\Adapter\Adapter'));
+            $newPasswordFormFilter = new NewPasswordFormFilter($this->get('dbAdapter'));
             $form->setInputFilter($newPasswordFormFilter);
 
             //form is post and valid
@@ -311,7 +354,7 @@ class IndexController extends AbstractActionController
                     $formData = $form->getData();
 
                     //change password
-                    $userService = $this->getServiceLocator()->get('Diagnostic\Service\UserService');
+                    $userService = $this->get('userService');
                     $userService->updatePassword($userToken->getUserEmail(), $formData['password']);
 
                     //delete token
@@ -362,7 +405,7 @@ class IndexController extends AbstractActionController
         $container->lastQuestion = $id;
 
         //retrieve questions
-        $questionService = $this->getServiceLocator()->get('Diagnostic\Service\QuestionService');
+        $questionService = $this->get('questionService');
         $questions = $questionService->getQuestions();
 
         if (!array_key_exists($id, $questions)) {
@@ -394,8 +437,8 @@ class IndexController extends AbstractActionController
         $information = ($container->offsetExists('information')) ? $container->information : ['organization' => '', 'synthesis' => ''];
 
         //form
-        $form = $this->getServiceLocator()->get('formElementManager')->get('QuestionForm');
-        $formUpload = $this->getServiceLocator()->get('formElementManager')->get('UploadForm');
+        $form = $this->get('questionForm');
+        $formUpload = $this->get('uploadForm');
 
         //form is post and valid
         $request = $this->getRequest();
@@ -423,7 +466,7 @@ class IndexController extends AbstractActionController
         }
 
         //populate
-        $diagnosticEntity = $this->getServiceLocator()->get('Diagnostic\Model\DiagnosticEntity');
+        $diagnosticEntity = $this->get('diagnosticEntity');
         $binding = (array_key_exists($id, $result)) ? $result[$id] : ['maturity' => 3, 'maturityTarget' => 3, 'gravity' => 2];
         $diagnosticEntity->exchangeArray($binding);
         $form->bind($diagnosticEntity);
@@ -453,7 +496,7 @@ class IndexController extends AbstractActionController
         }
 
         //retrieve questions
-        $questionService = $this->getServiceLocator()->get('Diagnostic\Service\QuestionService');
+        $questionService = $this->get('questionService');
         $questions = $questionService->getQuestions();
 
         //retrieve categories
@@ -468,8 +511,8 @@ class IndexController extends AbstractActionController
         $information = ($container->offsetExists('information')) ? $container->information : ['organization' => '', 'synthesis' => ''];
 
         //form
-        $form = $this->getServiceLocator()->get('formElementManager')->get('InformationForm');
-        $formUpload = $this->getServiceLocator()->get('formElementManager')->get('UploadForm');
+        $form = $this->get('informationForm');
+        $formUpload = $this->get('uploadForm');
 
         $type = $this->getEvent()->getRouteMatch()->getParam('id');
         $informationKey = ($type == 2) ? 'synthesis' : 'organization';
@@ -493,7 +536,7 @@ class IndexController extends AbstractActionController
                     //load json
                     if ($data["file"]["tmp_name"]) {
 
-                        $questionService = $this->getServiceLocator()->get('Diagnostic\Service\QuestionService');
+                        $questionService = $this->get('questionService');
                         $successUpload = $questionService->loadJson(file_get_contents($data["file"]["tmp_name"], true));
 
                         if ($successUpload) {
@@ -543,7 +586,7 @@ class IndexController extends AbstractActionController
         }
 
         //populate
-        $informationEntity = $this->getServiceLocator()->get('Diagnostic\Model\InformationEntity');
+        $informationEntity = $this->get('informationEntity');
         $binding = (array_key_exists($informationKey, $information)) ? ['information' => $information[$informationKey]] : [];
         $informationEntity->exchangeArray($binding);
         $form->bind($informationEntity);
@@ -577,10 +620,10 @@ class IndexController extends AbstractActionController
         }
 
         //form
-        $form = $this->getServiceLocator()->get('formElementManager')->get('AddQuestionForm');
+        $form = $this->get('addQuestionForm');
 
         //input filter
-        $addQuestionFormFilter = new AddQuestionFormFilter($this->getServiceLocator()->get('Zend\Db\Adapter\Adapter'));
+        $addQuestionFormFilter = new AddQuestionFormFilter($this->get('dbAdapter'));
         $form->setInputFilter($addQuestionFormFilter);
 
         //form is post and valid
@@ -592,7 +635,7 @@ class IndexController extends AbstractActionController
                 $formData = $form->getData();
 
                 //retrieve questions
-                $questionService = $this->getServiceLocator()->get('Diagnostic\Service\QuestionService');
+                $questionService = $this->get('questionService');
                 $questions = $questionService->getQuestions();
                 $lastId = 0;
                 foreach ($questions as $question) {
@@ -609,7 +652,7 @@ class IndexController extends AbstractActionController
 
                 //new question
                 $newId = $lastId + 1;
-                $questionEntity = $this->getServiceLocator()->get('Diagnostic\Model\QuestionEntity');
+                $questionEntity = $this->get('questionEntity');
                 $questionEntity->exchangeArray([
                     'id' => (string)$newId,
                     'category_id' => $categoryId,
@@ -649,7 +692,7 @@ class IndexController extends AbstractActionController
         }
 
         //retrieve questions
-        $questionService = $this->getServiceLocator()->get('Diagnostic\Service\QuestionService');
+        $questionService = $this->get('questionService');
         $questions = $questionService->getQuestions();
 
         //retrieve result
@@ -710,7 +753,7 @@ class IndexController extends AbstractActionController
         $information = ($container->offsetExists('information')) ? $container->information : [];
 
         //retrieve questions
-        $questionService = $this->getServiceLocator()->get('Diagnostic\Service\QuestionService');
+        $questionService = $this->get('questionService');
         $questions = $questionService->getQuestions();
 
         //format result
@@ -722,7 +765,7 @@ class IndexController extends AbstractActionController
         $export = json_encode($export);
 
         //encryption key
-        $config = $this->getServiceLocator()->get('Config');
+        $config = $this->get('config');
         $encryptionKey = $config['encryption_key'];
 
 
@@ -763,18 +806,18 @@ class IndexController extends AbstractActionController
     {
 
         //form
-        $form = $this->getServiceLocator()->get('formElementManager')->get('LinkDownloadForm');
+        $form = $this->get('LinkDownloadForm');
 
         //retrieve results and questions
         $container = new Container('diagnostic');
         $results = ($container->offsetExists('result')) ? $container->result : [];
 
         //calcul
-        $calculService = $this->getServiceLocator()->get('Diagnostic\Service\CalculService');
+        $calculService = $this->get('calculService');
         $calculResults = $calculService->calcul();
 
         //retrieve questions
-        $questionService = $this->getServiceLocator()->get('Diagnostic\Service\QuestionService');
+        $questionService = $this->get('Diagnostic\Service\questionService');
         $questions = $questionService->getQuestions();
 
         //retrieve categories
@@ -790,7 +833,7 @@ class IndexController extends AbstractActionController
         }
 
         //translator
-        $translator = $this->getServiceLocator()->get('translator');
+        $translator = $this->get('translator');
 
         //categories repartition
         $categoriesColor = [
@@ -843,10 +886,10 @@ class IndexController extends AbstractActionController
     public function downloadAction()
     {
         //form
-        $form = $this->getServiceLocator()->get('formElementManager')->get('DownloadForm');
+        $form = $this->get('DownloadForm');
 
         //input filter
-        $downloadFilter = new DownloadFormFilter($this->getServiceLocator()->get('Zend\Db\Adapter\Adapter'));
+        $downloadFilter = new DownloadFormFilter($this->get('dbAdapter'));
         $form->setInputFilter($downloadFilter);
 
         //retrieve information
@@ -883,12 +926,12 @@ class IndexController extends AbstractActionController
                     unset($data['submit']);
 
                     //retrieve questions
-                    $questionService = $this->getServiceLocator()->get('Diagnostic\Service\QuestionService');
+                    $questionService = $this->get('questionService');
                     $questions = $questionService->getQuestions();
 
-                    $translator = $this->getServiceLocator()->get('translator');
+                    $translator = $this->get('translator');
 
-                    $calculService = $this->getServiceLocator()->get('Diagnostic\Service\CalculService');
+                    $calculService = $this->get('calculService');
                     $calculResults = $calculService->calcul();
 
                     $word = new TemplateProcessorService('data/resources/modele_v1.4.docx');

@@ -12,7 +12,10 @@ namespace Diagnostic;
 return [
     'controllers' => [
         'invokables' => [
-            'Diagnostic\Controller\Index' => 'Diagnostic\Controller\IndexController',
+            //'Diagnostic\Controller\Index' => 'Diagnostic\Controller\IndexController',
+        ],
+        'factories' => [
+            'Diagnostic\Controller\Index' => 'Diagnostic\Controller\IndexControllerFactory',
         ],
     ],
 
