@@ -94,7 +94,7 @@ class QuestionService extends AbstractService
     public function loadJson($json)
     {
         //encryption key
-        $config = $this->get('Config');
+        $config = $this->get('config');
         $encryptionKey = $config['encryption_key'];
 
         //encrypt result
