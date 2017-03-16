@@ -797,7 +797,7 @@ class IndexController extends AbstractController
     public function rapportAction()
     {
         //form
-        $form = $this->get('LinkDownloadForm');
+        $form = $this->get('linkDownloadForm');
 
         //retrieve results and questions
         $container = new Container('diagnostic');
@@ -810,7 +810,7 @@ class IndexController extends AbstractController
 
         //retrieve questions
         /** @var QuestionService $questionService */
-        $questionService = $this->get('Diagnostic\Service\questionService');
+        $questionService = $this->get('questionService');
         $questions = $questionService->getQuestions();
 
         //retrieve categories
