@@ -878,7 +878,7 @@ class IndexController extends AbstractController
     public function downloadAction()
     {
         //form
-        $form = $this->get('DownloadForm');
+        $form = $this->get('downloadForm');
 
         //input filter
         $downloadFilter = new DownloadFormFilter($this->get('dbAdapter'));
