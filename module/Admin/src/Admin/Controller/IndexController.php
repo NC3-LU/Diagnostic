@@ -47,7 +47,7 @@ class IndexController extends AbstractController
         ];
 
         if (!is_null($id)) {
-            $form = $this-->get('userForm');
+            $form = $this->get('userForm');
 
             $userFormFilter = new UserFormFilter($this->get('dbAdapter'));
             $form->setInputFilter($userFormFilter);
