@@ -2,13 +2,13 @@
 
 Votre organisation traite quotidiennement des données sensibles. En tant que responsable, vous avez des obligations spécifiques quant aux mesures de sécurité comportementales, organisationnelles et techniques à mettre en place pour la protection de ces données. En outre, ces mesures doivent répondre aux principes fondamentaux que sont la nécessité et la proportionnalité.
 
-Identifier les actions nécessaires et définir le niveau d’eficacité pour chacune d’elles est une tâche hautement complexe. Le Diagnostic CASES vous accompagne dans cette démarche.
+Identifier les actions nécessaires et définir le niveau d’efficacité pour chacune d’elles est une tâche hautement complexe. Le Diagnostic CASES vous accompagne dans cette démarche.
 
 ## COMMENT ?
-Grâce à un questionnaire dédié, cet oputil vous aide à :
-• identifier les vulnérabilités,
-• évaluere le niveau de sécurité des systèmes d’information,
-• émettre des recommandations.
+Grâce à un questionnaire dédié, cet outil vous aide à :
++ identifier les vulnérabilités,
++ évaluer le niveau de sécurité des systèmes d’information,
++ émettre des recommandations.
  
 
 
