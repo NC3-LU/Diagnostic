@@ -1,7 +1,9 @@
 Diagnostic - Cases
 
-Copyright (c) 2016, Jérôme De Almeida - Vesperia Group
-Copyright (c) 2016, securitymadein.lu - Smile GIE
+Copyright (c) 2017, Benjamin Joly, Yacine Khamis, Jerome Lombardi, Fabien Mathey, Juan Rocha, securitymadein.lu - Smile GIE
+Copyright (c) 2017, Jérôme De Almeida - Vesperia Group
+
+Support contribution by Matthieu Farcot & Thierry Petitgenet, securitymadein.lu - Smile GIE
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU Affero General Public License as
