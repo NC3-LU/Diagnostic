@@ -1,14 +1,25 @@
+# EN Intro: The CASES Diagnostic: your security check-up
+
+Your organisation processes sensitive data every day. As a manager, you have an obligation to establish specific security procedures (behavioural, organisational and technical) to protect this data. Moreover, these procedures must address the fundamental principles of necessity and proportionality.
+Identifying the best measures and defining the level of effectiveness required for each measure is a highly complex task. The CASES Diagnostic supports you in this process.
+
+HOW?
+Using the dedicated questionnaire, this tool will help you :
++ Identify vulnerabilities.
++ Evaluate the security level of information systems.
++ Issue recommendations.
+
 # FR Intro: Le Diagnostic CASES : votre check-up sécurité
 
 Votre organisation traite quotidiennement des données sensibles. En tant que responsable, vous avez des obligations spécifiques quant aux mesures de sécurité comportementales, organisationnelles et techniques à mettre en place pour la protection de ces données. En outre, ces mesures doivent répondre aux principes fondamentaux que sont la nécessité et la proportionnalité.
 
-Identifier les actions nécessaires et définir le niveau d’eficacité pour chacune d’elles est une tâche hautement complexe. Le Diagnostic CASES vous accompagne dans cette démarche.
+Identifier les actions nécessaires et définir le niveau d’efficacité pour chacune d’elles est une tâche hautement complexe. Le Diagnostic CASES vous accompagne dans cette démarche.
 
 ## COMMENT ?
-Grâce à un questionnaire dédié, cet oputil vous aide à :
-• identifier les vulnérabilités,
-• évaluere le niveau de sécurité des systèmes d’information,
-• émettre des recommandations.
+Grâce à un questionnaire dédié, cet outil vous aide à :
++ identifier les vulnérabilités,
++ évaluer le niveau de sécurité des systèmes d’information,
++ émettre des recommandations.
  
 
 
