@@ -162,23 +162,23 @@ Just below the first tab, you will find the current maturity level and the targe
 
 And you will also find the proportion of the category on the whole Diagnostic. 
 
-![Proportion category](img/UG_Diagnostic_024.PNG)
 
 If everything seems okay, you just need to get it on a .doc, and for that, click on the yellow button ‘Download deliverable.’ 
-
-![Download deliverable](img/UG_Diagnostic_025.PNG)
-
 You will need to put a Document Name, the company which concerned by the Diagnostic, the version of the document \(If there are multiple Diagnostics, or if you want to correct it…\), a choice if it’s a draft or a final version of the Diagnostic, the classification of the document \(who can read it or have it, it’s a free text, so it can be chosen with TLP, or a classification on your own\), and finally the name of the consultant and the name of the client. Most of that data will be found on the document. 
 The document will be named \[Document Name\]\_Date.docx.
 
-![Report Downloaded](img/UG_Diagnostic_026.PNG)
+![Proportion category](img/UG_Diagnostic_024.PNG)
 
 In the document, you can find on the Part 1.1 the free text in ‘Information about organisation’ and on 2.1 the free text in ‘Summary of evaluation’.
 
-![Report Downloaded Part 2](img/UG_Diagnostic_027.PNG)
+![Report Downloaded](img/UG_Diagnostic_025.PNG)
+
+
 
 Graphics and tabs which were on the report screen could mostly be found on in the document. 
 
-![Report Downloaded Part 3](img/UG_Diagnostic_028.PNG)
+![Report Downloaded Part 3](img/UG_Diagnostic_26.PNG)
 
 There is also a tab which contains the questions, the note taken, the recommendation and the current and target maturity. 
+
+![Report Downloaded Part 2](img/UG_Diagnostic_027.PNG)
