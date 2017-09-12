@@ -1,6 +1,6 @@
 Script Diagnostic Cases Install
 
-Copyright (c) 2017, Yacine Khamis - Université de Lorraine
+Copyright (c) 2017, Yacine Khamis - UniversitÃ© de Lorraine
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU Affero General Public License as
@@ -19,7 +19,7 @@ GNU AFFERO GENERAL PUBLIC LICENSE
 
 Version 3, 19 November 2007
 
-Copyright © 2007 Free Software Foundation, Inc. <http://fsf.org/>
+Copyright Â© 2007 Free Software Foundation, Inc. <http://fsf.org/>
 Everyone is permitted to copy and distribute verbatim copies of this license document, but changing it is not allowed.
 
 Preamble
