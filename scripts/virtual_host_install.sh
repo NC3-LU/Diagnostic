@@ -10,21 +10,20 @@ function main(){
     echo -e "\033[93m#                                                                             #"
     echo -e "\033[93m###############################################################################"
     readonly path=$(pwd)
-#    echo ""
-#    read -p "Choose the address to which you will find the application in your browser > " server_name
-#    echo ""
-#    echo -e "\033[94mThe application will be accessed by typing \033[92mhttp://$server_name\033[0m in your browser"
+    echo ""
+    read -p "Choose the address to which you will find the application in your browser > " server_name
+    echo ""
+    echo -e "\033[94mThe application will be accessed by typing \033[92mhttp://$server_name\033[0m in your browser"
 
     declare -A virtual_host_configurationArray
     virtual_host_configurationArray=(
-#        ["%%SERVER_NAME%%"]=$server_name
+        ["%%SERVER_NAME%%"]=$server_name
         ["%%ROOT_DIRECTORY%%"]="$path/public"
     )
 
     echo -e "\033[94m $(pwd)\033[93mis now set as the root directory for the newly created virtual host\033[0m"
 
-#    sudo cp ../$applicationDir/scripts/virtual_host.conf /etc/apache2/sites-available/$server_name.conf
-	sudo cp ../$applicationDir/scripts/virtual_host.conf /etc/apache2/sites-available/diagnostic.conf
+    sudo cp ../$applicationDir/scripts/virtual_host.conf /etc/apache2/sites-available/$server_name.conf
 
     virtual_host_configure() {
         # Loop the config array
@@ -32,20 +31,17 @@ function main(){
         do
             search=$i
             replace=${virtual_host_configurationArray[$i]}
-            #sudo sed -i "s@${search}@${replace}@g" /etc/apache2/sites-available/$server_name.conf
-			sudo sed -i "s@${search}@${replace}@g" /etc/apache2/sites-available/diagnostic.conf
+            sudo sed -i "s@${search}@${replace}@g" /etc/apache2/sites-available/$server_name.conf
         done
     }
     virtual_host_configure
 
     echo -e "\033[32m###############################################################################"
-#    echo -e "\033[32m /etc/apache2/sites-available/$server_name.conf edited"
-    echo -e "\033[32m /etc/apache2/sites-available/diagnostic.conf edited"
+    echo -e "\033[32m /etc/apache2/sites-available/$server_name.conf edited"
     echo -e "\033[32m###############################################################################"
     echo ""
     echo ""
-#    sudo sed -i "1s/^/127.0.0.1       $server_name\n/" /etc/hosts
-    sudo sed -i "1s/^/127.0.0.1       diagnostic\n/" /etc/hosts
+    sudo sed -i "1s/^/127.0.0.1       $server_name\n/" /etc/hosts
 
     echo -e "\033[32m###############################################################################"
     echo -e "\033[32m/etc/hosts edited"
@@ -63,8 +59,7 @@ function main(){
             ;;
     esac
 
-#    sudo a2ensite $server_name.conf
-	sudo a2ensite diagnostic.conf
+    sudo a2ensite $server_name.conf
     export server_name
 
     echo -e "\033[93m###############################################################################"
