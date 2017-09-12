@@ -62,7 +62,6 @@ function main(){
     echo -e "\033[94m"
     read -s -p "A specific database user for the diagnostic application will be created. Choose the password for this user >" dbuser_password
     echo -e "\033[0m"
-	mysql -u root -p"$password" -e "DROP USER IF EXISTS 'diagnostic'@'localhost'"
     mysql -u root -p"$password" -e "CREATE USER 'diagnostic'@'localhost' IDENTIFIED BY '$dbuser_password'"
     mysql -u root -p"$password" -e "GRANT SELECT, UPDATE, INSERT, DELETE, EXECUTE on diagnostic.* to 'diagnostic'@'localhost'"
 
