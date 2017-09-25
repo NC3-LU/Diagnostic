@@ -125,3 +125,12 @@ user:password )
 You are good to go after seeing that screen :
 
 imgInstallSuccessful
+
+Diagnostic - Cases
+==================
+
+Copyright (c) 2017, Benjamin Joly, Jerome Lombardi, Fabien Mathey, Juan Rocha - securitymadein.lu - Smile GIE
+Copyright (c) 2017, Yacine Khamis - Université de Lorraine
+Copyright (c) 2017, Jérôme De Almeida - Vesperia Group
+
+Licensed under Affero GNU GPL v3 - see license.txt for more information
