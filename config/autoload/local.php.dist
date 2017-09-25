@@ -13,8 +13,8 @@
 
 return [
     'db' => [
-        'username' => '********',
-        'password' => '********',
+        'username' => '%%DB_USER%%',
+        'password' => '%%DB_PASSWORD%%',
     ],
     'encryption_key' => '*****',
     'mail' => 'info@cases.lu',

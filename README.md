@@ -1,153 +1,138 @@
-# EN Intro: The CASES Diagnostic: your security check-up
-
-Your organisation processes sensitive data every day. As a manager, you have an obligation to establish specific security procedures (behavioural, organisational and technical) to protect this data. Moreover, these procedures must address the fundamental principles of necessity and proportionality.
-Identifying the best measures and defining the level of effectiveness required for each measure is a highly complex task. The CASES Diagnostic supports you in this process.
-
-HOW?
-Using the dedicated questionnaire, this tool will help you :
-+ Identify vulnerabilities.
-+ Evaluate the security level of information systems.
-+ Issue recommendations.
-
-# FR Intro: Le Diagnostic CASES : votre check-up sécurité
-
-Votre organisation traite quotidiennement des données sensibles. En tant que responsable, vous avez des obligations spécifiques quant aux mesures de sécurité comportementales, organisationnelles et techniques à mettre en place pour la protection de ces données. En outre, ces mesures doivent répondre aux principes fondamentaux que sont la nécessité et la proportionnalité.
-
-Identifier les actions nécessaires et définir le niveau d’efficacité pour chacune d’elles est une tâche hautement complexe. Le Diagnostic CASES vous accompagne dans cette démarche.
-
-## COMMENT ?
-Grâce à un questionnaire dédié, cet outil vous aide à :
-+ identifier les vulnérabilités,
-+ évaluer le niveau de sécurité des systèmes d’information,
-+ émettre des recommandations.
- 
-
-
-
-ZendSkeletonApplication
-=======================
+Diagnostic quick start guide
+============================
 
 Introduction
 ------------
-This is a simple, skeleton application using the ZF2 MVC layer and module
-systems. This application is meant to be used as a starting place for those
-looking to get their feet wet with ZF2.
 
-Installation using Composer
----------------------------
+Your organization processes sensitive data every day. As a manager, you
+have an obligation to establish specific security procedures
+(behavioral, organizational and technical) to protect this data.
+Moreover, these procedures must address the fundamental principles of
+necessity and proportionality. Identifying the best measures and
+defining the level of effectiveness required for each measure is a
+highly complex task. The CASES Diagnostic supports you in this process.
 
-The easiest way to create a new ZF2 project is to use [Composer](https://getcomposer.org/). If you don't have it already installed, then please install as per the [documentation](https://getcomposer.org/doc/00-intro.md).
+**HOW?**  
+Using the dedicated questionnaire, this tool will help you :
 
++ Identify vulnerabilities
++ Evaluate the security level of information systems
++ Issue recommendations
 
-Create your new ZF2 project:
+### Other documents
 
-    composer create-project -n -sdev zendframework/skeleton-application path/to/install
+Here would you find further Diagnostic related documentation :
+* [**Technical guide**](documentation/technicalguide): Components installation walkthrough and troubleshoot section
+* [**User guide**](documentation/userguide): Complete Diagnostic available functionalities documentation
 
+Quick start
+-----------
 
+-   Download [**VM\_Diagnostic.ova**](ovaFile) ready-to-use virtual machine file which can be imported directly into a virtualization tool
 
-### Installation using a tarball with a local Composer
+-   Make use of the **installation scripts** provided in the [**Diagnostic repository**](repoLink)
 
-If you don't have composer installed globally then another way to create a new ZF2 project is to download the tarball and install it:
+### Using the Virtual Machine
 
-1. Download the [tarball](https://github.com/zendframework/ZendSkeletonApplication/tarball/master), extract it and then install the dependencies with a locally installed Composer:
+The aforementioned virtual machine has already been setup and
+provisioned with all application component in an Ubuntu Server 17.04
+environment.
 
-        cd my/project/dir
-        curl -#L https://github.com/zendframework/ZendSkeletonApplication/tarball/master | tar xz --strip-components=1
-    
+You can then import **VM\_Diagnostic.ova** file in a virtualization tool
+which in our case will be VirtualBox.
 
-2. Download composer into your project directory and install the dependencies:
+#### Virtual machine import
 
-        curl -s https://getcomposer.org/installer | php
-        php composer.phar install
+**( File → Import Appliance )**
 
-If you don't have access to curl, then install Composer into your project as per the [documentation](https://getcomposer.org/doc/00-intro.md).
+![QS01\_import.PNG](documentation/quickstart/images/QS01_import.PNG)
 
-Web server setup
-----------------
+![QS02.PNG](documentation/quickstart/images/QS02.PNG)
 
-### PHP CLI server
+![QS03.PNG](documentation/quickstart/images/QS03.PNG)
 
-The simplest way to get started if you are using PHP 5.4 or above is to start the internal PHP cli-server in the root
-directory:
+![QS04.PNG](documentation/quickstart/images/QS04.PNG)
 
-    php -S 0.0.0.0:8080 -t public/ public/index.php
+#### VirtualBox configuration
 
-This will start the cli-server on port 8080, and bind it to all network
-interfaces.
+When successfully imported the virtual machine, you now need to setup a
+Host Only Network Adapter for it in VirtualBox
 
-**Note:** The built-in CLI server is *for development only*.
+**( File → Preferences → Network )**
 
-### Vagrant server
+![QS061.PNG](documentation/quickstart/images/QS061.PNG)
 
-This project supports a basic [Vagrant](http://docs.vagrantup.com/v2/getting-started/index.html) configuration with an inline shell provisioner to run the Skeleton Application in a [VirtualBox](https://www.virtualbox.org/wiki/Downloads).
+And configure it like the following
 
-1. Run vagrant up command
+![QS07.PNG](documentation/quickstart/images/QS07.PNG)
 
-    vagrant up
+![QS08.PNG](documentation/quickstart/images/QS08.PNG)
 
-2. Visit [http://localhost:8085](http://localhost:8085) in your browser
+Click OK and you should see it in the list
 
-Look in [Vagrantfile](Vagrantfile) for configuration details.
+![QS06.PNG](documentation/quickstart/images/QS06.PNG)
 
-### Apache setup
+Then you have to tell VirtualBox that the machine you just imported have
+to use the Host Only Network Adapter
 
-To setup apache, setup a virtual host to point to the public/ directory of the
-project and you should be ready to go! It should look something like below:
+![QS09.PNG](documentation/quickstart/images/QS09.PNG)
 
-    <VirtualHost *:80>
-        ServerName zf2-app.localhost
-        DocumentRoot /path/to/zf2-app/public
-        <Directory /path/to/zf2-app/public>
-            DirectoryIndex index.php
-            AllowOverride All
-            Order allow,deny
-            Allow from all
-            <IfModule mod_authz_core.c>
-            Require all granted
-            </IfModule>
-        </Directory>
-    </VirtualHost>
+Go to Network tab
 
-### Nginx setup
+![QS10.PNG](documentation/quickstart/images/QS10.PNG)
 
-To setup nginx, open your `/path/to/nginx/nginx.conf` and add an
-[include directive](http://nginx.org/en/docs/ngx_core_module.html#include) below
-into `http` block if it does not already exist:
+And select Adapter 2 and fill like the following
 
-    http {
-        # ...
-        include sites-enabled/*.conf;
-    }
+![QS11.PNG](documentation/quickstart/images/QS11.PNG)
 
+Make sure everything is correctly set
 
-Create a virtual host configuration file for your project under `/path/to/nginx/sites-enabled/zf2-app.localhost.conf`
-it should look something like below:
+![QS05.PNG](documentation/quickstart/images/QS05.PNG)
 
-    server {
-        listen       80;
-        server_name  zf2-app.localhost;
-        root         /path/to/zf2-app/public;
+And run the virtual machine. You know you are good to go when seeing
+that screen:
 
-        location / {
-            index index.php;
-            try_files $uri $uri/ @php;
-        }
+![QS12.PNG](documentation/quickstart/images/QS12.PNG)
 
-        location @php {
-            # Pass the PHP requests to FastCGI server (php-fpm) on 127.0.0.1:9000
-            fastcgi_pass   127.0.0.1:9000;
-            fastcgi_param  SCRIPT_FILENAME /path/to/zf2-app/public/index.php;
-            include fastcgi_params;
-        }
-    }
+#### Access your Diagnostic application
 
-Restart the nginx, now you should be ready to go!
+Open your favorite browser and type in: <http://10.0.0.101>
 
+#### Default machine credentials
+
+* Diagnostic application: (<diagnostic@cases.lu>:Diagnostic1!)
+
+* Virtual machine user: (diagnostic:diagnostic)
+
+* Mysql root user: (root:GENERATEDPASSWORD)
+
+* Mysql diagnostic user: (diagnostic:GENERATEDPASSWORD)
+
+### Using the installation scripts
+
+In case you want to install the Diagnostic application on a Ubuntu or
+Debian distribution you may use the provided installation scripts.
+
+Simply run the following commands
+
+    git clone gitrepo.git
+    cd repository
+    ./install.sh
+
+Provide the script the information it needs when it asks (e.g mysql
+user:password )
+
+You are good to go after seeing that screen :
+
+imgInstallSuccessful
 
 Diagnostic - Cases
+==================
 
 Copyright (c) 2017, Benjamin Joly, Jerome Lombardi, Fabien Mathey, Juan Rocha - securitymadein.lu - Smile GIE
+
 Copyright (c) 2017, Yacine Khamis - Université de Lorraine
+
 Copyright (c) 2017, Jérôme De Almeida - Vesperia Group
 
 Licensed under Affero GNU GPL v3 - see license.txt for more information

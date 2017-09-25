@@ -1,0 +1,71 @@
+= Diagnostic quick start guide
+"security made in Lëtzebuerg" (SMILE) g.i.e.
+:Date: 2017-09-19
+:Revision:  0.1
+:description: Diagnotic Quick start
+:keywords: diagnostic,
+:doctype: article
+:compat-mode!:
+:page-layout!:
+:toc: left
+:toclevels: 2
+:sectanchors:
+:sectlinks:
+:sectnums:
+:linkattrs:
+:webfonts!:
+:icons: font
+:source-highlighter: coderay
+:source-language: asciidoc
+:experimental:
+:stem:
+:idprefix:
+:idseparator: -
+:ast: &ast;
+:endash: &#8211;
+:y: icon:check[role="green"]
+:n: icon:times[role="red"]
+:c: icon:file-text-o[role="blue"]
+:table-caption!:
+:example-caption!:
+:figure-caption!:
+:imagesdir: images
+:includedir: _includes
+:underscore: _
+:adp: AsciiDoc Python
+:adr: Asciidoctor
+
+== Diagnostic quick start guide
+
+=== Introduction
+
+Your organization processes sensitive data every day. As a manager, you have an obligation to establish specific security procedures (behavioral, organizational and technical) to protect this data. Moreover, these procedures must address the fundamental principles of necessity and proportionality.
+Identifying the best measures and defining the level of effectiveness required for each measure is a highly complex task. The CASES Diagnostic supports you in this process.
+
+HOW?
+Using the dedicated questionnaire, this tool will help you :
++ Identify vulnerabilities.
++ Evaluate the security level of information systems.
++ Issue recommendations.
+
+==== Other documents
+
+===============
+Here would you find further Diagnostic related documentation :
+* link:/tech-guide[*Technical guide*]: Components installation walkthrough and troubleshoot section
+* link:/user-guide[*User guide*]: Complete Diagnostic available functionalities documentation
+===============
+
+=== Quick start
+
+.To get started quickly you can either:
+* Download link:ovaFile[*VM_Diagnostic.ova*] ready-to-use virtual machine file which can be imported directly into a virtualization tool
+* Make use of the *installation scripts* provided in the link:repoLink[*Diagnostic repository*]
+
+==== Using the Virtual Machine
+
+include::{includedir}/virtual_machine.adoc[]
+
+==== Using the installation scripts
+
+include::{includedir}/installation_scripts.adoc[]

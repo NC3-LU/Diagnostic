@@ -36,9 +36,9 @@ class QuestionService extends AbstractService
     public function getQuestions()
     {
         $container = new Container('diagnostic');
-        /*if ($container->offsetExists('questions')) {
+        if ($container->offsetExists('questions')) {
             $questions = $container->questions;
-        } else {*/
+        } else {
             $questionsObject = $this->fetchAllWithCategories();
 
             $questions = [];
@@ -47,7 +47,7 @@ class QuestionService extends AbstractService
             }
 
             $container->questions = $questions;
-        //}
+        }
 
         $tmpArray = [];
         foreach ($questions as $question) {
@@ -120,11 +120,11 @@ class QuestionService extends AbstractService
 
         //questions
         $questions = [];
+		$questionEntity = $this->get('entity');
         if (array_key_exists('questions', $data)) {
             foreach ($data['questions'] as $key => $value) {
-                $questionEntity = $this->get('entity');
-                $questionEntity->exchangeArray($value);
-                $questions[$key] = $questionEntity;
+                $questions[$key] = new $questionEntity;
+				$questions[$key]->exchangeArray($value);
             }
         }
 
