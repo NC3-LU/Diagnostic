@@ -22,8 +22,8 @@ Using the dedicated questionnaire, this tool will help you :
 ### Other documents
 
 Here would you find further Diagnostic related documentation :
-* [**Technical guide**](/tech-guide): Components installation walkthrough and troubleshoot section
-* [**User guide**](/user-guide): Complete Diagnostic available functionalities documentation
+* [**Technical guide**](documentation/technicalguide): Components installation walkthrough and troubleshoot section
+* [**User guide**](documentation/userguide): Complete Diagnostic available functionalities documentation
 
 Quick start
 -----------
@@ -45,13 +45,13 @@ which in our case will be VirtualBox.
 
 **( File → Import Appliance )**
 
-![QS01\_import.PNG](images/QS01_import.PNG)
+![QS01\_import.PNG](documentation/quickstart/images/QS01_import.PNG)
 
-![QS02.PNG](images/QS02.PNG)
+![QS02.PNG](documentation/quickstart/images/QS02.PNG)
 
-![QS03.PNG](images/QS03.PNG)
+![QS03.PNG](documentation/quickstart/images/QS03.PNG)
 
-![QS04.PNG](images/QS04.PNG)
+![QS04.PNG](documentation/quickstart/images/QS04.PNG)
 
 #### VirtualBox configuration
 
@@ -60,39 +60,39 @@ Host Only Network Adapter for it in VirtualBox
 
 **( File → Preferences → Network )**
 
-![QS061.PNG](images/QS061.PNG)
+![QS061.PNG](documentation/quickstart/images/QS061.PNG)
 
 And configure it like the following
 
-![QS07.PNG](images/QS07.PNG)
+![QS07.PNG](documentation/quickstart/images/QS07.PNG)
 
-![QS08.PNG](images/QS08.PNG)
+![QS08.PNG](documentation/quickstart/images/QS08.PNG)
 
 Click OK and you should see it in the list
 
-![QS06.PNG](images/QS06.PNG)
+![QS06.PNG](documentation/quickstart/images/QS06.PNG)
 
 Then you have to tell VirtualBox that the machine you just imported have
 to use the Host Only Network Adapter
 
-![QS09.PNG](images/QS09.PNG)
+![QS09.PNG](documentation/quickstart/images/QS09.PNG)
 
 Go to Network tab
 
-![QS10.PNG](images/QS10.PNG)
+![QS10.PNG](documentation/quickstart/images/QS10.PNG)
 
 And select Adapter 2 and fill like the following
 
-![QS11.PNG](images/QS11.PNG)
+![QS11.PNG](documentation/quickstart/images/QS11.PNG)
 
 Make sure everything is correctly set
 
-![QS05.PNG](images/QS05.PNG)
+![QS05.PNG](documentation/quickstart/images/QS05.PNG)
 
 And run the virtual machine. You know you are good to go when seeing
 that screen:
 
-![QS12.PNG](images/QS12.PNG)
+![QS12.PNG](documentation/quickstart/images/QS12.PNG)
 
 #### Access your Diagnostic application
 
