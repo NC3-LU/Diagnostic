@@ -7,6 +7,6 @@ You can easily change your installation in the [diagnostic_installer.sh](scripts
 
 > WARNING
 >
-> If you try to launch the packer of the diagnostic.json without editing nothing, you should probably have an error while launching for the 
+> If you try to launch the packer of the [diagnostic.json](./diagnostic.json) without editing nothing, you should probably have an error while launching for the 
 > first time the VM. It is configure to have an Host-Only adapter called "YourHostOnlyAdapter". You should probably configure a new 
 > Host-Only adapter, with the help of the [quick-start guide](../README.md)
