@@ -13,7 +13,6 @@ function main() {
 
     echo -e "\033[93m###############################################################################"
     echo -e "\033[93m#                             Diagnostic installer                            #"
-    echo -e "\033[93m#                                                                             #"
     echo -e "\033[93m###############################################################################"
 
     # Getting current application directory name
@@ -21,12 +20,6 @@ function main() {
 
     # Getting current user and group id
     readonly user="$(whoami)"
-
-
-    if [ ! -d "../$applicationDir/data/img" ]; then
-      sudo mkdir ../$applicationDir/data/img
-      sudo chmod 770 ../$applicationDir/data/img/
-    fi
 
     # Quickly adding current user to www-data group
     sudo usermod -a -G www-data $user

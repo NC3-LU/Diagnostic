@@ -103,6 +103,8 @@ function main(){
     }
     local_configure
 
+    sudo sed -i "s/%%PASSWD%%/${dbuser_password}/g" ../$applicationDir/scripts/changePassword.sh
+
     echo -e "\033[32m###############################################################################"
     echo -e "\033[32mConfiguration files edited"
     echo -e "\033[32m###############################################################################"
