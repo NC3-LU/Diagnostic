@@ -4,15 +4,16 @@ PATH_TO_DIAGNOSTIC='/var/www/diagnostic'					#The path of the diagnostic in your
 GITHUB_LINK='https://github.com/CASES-LU/diagnostic.git'	#The Github path where you can find the diagnostic
 
 # Variables							
-DB_NAME='diagnostic' 								#The name of the Database
-DB_HOST='localhost'									#The IP Address where is located 
-DBUSER_DIAGNOSTIC='diagnostic'						#The DB user that will be used for the diagnostic
-DBPASSWORD_DIAGNOSTIC="$(openssl rand -hex 32)"		#The password of the user diagnostic of the DB; Random by default
-DBUSER_ADMIN='root'									#The administrator login of the DB
-DBPASSWORD_ADMIN="$(openssl rand -hex 32)"			#The password of the administrator of the DB; Random by default
-DEFAULT_LANGUAGE='en_EN'							#The default and main language of the diagnostic 
-IP_ADDRESS='10.0.0.102'								#The IP address where you will find the diagnostic
-DISABLE_MXCHECK=true								#If the VM is connected on internet (which is depreciate), it could check the validity of the mail used. If it set to false, no check are done.
+DB_NAME='diagnostic' 				#The name of the Database
+DB_HOST='localhost'				#The IP Address where is located 
+DBUSER_DIAGNOSTIC='diagnostic'			#The DB user that will be used for the diagnostic
+DBPASSWORD_DIAGNOSTIC="$(openssl rand -hex 32)"	#The password of the user diagnostic of the DB; Random by default
+DBUSER_ADMIN='root'				#The administrator login of the DB
+DBPASSWORD_ADMIN="$(openssl rand -hex 32)"	#The password of the administrator of the DB; Random by default
+DEFAULT_LANGUAGE='en_EN'			#The default and main language of the diagnostic 
+IP_ADDRESS='10.0.0.102'				#The IP address where you will find the diagnostic
+DISABLE_MXCHECK=true				#If the VM is connected on internet (which is depreciate),
+# it could check the validity of the mail used. If it set to true, no check are done.
 
 
 echo "\033[93m###############################################################################\\033[0m"
