@@ -30,11 +30,15 @@ password. Then, just click on the ‘Log in’ button.
 > If you are on the Virtual Machine, you will NOT have any mail server
 > installed by default. So you wont receive any mail unless you install
 > one. You can also use a script included in the virtual machine to
-> change manually a password of any user (name\_of\_script.sh)
+> change manually a password of any user (scripts/changePassword.sh)
 
 > **Tip**
 >
-> How to use the script, short description.
+> This script should be used only in a closed environment which does not
+> have a network connexion. This script needs to have the username of the 
+> user that wants to change his password. (Ex: ./changePassword.sh "diagnostic@cases.lu").
+> he password needs to have at least a lower case, an upper case, a digit
+> and a special char, and at least 8 characters.  
 
 Begin a Diagnostic as a User
 ============================
