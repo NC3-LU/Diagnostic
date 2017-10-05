@@ -30,7 +30,7 @@ password. Then, just click on the ‘Log in’ button.
 > If you are on the Virtual Machine, you will NOT have any mail server
 > installed by default. So you wont receive any mail unless you install
 > one. You can also use a script included in the virtual machine to
-> change manually a password of any user (scripts/changePassword.sh)
+> change manually a password of any user [scripts/changePassword.sh](scripts/changePassword.sh)
 
 > **Tip**
 >
