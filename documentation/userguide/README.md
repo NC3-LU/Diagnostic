@@ -36,8 +36,8 @@ password. Then, just click on the ‘Log in’ button.
 >
 > This script should be used only in a closed environment which does not
 > have a network connexion. This script needs to have the username of the 
-> user that wants to change his password. (Ex: ./changePassword.sh "diagnostic@cases.lu").
-> he password needs to have at least a lower case, an upper case, a digit
+> user that wants to change his password. (Ex: `./changePassword.sh "diagnostic@cases.lu"`).
+> The password needs to have at least a lower case, an upper case, a digit
 > and a special char, and at least 8 characters.  
 
 Begin a Diagnostic as a User
