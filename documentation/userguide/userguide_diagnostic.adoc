@@ -1,4 +1,4 @@
-﻿= User guide for CASES Diagnostic
+= User guide for CASES Diagnostic
 Benjamin Joly <benjamin.joly@securitymadein.lu>
 v1.0, 2017-09-19
 :imagesdir: img
@@ -21,9 +21,9 @@ image::UG_Diagnostic_004.PNG[Change Password]
 
 Then, you just need to create your first own diagnostic. For that, just log in to the main connexion screen, by giving your mail and your new password. Then, just click on the ‘Log in’ button.
 
-WARNING: If you are on the Virtual Machine, you will NOT have any mail server installed by default. So you wont receive any mail unless you install one. You can also use a script included in the virtual machine to change manually a password of any user (name_of_script.sh)
+WARNING: If you are on the Virtual Machine, you will NOT have any mail server installed by default. So you wont receive any mail unless you install one. You can also use a script included in the virtual machine to change manually a password of any user [_Path_to_Diagnostic_]/scripts/changePassword.sh
 
-TIP: How to use the script, short description.
+TIP: This script should be used only in a closed environment which does not have a network connexion. This script needs to have the username of the user that wants to change his password. (Ex: `./changePassword.sh "diagnostic@cases.lu"`). The password needs to have at least a lower case, an upper case, a digit and a special char, and at least 8 characters.
 
 ifdef::backend-pdf[<<<]
 
@@ -243,7 +243,7 @@ ifdef::backend-pdf[<<<]
 
 === Modify the template report
 
-The template report is quite simple to understand. It can be found in : [__PATH_TO_DIAGNOSTIC__]/data/resources. There are some tags which corresponding to some fields in the diagnostic. You can find a complete list just below. Concerning the charts, some dummy pictures are in the document. Their name are "__image9.png__", "__image5.png__" and "__image10.png__".
+The template report is quite simple to understand. It can be found in : [__PATH_TO_DIAGNOSTIC__]/data/resources. There is some tags which corresponding to some fields in the diagnostic. You can find a complete list just below. Concerning the charts, some dummy pictures are in the document. Their name are "__image9.png__", "__image5.png__" and "__image10.png__".
 
 image::UG_Diagnostic_034.PNG[Name of the dummy chart for the template]
 
@@ -259,21 +259,21 @@ As you can also see, tags which can be modified in their order, or that could be
 * **${CLIENT}** : Name of the person who represents the company which has been the subject of the diagnostic (Field get just before download the report)
 * **${COMPANY}** : Name of the company which has been the subject of the diagnostic (Field get just before download the report)
 * **${CONSULTANT}** : Name of the security consultant or the company which has done the Diagnostic (Field get just before download the report)
-* **${DATE}** : The date when is generated the report (Done automatically, depending on the server date)
+* **${DATE}** : The date when is generated the report (Done automatically, depending of the server date)
 * **${DOCUMENT}** : Name of the document (Field get just before download the report)Get automatically
 * **${EVALUATION_SYNTHESYS}** : Some important conclusions of the diagnostic, or important information to underline (Field get on the last free-text field, "__Summary of evaluation__")
-* **${ORGANIZATION_INFORMATION}** : Some information that is general on the company (Field get on the first free-text field, "__Information about organisation__")
+* **${ORGANIZATION_INFORMATION}** : Some informations that are general on the company (Field get on the first free-text field, "__Information about organisation__")
 * **${PRISE_NOTE___Y_____X__}** __(Where X is a number under 1 to 8 and Y is a number under 1 to 4)__ : Contain a cross in the maturity Y for the current question in the category X (table of text)
 * **${PRISE_NOTE___Y_____X__}** __(Where X is a number under 1 to 8 and Y is a number under 1 to 2)__ : Contain a cross in the aimed maturity Y for the current question in the category X (table of text)
 * **${PRISE_NOTE_CATEG___X__}** __(Where X is a number under 1 to 8)__ : The name of the category/security domain field number X (Get automatically)
-* **${PRISE_NOTE_COLLECT___X__}** __(Where X is a number under 1 to 8)__ : The list of remarks corresponding to the question in the category number X (Recommendation field in a question, table of text)
+* **${PRISE_NOTE_COLLECT___X__}** __(Where X is a number under 1 to 8)__ : The list of remarks corresponding to the question in the category number X (Recommandation field in a question, table of text)
 * **${PRISE_NOTE_RECOMM___X__}** __(Where X is a number under 1 to 8)__ : The list of recommendation corresponding to the question in the category number X (Remarks field in a question, table of text)
-* **${PRISE_NOTE_TO_COLLECT___X__}** __(Where X is a number under 1 to 8)__ : The list of questions in the category number X (Get automatically, table of text)
-* **${RECOMM_CURR_MAT}** : The current maturity set before the recommendations is implemented (Field get when you choose actual maturity of any question, table of text)
-* **${RECOMM_DOM}** : The category that concerns the recommendation (Get automatically, table of text, depending of where recommendations are found)
-* **${RECOMM_GRAV}** : The gravity that concerns the recommendation (Field get when you choose the gravity, table of text)
-* **${RECOMM_NUM}** : The position numbers of all the recommendations set (Get automatically, table of numbers, depending of the number of recommendations)
-* **${RECOMM_TARG_MAT}** : The targeted maturity, set after the recommendation is implemented (Field get when you choose aimed maturity of any question, table of text)
-* **${RECOMM_TEXT}** : The text all recommendations set (Field get when you put a recommendation to a question, table of text)
+* **${PRISE_NOTE_TO_COLLECT___X__}** __(Where X is a number under 1 to 8)__ : The list of question in the category number X (Get automatically, table of text)
+* **${RECOMM_CURR_MAT}** : The current maturity, set before the recommandation is implemented (Field get when you choose actual maturity of any question, table of text)
+* **${RECOMM_DOM}** : The category that concern the recommandation (Get automatically, table of text, depending of where recommandations are found)
+* **${RECOMM_GRAV}** : The gravity that concern the recommandation (Field get when you choose the gravity, table of text)
+* **${RECOMM_NUM}** : The positions numbers of all the recommandations set (Get automatically, table of number, depending of the number of recommandations)
+* **${RECOMM_TARG_MAT}** : The targeted maturity, set after the recommandation is implemented (Field get when you choose aimed maturity of any question, table of text)
+* **${RECOMM_TEXT}** : The text all recommandations set (Field get when you put a recommandation to a question, table of text)
 * **${STATE}** : State of the document, to know if it's still a draft, or a final version (Field get just before download the report)
 * **${VERSION}** : Versioning of the document (Field get just before download the report)
