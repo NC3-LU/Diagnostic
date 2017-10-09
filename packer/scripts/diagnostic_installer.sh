@@ -53,6 +53,7 @@ then
 	sudo sed -i "/'useMxCheck' => true/c\\\t\t\t'useMxCheck' => false" $PATH_TO_DIAGNOSTIC/module/Admin/src/Admin/InputFilter/EmailNotExistFilter.php
 	echo "\033[32mMxCheck disabled\\033[0m"
 fi
+sudo sed -i "/sqlPassword=diagnosticpass/c\\sqlPassword=$DBPASSWORD_DIAGNOSTIC" $PATH_TO_DIAGNOSTIC/scripts/changePassword.sh
 echo "\033[32mdiagnostic sources copied\\033[0m"
 
 echo "\033[93mcomposer installation\\033[0m"
