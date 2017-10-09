@@ -2,7 +2,7 @@
 #
 # Change user password for Diagnostic's application user
 
-sqlPassword=diagnosticpass
+sqlPassword=%%PASSWD%%
 user="${1:-}"
 strongPass=0
 password="something"
