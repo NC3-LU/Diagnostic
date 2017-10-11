@@ -27,12 +27,8 @@ Install **apache2** and enable following modules :
 ### COMPOSER
 
 Install **composer** and use it in the root directory to download all
-dependencies listed in the **composer.json** file:
-
-    php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
-    php -r "if (hash_file('SHA384', 'composer-setup.php') === '544e09ee996cdf60ece3804abc52599c22b1f40f4323403c44d44fdfdd586475ca9813a858088ffbc1f233e9b180f061') { echo 'Installer verified'; } else { echo 'Installer corrupt'; unlink('composer-setup.php'); } echo PHP_EOL;"
-    php composer-setup.php
-    php -r "unlink('composer-setup.php');"
+dependencies listed in the **composer.json** file. You could get it by
+go to the following link : [https://getcomposer.org/download/](https://getcomposer.org/download/)
 
 And use the command in the root directory:
 
@@ -46,15 +42,27 @@ on database, which can be found in **ROOT\_DIRECTORY/scripts** folder.
     sudo apt-get install mysql-server
 
 Duplicate **ROOT\_DIRECTORY/config/autoload/global.php.dist** as
-**global.php** and fill in **DB\_NAME** & **DB\_HOST** fields :
+**global.php** and fill in **DB\_NAME** & **DB\_HOST** fields in the following line :
 
     'dsn'  => 'mysql:dbname=%%DB_NAME%%;host=%%DB_HOST%%'
 
 Duplicate **ROOT\_DIRECTORY/config/autoload/local.php.dist** as
-**local.php** and fill in **DB\_USER** & **DB\_PASSWORD** fields :
+**local.php** and fill in **DB\_USER** & **DB\_PASSWORD** fields in the following line :
 
     'username' => '%%DB_USER%%',
     'password' => '%%DB_PASSWORD%%'
+
+*\_*
+
+
+### Change language
+
+Diagnostic application is available in both
+french and english. Find the **%%LANG%%** field in
+
+    /ROOT_DIRECTORY/module/Diagnostic/config/module.config.php
+
+and replace by either **"en\_EN"** or **"fr\_FR"**
 
 *\_*
 
@@ -67,8 +75,8 @@ Your configuration file should look like this :
 
     <VirtualHost *:80>
         ServerName %SERVER_NAME%
-        DocumentRoot %ROOT_DIRECTORY%
-        <Directory %ROOT_DIRECTORY%>
+        DocumentRoot %ROOT_DIRECTORY%/public
+        <Directory %ROOT_DIRECTORY%/public>
             DirectoryIndex index.php
             AllowOverride All
             Order allow,deny
@@ -93,15 +101,6 @@ Default credentials are :
     `Login : "diagnostic@cases.lu"`
 
     `Password : "Diagnostic1!"`
-
-### Change language
-
-\#TODO not right placeholder Diagnostic application is available in both
-french and english. Find the **%%LANG%%** field in
-
-    /ROOT_DIRECTORY/module/Diagnostic/config/module.config.php
-
-and replace by either **"en\_EN"** or **"fr\_FR"**
 
 *\_*
 
