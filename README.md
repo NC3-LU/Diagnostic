@@ -28,7 +28,7 @@ Here would you find further Diagnostic related documentation :
 Quick start
 -----------
 
--   Download [**VM\_Diagnostic.ova**](ovaFile) ready-to-use virtual machine file which can be imported directly into a virtualization tool
+-   Download [**VM\_Diagnostic.ova**](https://github.com/CASES-LU/diagnostic/releases/tag/1.0) ready-to-use virtual machine file which can be imported directly into a virtualization tool
 
 -   Make use of the **installation scripts** provided in the [**Diagnostic repository**](repoLink)
 
@@ -122,9 +122,7 @@ Simply run the following commands
 Provide the script the information it needs when it asks (e.g mysql
 user:password )
 
-You are good to go after seeing that screen :
-
-imgInstallSuccessful
+You are good to go then !
 
 Diagnostic - Cases
 ==================
