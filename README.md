@@ -30,7 +30,7 @@ Quick start
 
 -   Download [**VM\_Diagnostic.ova**](https://github.com/CASES-LU/diagnostic/releases/tag/1.0) ready-to-use virtual machine file which can be imported directly into a virtualization tool
 
--   Make use of the **installation scripts** provided in the [**Diagnostic repository**](repoLink)
+-   Make use of the **installation scripts** provided in the [**Diagnostic repository**](https://github.com/CASES-LU/diagnostic/tree/master/scripts)
 
 ### Using the Virtual Machine
 
