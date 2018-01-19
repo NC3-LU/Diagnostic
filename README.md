@@ -96,7 +96,7 @@ that screen:
 
 #### Access your Diagnostic application
 
-Open your favorite browser and type in: <http://10.0.0.101>
+Open your favorite browser and type in: <http://10.0.0.102>
 
 #### Default machine credentials
 
