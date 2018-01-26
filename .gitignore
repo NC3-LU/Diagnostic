@@ -1,1 +1,7 @@
 # Created by .ignore support plugin (hsz.mobi)
+
+composer.phar
+composer.lock
+vendor/
+data/img/*.png
+
