@@ -357,7 +357,7 @@ msgstr "Change password"
 
 #:
 msgid "__message_password"
-msgstr "An e-mail will be sent to you at this address explaining how to change your password.<br /><strong>Note</strong> that the e-mail is only valid for one hour."
+msgstr "An e-mail will be sent to you at this address explaining how to change your password.<br /><strong>Note</strong> that the e-mail is only valid for 24 hours."
 
 #:
 msgid "__receive_mail_password"

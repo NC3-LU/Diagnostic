@@ -355,7 +355,7 @@ msgstr "Changer de mot de passe"
 
 #: 
 msgid "__message_password"
-msgstr "Vous allez recevoir un mail à cette adresse vous stipulant la manoeuvre à suivre pour changer de mot de passe.<br /><strong>Attention !</strong> ce mail n'est valable que une heure."
+msgstr "Vous allez recevoir un mail à cette adresse vous stipulant la manoeuvre à suivre pour changer de mot de passe.<br /><strong>Attention !</strong> ce mail n'est valable que 24h."
 
 #: 
 msgid "__receive_mail_password"
