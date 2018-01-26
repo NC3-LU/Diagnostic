@@ -22,7 +22,7 @@ class UserTokenService extends AbstractService
         $userToken = [
             'userEmail' => $email,
             'token' => bin2hex(openssl_random_pseudo_bytes(16)),
-            'limitTimestamp' => time() + (24 * 60 * 60),
+            'limitTimestamp' => time() + (1 * 60 * 60),
         ];
 
         //set user information
