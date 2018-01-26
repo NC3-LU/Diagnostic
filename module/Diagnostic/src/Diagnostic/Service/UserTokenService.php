@@ -21,7 +21,7 @@ class UserTokenService extends AbstractService
         //record token
         $userToken = [
             'userEmail' => $email,
-            'token' => uniqid(bin2hex(openssl_random_pseudo_bytes(rand(20, 40))), true),
+            'token' => bin2hex(openssl_random_pseudo_bytes(16)),
             'limitTimestamp' => time() + (24 * 60 * 60),
         ];
 
