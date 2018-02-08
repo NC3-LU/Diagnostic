@@ -21,7 +21,7 @@ return [
     'mail_name' => 'Cases',
     'domain' => 'diagnostic.cases.lu',
     'translator' => [
-        'locale' => 'fr_FR',
+        'locale' => '%%LANG%%',
         'translation_file_patterns' => [
             [
                'type' => 'gettext',
