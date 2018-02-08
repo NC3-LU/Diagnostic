@@ -20,4 +20,14 @@ return [
     'mail' => 'info@cases.lu',
     'mail_name' => 'Cases',
     'domain' => 'diagnostic.cases.lu',
+    'translator' => [
+        'locale' => 'fr_FR',
+        'translation_file_patterns' => [
+            [
+               'type' => 'gettext',
+                'base_dir' => __DIR__ . '/../../../language',
+                'pattern' => '%s.mo',
+            ],
+        ],
+    ]
 ];
