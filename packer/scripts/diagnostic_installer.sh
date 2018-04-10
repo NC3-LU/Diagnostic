@@ -4,17 +4,15 @@ PATH_TO_DIAGNOSTIC='/var/www/diagnostic'					#The path of the diagnostic in your
 GITHUB_LINK='https://github.com/CASES-LU/diagnostic.git'	#The Github path where you can find the diagnostic
 
 # Variables							
-DB_NAME='diagnostic' 				#The name of the Database
-DB_HOST='localhost'				#The IP Address where is located 
-DBUSER_DIAGNOSTIC='diagnostic'			#The DB user that will be used for the diagnostic
-DBPASSWORD_DIAGNOSTIC="$(openssl rand -hex 32)"	#The password of the user diagnostic of the DB; Random by default
-DBUSER_ADMIN='root'				#The administrator login of the DB
-DBPASSWORD_ADMIN="$(openssl rand -hex 32)"	#The password of the administrator of the DB; Random by default
-DEFAULT_LANGUAGE='en_EN'			#The default and main language of the diagnostic 
-IP_ADDRESS='10.0.0.102'				#The IP address where you will find the diagnostic
-DISABLE_MXCHECK=true				#If the VM is connected on internet (which is depreciate),
-# it could check the validity of the mail used. If it set to true, no check are done.
-
+DB_NAME='diagnostic' 								#The name of the Database
+DB_HOST='localhost'									#The IP Address where is located 
+DBUSER_DIAGNOSTIC='diagnostic'						#The DB user that will be used for the diagnostic
+DBPASSWORD_DIAGNOSTIC="$(openssl rand -hex 32)"		#The password of the user diagnostic of the DB; Random by default
+DBUSER_ADMIN='root'									#The administrator login of the DB
+DBPASSWORD_ADMIN="$(openssl rand -hex 32)"			#The password of the administrator of the DB; Random by default
+DEFAULT_LANGUAGE='en_EN'							#The default and main language of the diagnostic 
+IP_ADDRESS='10.0.0.102'								#The IP address where you will find the diagnostic
+DISABLE_MXCHECK=true								#If the VM is connected on internet (which is depreciate), it could check the validity of the mail used. If it set to false, no check are done.
 
 echo "\033[93m###############################################################################\\033[0m"
 echo "\033[93m#                             Diagnostic installer                            #\\033[0m"
@@ -22,7 +20,7 @@ echo "\033[93m#                                                                 
 echo "\033[93m###############################################################################\\033[0m"
 
 echo "\033[93mphp installation\\033[0m"
-sudo apt-get -qq install php7.0 libapache2-mod-php7.0 php7.0-mcrypt php7.0-mysql php7.0-zip  php-xml > /dev/null 2>&1
+sudo apt-get -qq install php7.1 libapache2-mod-php7.1 php7.1-mcrypt php7.1-mysql php7.1-zip  php-xml > /dev/null 2>&1
 echo "\033[32mphp installation done\\033[0m"
 
 echo "\033[93mcurl installation\\033[0m"
@@ -40,7 +38,7 @@ cd $PATH_TO_DIAGNOSTIC
 sudo chown www-data:www-data $PATH_TO_DIAGNOSTIC
 #git install
 sudo apt-get install -y git > /dev/null 2>&1
-sudo -u www-data git clone --config core.filemode=false $GITHUB_LINK . > /dev/null 2>&1
+sudo -u www-data git clone -b dev $GITHUB_LINK . > /dev/null 2>&1
 if [ $? -ne 0 ]; then
     echo "ERROR: unable to clone the Diagnostic repository"
     exit 1;
@@ -53,7 +51,6 @@ then
 	sudo sed -i "/'useMxCheck' => true/c\\\t\t\t'useMxCheck' => false" $PATH_TO_DIAGNOSTIC/module/Admin/src/Admin/InputFilter/EmailNotExistFilter.php
 	echo "\033[32mMxCheck disabled\\033[0m"
 fi
-sudo sed -i "/sqlPassword=%%PASSWD%%/c\\sqlPassword=$DBPASSWORD_DIAGNOSTIC" $PATH_TO_DIAGNOSTIC/scripts/changePassword.sh
 echo "\033[32mdiagnostic sources copied\\033[0m"
 
 echo "\033[93mcomposer installation\\033[0m"
@@ -148,19 +145,17 @@ sudo chmod -R 700 $PATH_TO_DIAGNOSTIC
 #network configuration
 echo "\033[93mnetwork configuration\\033[0m"
 sudo apt-get -qq install net-tools > /dev/null 2>&1
-sudo cat > /etc/network/interfaces <<EOF
-source /etc/network/interfaces.d/*
-
-# The loopback network interface
-auto lo
-iface lo inet loopback
-
-# The primary network interface
-auto enp0s8
-iface enp0s8 inet static
-	address $IP_ADDRESS
-	netmask 255.0.0.0
-	gateway 10.0.0.1
+sudo cat > /etc/network/01-netcfg.yaml <<EOF
+network:
+ version: 2
+ renderer: networkd
+ ethernets:
+   enp0s3:
+     dhcp4: yes
+   enp0s8:
+     dhcp4: no
+     addresses: [10.0.0.102/8]
+     gateway4: 10.0.0.1
 EOF
 sudo ifconfig enp0s8 up
 echo "\033[32mnetworkconfiguration done\\033[0m"
