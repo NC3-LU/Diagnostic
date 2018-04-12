@@ -981,7 +981,9 @@ class IndexController extends AbstractController
         if ($id == 2) {
             $container->language = 'en_EN';
         }
-
+	if ($id == 3) {
+            $container->language = 'de_DE';
+        }
         //redirection
         $this->redirect()->toUrl($this->getRequest()->getHeader('Referer')->getUri());
     }
