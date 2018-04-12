@@ -112,7 +112,7 @@ return [
     ],
 
     'translator' => [
-        'locale' => 'en_EN',
+        'locale' => '%%LANG%%',
         'translation_file_patterns' => [
             [
                 'type' => 'gettext',

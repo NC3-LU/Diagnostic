@@ -37,7 +37,7 @@ class EmailNotExistFilter extends InputFilter
                     'name' => 'EmailAddress',
                     'options' => [
                         'allow' => Hostname::ALLOW_DNS,
-			'useMxCheck' => false
+                        'useMxCheck' => true
                     ],
                 ],
             ],
