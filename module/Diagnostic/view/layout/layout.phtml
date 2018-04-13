@@ -44,10 +44,17 @@
                     if ($this->plugin('translate')->getTranslator()->getLocale() == 'en_EN') {
                         $frClass = '';
                         $enClass = 'btn-info';
-                    } else {
+			$deClass = '';
+                    } else if ($this->plugin('translate')->getTranslator()->getLocale() == 'fr_FR') {
                         $frClass = 'btn-info';
                         $enClass = '';
-                    }
+			$deClass = '';
+                    } else {
+			$frClass = '';
+                        $enClass = '';
+			$deClass = 'btn-info';
+		    }
+
                     ?>
                     <table width="100%">
                         <tr>
@@ -91,6 +98,16 @@
                                     </button>
                                 </a>
                             </td>
+
+			     <td width="75">
+                                <a href="<?php echo $this->url('diagnostic', ['action' => 'language', 'id' => 3]); ?>">
+                                    <button type="submit" name="language" value="de"
+                                            class="btn-default btn-blue btn-sm <?php echo $deClass ?>"><span
+                                                class="text-uppercase"><span class="flag-icon flag-icon-de"></span>&nbsp;&nbsp;de</span>
+                                    </button>
+                                </a>
+                            </td>
+
                         </tr>
                     </table>
                 </div>
