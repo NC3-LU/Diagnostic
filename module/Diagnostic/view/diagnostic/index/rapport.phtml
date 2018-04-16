@@ -14,9 +14,9 @@ foreach ($this->totalCategoryTarget as $key => $value) {
     $jsPercentsTarget[] = $value;
 }
 
-$color1 = 'rgba(217, 83, 79, 0.5)';
+$color1 = 'rgba(217, 83, 79, 0.3)';
 $color1Border = 'rgba(212, 63, 58, 1)';
-$color2 = 'rgba(91, 192, 222, 0.5)';
+$color2 = 'rgba(91, 192, 222, 0.3)';
 $color2Border = 'rgba(70, 184, 218, 1)';
 
 echo $this->inlineScript()->prependFile($this->basePath('js/Chart.js-master/Chart.js'));
@@ -101,14 +101,19 @@ echo $this->inlineScript()->prependFile($this->basePath('js/Chart.js-master/Char
                 <th style="text-align: center"><?= $this->translate('__target'); ?></th>
             </tr>
             <?php
-            foreach ($totalCategory as $key => $value) :
+            foreach ($totalCategory as $key => $value):
                 ?>
                 <tr>
-                    <td class="text-left"><?= $this->translate($this->escapeHtml($key)) ?></td>
+                    <td class="text-left"><?php if ($value < 33){ ?><font color="red"><?= $this->translate($this->escapeHtml($key)); ?></font><?php }
+					        elseif ($value > 66){ ?><font color="#20DD1A"><?= $this->translate($this->escapeHtml($key)); ?></font><?php }
+						else { ?><font color="orange"><?= $this->translate($this->escapeHtml($key)); ?></font><?php }?>
+		    </td>
                     <td class="text-center"><?= (int)$value ?>%</td>
                     <td class="text-center"><?= (int)$this->totalCategoryTarget[$key] ?>%</td>
                 </tr>
-            <?php endforeach; ?>
+	    <?php
+ 	    endforeach;
+		?>
         </table>
 
     </div>
@@ -228,58 +233,111 @@ echo $this->inlineScript()->prependFile($this->basePath('js/Chart.js-master/Char
 <div id="js-legend" class="chart-legend"></div>
 
 <script>
-    //radar chart
-    var radarChartData = {
-        labels: <?= json_encode($jsCategories) ?>,
-        datasets: [
-            {
-                label: "Cases radar",
-                fillColor: "<?= $color1 ?>",
-                strokeColor: "<?= $color1Border ?>",
-                pointColor: "<?= $color1Border ?>",
-                pointStrokeColor: "#fff",
-                pointStrokeColor: "#fff",
-                pointHighlightFill: "#fff",
-                pointHighlightStroke: "rgba(220,220,220,1)",
-                data: <?= json_encode($jsPercents) ?>
-            }
-        ]
-    };
 
-    var radarChartData = {
-        labels: <?= json_encode($jsCategories) ?>,
-        datasets: [
-            {
-                label: "Visée",
-                fillColor: "<?= $color2 ?>",
-                strokeColor: "<?= $color2Border ?>",
-                pointColor: "<?= $color2Border ?>",
-                pointStrokeColor: "#fff",
-                pointStrokeColor: "#fff",
-                pointHighlightFill: "#fff",
-                pointHighlightStroke: "rgba(220,220,220,1)",
-                data: <?= json_encode($jsPercentsTarget) ?>
-            },
-            {
-                label: "Actuel",
-                fillColor: "<?= $color1 ?>",
-                strokeColor: "<?= $color1Border ?>",
-                pointColor: "<?= $color1Border ?>",
-                pointStrokeColor: "#fff",
-                pointStrokeColor: "#fff",
-                pointHighlightFill: "#fff",
-                pointHighlightStroke: "rgba(220,220,220,1)",
-                data: <?= json_encode($jsPercents) ?>
-            },
-        ]
-    };
+// Création schéma radar avec changement de couleurs
+Chart.types.Radar.extend({
+    name: "radar",
+    initialize: function (radarChartData) {
+        Chart.types.Radar.prototype.initialize.apply(this, arguments);
 
-    var myRadarChart = new Chart(document.getElementById("canvas").getContext("2d")).Radar(radarChartData, {
-        responsive: false,
-        onAnimationComplete: function () {
-            document.querySelector('input[name="radar"]').value = myRadarChart.toBase64Image();
+        var originalScaleDraw = this.scale.draw;
+        var ctx = this.chart.ctx;
+        this.scale.draw = function () {
+            var lineWidth = this.lineWidth;
+            // ce qui va permettre d'aggrandir les parties en couleur
+            this.lineWidth = lineWidth;
+
+            originalScaleDraw.apply(this, arguments);
+
+            ctx.lineWidth = this.lineWidth;
+            var scale = this;
+            // Dessin du radar
+            Chart.helpers.each(scale.yLabels, function () {
+                // couleur rouge quand inférieur à 33% de sécurité 
+                ctx.strokeStyle = "red";
+                ctx.beginPath();
+		ctx.lineWidth = 60;
+                for (var i = 0; i < scale.valuesCount; i++) {
+                    pointPosition = scale.getPointPosition(i, scale.calculateCenterOffset(18));
+                    if (i == 0) {
+                        ctx.moveTo(pointPosition.x, pointPosition.y);
+                    }  else {
+                        ctx.lineTo(pointPosition.x, pointPosition.y);
+                    }
+                }
+		ctx.closePath();
+		ctx.stroke();
+
+		// couleur orange quand entre 33 et 66%
+		ctx.beginPath();
+		ctx.strokeStyle = "orange";
+		ctx.lineWidth = 80;
+		for (var i = 0; i < scale.valuesCount; i++) {
+                    pointPosition = scale.getPointPosition(i, scale.calculateCenterOffset(58));
+                    if (i == 0) {
+                        ctx.moveTo(pointPosition.x, pointPosition.y);
+                    }  else {
+                        ctx.lineTo(pointPosition.x, pointPosition.y);
+                    }
+                }
+		ctx.closePath();
+		ctx.stroke();
+
+		// Couleur verte quand supérieur à 66%
+		ctx.beginPath();
+		ctx.strokeStyle = "green";
+		ctx.lineWidth = 56;
+		for (var i = 0; i < scale.valuesCount; i++) {
+                    pointPosition = scale.getPointPosition(i, scale.calculateCenterOffset(83));
+                    if (i == 0) {
+                        ctx.moveTo(pointPosition.x, pointPosition.y);
+                    }  else {
+                        ctx.lineTo(pointPosition.x, pointPosition.y);
+                    }
+                }
+                ctx.closePath();
+                ctx.stroke();
+            });
         }
-    });
+    }
+});
+
+var radarChartData = {
+    labels: <?= json_encode($jsCategories) ?>,
+    datasets: [
+        {
+            label: "Visée",
+            fillColor: "<?= $color2 ?>",
+            strokeColor: "<?= $color2Border ?>",
+            pointColor: "<?= $color2Border ?>",
+            pointStrokeColor: "#fff",
+            pointStrokeColor: "#fff",
+            pointHighlightFill: "#fff",
+            pointHighlightStroke: "rgba(220,220,220,1)",
+            data: <?= json_encode($jsPercentsTarget) ?>
+        },
+        {
+            label: "Actuel",
+            fillColor: "<?= $color1 ?>",
+            strokeColor: "<?= $color1Border ?>",
+            pointColor: "<?= $color1Border ?>",
+            pointStrokeColor: "#fff",
+            pointStrokeColor: "#fff",
+            pointHighlightFill: "#fff",
+            pointHighlightStroke: "rgba(220,220,220,1)",
+            data: <?= json_encode($jsPercents) ?>
+        },
+    ]
+};
+
+
+var ctx = document.getElementById("canvas").getContext("2d");
+var myRadarChart = new Chart(ctx).radar(radarChartData, {
+	responsive: false,
+	onAnimationComplete: function () {
+		document.querySelector('input[name="radar"]').value = myRadarChart.toBase64Image();
+	}
+});
 
 
     //doughnut chart
