@@ -2,7 +2,6 @@
 namespace Diagnostic\Service;
 
 use Zend\Session\Container;
-
 /**
  * CalculService
  *
@@ -31,21 +30,30 @@ class CalculService extends AbstractService
         $globalPointsTarget = [];
         $globalThreshold = [];
         $recommandations = [];
+
         foreach ($questions as $questionId => $question) {
 
             $categoryId = $question->getCategoryId();
             $threshold = $question->getThreshold();
-
             if (array_key_exists($questionId, $results)) {
                 if (strlen($results[$questionId]['notes'])) {
                     $points = $results[$questionId]['maturity'] * $threshold;
+		// Si la maturité est 3 donc NA, elle n'est pas prise en compte dans les points
+		if ($results[$questionId]['maturity'] == 3) {
+			$points = 0;
+			$threshold = 0;
+		}
                     $pointsTarget = $results[$questionId]['maturityTarget'] * $threshold;
+		    // Affichage des points rouges MONARC à la place des triangles
+		    if ($results[$questionId]['gravity'] == 1) $temp = '●';
+ 		    elseif ($results[$questionId]['gravity'] == 2) $temp = '●●';
+		    else $temp = '●●●';
                     $recommandations[$question->getId()] = [
                         'recommandation' => $results[$questionId]['recommandation'],
                         'threshold' => $threshold,
                         'domaine' => $question->getCategoryTranslationKey(),
-                        'gravity-img' => '/img/gravity_' . $results[$questionId]['gravity'] . '.png',
                         'gravity' => $results[$questionId]['gravity'],
+			'gravity-img' => $temp, // On prend les points rouges en fonction de l'importance
                         'maturity' => $results[$questionId]['maturity'],
                         'maturity-img' => $this->getImgMaturity($results[$questionId]['maturity']),
                         'maturityTarget' => $results[$questionId]['maturityTarget'],
@@ -60,21 +68,22 @@ class CalculService extends AbstractService
 
                     $totalThreshold += $threshold;
                     $globalThreshold[$categoryId] = array_key_exists($categoryId, $globalThreshold) ? $globalThreshold[$categoryId] + $threshold : (int)$threshold;
-                }
+		}
             }
         }
 
-        $total = ($totalThreshold) ? round($totalPoints / $totalThreshold * 100 / 3) : 0;
-        $totalTarget = ($totalThreshold) ? round($totalPointsTarget / $totalThreshold * 100 / 3) : 0;
+	// On divise par 2 pour mettre à 50% au lieu de 33% en divisant par 3
+        $total = ($totalThreshold) ? round($totalPoints / $totalThreshold * 100 / 2) : 0;
+        $totalTarget = ($totalThreshold) ? round($totalPointsTarget / $totalThreshold * 100 / 2) : 0;
 
         $totalCategory = [];
         foreach ($globalPoints as $categoryId => $points) {
-            $totalCategory[$categoryId] = ($globalThreshold[$categoryId]) ? round($points / $globalThreshold[$categoryId] * 100 / 3) : 0;
+            $totalCategory[$categoryId] = ($globalThreshold[$categoryId]) ? round($points / $globalThreshold[$categoryId] * 100 / 2) : 0;
         }
 
         $totalCategoryTarget = [];
         foreach ($globalPointsTarget as $categoryId => $pointsTarget) {
-            $totalCategoryTarget[$categoryId] = ($globalThreshold[$categoryId]) ? round($pointsTarget / $globalThreshold[$categoryId] * 100 / 3) : 0;
+            $totalCategoryTarget[$categoryId] = ($globalThreshold[$categoryId]) ? round($pointsTarget / $globalThreshold[$categoryId] * 100 / 2) : 0;
         }
 
         $recommandations = $this->sortArray($recommandations, 'maturityTarget');
@@ -121,15 +130,15 @@ class CalculService extends AbstractService
      */
     public function getImgMaturity($maturity)
     {
-
+	// 2 = 100%, 1 = 50%, 0 = 0%, 3 = NA
         switch ($maturity) {
-            case 3:
+            case 2:
                 $img = '/img/mat_ok.png';
                 break;
-            case 2:
+            case 1:
                 $img = '/img/mat_moyen.png';
                 break;
-            case 1:
+            case 3:
                 $img = '/img/mat_plan.png';
                 break;
             case 0:

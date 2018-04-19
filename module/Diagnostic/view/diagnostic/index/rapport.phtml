@@ -103,8 +103,9 @@ echo $this->inlineScript()->prependFile($this->basePath('js/Chart.js-master/Char
             <?php
             foreach ($totalCategory as $key => $value):
                 ?>
-                <tr>
-                    <td class="text-left"><?php if ($value < 33){ ?><font color="red"><?= $this->translate($this->escapeHtml($key)); ?></font><?php }
+                <tr> <!-- // Colorie le texte en rouge si maturité < 33%, en orange si < 66% et en vert si > 66% -->
+                    <td class="text-left"><?php if ($value < 33){ ?><font color="red"><?= $this->translate($this->escapeHtml($key)); ?></font>
+						<?php }
 					        elseif ($value > 66){ ?><font color="#20DD1A"><?= $this->translate($this->escapeHtml($key)); ?></font><?php }
 						else { ?><font color="orange"><?= $this->translate($this->escapeHtml($key)); ?></font><?php }?>
 		    </td>
@@ -115,6 +116,20 @@ echo $this->inlineScript()->prependFile($this->basePath('js/Chart.js-master/Char
  	    endforeach;
 		?>
         </table>
+	      	    <td>
+                        <table class="table"
+                               style="background-color: lightgrey; border: 1px solid darkgrey; height: 35px;">
+                            <tr>
+				<th><?= $this->translate('__maturity_levels') ?></th>
+                                <td style="background-color: red;"></td>
+                                <td class="text-left"><?= $this->translate('__maturity_none') ?></td>
+                                <td style="background-color: orange;"></td>
+                                <td class="text-left"><?= $this->translate('__maturity_medium') ?></td>
+                                <td style="background-color: green;"></td>
+                                <td class="text-left"><?= $this->translate('__maturity_ok') ?></td>
+                            </tr>
+                        </table>
+                    </td>
 
     </div>
 </div>
@@ -138,7 +153,7 @@ echo $this->inlineScript()->prependFile($this->basePath('js/Chart.js-master/Char
                         <tr>
                             <td style="text-align: left;"><?= htmlspecialchars($recommandation['recommandation']); ?></td>
                             <td style="text-align: left;"><?= $this->translate($recommandation['domaine']); ?></td>
-                            <td style="text-align: center;"><img src="<?= $recommandation['gravity-img']; ?>"/></td>
+                            <td style="text-align: center;"><font color="red" size="4"><?= $recommandation['gravity-img']; ?></font></td>
                             <td style="text-align: center;"><img
                                         src="<?= $recommandation['maturity-img'] ?>"/>&nbsp;<span
                                         class="glyphicon glyphicon-arrow-right"></span>&nbsp;<img
@@ -162,8 +177,6 @@ echo $this->inlineScript()->prependFile($this->basePath('js/Chart.js-master/Char
                             <tr>
                                 <td><img src="/img/mat_none.png"/></td>
                                 <td><?= $this->translate('__maturity_none') ?></td>
-                                <td><img src="/img/mat_plan.png"/></td>
-                                <td><?= $this->translate('__maturity_plan') ?></td>
                                 <td><img src="/img/mat_moyen.png"/></td>
                                 <td><?= $this->translate('__maturity_medium') ?></td>
                                 <td><img src="/img/mat_ok.png"/></td>
@@ -175,12 +188,12 @@ echo $this->inlineScript()->prependFile($this->basePath('js/Chart.js-master/Char
                     <td>
                         <table class="table"
                                style="background-color: lightgrey; border: 1px solid darkgrey; height: 45px;">
-                            <tr>
-                                <td><img src="/img/gravity_1.png"/></td>
+                            <tr> <!-- // Affiche les points rouges Monarc à la place des triangles -->
+                                <td><font color="red" size="4">●</font></td>
                                 <td><?= $this->translate('__low') ?></td>
-                                <td><img src="/img/gravity_2.png"/></td>
+                                <td><font color="red" size="4">●●</font></td>
                                 <td><?= $this->translate('__medium') ?></td>
-                                <td><img src="/img/gravity_3.png"/></td>
+                                <td><font color="red" size="4">●●●</font></td>
                                 <td><?= $this->translate('__strong') ?></td>
                             </tr>
                         </table>
@@ -214,7 +227,7 @@ echo $this->inlineScript()->prependFile($this->basePath('js/Chart.js-master/Char
                     <div class="col-lg-2 text-left"></div>
                     <div class="col-lg-8 text-left">
                         <center>
-                            <canvas id="canvas2" width="350" height="350"></canvas>
+                            <canvas id="canvas2" width="380" height="350"></canvas> <!-- // Aggrandissement de la longueur pour que la légende soit visible entièrement-->
                         </center>
                         <div id="canvas2-legend" class="chart-legend"
                              style="margin-left: auto; margin-right: auto; width: 330px; margin-top: 15px;"></div>
@@ -364,7 +377,7 @@ var myRadarChart = new Chart(ctx).radar(radarChartData, {
                 strokeColor: "<?= $color1Border ?>",
                 highlightFill: "<?= $color1 ?>",
                 highlightStroke: "<?= $color1Border ?>",
-                data: [<?= $this->total ?>]
+                data: [<?= $this->total ?>],
             },
             {
                 label: "<?= $this->translate('__target') ?>",
@@ -372,8 +385,16 @@ var myRadarChart = new Chart(ctx).radar(radarChartData, {
                 strokeColor: "<?= $color2Border ?>",
                 highlightFill: "<?= $color2 ?>",
                 highlightStroke: "<?= $color2Border ?>",
-                data: [<?= $this->totalTarget ?>]
-            }
+                data: [<?= $this->totalTarget ?>],
+            },
+	    /*{
+       	        label: "test",
+       		fillColor: "green",
+        	strokeColor: "green",
+        	highlightFill: "green",
+        	highlightStroke: "green",
+        	data: [20],
+    	    },*/
         ]
     };
 
@@ -384,6 +405,19 @@ var myRadarChart = new Chart(ctx).radar(radarChartData, {
             document.querySelector('input[name="bar"]').value = myBarChart.toBase64Image();
         }
     });
+
+    var newDataset = {
+        label: "test",
+        fillColor: "green",
+        strokeColor: "green",
+        highlightFill: "green",
+        highlightStroke: "green",
+        data: [20],
+    };
+  myBarChart.update();
+   myBarChart.datasets[2] = newDataset;
+  myBarChart.datasets[2].data = 20;
+   myBarChart.update();
 
     document.getElementById('canvas3-legend').innerHTML = myBarChart.generateLegend();
 

@@ -23,19 +23,19 @@ class QuestionForm extends Form
                 'label' => '__maturity',
                 'value_options' => [
                     3 => [
-                        'value' => '3',
+                        'value' => '2', // = 100%
                         'label_attributes' => ['class' => 'maticon matok', 'title' => '__maturity_ok'],
                     ],
                     2 => [
-                        'value' => '2',
+                        'value' => '1', // = 50%
                         'label_attributes' => ['class' => 'maticon matmoyen', 'title' => '__maturity_medium'],
                     ],
                     1 => [
-                        'value' => '1',
+                        'value' => 3, // Valeur pour vérifier si la maturité est à ne pas prendre en compte
                         'label_attributes' => ['class' => 'maticon matplan', 'title' => '__maturity_plan'],
                     ],
                     0 => [
-                        'value' => '0',
+                        'value' => '0', // = 0%
                         'label_attributes' => ['class' => 'maticon matnone', 'title' => '__maturity_none'],
                     ]
                 ],
@@ -55,11 +55,11 @@ class QuestionForm extends Form
                 'label' => '__maturity_target',
                 'value_options' => [
                     3 => [
-                        'value' => '3',
+                        'value' => '2', // = 100%
                         'label_attributes' => ['class' => 'maticon matok', 'title' => '__maturity_ok'],
                     ],
                     2 => [
-                        'value' => '2',
+                        'value' => '1', // = 50%
                         'label_attributes' => ['class' => 'maticon matmoyen', 'title' => '__maturity_medium'],
                     ],
                 ],

@@ -32,7 +32,7 @@
         <div class="top-line">&nbsp;</div>
         <div class="top">
             <div class="row">
-                <div class="col-lg-1"></div>
+                <div class="col-lg-1"></div> <!-- // Logo diagnostic à la place du logo cases -->
                 <div class="col-lg-3"><a href="http://www.cases.lu"><img
                                 src="/img/logo_diagnostic.jpg"
                                 border="0"
@@ -51,7 +51,7 @@
                         $frClass = 'btn-info';
                         $enClass = '';
 			$deClass = '';
-                    } else {
+                    } else { // ajout de la langue allemande
 			$frClass = '';
                         $enClass = '';
 			$deClass = 'btn-info';
@@ -100,7 +100,7 @@
                                     </button>
                                 </a>
                             </td>
-
+			     <!-- // Ajout de la langue allemande -->
 			     <td width="75">
                                 <a href="<?php echo $this->url('diagnostic', ['action' => 'language', 'id' => 3]); ?>">
                                     <button type="submit" name="language" value="de"
