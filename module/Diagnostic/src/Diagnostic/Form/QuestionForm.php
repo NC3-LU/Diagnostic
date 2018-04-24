@@ -119,7 +119,6 @@ class QuestionForm extends Form
             ],
             'attributes' => [
                 'class' => 'form-control notes-area',
-		//'placeholder' => 'test1',
             ]
         ]);
 

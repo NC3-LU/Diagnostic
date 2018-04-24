@@ -279,7 +279,7 @@ Chart.types.Radar.extend({
                 ctx.strokeStyle = "red";
                 ctx.beginPath();
                 for (var i = 0; i < scale.valuesCount; i++) {
-                    pointPosition = scale.getPointPosition(i, scale.calculateCenterOffset(1));
+                    pointPosition = scale.getPointPosition(i, scale.calculateCenterOffset(33));
                     if (i == 0) {
                         ctx.moveTo(pointPosition.x, pointPosition.y);
                     }  else {
@@ -293,7 +293,7 @@ Chart.types.Radar.extend({
 		ctx.beginPath();
 		ctx.strokeStyle = "orange";
 		for (var i = 0; i < scale.valuesCount; i++) {
-                    pointPosition = scale.getPointPosition(i, scale.calculateCenterOffset(33));
+                    pointPosition = scale.getPointPosition(i, scale.calculateCenterOffset(66));
                     if (i == 0) {
                         ctx.moveTo(pointPosition.x, pointPosition.y);
                     }  else {
@@ -307,7 +307,7 @@ Chart.types.Radar.extend({
 		ctx.beginPath();
 		ctx.strokeStyle = "green";
 		for (var i = 0; i < scale.valuesCount; i++) {
-                    pointPosition = scale.getPointPosition(i, scale.calculateCenterOffset(66));
+                    pointPosition = scale.getPointPosition(i, scale.calculateCenterOffset(100));
                     if (i == 0) {
                         ctx.moveTo(pointPosition.x, pointPosition.y);
                     }  else {
