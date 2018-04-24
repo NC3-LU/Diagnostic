@@ -1,0 +1,423 @@
+<?php
+$title = $this->translate('__rapport');
+$this->headTitle($title);
+
+$jsPercents = [];
+$jsCategories = [];
+foreach ($this->totalCategory as $key => $value) {
+    $jsPercents[] = $value;
+    $jsCategories[] = $this->translate($key);
+}
+
+$jsPercentsTarget = [];
+foreach ($this->totalCategoryTarget as $key => $value) {
+    $jsPercentsTarget[] = $value;
+}
+
+$color1 = 'rgba(217, 83, 79, 0.3)';
+$color1Border = 'rgba(212, 63, 58, 1)';
+$color2 = 'rgba(91, 192, 222, 0.3)';
+$color2Border = 'rgba(70, 184, 218, 1)';
+
+echo $this->inlineScript()->prependFile($this->basePath('js/Chart.js-master/Chart.js'));
+?>
+
+<style>
+    .chart-legend li span {
+        display: inline-block;
+        width: 12px;
+        height: 12px;
+        margin-right: 5px;
+    }
+</style>
+<div class="row">
+    <div class="col-lg-3 text-left">
+        <?php
+        $container = new \Zend\Session\Container('user');
+        if (($container->offsetExists('email')) || (!is_null($container->email))) {
+            if ($this->download) {
+                $form->setAttribute('action', $this->url('diagnostic', ['action' => 'download']));
+                $form->prepare();
+                echo $this->form()->openTag($form);
+                echo $this->formHidden($form->get('radar'));
+                echo $this->formHidden($form->get('pie'));
+                echo $this->formHidden($form->get('bar'));
+                ?>
+                <button type="submit" class="btn btn-warning" style="padding: 7px 70px 7px 70px; margin-top: 15px;">
+                    <span
+                            class="glyphicon glyphicon-download-alt"></span>&nbsp;<?= $this->translate('__download_delivery') ?>
+                </button>
+                <?php
+                echo $this->form()->closeTag();
+            }
+        }
+        ?>
+    </div>
+    <div class="col-lg-5 text-center bg-info"
+    ">
+    <h2><?= ucfirst($this->translate('__results')) ?> : <?= $this->escapeHtml($total); ?>/100</h2>
+</div>
+<div class="col-lg-4 text-left">
+    <table style="width: 100%; margin-top: 15px;">
+        <tr>
+            <td align="center">
+                <?php
+
+                $container = new \Zend\Session\Container('navigation');
+                if ($container->offsetExists('lastQuestion')) {
+                    $link = $this->url('diagnostic', ['action' => 'diagnostic', 'id' => $container->lastQuestion]);
+                } else {
+                    $link = $this->url('diagnostic', ['action' => 'diagnostic']);
+                }
+                ?>
+                <a href="<?= $link ?>" class="btn btn-info" style="padding: 7px 70px 7px 70px;">
+                    <span class="glyphicon glyphicon-backward"></span>&nbsp;<?= $this->translate('__back') ?>
+                </a>
+            </td>
+            <td align="center">
+                <a href="<?= $this->url('diagnostic', ['action' => 'logout']); ?>" class="btn btn-default"
+                   style="padding: 7px 70px 7px 70px;">
+                    <span class="glyphicon glyphicon-home"></span>&nbsp;<?= $this->translate('__home') ?>
+                </a>
+            </td>
+        </tr>
+    </table>
+</div>
+</div>
+
+<br/>
+
+<div class="row">
+    <div class="col-lg-6 text-center" style="background-color: #EEEEEE;">
+        <h1><?php echo ucfirst($this->translate($this->escapeHtml('__riks_cartography'))); ?></h1>
+        <canvas id="canvas" width="600" height="400"></canvas>
+    </div>
+    <div class="col-lg-6 text-center">
+        <h1><?php echo ucfirst($this->translate($this->escapeHtml('__categories_maturities'))); ?></h1>
+        <table class="table table-striped table-hover">
+            <tr>
+                <th><?= $this->translate('__category'); ?></th>
+                <th style="text-align: center"><?= $this->translate('__actual'); ?></th>
+                <th style="text-align: center"><?= $this->translate('__target'); ?></th>
+            </tr>
+            <?php
+            foreach ($totalCategory as $key => $value):
+                ?>
+                <tr> <!-- // Colorie le texte en rouge si maturité < 33%, en orange si < 66% et en vert si > 66% -->
+                    <td class="text-left"><?php if ($value < 33){ ?><font color="red"><?= $this->translate($this->escapeHtml($key)); ?></font>
+						<?php }
+					        elseif ($value > 66){ ?><font color="#20DD1A"><?= $this->translate($this->escapeHtml($key)); ?></font><?php }
+						else { ?><font color="orange"><?= $this->translate($this->escapeHtml($key)); ?></font><?php }?>
+		    </td>
+                    <td class="text-center"><?= (int)$value ?>%</td>
+                    <td class="text-center"><?= (int)$this->totalCategoryTarget[$key] ?>%</td>
+                </tr>
+	    <?php
+ 	    endforeach;
+		?>
+        </table>
+	      	    <td>
+                        <table class="table"
+                               style="background-color: lightgrey; border: 1px solid darkgrey; height: 35px;">
+                            <tr>
+				<th><?= $this->translate('__maturity_levels') ?></th>
+                                <td style="background-color: red;"></td>
+                                <td class="text-left"><?= $this->translate('__maturity_none') ?></td>
+                                <td style="background-color: orange;"></td>
+                                <td class="text-left"><?= $this->translate('__maturity_medium') ?></td>
+                                <td style="background-color: green;"></td>
+                                <td class="text-left"><?= $this->translate('__maturity_ok') ?></td>
+                            </tr>
+                        </table>
+                    </td>
+
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-lg-6 text-center">
+        <?php
+        if (count($this->recommandations)) {
+            echo '<h1>' . ucfirst($this->translate($this->escapeHtml('__recommandations'))) . '</h1>';
+            ?>
+            <table class="table table-striped table-hover">
+                <tr>
+                    <th><?= $this->translate('__recommandation'); ?></th>
+                    <th><?= $this->translate('__category'); ?></th>
+                    <th style="text-align: center"><?= $this->translate('__gravity'); ?></th>
+                    <th style="text-align: center" width="100"><?= $this->translate('__goal'); ?></th>
+                </tr>
+                <?php foreach ($this->recommandations as $recommandation) :
+                    if (strlen($recommandation['recommandation'])) {
+                        ?>
+                        <tr>
+                            <td style="text-align: left;"><?= htmlspecialchars($recommandation['recommandation']); ?></td>
+                            <td style="text-align: left;"><?= $this->translate($recommandation['domaine']); ?></td>
+                            <td style="text-align: center;"><font color="red" size="4"><?= $recommandation['gravity-img']; ?></font></td>
+                            <td style="text-align: center;"><img
+                                        src="<?= $recommandation['maturity-img'] ?>"/>&nbsp;<span
+                                        class="glyphicon glyphicon-arrow-right"></span>&nbsp;<img
+                                        src="<?= $recommandation['maturityTarget-img'] ?>"/></td>
+                        </tr>
+                        <?php
+                    }
+                endforeach; ?>
+            </table>
+            <br/>
+            <table class="table table-borderless">
+                <tr>
+                    <th><?= $this->translate('__maturity_levels') ?></th>
+                    <th>&nbsp; &nbsp;</th>
+                    <th><?= $this->translate('__gravity_levels') ?></th>
+                </tr>
+                <tr>
+                    <td style="vertical-align: top;">
+                        <table class="table"
+                               style="background-color: lightgrey; border: 1px solid darkgrey; height: 45px;">
+                            <tr>
+                                <td><img src="/img/mat_none.png"/></td>
+                                <td><?= $this->translate('__maturity_none') ?></td>
+                                <td><img src="/img/mat_moyen.png"/></td>
+                                <td><?= $this->translate('__maturity_medium') ?></td>
+                                <td><img src="/img/mat_ok.png"/></td>
+                                <td><?= $this->translate('__maturity_ok') ?></td>
+                            </tr>
+                        </table>
+                    </td>
+                    <td></td>
+                    <td>
+                        <table class="table"
+                               style="background-color: lightgrey; border: 1px solid darkgrey; height: 45px;">
+                            <tr> <!-- // Affiche les points rouges Monarc à la place des triangles -->
+                                <td><font color="red" size="4">●</font></td>
+                                <td><?= $this->translate('__low') ?></td>
+                                <td><font color="red" size="4">●●</font></td>
+                                <td><?= $this->translate('__medium') ?></td>
+                                <td><font color="red" size="4">●●●</font></td>
+                                <td><?= $this->translate('__strong') ?></td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+            </table>
+            <?php
+        }
+        ?>
+
+    </div>
+    <div class="col-lg-6 text-center">
+
+        <h1><?php echo ucfirst($this->translate($this->escapeHtml('__maturity_evolution'))); ?></h1>
+        <div class="row">
+            <div class="col-lg-3 text-left"></div>
+            <div class="col-lg-6 text-left">
+                <br/>
+                <canvas id="canvas3" width="300" height="200"></canvas>
+                <div id="canvas3-legend" class="chart-legend"></div>
+            </div>
+            <div class="col-lg-3 text-left"></div>
+        </div>
+        <br/>
+        <h1><?php echo ucfirst($this->translate($this->escapeHtml('__doughnut_legend'))); ?></h1>
+        <div class="row">
+            <div class="col-lg-1 text-left"></div>
+            <div class="col-lg-10 text-center">
+                <br/><br/>
+                <div class="row">
+                    <div class="col-lg-2 text-left"></div>
+                    <div class="col-lg-8 text-left">
+                        <center>
+                            <canvas id="canvas2" width="380" height="350"></canvas> <!-- // Aggrandissement de la longueur pour que la légende soit visible entièrement-->
+                        </center>
+                        <div id="canvas2-legend" class="chart-legend"
+                             style="margin-left: auto; margin-right: auto; width: 330px; margin-top: 15px;"></div>
+                    </div>
+                    <div class="col-lg-2 text-left"></div>
+                </div>
+            </div>
+            <div class="col-lg-1 text-left"></div>
+        </div>
+    </div>
+</div>
+
+<div style="width: 100%; height: 100%;">
+    <canvas id="myChart" style="width: 100%; height: auto;"></canvas>
+</div>
+<div id="js-legend" class="chart-legend"></div>
+
+<script>
+
+// Création schéma radar avec changement de couleurs
+Chart.types.Radar.extend({
+    name: "radar",
+    initialize: function (radarChartData) {
+        Chart.types.Radar.prototype.initialize.apply(this, arguments);
+
+        var originalScaleDraw = this.scale.draw;
+        var ctx = this.chart.ctx;
+        this.scale.draw = function () {
+            var lineWidth = this.lineWidth;
+            // ce qui va permettre d'aggrandir les parties en couleur
+            this.lineWidth = lineWidth;
+
+            originalScaleDraw.apply(this, arguments);
+
+            ctx.lineWidth = this.lineWidth;
+            var scale = this;
+            // Dessin du radar
+            Chart.helpers.each(scale.yLabels, function () {
+                // couleur rouge quand inférieur à 33% de sécurité 
+                ctx.strokeStyle = "red";
+                ctx.beginPath();
+		ctx.lineWidth = 60;
+                for (var i = 0; i < scale.valuesCount; i++) {
+                    pointPosition = scale.getPointPosition(i, scale.calculateCenterOffset(18));
+                    if (i == 0) {
+                        ctx.moveTo(pointPosition.x, pointPosition.y);
+                    }  else {
+                        ctx.lineTo(pointPosition.x, pointPosition.y);
+                    }
+                }
+		ctx.closePath();
+		ctx.stroke();
+
+		// couleur orange quand entre 33 et 66%
+		ctx.beginPath();
+		ctx.strokeStyle = "orange";
+		ctx.lineWidth = 80;
+		for (var i = 0; i < scale.valuesCount; i++) {
+                    pointPosition = scale.getPointPosition(i, scale.calculateCenterOffset(58));
+                    if (i == 0) {
+                        ctx.moveTo(pointPosition.x, pointPosition.y);
+                    }  else {
+                        ctx.lineTo(pointPosition.x, pointPosition.y);
+                    }
+                }
+		ctx.closePath();
+		ctx.stroke();
+
+		// Couleur verte quand supérieur à 66%
+		ctx.beginPath();
+		ctx.strokeStyle = "green";
+		ctx.lineWidth = 56;
+		for (var i = 0; i < scale.valuesCount; i++) {
+                    pointPosition = scale.getPointPosition(i, scale.calculateCenterOffset(83));
+                    if (i == 0) {
+                        ctx.moveTo(pointPosition.x, pointPosition.y);
+                    }  else {
+                        ctx.lineTo(pointPosition.x, pointPosition.y);
+                    }
+                }
+                ctx.closePath();
+                ctx.stroke();
+            });
+        }
+    }
+});
+
+var radarChartData = {
+    labels: <?= json_encode($jsCategories) ?>,
+    datasets: [
+        {
+            label: "Visée",
+            fillColor: "<?= $color2 ?>",
+            strokeColor: "<?= $color2Border ?>",
+            pointColor: "<?= $color2Border ?>",
+            pointStrokeColor: "#fff",
+            pointStrokeColor: "#fff",
+            pointHighlightFill: "#fff",
+            pointHighlightStroke: "rgba(220,220,220,1)",
+            data: <?= json_encode($jsPercentsTarget) ?>
+        },
+        {
+            label: "Actuel",
+            fillColor: "<?= $color1 ?>",
+            strokeColor: "<?= $color1Border ?>",
+            pointColor: "<?= $color1Border ?>",
+            pointStrokeColor: "#fff",
+            pointStrokeColor: "#fff",
+            pointHighlightFill: "#fff",
+            pointHighlightStroke: "rgba(220,220,220,1)",
+            data: <?= json_encode($jsPercents) ?>
+        },
+    ]
+};
+
+
+var ctx = document.getElementById("canvas").getContext("2d");
+var myRadarChart = new Chart(ctx).radar(radarChartData, {
+	responsive: false,
+	onAnimationComplete: function () {
+		document.querySelector('input[name="radar"]').value = myRadarChart.toBase64Image();
+	}
+});
+
+
+    //doughnut chart
+    var doughnutChartData =  <?= json_encode($categoriesRepartition) ?>;
+
+    var myDoughnutChart = new Chart(document.getElementById("canvas2").getContext("2d")).Doughnut(doughnutChartData, {
+        responsive: false,
+        legendTemplate: "<ul class=\"<%=name.toLowerCase()%>-legend\"><% for (var i=0; i<segments.length; i++){%><li><span style=\"background-color:<%=segments[i].fillColor%>\"></span><%if(segments[i].label){%><%=segments[i].label%><%}%></li><%}%></ul>",
+        onAnimationComplete: function () {
+            document.querySelector('input[name="pie"]').value = myDoughnutChart.toBase64Image();
+        }
+    });
+
+    document.getElementById('canvas2-legend').innerHTML = myDoughnutChart.generateLegend();
+
+
+    //bar chart
+    var barChartData = {
+        labels: [''],
+        datasets: [
+            {
+                label: "<?= $this->translate('__actual') ?>",
+                fillColor: "<?= $color1 ?>",
+                strokeColor: "<?= $color1Border ?>",
+                highlightFill: "<?= $color1 ?>",
+                highlightStroke: "<?= $color1Border ?>",
+                data: [<?= $this->total ?>],
+            },
+            {
+                label: "<?= $this->translate('__target') ?>",
+                fillColor: "<?= $color2 ?>",
+                strokeColor: "<?= $color2Border ?>",
+                highlightFill: "<?= $color2 ?>",
+                highlightStroke: "<?= $color2Border ?>",
+                data: [<?= $this->totalTarget ?>],
+            },
+        ]
+    };
+
+    var myBarChart = new Chart(document.getElementById("canvas3").getContext("2d")).Bar(barChartData, {
+        responsive: true,
+        tooltipTemplate: "<%= value %>%",
+        onAnimationComplete: function () {
+            document.querySelector('input[name="bar"]').value = myBarChart.toBase64Image();
+        }
+    });
+
+    var newDataset = {
+        label: "<?= $this->translate('__target') ?>",
+        fillColor: "<?= $color2 ?>",
+        strokeColor: "<?= $color2Border ?>",
+        highlightFill: "<?= $color2 ?>",
+        highlightStroke: "<?= $color2Border ?>",
+        data: [<?= $this->totalTarget ?>],
+    };
+
+data
+function addData(chart, label, color, data) {
+		chart.data.datasets.push({
+	    label: label,
+      backgroundColor: color,
+      data: data
+    });
+    chart.update();
+}
+
+
+    document.getElementById('canvas3-legend').innerHTML = myBarChart.generateLegend();
+
+</script>

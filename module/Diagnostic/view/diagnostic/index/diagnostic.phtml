@@ -174,7 +174,7 @@ $currentCategoryId = (array_key_exists($id, $questions)) ? $questions[$id]->getC
         <table class="table table-responsive table-borderless">
             <tr>
                 <td><label><?= $this->translate($form->get('notes')->getLabel()) ?></label></td>
-                <td><?= $this->formTextarea($form->get('notes')) ?></td>
+                <td><?= $this->formTextarea($form->get('notes'), ['placeholder' => 'test2']) ?></td>
             </tr>
             <tr>
                 <td colspan="2">

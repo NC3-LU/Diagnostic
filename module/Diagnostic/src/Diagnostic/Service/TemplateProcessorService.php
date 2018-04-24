@@ -151,10 +151,10 @@ class TemplateProcessorService extends TemplateProcessor implements ServiceLocat
          $styleHeaderCellBlack = ['valign' => 'center', 'bgcolor' => '444444', 'size' => 10];
          $styleContentFontBold = ['bold' => true, 'size' => 10, 'name' => 'Century Schoolbook'];
          $styleContentFontBoldWhite = ['bold' => true, 'size' => 10, 'color' => 'FFFFFF', 'name' => 'Century Schoolbook'];
-         $styleContentFontMat0 = ['bold' => true, 'size' => 16, 'color' => 'FD661F', 'name' => 'Wingdings 2'];
-         $styleContentFontMat3 = ['bold' => true, 'size' => 11, 'name' => 'Century Schoolbook'];
-         $styleContentFontMat1 = ['bold' => true, 'size' => 16, 'color' => 'FFBC1C', 'name' => 'Century Schoolbook'];
-         $styleContentFontMat2 = ['bold' => true, 'size' => 16, 'color' => 'D6F107', 'name' => 'Wingdings 2'];
+         $styleContentFontMat0 = ['bold' => true, 'size' => 18, 'color' => 'FD661F', 'name' => 'Wingdings'];
+         $styleContentFontMat3 = ['bold' => true, 'size' => 18, 'color' => 'DFDFDF', 'name' => 'Wingdings'];
+         $styleContentFontMat1 = ['bold' => true, 'size' => 18, 'color' => 'FFBC1C', 'name' => 'Wingdings'];
+         $styleContentFontMat2 = ['bold' => true, 'size' => 18, 'color' => 'D6F107', 'name' => 'Wingdings'];
          $styleContentCell = ['align' => 'left', 'valign' => 'center', 'size' => 10];
          $styleContentCellMat0 = ['align' => 'left', 'valign' => 'center', 'size' => 10];
          $styleContentCellMat3 = ['align' => 'left', 'valign' => 'center', 'size' => 10];
@@ -213,7 +213,7 @@ class TemplateProcessorService extends TemplateProcessor implements ServiceLocat
 
           $maturity = $translator->translate('__maturity_none');
           $styleContentCellMaturity = ['align' => 'left', 'bgcolor' => 'FD661F', 'valign' => 'center', 'size' => 10];
-	  // 2 = 100%, 1 = 50%, 3 = non applicable en maturité
+	  // 2 = 100%, 1 = 50%, 3 = not applicable for the  maturity
           switch ($value['maturity']) {
               case 3:
                   $maturity = $translator->translate('__maturity_plan');
@@ -280,13 +280,13 @@ class TemplateProcessorService extends TemplateProcessor implements ServiceLocat
         $table->addRow();
         $table->addCell(\PhpOffice\Common\Font::centimeterSizeToTwips(7.00), $cellRowContinueBlack);
         $table->addCell(\PhpOffice\Common\Font::centimeterSizeToTwips(7.00), $cellRowContinueBlack);
-        $table->addCell(\PhpOffice\Common\Font::centimeterSizeToTwips(1.00), $styleHeaderCellBlack)->addText('', $styleContentFontMat2, $alignCenter);
-        $table->addCell(\PhpOffice\Common\Font::centimeterSizeToTwips(1.00), $styleHeaderCellBlack)->addText('±', $styleContentFontMat1, $alignCenter);
-        $table->addCell(\PhpOffice\Common\Font::centimeterSizeToTwips(1.00), $styleHeaderCellBlack)->addText('', $styleContentFontMat0, $alignCenter);
-        $table->addCell(\PhpOffice\Common\Font::centimeterSizeToTwips(1.00), $styleHeaderCellBlack)->addText('N/A', $styleContentFontBoldWhite, $alignCenter);
+        $table->addCell(\PhpOffice\Common\Font::centimeterSizeToTwips(1.00), $styleHeaderCellBlack)->addText('n', $styleContentFontMat2, $alignCenter);
+        $table->addCell(\PhpOffice\Common\Font::centimeterSizeToTwips(1.00), $styleHeaderCellBlack)->addText('n', $styleContentFontMat1, $alignCenter);
+        $table->addCell(\PhpOffice\Common\Font::centimeterSizeToTwips(1.00), $styleHeaderCellBlack)->addText('n', $styleContentFontMat0, $alignCenter);
+        $table->addCell(\PhpOffice\Common\Font::centimeterSizeToTwips(1.00), $styleHeaderCellBlack)->addText('n', $styleContentFontMat3, $alignCenter);
         $table->addCell(\PhpOffice\Common\Font::centimeterSizeToTwips(7.00), $cellRowContinueBlack);
-        $table->addCell(\PhpOffice\Common\Font::centimeterSizeToTwips(1.10), $styleHeaderCellBlack)->addText('', $styleContentFontMat2, $alignCenter);
-        $table->addCell(\PhpOffice\Common\Font::centimeterSizeToTwips(1.10), $styleHeaderCellBlack)->addText('±', $styleContentFontMat1, $alignCenter);
+        $table->addCell(\PhpOffice\Common\Font::centimeterSizeToTwips(1.10), $styleHeaderCellBlack)->addText('n', $styleContentFontMat2, $alignCenter);
+        $table->addCell(\PhpOffice\Common\Font::centimeterSizeToTwips(1.10), $styleHeaderCellBlack)->addText('n', $styleContentFontMat1, $alignCenter);
 
         $previousCategoryId = null;
 

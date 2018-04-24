@@ -31,7 +31,7 @@ class QuestionForm extends Form
                         'label_attributes' => ['class' => 'maticon matmoyen', 'title' => '__maturity_medium'],
                     ],
                     1 => [
-                        'value' => 3, // Valeur pour vérifier si la maturité est à ne pas prendre en compte
+                        'value' => 3, // The value is N/A, so it isn't counted in the score
                         'label_attributes' => ['class' => 'maticon matplan', 'title' => '__maturity_plan'],
                     ],
                     0 => [
@@ -119,6 +119,7 @@ class QuestionForm extends Form
             ],
             'attributes' => [
                 'class' => 'form-control notes-area',
+		//'placeholder' => 'test1',
             ]
         ]);
 

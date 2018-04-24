@@ -38,13 +38,13 @@ class CalculService extends AbstractService
             if (array_key_exists($questionId, $results)) {
                 if (strlen($results[$questionId]['notes'])) {
                     $points = $results[$questionId]['maturity'] * $threshold;
-		// Si la maturité est 3 donc NA, elle n'est pas prise en compte dans les points
+		// If the maturity equal to 3, so N/A, it isn't count in the score
 		if ($results[$questionId]['maturity'] == 3) {
 			$points = 0;
 			$threshold = 0;
 		}
                     $pointsTarget = $results[$questionId]['maturityTarget'] * $threshold;
-		    // Affichage des points rouges MONARC à la place des triangles
+		    // Display red points like in Monarc instead of triangles
 		    if ($results[$questionId]['gravity'] == 1) $temp = '●';
  		    elseif ($results[$questionId]['gravity'] == 2) $temp = '●●';
 		    else $temp = '●●●';
@@ -53,7 +53,7 @@ class CalculService extends AbstractService
                         'threshold' => $threshold,
                         'domaine' => $question->getCategoryTranslationKey(),
                         'gravity' => $results[$questionId]['gravity'],
-			'gravity-img' => $temp, // On prend les points rouges en fonction de l'importance
+			'gravity-img' => $temp, // Display red points
                         'maturity' => $results[$questionId]['maturity'],
                         'maturity-img' => $this->getImgMaturity($results[$questionId]['maturity']),
                         'maturityTarget' => $results[$questionId]['maturityTarget'],
@@ -72,7 +72,7 @@ class CalculService extends AbstractService
             }
         }
 
-	// On divise par 2 pour mettre à 50% au lieu de 33% en divisant par 3
+	// Divided by 2 to make the score 0/1, 0.5/1, 1/1, instead of 3 for 0/1, 0.33/1, 0.66/1, 1/1
         $total = ($totalThreshold) ? round($totalPoints / $totalThreshold * 100 / 2) : 0;
         $totalTarget = ($totalThreshold) ? round($totalPointsTarget / $totalThreshold * 100 / 2) : 0;
 
@@ -130,7 +130,7 @@ class CalculService extends AbstractService
      */
     public function getImgMaturity($maturity)
     {
-	// 2 = 100%, 1 = 50%, 0 = 0%, 3 = NA
+	// 2 = 100%, 1 = 50%, 0 = 0%, 3 = N/A
         switch ($maturity) {
             case 2:
                 $img = '/img/mat_ok.png';

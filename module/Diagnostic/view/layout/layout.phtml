@@ -26,13 +26,12 @@
 
 </head>
 <body>
-
 <div id="wrapper">
     <div id="header">
         <div class="top-line">&nbsp;</div>
         <div class="top">
             <div class="row">
-                <div class="col-lg-1"></div> <!-- // Logo diagnostic à la place du logo cases -->
+                <div class="col-lg-1"></div> <!-- // Diagnostic logo instead of Cases logo -->
                 <div class="col-lg-3"><a href="http://www.cases.lu"><img
                                 src="/img/logo_diagnostic.jpg"
                                 border="0"
@@ -51,7 +50,7 @@
                         $frClass = 'btn-info';
                         $enClass = '';
 			$deClass = '';
-                    } else { // ajout de la langue allemande
+                    } else { // German language added
 			$frClass = '';
                         $enClass = '';
 			$deClass = 'btn-info';
@@ -100,19 +99,20 @@
                                     </button>
                                 </a>
                             </td>
-			     <!-- // Ajout de la langue allemande -->
+			     <!-- // German language added -->
 			     <td width="75">
-                                <a href="<?php echo $this->url('diagnostic', ['action' => 'language', 'id' => 3]); ?>">
-                                    <button type="submit" name="language" value="de"
+                               <!-- <a href="<?php echo $this->url('diagnostic', ['action' => 'language', 'id' => 3]); ?>">-->
+                                    <button type="submit" name="language" value="de" onclick="toggle_txt ();"
                                             class="btn-default btn-blue btn-sm <?php echo $deClass ?>"><span
                                                 class="text-uppercase"><span class="flag-icon flag-icon-de"></span>&nbsp;&nbsp;de</span>
                                     </button>
                                 </a>
                             </td>
-
+			    <span id="span_txt" style="display:none;">Not yet available</span>
                         </tr>
                     </table>
-                </div>
+
+            </div>
                 <div class="col-lg-1"></div>
             </div>
         </div>
@@ -185,4 +185,15 @@
     </div>
 </div>
 </body>
+
+<!-- // Display the not yet available txt -->
+<script>
+function toggle_txt () {
+  var span = document.getElementById("span_txt");
+  if(span.style.display == "none") {
+    span.style.display = "inline";
+  }
+}
+</script>
+
 </html>
