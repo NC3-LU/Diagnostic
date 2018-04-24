@@ -145,27 +145,27 @@ class TemplateProcessorService extends TemplateProcessor implements ServiceLocat
 
 
 
-
+	 // ContentMat : 0 = 0/1, 1 = 0.5/1, 2 = 1/1, 3 = NA
          //css Tables
          $styleHeaderCell = ['valign' => 'center', 'bgcolor' => 'DFDFDF', 'size' => 10];
          $styleHeaderCellBlack = ['valign' => 'center', 'bgcolor' => '444444', 'size' => 10];
          $styleContentFontBold = ['bold' => true, 'size' => 10, 'name' => 'Century Schoolbook'];
          $styleContentFontBoldWhite = ['bold' => true, 'size' => 10, 'color' => 'FFFFFF', 'name' => 'Century Schoolbook'];
-         $styleContentFontMat0 = ['bold' => true, 'size' => 16, 'color' => 'FD661F', 'name' => 'Wingdings 2'];
-         $styleContentFontMat1 = ['bold' => true, 'size' => 11, 'name' => 'Century Schoolbook'];
-         $styleContentFontMat2 = ['bold' => true, 'size' => 16, 'color' => 'FFBC1C', 'name' => 'Century Schoolbook'];
-         $styleContentFontMat3 = ['bold' => true, 'size' => 16, 'color' => 'D6F107', 'name' => 'Wingdings 2'];
+         $styleContentFontMat0 = ['bold' => true, 'size' => 18, 'color' => 'FD661F', 'name' => 'Wingdings'];
+         $styleContentFontMat3 = ['bold' => true, 'size' => 18, 'color' => 'DFDFDF', 'name' => 'Wingdings'];
+         $styleContentFontMat1 = ['bold' => true, 'size' => 18, 'color' => 'FFBC1C', 'name' => 'Wingdings'];
+         $styleContentFontMat2 = ['bold' => true, 'size' => 18, 'color' => 'D6F107', 'name' => 'Wingdings'];
          $styleContentCell = ['align' => 'left', 'valign' => 'center', 'size' => 10];
          $styleContentCellMat0 = ['align' => 'left', 'valign' => 'center', 'size' => 10];
+         $styleContentCellMat3 = ['align' => 'left', 'valign' => 'center', 'size' => 10];
          $styleContentCellMat1 = ['align' => 'left', 'valign' => 'center', 'size' => 10];
          $styleContentCellMat2 = ['align' => 'left', 'valign' => 'center', 'size' => 10];
-         $styleContentCellMat3 = ['align' => 'left', 'valign' => 'center', 'size' => 10];
+         $styleContentCellMatTarget1 = ['align' => 'left', 'valign' => 'center', 'size' => 10];
          $styleContentCellMatTarget2 = ['align' => 'left', 'valign' => 'center', 'size' => 10];
-         $styleContentCellMatTarget3 = ['align' => 'left', 'valign' => 'center', 'size' => 10];
          $bgcolorMat0 = 'FD661F';
-         $bgcolorMat1 = 'DFDFDF';
-         $bgcolorMat2 = 'FFBC1C';
-         $bgcolorMat3 = 'D6F107';
+         $bgcolorMat3 = 'DFDFDF';
+         $bgcolorMat1 = 'FFBC1C';
+         $bgcolorMat2 = 'D6F107';
          $styleContentFontGravity = ['bold' => true, 'color' => 'FF0000', 'size' => 12];
          $alignCenter = ['Alignment' => 'center', 'spaceAfter' => '0'];
          $alignLeft = ['Alignment' => 'left', 'spaceAfter' => '0'];
@@ -213,17 +213,17 @@ class TemplateProcessorService extends TemplateProcessor implements ServiceLocat
 
           $maturity = $translator->translate('__maturity_none');
           $styleContentCellMaturity = ['align' => 'left', 'bgcolor' => 'FD661F', 'valign' => 'center', 'size' => 10];
-
+	  // 2 = 100%, 1 = 50%, 3 = not applicable for the  maturity
           switch ($value['maturity']) {
-              case 1:
+              case 3:
                   $maturity = $translator->translate('__maturity_plan');
                   $styleContentCellMaturity = ['align' => 'left', 'bgcolor' => 'E7E6E6','valign' => 'center', 'size' => 10];
                   break;
-              case 2:
+              case 1:
                   $maturity = $translator->translate('__maturity_medium');
                   $styleContentCellMaturity = ['align' => 'left', 'bgcolor' => 'FFBC1C', 'valign' => 'center', 'size' => 10];
                   break;
-              case 3:
+              case 2:
                   $maturity = $translator->translate('__maturity_ok');
                   $styleContentCellMaturity = ['align' => 'left', 'bgcolor' => 'D6F107', 'valign' => 'center', 'size' => 10];
                   break;
@@ -232,17 +232,17 @@ class TemplateProcessorService extends TemplateProcessor implements ServiceLocat
           $maturityTarget = $translator->translate('__maturity_none');
           $styleContentCellMaturityTarget = ['align' => 'left', 'bgcolor' => 'FD661F', 'valign' => 'center', 'size' => 10];
           switch ($value['maturityTarget']) {
-              case 1:
+              case 3:
                   $maturityTarget = $translator->translate('__maturity_plan');
                   $styleContentCellMaturityTarget = ['align' => 'left', 'bgcolor' => 'E7E6E6', 'valign' => 'center', 'size' => 10];
 
                   break;
-              case 2:
+              case 1:
                   $maturityTarget = $translator->translate('__maturity_medium');
                   $styleContentCellMaturityTarget = ['align' => 'left', 'bgcolor' => 'FFBC1C', 'valign' => 'center', 'size' => 10];
 
                   break;
-              case 3:
+              case 2:
                   $maturityTarget = $translator->translate('__maturity_ok');
                   $styleContentCellMaturityTarget = ['align' => 'left', 'bgcolor' => 'D6F107', 'valign' => 'center', 'size' => 10];
                   break;
@@ -280,13 +280,13 @@ class TemplateProcessorService extends TemplateProcessor implements ServiceLocat
         $table->addRow();
         $table->addCell(\PhpOffice\Common\Font::centimeterSizeToTwips(7.00), $cellRowContinueBlack);
         $table->addCell(\PhpOffice\Common\Font::centimeterSizeToTwips(7.00), $cellRowContinueBlack);
-        $table->addCell(\PhpOffice\Common\Font::centimeterSizeToTwips(1.00), $styleHeaderCellBlack)->addText('', $styleContentFontMat3, $alignCenter);
-        $table->addCell(\PhpOffice\Common\Font::centimeterSizeToTwips(1.00), $styleHeaderCellBlack)->addText('±', $styleContentFontMat2, $alignCenter);
-        $table->addCell(\PhpOffice\Common\Font::centimeterSizeToTwips(1.00), $styleHeaderCellBlack)->addText('', $styleContentFontMat0, $alignCenter);
-        $table->addCell(\PhpOffice\Common\Font::centimeterSizeToTwips(1.00), $styleHeaderCellBlack)->addText('N/A', $styleContentFontBoldWhite, $alignCenter);
+        $table->addCell(\PhpOffice\Common\Font::centimeterSizeToTwips(1.00), $styleHeaderCellBlack)->addText('n', $styleContentFontMat2, $alignCenter);
+        $table->addCell(\PhpOffice\Common\Font::centimeterSizeToTwips(1.00), $styleHeaderCellBlack)->addText('n', $styleContentFontMat1, $alignCenter);
+        $table->addCell(\PhpOffice\Common\Font::centimeterSizeToTwips(1.00), $styleHeaderCellBlack)->addText('n', $styleContentFontMat0, $alignCenter);
+        $table->addCell(\PhpOffice\Common\Font::centimeterSizeToTwips(1.00), $styleHeaderCellBlack)->addText('n', $styleContentFontMat3, $alignCenter);
         $table->addCell(\PhpOffice\Common\Font::centimeterSizeToTwips(7.00), $cellRowContinueBlack);
-        $table->addCell(\PhpOffice\Common\Font::centimeterSizeToTwips(1.10), $styleHeaderCellBlack)->addText('', $styleContentFontMat3, $alignCenter);
-        $table->addCell(\PhpOffice\Common\Font::centimeterSizeToTwips(1.10), $styleHeaderCellBlack)->addText('±', $styleContentFontMat2, $alignCenter);
+        $table->addCell(\PhpOffice\Common\Font::centimeterSizeToTwips(1.10), $styleHeaderCellBlack)->addText('n', $styleContentFontMat2, $alignCenter);
+        $table->addCell(\PhpOffice\Common\Font::centimeterSizeToTwips(1.10), $styleHeaderCellBlack)->addText('n', $styleContentFontMat1, $alignCenter);
 
         $previousCategoryId = null;
 
@@ -317,13 +317,13 @@ class TemplateProcessorService extends TemplateProcessor implements ServiceLocat
                   $table->addRow(400);
                   $table->addCell(\PhpOffice\Common\Font::centimeterSizeToTwips(7.00), $styleContentCell)->addText($questionCollect, $styleContentFont, $alignLeft);
                   $table->addCell(\PhpOffice\Common\Font::centimeterSizeToTwips(7.00), $styleContentCell)->addText($notes, $styleContentFont, $alignLeft);
-                  $table->addCell(\PhpOffice\Common\Font::centimeterSizeToTwips(1.00), $styleContentCellMat3)->addText('', $styleContentFontBold, $alignCenter);
                   $table->addCell(\PhpOffice\Common\Font::centimeterSizeToTwips(1.00), $styleContentCellMat2)->addText('', $styleContentFontBold, $alignCenter);
-                  $table->addCell(\PhpOffice\Common\Font::centimeterSizeToTwips(1.00), $styleContentCellMat0)->addText('', $styleContentFontBold, $alignCenter);
                   $table->addCell(\PhpOffice\Common\Font::centimeterSizeToTwips(1.00), $styleContentCellMat1)->addText('', $styleContentFontBold, $alignCenter);
+                  $table->addCell(\PhpOffice\Common\Font::centimeterSizeToTwips(1.00), $styleContentCellMat0)->addText('', $styleContentFontBold, $alignCenter);
+                  $table->addCell(\PhpOffice\Common\Font::centimeterSizeToTwips(1.00), $styleContentCellMat3)->addText('', $styleContentFontBold, $alignCenter);
                   $table->addCell(\PhpOffice\Common\Font::centimeterSizeToTwips(7.00), $styleContentCell)->addText($value['recommandation'], $styleContentFont, $alignLeft);
-                  $table->addCell(\PhpOffice\Common\Font::centimeterSizeToTwips(1.00), $styleContentCellMatTarget3)->addText('', $styleContentFontBold, $alignCenter);
                   $table->addCell(\PhpOffice\Common\Font::centimeterSizeToTwips(1.00), $styleContentCellMatTarget2)->addText('', $styleContentFontBold, $alignCenter);
+                  $table->addCell(\PhpOffice\Common\Font::centimeterSizeToTwips(1.00), $styleContentCellMatTarget1)->addText('', $styleContentFontBold, $alignCenter);
 
                   for ($i = 0; $i <= 3 ; $i++) {
                       ${'styleContentCellMat' . $i} = ['valign' => 'center', 'size' => 10];
@@ -341,7 +341,7 @@ class TemplateProcessorService extends TemplateProcessor implements ServiceLocat
 
         $j = 1;
         foreach ($categories as $categoryId => $category) {
-          $this->setValue('PRISE_NOTE_CATEG_' . $j, $translator->translate($category['label']));
+	  $this->setValue('PRISE_NOTE_CATEG_' . $j, $translator->translate($category['label']));
           $this->setValue('CATEG__PERCENT_' . $j, $category['percent'] . '%');
           $this->setValue('CATEG__PERCENT_TARG_' . $j, $category['percentTarget'] . '%');
         $j++;
