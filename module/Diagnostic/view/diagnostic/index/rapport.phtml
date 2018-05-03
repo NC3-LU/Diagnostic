@@ -14,13 +14,12 @@ foreach ($this->totalCategoryTarget as $key => $value) {
     $jsPercentsTarget[] = $value;
 }
 
-$color1 = 'rgba(217, 83, 79, 0.4)';
+$color1 = 'rgba(217, 83, 79, 0.5)';
 $color1Border = 'rgba(212, 63, 58, 1)';
-$color2 = 'rgba(91, 192, 222, 0.2)';
+$color2 = 'rgba(91, 192, 222, 0.5)';
 $color2Border = 'rgba(70, 184, 218, 1)';
 
 echo $this->inlineScript()->prependFile($this->basePath('js/Chart.js-master/Chart.js'));
-//echo $this->inlineScript()->prependFile($this->basePath('npm_components/chart.js/dist/Chart.min.js'));
 ?>
 
 <style>
@@ -102,36 +101,15 @@ echo $this->inlineScript()->prependFile($this->basePath('js/Chart.js-master/Char
                 <th style="text-align: center"><?= $this->translate('__target'); ?></th>
             </tr>
             <?php
-            foreach ($totalCategory as $key => $value):
+            foreach ($totalCategory as $key => $value) :
                 ?>
-                <tr> <!-- // Color the text in red if maturity < 33%, in orange if < 66%, in green if > 66% -->
-                    <td class="text-left"><?php if ($value < 33){ ?><font color="red"><?= $this->translate($this->escapeHtml($key)); ?></font>
-						<?php }
-					        elseif ($value > 66){ ?><font color="#20DD1A"><?= $this->translate($this->escapeHtml($key)); ?></font><?php }
-						else { ?><font color="orange"><?= $this->translate($this->escapeHtml($key)); ?></font><?php }?>
-		    </td>
-                    <td class="text-center"><?php if ($value < 33){ ?><font color="red"><?= (int)$value ?>%</font>
-						<?php }
-					        elseif ($value > 66){ ?><font color="#20DD1A"><?= (int)$value ?>%</font><?php }
-						else { ?><font color="orange"><?= (int)$value ?>%</font><?php }?>
-		    </td>
+                <tr>
+                    <td class="text-left"><?= $this->translate($this->escapeHtml($key)) ?></td>
+                    <td class="text-center"><?= (int)$value ?>%</td>
                     <td class="text-center"><?= (int)$this->totalCategoryTarget[$key] ?>%</td>
                 </tr>
-	    <?php
- 	    endforeach;
-		?>
+            <?php endforeach; ?>
         </table>
-	      	    <td>
-                        <table class="table"
-                               style="background-color: lightgrey; border: 1px solid darkgrey; height: 35px;">
-                            <tr>
-				<th><?= $this->translate('__maturity_levels') ?></th>
-                                <td class="text-left" style="color:red"><?= $this->translate('__maturity_none') ?></td>
-                                <td class="text-left" style="color:orange"><?= $this->translate('__maturity_medium') ?></td>
-                                <td class="text-left" style="color:#20DD1A"><?= $this->translate('__maturity_ok') ?></td>
-                            </tr>
-                        </table>
-                    </td>
 
     </div>
 </div>
@@ -149,20 +127,13 @@ echo $this->inlineScript()->prependFile($this->basePath('js/Chart.js-master/Char
                     <th style="text-align: center"><?= $this->translate('__gravity'); ?></th>
                     <th style="text-align: center" width="100"><?= $this->translate('__goal'); ?></th>
                 </tr>
-                <?php
-		foreach ($this->recommandations as $recommandation) :
+                <?php foreach ($this->recommandations as $recommandation) :
                     if (strlen($recommandation['recommandation'])) {
                         ?>
                         <tr>
                             <td style="text-align: left;"><?= htmlspecialchars($recommandation['recommandation']); ?></td>
-                            <td style="text-align: left;"><?php for ($i=1; $i<=8; $i++) { // Search the right category and set its colour in the recommandation table
-									if ('__category' . $i == $recommandation['domaine']){
-									    if ($totalCategory['__category' . $i] < 33){
-										?><font color="red"><?= $this->translate($recommandation['domaine']); ?></font>
-							  	    <?php } elseif ($totalCategory['__category' . $i] > 66){ ?><font color="#20DD1A"><?= $this->translate($recommandation['domaine']); ?></font>
-						     	  	    <?php } else { ?><font color="orange"><?= $this->translate($recommandation['domaine']); ?></font><?php }}}?>
-			    </td>
-                            <td style="text-align: center;"><font color="red" size="4"><?= $recommandation['gravity-img']; ?></font></td>
+                            <td style="text-align: left;"><?= $this->translate($recommandation['domaine']); ?></td>
+                            <td style="text-align: center;"><img src="<?= $recommandation['gravity-img']; ?>"/></td>
                             <td style="text-align: center;"><img
                                         src="<?= $recommandation['maturity-img'] ?>"/>&nbsp;<span
                                         class="glyphicon glyphicon-arrow-right"></span>&nbsp;<img
@@ -186,6 +157,8 @@ echo $this->inlineScript()->prependFile($this->basePath('js/Chart.js-master/Char
                             <tr>
                                 <td><img src="/img/mat_none.png"/></td>
                                 <td><?= $this->translate('__maturity_none') ?></td>
+                                <td><img src="/img/mat_plan.png"/></td>
+                                <td><?= $this->translate('__maturity_plan') ?></td>
                                 <td><img src="/img/mat_moyen.png"/></td>
                                 <td><?= $this->translate('__maturity_medium') ?></td>
                                 <td><img src="/img/mat_ok.png"/></td>
@@ -197,12 +170,12 @@ echo $this->inlineScript()->prependFile($this->basePath('js/Chart.js-master/Char
                     <td>
                         <table class="table"
                                style="background-color: lightgrey; border: 1px solid darkgrey; height: 45px;">
-                            <tr> <!-- // Display red points like in Monarc instead of triangles -->
-                                <td><font color="red" size="4">●</font></td>
+                            <tr>
+                                <td><img src="/img/gravity_1.png"/></td>
                                 <td><?= $this->translate('__low') ?></td>
-                                <td><font color="red" size="4">●●</font></td>
+                                <td><img src="/img/gravity_2.png"/></td>
                                 <td><?= $this->translate('__medium') ?></td>
-                                <td><font color="red" size="4">●●●</font></td>
+                                <td><img src="/img/gravity_3.png"/></td>
                                 <td><?= $this->translate('__strong') ?></td>
                             </tr>
                         </table>
@@ -236,7 +209,7 @@ echo $this->inlineScript()->prependFile($this->basePath('js/Chart.js-master/Char
                     <div class="col-lg-2 text-left"></div>
                     <div class="col-lg-8 text-left">
                         <center>
-                            <canvas id="canvas2" width="380" height="350"></canvas> <!-- // extension of the width in order to properly see the legend of the graph-->
+                            <canvas id="canvas2" width="350" height="350"></canvas>
                         </center>
                         <div id="canvas2-legend" class="chart-legend"
                              style="margin-left: auto; margin-right: auto; width: 330px; margin-top: 15px;"></div>
@@ -255,107 +228,59 @@ echo $this->inlineScript()->prependFile($this->basePath('js/Chart.js-master/Char
 <div id="js-legend" class="chart-legend"></div>
 
 <script>
+    //radar chart
+    var radarChartData = {
+        labels: <?= json_encode($jsCategories) ?>,
+        datasets: [
+            {
+                label: "Cases radar",
+                fillColor: "<?= $color1 ?>",
+                strokeColor: "<?= $color1Border ?>",
+                pointColor: "<?= $color1Border ?>",
+                pointStrokeColor: "#fff",
+                pointStrokeColor: "#fff",
+                pointHighlightFill: "#fff",
+                pointHighlightStroke: "rgba(220,220,220,1)",
+                data: <?= json_encode($jsPercents) ?>
+            }
+        ]
+    };
 
-// Creation of the radar chart
-Chart.types.Radar.extend({
-    name: "radar",
-    initialize: function (radarChartData) {
-        Chart.types.Radar.prototype.initialize.apply(this, arguments);
+    var radarChartData = {
+        labels: <?= json_encode($jsCategories) ?>,
+        datasets: [
+            {
+                label: "Visée",
+                fillColor: "<?= $color2 ?>",
+                strokeColor: "<?= $color2Border ?>",
+                pointColor: "<?= $color2Border ?>",
+                pointStrokeColor: "#fff",
+                pointStrokeColor: "#fff",
+                pointHighlightFill: "#fff",
+                pointHighlightStroke: "rgba(220,220,220,1)",
+                data: <?= json_encode($jsPercentsTarget) ?>
+            },
+            {
+                label: "Actuel",
+                fillColor: "<?= $color1 ?>",
+                strokeColor: "<?= $color1Border ?>",
+                pointColor: "<?= $color1Border ?>",
+                pointStrokeColor: "#fff",
+                pointStrokeColor: "#fff",
+                pointHighlightFill: "#fff",
+                pointHighlightStroke: "rgba(220,220,220,1)",
+                data: <?= json_encode($jsPercents) ?>
+            },
+        ]
+    };
 
-        var originalScaleDraw = this.scale.draw;
-        var ctx = this.chart.ctx;
-        this.scale.draw = function () {
-            var lineWidth = this.lineWidth;
-
-            this.lineWidth = lineWidth;
-
-            originalScaleDraw.apply(this, arguments);
-
-            ctx.lineWidth = this.lineWidth;
-            var scale = this;
-            // Draw
-            Chart.helpers.each(scale.yLabels, function () {
-                // Red color when < 33%
-                ctx.strokeStyle = "red";
-                ctx.beginPath();
-                for (var i = 0; i < scale.valuesCount; i++) {
-                    pointPosition = scale.getPointPosition(i, scale.calculateCenterOffset(33));
-                    if (i == 0) {
-                        ctx.moveTo(pointPosition.x, pointPosition.y);
-                    }  else {
-                        ctx.lineTo(pointPosition.x, pointPosition.y);
-                    }
-                }
-		ctx.closePath();
-		ctx.stroke();
-
-		// Orange color when between 33 and 66%
-		ctx.beginPath();
-		ctx.strokeStyle = "orange";
-		for (var i = 0; i < scale.valuesCount; i++) {
-                    pointPosition = scale.getPointPosition(i, scale.calculateCenterOffset(66));
-                    if (i == 0) {
-                        ctx.moveTo(pointPosition.x, pointPosition.y);
-                    }  else {
-                        ctx.lineTo(pointPosition.x, pointPosition.y);
-                    }
-                }
-		ctx.closePath();
-		ctx.stroke();
-
-		// Green color when superior to 66%
-		ctx.beginPath();
-		ctx.strokeStyle = "green";
-		for (var i = 0; i < scale.valuesCount; i++) {
-                    pointPosition = scale.getPointPosition(i, scale.calculateCenterOffset(100));
-                    if (i == 0) {
-                        ctx.moveTo(pointPosition.x, pointPosition.y);
-                    }  else {
-                        ctx.lineTo(pointPosition.x, pointPosition.y);
-                    }
-                }
-                ctx.closePath();
-                ctx.stroke();
-            });
+    var myRadarChart = new Chart(document.getElementById("canvas").getContext("2d")).Radar(radarChartData, {
+        responsive: false,
+        onAnimationComplete: function () {
+            document.querySelector('input[name="radar"]').value = myRadarChart.toBase64Image();
         }
-    }
-});
+    });
 
-var radarChartData = {
-    labels: <?= json_encode($jsCategories) ?>,
-    datasets: [
-        {
-            label: "Visée",
-            fillColor: "<?= $color2 ?>",
-            strokeColor: "<?= $color2Border ?>",
-            pointColor: "<?= $color2Border ?>",
-            pointStrokeColor: "#fff",
-            pointStrokeColor: "#fff",
-            pointHighlightFill: "#fff",
-            pointHighlightStroke: "rgba(220,220,220,1)",
-            data: <?= json_encode($jsPercentsTarget) ?>
-        },
-        {
-            label: "Actuel",
-            fillColor: "<?= $color1 ?>",
-            strokeColor: "<?= $color1Border ?>",
-            pointColor: "<?= $color1Border ?>",
-            pointStrokeColor: "#fff",
-            pointStrokeColor: "#fff",
-            pointHighlightFill: "#fff",
-            pointHighlightStroke: "rgba(220,220,220,1)",
-            data: <?= json_encode($jsPercents) ?>
-        },
-    ]
-};
-
-var ctx = document.getElementById("canvas").getContext("2d");
-var myRadarChart = new Chart(ctx).radar(radarChartData, {
-	responsive: false,
-	onAnimationComplete: function () {
-		document.querySelector('input[name="radar"]').value = myRadarChart.toBase64Image();
-	}
-});
 
     //doughnut chart
     var doughnutChartData =  <?= json_encode($categoriesRepartition) ?>;
@@ -370,6 +295,7 @@ var myRadarChart = new Chart(ctx).radar(radarChartData, {
 
     document.getElementById('canvas2-legend').innerHTML = myDoughnutChart.generateLegend();
 
+
     //bar chart
     var barChartData = {
         labels: [''],
@@ -380,7 +306,7 @@ var myRadarChart = new Chart(ctx).radar(radarChartData, {
                 strokeColor: "<?= $color1Border ?>",
                 highlightFill: "<?= $color1 ?>",
                 highlightStroke: "<?= $color1Border ?>",
-                data: [<?= $this->total ?>],
+                data: [<?= $this->total ?>]
             },
             {
                 label: "<?= $this->translate('__target') ?>",
@@ -388,9 +314,8 @@ var myRadarChart = new Chart(ctx).radar(radarChartData, {
                 strokeColor: "<?= $color2Border ?>",
                 highlightFill: "<?= $color2 ?>",
                 highlightStroke: "<?= $color2Border ?>",
-                data: [<?= $this->totalTarget ?>],
-            },
-
+                data: [<?= $this->totalTarget ?>]
+            }
         ]
     };
 
