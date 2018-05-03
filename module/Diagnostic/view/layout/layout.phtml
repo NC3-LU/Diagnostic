@@ -26,16 +26,17 @@
 
 </head>
 <body>
-
 <div id="wrapper">
     <div id="header">
         <div class="top-line">&nbsp;</div>
         <div class="top">
             <div class="row">
-                <div class="col-lg-1"></div>
+                <div class="col-lg-1"></div> <!-- // Diagnostic logo instead of Cases logo -->
                 <div class="col-lg-3"><a href="http://www.cases.lu"><img
-                                src="https://www.cases.lu/templates/frontoffice/casesv3/images/logo-web-cases.lu.png"
-                                border="0"></a></div>
+                                src="/img/logo_diagnostic.jpg"
+                                border="0"
+				width="220"
+				height="80"></a></div>
                 <div class="col-lg-4 text-center"><h1>DIAGNOSTIC CASES</h1></div>
                 <div class="col-lg-3 text-right">
                     <br>
@@ -44,10 +45,17 @@
                     if ($this->plugin('translate')->getTranslator()->getLocale() == 'en_EN') {
                         $frClass = '';
                         $enClass = 'btn-info';
-                    } else {
+			$deClass = '';
+                    } else if ($this->plugin('translate')->getTranslator()->getLocale() == 'fr_FR') {
                         $frClass = 'btn-info';
                         $enClass = '';
-                    }
+			$deClass = '';
+                    } else { // German language added
+			$frClass = '';
+                        $enClass = '';
+			$deClass = 'btn-info';
+		    }
+
                     ?>
                     <table width="100%">
                         <tr>
@@ -91,9 +99,20 @@
                                     </button>
                                 </a>
                             </td>
+			     <!-- // German language added -->
+			     <td width="75">
+                               <!-- <a href="<?php echo $this->url('diagnostic', ['action' => 'language', 'id' => 3]); ?>">-->
+                                    <button type="submit" name="language" value="de" onclick="toggle_txt ();"
+                                            class="btn-default btn-blue btn-sm <?php echo $deClass ?>"><span
+                                                class="text-uppercase"><span class="flag-icon flag-icon-de"></span>&nbsp;&nbsp;de</span>
+                                    </button>
+                                </a>
+                            </td>
+			    <span id="span_txt" style="display:none;">Not yet available</span>
                         </tr>
                     </table>
-                </div>
+
+            </div>
                 <div class="col-lg-1"></div>
             </div>
         </div>
@@ -166,4 +185,15 @@
     </div>
 </div>
 </body>
+
+<!-- // Display the not yet available txt -->
+<script>
+function toggle_txt () {
+  var span = document.getElementById("span_txt");
+  if(span.style.display == "none") {
+    span.style.display = "inline";
+  }
+}
+</script>
+
 </html>

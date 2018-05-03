@@ -760,12 +760,11 @@ class IndexController extends AbstractController
         $config = $this->get('config');
         $encryptionKey = $config['encryption_key'];
 
-
-        //encrypt result
-        $blockCipher = BlockCipher::factory('mcrypt', ['algo' => 'aes']);
-        $blockCipher->setKey($encryptionKey);
-        $cryptExport = $blockCipher->encrypt($export);
-
+	//encrypt result
+        //$blockCipher = BlockCipher::factory('mcrypt', ['algo' => 'aes']);
+        //$blockCipher->setKey($encryptionKey);
+        //$cryptExport = $blockCipher->encrypt($export);
+        $cryptExport = openssl_encrypt($export,'AES-256-ECB', $encryptionKey);
         //create file
         $filename = 'data/' . date('YmdHis') . '.cases';
         !$handle = fopen($filename, 'w');
@@ -981,7 +980,9 @@ class IndexController extends AbstractController
         if ($id == 2) {
             $container->language = 'en_EN';
         }
-
+	if ($id == 3) {
+            $container->language = 'de_DE';
+        }
         //redirection
         $this->redirect()->toUrl($this->getRequest()->getHeader('Referer')->getUri());
     }
