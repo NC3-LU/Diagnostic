@@ -36,7 +36,7 @@ $form->prepare();
             <tr>
                 <td><label><?= $this->translate($form->get('version')->getLabel()) ?></label></td>
                 <td>
-                    <?= $this->formText($form->get('version')) ?>
+                    <?= $this->formText($form->get('version')->setValue('1')) ?>
                 </td>
             </tr>
             <tr>
@@ -58,7 +58,7 @@ $form->prepare();
             <tr>
                 <td><label><?= $this->translate($form->get('classification')->getLabel()) ?></label></td>
                 <td>
-                    <?= $this->formText($form->get('classification')) ?>
+                    <?= $this->formText($form->get('classification')->setValue('Confidential')) ?>
                 </td>
             </tr>
             <tr>

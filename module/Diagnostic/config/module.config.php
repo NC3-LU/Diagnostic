@@ -134,6 +134,11 @@ return [
                 'route' => 'admin',
                 'action' => 'questions',
             ],
+	    /*[
+                'label' => '__categories',
+                'route' => 'admin',
+                'action' => 'categories',
+            ],*/
         ],
     ],
 ];

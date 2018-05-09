@@ -1,0 +1,102 @@
+<?php use Zend\Form\Element;
+
+$title = $this->translate('__diagnostic');
+$this->headTitle($title);
+
+// Creation of translation form-text
+$translation_fr = new Element\Text('translation_fr');
+$translation_en = new Element\Text('translation_en');
+$translation_de = new Element\Text('translation_de');
+$help_fr = new Element\Text('help_fr');
+$help_en = new Element\Text('help_en');
+$help_de = new Element\Text('help_de');
+$translation_fr->setAttribute('class','form-control');
+$translation_en->setAttribute('class','form-control');
+$translation_de->setAttribute('class','form-control');
+$help_fr->setAttribute('class','form-control');
+$help_en->setAttribute('class','form-control');
+$help_de->setAttribute('class','form-control');
+
+$this->form->setAttribute('action', $this->url('admin', ['action' => 'add-question']));
+$this->form->prepare(); ?>
+<div class="row">
+    <div class="col-lg-3 text-center"></div>
+    <div class="col-lg-6 text-left">
+        <h2><?= $this->translate('__add_a_question') ?></h2>
+        <br/>
+        <?= $this->form()->openTag($form) ?>
+        <table class="table table-responsive table-borderless">
+            <tr>
+                <td><label><?= $this->translate($form->get('translation_key')->getLabe$
+                <td>
+                    <?= $this->formText($form->get('translation_key')) ?>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <?= $this->formElementErrors($form->get('translation_key'), ['clas$
+                    <!-- // Display error if the translation key already exist -->
+                    <?php if($_SESSION['erreur_exist'] == 1){ echo "<ul class='bg-dang$
+                </td>
+            </tr>
+            <!-- // Translations label and form-text -->
+            <tr>
+                <td><label><?= $this->translate('__translation') ?></label>&nbsp;<span$
+                <td>
+                    <?= $this->formText($translation_fr) ?>
+                </td>
+            </tr>
+            <tr>
+                <td><label><?= $this->translate('__help') ?></label>&nbsp;<span class=$
+                <td>
+                    <?= $this->formText($help_fr) ?>
+                </td>
+            </tr>
+            <tr>
+                <td><label><?= $this->translate('__translation') ?></label>&nbsp;<span$
+                <td>
+                    <?= $this->formText($translation_en) ?>
+                </td>
+            </tr>
+            <tr>
+                <td><label><?= $this->translate('__help') ?></label>&nbsp;<span class=$
+                <td>
+                    <?= $this->formText($help_en) ?>
+                </td>
+            </tr>
+            <tr>
+                <td><label><?= $this->translate('__translation') ?></label>&nbsp;<span$
+                <td>
+                    <?= $this->formText($translation_de) ?>
+                </td>
+            </tr>
+            <tr>
+                <td><label><?= $this->translate('__help') ?></label>&nbsp;<span class=$
+                <td>
+                    <?= $this->formText($help_de) ?>
+                </td>
+            </tr>
+            <tr>
+                <td><label><?= $this->translate($form->get('category_id')->getLabel())$
+                <td>
+                    <?= $this->formSelect($form->get('category_id')) ?>
+                </td>
+            </tr>
+            <tr>
+                <td><label><?= $this->translate($form->get('threshold')->getLabel()) ?$
+                <td>
+                    <?= $this->formSelect($form->get('threshold')) ?>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <?= $this->formElementErrors($form->get('category_id'), ['class' =$
+                    <?= $this->formElementErrors($form->get('threshold'), ['class' => $
+                    <?= $this->formSubmit($form->get('submit')) ?>
+                </td>
+            </tr>
+        </table>
+        <?= $this->formHidden($form->get('csrf')) ?>
+        <?= $this->form()->closeTag() ?>
+    </div>
+    <div class="col-lg-3 text-center"></div> </div>

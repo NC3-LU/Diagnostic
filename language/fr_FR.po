@@ -44,12 +44,6 @@ msgstr "Quels sont les mécanismes de sécurité existants (autres que technique
 msgid "__question1help"
 msgstr "Existe-t-il ?<br><ul><li>Une politique de sécurité</li><li>Une charte utilisateur ou administrateur</li><li>Des procédures (backup par ex.)</li><li>Des consignes internes</li><li>Etc.</li></ul>"
 
-msgid "__question2"
-msgstr "Quel est le cœur de métier ? Processus/informations les plus sensibles ?"
-
-msgid "__question2help"
-msgstr "Conscience des actifs importants ? (services, processus, information, etc.)"
-
 msgid "__question3"
 msgstr "Quelles sont les obligations de conformité induites par le métier ?"
 
@@ -389,6 +383,9 @@ msgstr "Questions"
 msgid "__translation_key"
 msgstr "Clef de traduction"
 
+msgid "__translation"
+msgstr "Traduction"
+
 msgid "__category"
 msgstr "Catégorie"
 
@@ -473,7 +470,7 @@ msgstr "Niveaux d'importance"
 msgid "__maturity_none"
 msgstr "Fragile"
 
-msgid "__maturity_plan"
+msgid "__maturity_NA"
 msgstr "N/A"
 
 msgid "__maturity_medium"
@@ -533,3 +530,11 @@ msgstr "Le mot de passe doit contenir au moins 8 caractères"
 msgid "The two given tokens do not match"
 msgstr "Le mot de passe et la confirmation doivent être identiques"
 
+msgid "__error_exist"
+msgstr "Cette clé existe déjà"
+
+msgid "__question2"
+msgstr "Quel est le cœur de métier ? Processus/informations les plus sensibles ?"
+
+msgid "__question2help"
+msgstr "Conscience des actifs importants ? (services, processus, information, etc.)"

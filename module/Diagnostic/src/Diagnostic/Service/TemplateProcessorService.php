@@ -216,7 +216,7 @@ class TemplateProcessorService extends TemplateProcessor implements ServiceLocat
 	  // 2 = 100%, 1 = 50%, 3 = not applicable for the  maturity
           switch ($value['maturity']) {
               case 3:
-                  $maturity = $translator->translate('__maturity_plan');
+                  $maturity = $translator->translate('__maturity_NA');
                   $styleContentCellMaturity = ['align' => 'left', 'bgcolor' => 'E7E6E6','valign' => 'center', 'size' => 10];
                   break;
               case 1:
@@ -233,7 +233,7 @@ class TemplateProcessorService extends TemplateProcessor implements ServiceLocat
           $styleContentCellMaturityTarget = ['align' => 'left', 'bgcolor' => 'FD661F', 'valign' => 'center', 'size' => 10];
           switch ($value['maturityTarget']) {
               case 3:
-                  $maturityTarget = $translator->translate('__maturity_plan');
+                  $maturityTarget = $translator->translate('__maturity_NA');
                   $styleContentCellMaturityTarget = ['align' => 'left', 'bgcolor' => 'E7E6E6', 'valign' => 'center', 'size' => 10];
 
                   break;

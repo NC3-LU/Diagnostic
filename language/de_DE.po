@@ -44,12 +44,6 @@ msgstr "What security mechanisms already exist (other than technical mechanisms)
 msgid "__question1help"
 msgstr "Is there:<br><ul><li>a security policy?</li><li>a user or administrator charter?</li><li>procedures (e.g. back-up)?</li><li>in-house instructions?</li><li>etc</li></ul>"
 
-msgid "__question2"
-msgstr "What is the core business? The most sensitive processes/items of information?"
-
-msgid "__question2help"
-msgstr "Conscious of major assets? (services, processes, information, etc)"
-
 msgid "__question3"
 msgstr "What compliance obligations does the job involve?"
 
@@ -389,6 +383,9 @@ msgstr "Questions"
 msgid "__translation_key"
 msgstr "Translation key"
 
+msgid "__translation"
+msgstr "Translation"
+
 msgid "__category"
 msgstr "Category"
 
@@ -473,7 +470,7 @@ msgstr "Importance levels"
 msgid "__maturity_none"
 msgstr "Fragile"
 
-msgid "__maturity_plan"
+msgid "__maturity_NA"
 msgstr "N/A"
 
 msgid "__maturity_medium"
@@ -511,3 +508,12 @@ msgstr "Summary of evaluation"
 
 msgid "__categories_maturities"
 msgstr "Maturities by category"
+
+msgid "__error_exist"
+msgstr "This key already exist"
+
+msgid "__question2"
+msgstr "What is the core business? The most sensitive processes/items of information?"
+
+msgid "__question2help"
+msgstr "Conscious of major assets? (services, processes, information, etc)"

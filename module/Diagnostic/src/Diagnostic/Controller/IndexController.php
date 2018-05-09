@@ -420,7 +420,6 @@ class IndexController extends AbstractController
         $container = new Container('diagnostic');
         $result = ($container->offsetExists('result')) ? $container->result : [];
         $information = ($container->offsetExists('information')) ? $container->information : ['organization' => '', 'synthesis' => ''];
-
         //form
         $form = $this->get('questionForm');
         $formUpload = $this->get('uploadForm');
@@ -496,18 +495,18 @@ class IndexController extends AbstractController
         $result = ($container->offsetExists('result')) ? $container->result : [];
         $information = ($container->offsetExists('information')) ? $container->information : ['organization' => '', 'synthesis' => ''];
 
-        //form
+	//form
         $form = $this->get('informationForm');
         $formUpload = $this->get('uploadForm');
 
         $type = $this->getEvent()->getRouteMatch()->getParam('id');
         $informationKey = ($type == 2) ? 'synthesis' : 'organization';
 
-
         //form is post and valid
         $errorMessage = '';
         $request = $this->getRequest();
-        if ($request->isPost()) {
+
+	if ($request->isPost()) {
 
             if (count($request->getFiles())) {
                 $formUpload->setData(array_merge_recursive(
@@ -764,9 +763,10 @@ class IndexController extends AbstractController
         //$blockCipher = BlockCipher::factory('mcrypt', ['algo' => 'aes']);
         //$blockCipher->setKey($encryptionKey);
         //$cryptExport = $blockCipher->encrypt($export);
-        $cryptExport = openssl_encrypt($export,'AES-256-ECB', $encryptionKey);
+	$iv = $config['iv_key'];
+        $cryptExport = openssl_encrypt($export,'AES-256-CBC', $encryptionKey, OPENSSL_RAW_DATA, $iv);
         //create file
-        $filename = 'data/' . date('YmdHis') . '.cases';
+        $filename = 'Diagnostic_' . date('YmdHis') . '.cases';
         !$handle = fopen($filename, 'w');
         fwrite($handle, $cryptExport);
         fclose($handle);
