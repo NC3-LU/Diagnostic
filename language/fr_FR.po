@@ -218,12 +218,6 @@ msgstr "Y-a-t-il une gestion des incidents ?"
 msgid "__question31help"
 msgstr "Les personnes sont-elles sensibilisées ?<br>À qui s'adresser et comment ?"
 
-msgid "__question32"
-msgstr "Existe-t-il un plan de reprise ?"
-
-msgid "__question32help"
-msgstr "Ébauche ou complet ?"
-
 msgid "__welcome"
 msgstr "Bienvenue au diagnostic de Cases"
 
@@ -311,6 +305,9 @@ msgstr "Enregistrer et continuer"
 msgid "__add_a_question"
 msgstr "Ajouter une question"
 
+msgid "__add_a_category"
+msgstr "Ajouter une catégorie"
+
 msgid "__add"
 msgstr "Ajouter"
 
@@ -397,6 +394,9 @@ msgstr "Action"
 
 msgid "__modify_question"
 msgstr "Modifier la question"
+
+msgid "__modify_category"
+msgstr "Modifier la catégorie"
 
 msgid "__admin"
 msgstr "Administration"
@@ -534,7 +534,13 @@ msgid "__error_exist"
 msgstr "Cette clé existe déjà"
 
 msgid "__question2"
-msgstr "Quel est le cœur de métier ? Processus/informations les plus sensibles ?"
+msgstr "Quel est le coeur de métier ? Processus/informations les plus sensibles ?"
 
 msgid "__question2help"
 msgstr "Conscience des actifs importants ? (services, processus, information, etc.)"
+
+msgid "__question32"
+msgstr "Existe-t-il un plan de reprise ?"
+
+msgid "__question32help"
+msgstr "Ébauche ou complet ?"

@@ -3,20 +3,24 @@
 $title = $this->translate('__diagnostic');
 $this->headTitle($title);
 
-// Creation of translation form-text
+// Creation of translations form-text, with session value which indicate the current value
 $translation_fr = new Element\Text('translation_fr');
 $translation_en = new Element\Text('translation_en');
 $translation_de = new Element\Text('translation_de');
+$translation_fr->setValue($_SESSION['value_fr']);
 $translation_fr->setAttribute('class','form-control');
+$translation_en->setValue($_SESSION['value_en']);
 $translation_en->setAttribute('class','form-control');
+$translation_de->setValue($_SESSION['value_de']);
 $translation_de->setAttribute('class','form-control');
-$this->form->setAttribute('action', $this->url('admin', ['action' => 'add-category']));
-$this->form->prepare(); ?>
 
+$form->setAttribute('action', $this->url('admin', ['action' => 'modify-category', 'id' => $id]));
+$form->prepare();
+?>
 <div class="row">
     <div class="col-lg-3 text-center"></div>
     <div class="col-lg-6 text-left">
-        <h2><?= $this->translate('__add_a_category') ?></h2>
+        <h2><?= $this->translate('__modify_category') ?></h2>
         <br/>
         <?= $this->form()->openTag($form) ?>
         <table class="table table-responsive table-borderless">
@@ -34,13 +38,13 @@ $this->form->prepare(); ?>
                 </td>
             </tr>
             <!-- // Translations label and form-text -->
-            <tr>
+             <tr>
                 <td><label><?= $this->translate('__translation') ?></label>&nbsp;<span class="flag-icon flag-icon-fr"></span></td>
                 <td>
                     <?= $this->formText($translation_fr) ?>
                 </td>
             </tr>
-            <tr>
+	    <tr>
                 <td><label><?= $this->translate('__translation') ?></label>&nbsp;<span class="flag-icon flag-icon-gb"></span></td>
                 <td>
                     <?= $this->formText($translation_en) ?>
@@ -61,4 +65,5 @@ $this->form->prepare(); ?>
         <?= $this->formHidden($form->get('csrf')) ?>
         <?= $this->form()->closeTag() ?>
     </div>
-    <div class="col-lg-3 text-center"></div> </div>
+    <div class="col-lg-3 text-center"></div>
+</div>

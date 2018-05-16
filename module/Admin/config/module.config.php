@@ -48,10 +48,12 @@ return [
     'form_elements' => [
         'factories' => [
             'AdminQuestionForm' => 'Admin\Form\QuestionFormFactory',
+	    'AdminCategoryForm' => 'Admin\Form\CategoryFormFactory',
         ],
         'invokables' => [
             'UserForm' => 'Admin\Form\UserForm',
             'NewQuestionForm' => 'Admin\Form\QuestionForm',
+	    'NewCategoryForm' => 'Admin\Form\CategoryForm',
         ],
     ],
 ];

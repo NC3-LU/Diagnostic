@@ -22,16 +22,16 @@ class QuestionFormFactory implements FactoryInterface
      */
     public function createService(ServiceLocatorInterface $serviceLocator)
     {
-        $questions = $serviceLocator->getServiceLocator()->get('Diagnostic\Service\QuestionService')->getQuestions();
+        $categories = $serviceLocator->getServiceLocator()->get('Diagnostic\Service\CategoryService')->getCategories();
 
         //retrieve categories
-        $categories = [];
-        foreach ($questions as $question) {
-            $categories[$question->getCategoryId()] = $question->getCategoryTranslationKey();
+        $tab_categories = [];
+        foreach ($categories as $category) {
+            $tab_categories[$category->getId()] = $category->getTranslationKey();
         }
 
         $form = new QuestionForm();
-        $form->setCategories($categories);
+        $form->setCategories($tab_categories);
 
         $questionFormFilter = new QuestionFormFilter($serviceLocator->getServiceLocator()->get('Zend\Db\Adapter\Adapter'));
         $form->setInputFilter($questionFormFilter);

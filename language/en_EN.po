@@ -218,12 +218,6 @@ msgstr "Is any incident management in place?"
 msgid "__question31help"
 msgstr "Have people been made aware?<br>Who to contact, and how?"
 
-msgid "__question32"
-msgstr "Is there a recovery plan?"
-
-msgid "__question32help"
-msgstr "Outline or comprehensive?"
-
 msgid "__welcome"
 msgstr "Welcome to CASES Diagnostic"
 
@@ -310,6 +304,9 @@ msgstr "Record and continue"
 
 msgid "__add_a_question"
 msgstr "Add a question"
+
+msgid "__add_a_category"
+msgstr "Add a category"
 
 msgid "__add"
 msgstr "Add"
@@ -398,6 +395,9 @@ msgstr "Action"
 msgid "__modify_question"
 msgstr "Change question"
 
+msgid "__modify_category"
+msgstr "Change category"
+
 msgid "__admin"
 msgstr "Administration"
 
@@ -405,7 +405,7 @@ msgid "__document_name"
 msgstr "Document name"
 
 msgid "__company"
-msgstr "Campany"
+msgstr "Company"
 
 msgid "__version"
 msgstr "Version"
@@ -517,3 +517,9 @@ msgstr "What is the core business? The most sensitive processes/items of informa
 
 msgid "__question2help"
 msgstr "Conscious of major assets? (services, processes, information, etc)"
+
+msgid "__question32"
+msgstr "Is there a recovery plan?"
+
+msgid "__question32help"
+msgstr "Outline or comprehensive?"
