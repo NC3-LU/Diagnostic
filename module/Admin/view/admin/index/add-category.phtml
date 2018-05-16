@@ -23,7 +23,7 @@ $this->form->prepare(); ?>
             <tr>
                 <td><label><?= $this->translate($form->get('translation_key')->getLabel()) ?></label></td>
                 <td>
-                    <?= $this->formText($form->get('translation_key')) ?>
+                    <?= $this->formText($form->get('translation_key')->setValue('__category' . $_SESSION['nb_categories'])) ?>
                 </td>
             </tr>
             <tr>
