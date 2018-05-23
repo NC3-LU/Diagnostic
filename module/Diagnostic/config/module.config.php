@@ -50,6 +50,7 @@ return [
             'Diagnostic\Model\DiagnosticEntity' => 'Diagnostic\Model\DiagnosticEntity',
             'Diagnostic\Model\InformationEntity' => 'Diagnostic\Model\InformationEntity',
             'Diagnostic\Model\QuestionEntity' => 'Diagnostic\Model\QuestionEntity',
+	    'Diagnostic\Model\CategoryEntity' => 'Diagnostic\Model\CategoryEntity',
             'Diagnostic\Model\UserEntity' => 'Diagnostic\Model\UserEntity',
             'Diagnostic\Model\UserTokenEntity' => 'Diagnostic\Model\UserTokenEntity',
             'Diagnostic\Service\Mime\Part' => 'Zend\Mime\Part',
@@ -66,6 +67,7 @@ return [
             'translator' => 'Zend\Mvc\Service\TranslatorServiceFactory',
             'navigation' => 'Zend\Navigation\Service\DefaultNavigationFactory',
             'Diagnostic\Service\QuestionService' => 'Diagnostic\Service\QuestionServiceFactory',
+	    'Diagnostic\Service\CategoryService' => 'Diagnostic\Service\CategoryServiceFactory',
             'Diagnostic\Service\CalculService' => 'Diagnostic\Service\CalculServiceFactory',
             'Diagnostic\Service\MailService' => 'Diagnostic\Service\MailServiceFactory',
             'Diagnostic\Service\UserService' => 'Diagnostic\Service\UserServiceFactory',
@@ -73,6 +75,7 @@ return [
         ],
         'shared' => [
             'Diagnostic\Model\QuestionEntity' => false,
+	    'Diagnostic\Model\CategoryEntity' => false,
         ],
     ],
     'form_elements' => [
@@ -82,6 +85,7 @@ return [
             'PasswordForgottenForm' => 'Diagnostic\Form\PasswordForgottenForm',
             'NewPasswordForm' => 'Diagnostic\Form\NewPasswordForm',
             'QuestionForm' => 'Diagnostic\Form\QuestionForm',
+	    'CategoryForm' => 'Diagnostic\Form\CategoryForm',
             'InformationForm' => 'Diagnostic\Form\InformationForm',
             'AddQuestionForm' => 'Diagnostic\Form\AddQuestionForm',
             'DownloadForm' => 'Diagnostic\Form\DownloadForm',
@@ -112,7 +116,7 @@ return [
     ],
 
     'translator' => [
-        'locale' => 'en_EN',
+        'locale' => 'en',
         'translation_file_patterns' => [
             [
                 'type' => 'gettext',
@@ -133,6 +137,16 @@ return [
                 'label' => '__questions',
                 'route' => 'admin',
                 'action' => 'questions',
+            ],
+	    [
+                'label' => '__categories',
+                'route' => 'admin',
+                'action' => 'categories',
+            ],
+	    [
+                'label' => '__languages',
+                'route' => 'admin',
+                'action' => 'languages',
             ],
         ],
     ],

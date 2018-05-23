@@ -138,11 +138,11 @@ class CalculService extends AbstractService
             case 1:
                 $img = '/img/mat_moyen.png';
                 break;
-            case 3:
-                $img = '/img/mat_plan.png';
-                break;
             case 0:
                 $img = '/img/mat_none.png';
+                break;
+	    case 3:
+                $img = '/img/mat_NA.png';
                 break;
         }
 

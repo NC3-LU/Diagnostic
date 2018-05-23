@@ -17,6 +17,7 @@ use Diagnostic\InputFilter\PasswordForgottenFormFilter;
 use Diagnostic\Service\CalculService;
 use Diagnostic\Service\MailService;
 use Diagnostic\Service\QuestionService;
+use Diagnostic\Service\CategoryService;
 use Diagnostic\Service\TemplateProcessorService;
 use Diagnostic\Service\UserService;
 use Diagnostic\Service\UserTokenService;
@@ -32,6 +33,7 @@ class IndexController extends AbstractController
     protected $uploadForm;
     protected $loginForm;
     protected $questionForm;
+    protected $categoryForm;
     protected $informationForm;
     protected $addQuestionForm;
     protected $passwordForgottenForm;
@@ -39,6 +41,7 @@ class IndexController extends AbstractController
     protected $linkDownloadForm;
     protected $downloadForm;
     protected $questionService;
+    protected $categoryService;
     protected $userService;
     protected $userTokenService;
     protected $mailService;
@@ -46,6 +49,7 @@ class IndexController extends AbstractController
     protected $diagnosticEntity;
     protected $informationEntity;
     protected $questionEntity;
+    protected $categoryEntity;
 
     /**
      * Index
@@ -420,7 +424,6 @@ class IndexController extends AbstractController
         $container = new Container('diagnostic');
         $result = ($container->offsetExists('result')) ? $container->result : [];
         $information = ($container->offsetExists('information')) ? $container->information : ['organization' => '', 'synthesis' => ''];
-
         //form
         $form = $this->get('questionForm');
         $formUpload = $this->get('uploadForm');
@@ -496,18 +499,18 @@ class IndexController extends AbstractController
         $result = ($container->offsetExists('result')) ? $container->result : [];
         $information = ($container->offsetExists('information')) ? $container->information : ['organization' => '', 'synthesis' => ''];
 
-        //form
+	//form
         $form = $this->get('informationForm');
         $formUpload = $this->get('uploadForm');
 
         $type = $this->getEvent()->getRouteMatch()->getParam('id');
         $informationKey = ($type == 2) ? 'synthesis' : 'organization';
 
-
         //form is post and valid
         $errorMessage = '';
         $request = $this->getRequest();
-        if ($request->isPost()) {
+
+	if ($request->isPost()) {
 
             if (count($request->getFiles())) {
                 $formUpload->setData(array_merge_recursive(
@@ -764,9 +767,10 @@ class IndexController extends AbstractController
         //$blockCipher = BlockCipher::factory('mcrypt', ['algo' => 'aes']);
         //$blockCipher->setKey($encryptionKey);
         //$cryptExport = $blockCipher->encrypt($export);
-        $cryptExport = openssl_encrypt($export,'AES-256-ECB', $encryptionKey);
+	$iv = $config['iv_key'];
+        $cryptExport = openssl_encrypt($export,'AES-256-CBC', $encryptionKey, OPENSSL_RAW_DATA, $iv);
         //create file
-        $filename = 'data/' . date('YmdHis') . '.cases';
+        $filename = 'Diagnostic_' . date('YmdHis') . '.cases';
         !$handle = fopen($filename, 'w');
         fwrite($handle, $cryptExport);
         fclose($handle);
@@ -837,6 +841,13 @@ class IndexController extends AbstractController
             ['color' => '#555555', 'highlight' => '#666666'],
             ['color' => '#B266FF', 'highlight' => '#CC99FF'],
             ['color' => '#FF66FF', 'highlight' => '#FF99FF'],
+	    ['color' => '#498BFD', 'highlight' => '#74A7FE'],
+	    ['color' => '#37DE96', 'highlight' => '#44FEAD'],
+	    ['color' => '#E0F000', 'highlight' => '#EDFE00'],
+	    ['color' => '#75CE00', 'highlight' => '#91FE03'],
+	    ['color' => '#00ECE4', 'highlight' => '#00FEF6'],
+	    ['color' => '#BA7C00', 'highlight' => '#DC9300'],
+	    ['color' => '#E500DD', 'highlight' => '#FE00F6'],
         ];
         $categoriesRepartition = [];
         $i = 0;
@@ -927,7 +938,7 @@ class IndexController extends AbstractController
                     $calculService = $this->get('calculService');
                     $calculResults = $calculService->calcul();
 
-			//generating the deliverable according to the language 
+			//generating the deliverable according to the language
                     $word = new TemplateProcessorService('data/resources/model_'.$translator->getLocale().'.docx');
                     $word->generateWord($data, $questions, $calculResults, $information, $translator);
                 }
@@ -974,15 +985,16 @@ class IndexController extends AbstractController
         $id = $this->getEvent()->getRouteMatch()->getParam('id');
 
         $container = new Container('diagnostic');
-        if ($id == 1) {
-            $container->language = 'fr_FR';
+
+	$file_lang = fopen('/var/www/diagnostic/language/languages.txt', 'r');
+	for ($i=1; $i<$_SESSION['nb_lang']; $i++) {
+	    $temp_lang = fgets($file_lang, 4096);
+            if ($id == $i) {
+                $container->language = substr($temp_lang, 0, -1);
+            }
         }
-        if ($id == 2) {
-            $container->language = 'en_EN';
-        }
-	if ($id == 3) {
-            $container->language = 'de_DE';
-        }
+	fclose($file_lang);
+
         //redirection
         $this->redirect()->toUrl($this->getRequest()->getHeader('Referer')->getUri());
     }

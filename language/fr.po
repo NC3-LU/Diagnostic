@@ -11,9 +11,6 @@ msgstr ""
 "Last-Translator: \n"
 "Language-Team: \n"
 
-msgid "__diagnostic"
-msgstr "Diagnostic"
-
 msgid "__category1"
 msgstr "Sensibilité à la sécurité et conformité"
 
@@ -45,7 +42,7 @@ msgid "__question1help"
 msgstr "Existe-t-il ?<br><ul><li>Une politique de sécurité</li><li>Une charte utilisateur ou administrateur</li><li>Des procédures (backup par ex.)</li><li>Des consignes internes</li><li>Etc.</li></ul>"
 
 msgid "__question2"
-msgstr "Quel est le cœur de métier ? Processus/informations les plus sensibles ?"
+msgstr "Quel est le coeur de métier ? Processus/informations les plus sensibles ?"
 
 msgid "__question2help"
 msgstr "Conscience des actifs importants ? (services, processus, information, etc.)"
@@ -230,6 +227,9 @@ msgstr "Existe-t-il un plan de reprise ?"
 msgid "__question32help"
 msgstr "Ébauche ou complet ?"
 
+msgid "__diagnostic"
+msgstr "Diagnostic"
+ 
 msgid "__welcome"
 msgstr "Bienvenue au diagnostic de Cases"
 
@@ -258,7 +258,7 @@ msgid "__email"
 msgstr "Email"
 
 msgid "__logout"
-msgstr "Se déconnecter"
+msgstr "Déconnexion"
 
 msgid "__password_forgotten"
 msgstr "Mot de passe oublié ?"
@@ -317,11 +317,20 @@ msgstr "Enregistrer et continuer"
 msgid "__add_a_question"
 msgstr "Ajouter une question"
 
+msgid "__add_a_category"
+msgstr "Ajouter une catégorie"
+
+msgid "__add_a_language"
+msgstr "Ajouter une langue"
+
 msgid "__add"
 msgstr "Ajouter"
 
 msgid "__question"
 msgstr "Question"
+
+msgid "__languages"
+msgstr "Langues"
 
 msgid "__export"
 msgstr "Exporter"
@@ -389,6 +398,9 @@ msgstr "Questions"
 msgid "__translation_key"
 msgstr "Clef de traduction"
 
+msgid "__translation"
+msgstr "Traduction"
+
 msgid "__category"
 msgstr "Catégorie"
 
@@ -400,6 +412,9 @@ msgstr "Action"
 
 msgid "__modify_question"
 msgstr "Modifier la question"
+
+msgid "__modify_category"
+msgstr "Modifier la catégorie"
 
 msgid "__admin"
 msgstr "Administration"
@@ -473,7 +488,7 @@ msgstr "Niveaux d'importance"
 msgid "__maturity_none"
 msgstr "Fragile"
 
-msgid "__maturity_plan"
+msgid "__maturity_NA"
 msgstr "N/A"
 
 msgid "__maturity_medium"
@@ -533,3 +548,5 @@ msgstr "Le mot de passe doit contenir au moins 8 caractères"
 msgid "The two given tokens do not match"
 msgstr "Le mot de passe et la confirmation doivent être identiques"
 
+msgid "__error_exist"
+msgstr "Cette clé existe déjà"

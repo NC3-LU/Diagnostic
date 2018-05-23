@@ -216,7 +216,7 @@ class TemplateProcessorService extends TemplateProcessor implements ServiceLocat
 	  // 2 = 100%, 1 = 50%, 3 = not applicable for the  maturity
           switch ($value['maturity']) {
               case 3:
-                  $maturity = $translator->translate('__maturity_plan');
+                  $maturity = $translator->translate('__maturity_NA');
                   $styleContentCellMaturity = ['align' => 'left', 'bgcolor' => 'E7E6E6','valign' => 'center', 'size' => 10];
                   break;
               case 1:
@@ -233,7 +233,7 @@ class TemplateProcessorService extends TemplateProcessor implements ServiceLocat
           $styleContentCellMaturityTarget = ['align' => 'left', 'bgcolor' => 'FD661F', 'valign' => 'center', 'size' => 10];
           switch ($value['maturityTarget']) {
               case 3:
-                  $maturityTarget = $translator->translate('__maturity_plan');
+                  $maturityTarget = $translator->translate('__maturity_NA');
                   $styleContentCellMaturityTarget = ['align' => 'left', 'bgcolor' => 'E7E6E6', 'valign' => 'center', 'size' => 10];
 
                   break;
@@ -339,13 +339,68 @@ class TemplateProcessorService extends TemplateProcessor implements ServiceLocat
         $this->setValue('NOTES_TABLE', $this->getWordXmlFromWordObject($tableWord));
         unset($tableWord);
 
-        $j = 1;
+	// Variables for the radar legend
+	$prise_note_categ = new PhpWord();
+	$categ_percent = new PhpWord();
+	$categ_percent_targ = new PhpWord();
+	$section = $prise_note_categ->addSection();
+	$section2 = $categ_percent->addSection();
+	$section3 = $categ_percent_targ->addSection();
+
+	// Variable for the pie legend
+	$legend_pie = new PhpWord();
+	$section4 = $legend_pie->addSection();
+
+	//categories repartition
+        $categoriesColor = [
+            ['color' => '#F7464A'],
+            ['color' => '#46BFBD'],
+            ['color' => '#FDB45C'],
+            ['color' => '#1b6d85'],
+            ['color' => '#3c763d'],
+            ['color' => '#555555'],
+            ['color' => '#B266FF'],
+            ['color' => '#FF66FF'],
+            ['color' => '#498BFD'],
+            ['color' => '#37DE96'],
+            ['color' => '#E0F000'],
+            ['color' => '#75CE00'],
+            ['color' => '#00ECE4'],
+            ['color' => '#BA7C00'],
+            ['color' => '#E500DD'],
+        ];
+
+	// Add categories to the legends : set color by level of maturity
+	$i = 0;
         foreach ($categories as $categoryId => $category) {
-	  $this->setValue('PRISE_NOTE_CATEG_' . $j, $translator->translate($category['label']));
-          $this->setValue('CATEG__PERCENT_' . $j, $category['percent'] . '%');
-          $this->setValue('CATEG__PERCENT_TARG_' . $j, $category['percentTarget'] . '%');
-        $j++;
-        }
+	    if ($category['percent'] < 33) {
+	        $text = $section->addText($translator->translate($category['label']), ['size' => 10, 'name' => 'Calibri', 'color' => 'red'], ['spaceAfter' => 100]);
+	        $text2 = $section2->addText($translator->translate($category['percent']) . '%', ['size' => 10, 'name' => 'Calibri', 'color' => 'red', 'bold' => 'true'], ['alignment' => 'center', 'spaceAfter' => 100]);
+	    }
+	    elseif ($category['percent'] > 66) {
+	        $text = $section->addText($translator->translate($category['label']), ['size' => 10, 'name' => 'Calibri', 'color' => '#20DD1A'], ['spaceAfter' => 100]);
+	        $text2 = $section2->addText($translator->translate($category['percent']) . '%', ['size' => 10, 'name' => 'Calibri', 'color' => '#20DD1A', 'bold' => 'true'], ['alignment' => 'center', 'spaceAfter' => 100]);
+	    }
+	    else {
+	        $text = $section->addText($translator->translate($category['label']), ['size' => 10, 'name' => 'Calibri', 'color' => 'orange'], ['spaceAfter' => 100]);
+	        $text2 = $section2->addText($translator->translate($category['percent']) . '%', ['size' => 10, 'name' => 'Calibri', 'color' => 'orange', 'bold' => 'true'], ['alignment' => 'center', 'spaceAfter' => 100]);
+	    }
+	    $text3 = $section3->addText($translator->translate($category['percentTarget']) . '%', ['size' => 10, 'name' => 'Calibri', 'color' => 767171, 'bold' => 'true'], ['alignment' => 'center', 'spaceAfter' => 100]);
+	    $text4 = $section4->addTextRun();
+	    $text4->addText('n', ['size' => 10, 'name' => 'Wingdings', 'color' => $categoriesColor[$i]['color']]);
+	    $text4->addText($translator->translate($category['label']), ['size' => 10, 'name' => 'Calibri', 'color' => 'black']);
+	    $i++;
+	}
+
+	$this->setValue('PRISE_NOTE_CATEG', $this->getWordXmlFromWordObject($prise_note_categ));
+	$this->setValue('CATEG__PERCENT', $this->getWordXmlFromWordObject($categ_percent));
+	$this->setValue('CATEG__PERCENT_TARG', $this->getWordXmlFromWordObject($categ_percent_targ));
+        unset($prise_note_categ);
+	unset($categ_percent);
+	unset($categ_percent_targ);
+
+	$this->setValue('LEGEND_PIE', $this->getWordXmlFromWordObject($legend_pie));
+	unset($legend_pie);
 
         $this->saveAs($filepath);
 

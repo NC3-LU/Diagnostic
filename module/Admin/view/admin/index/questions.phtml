@@ -1,6 +1,7 @@
 <?php
 $title = $this->translate('__users');
 $this->headTitle($title);
+$_SESSION['nb_questions'] = 1; // Count number of question
 ?>
 
 <div class="row">
@@ -18,18 +19,19 @@ $this->headTitle($title);
         <table class="table">
             <tr>
                 <th width="50%"><?= $this->translate('__question'); ?></th>
-                <th><?= $this->translate('__translation_key'); ?></th>
+		<th><?= $this->translate('__translation_key'); ?></th>
                 <th style="text-align: center"><?= $this->translate('__category'); ?></th>
                 <th style="text-align: center;"><?= $this->translate('__threshold_max'); ?></th>
                 <th style="text-align: center;"><?= $this->translate('__action'); ?></th>
             </tr>
             <?php foreach ($questions as $question) :
+		$_SESSION['nb_questions']++;
                 $urlModify = $this->url('admin', ['action' => 'modify-question', 'id' => $question->getId()]);
                 $urlDelete = $this->url('admin', ['action' => 'delete-question', 'id' => $question->getId()]);
                 ?>
                 <tr>
                     <td><?= $this->translate($question->getTranslationKey()); ?></td>
-                    <td><?= $question->getTranslationKey(); ?></td>
+		    <td><?= $question->getTranslationKey(); ?></td>
                     <td align="center"><?= $this->translate($question->getCategoryTranslationKey()); ?></td>
                     <td align="center"><?= $question->getThreshold(); ?></td>
                     <td align="center">

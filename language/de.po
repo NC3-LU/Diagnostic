@@ -11,14 +11,11 @@ msgstr ""
 "Last-Translator: \n"
 "Language-Team: \n"
 
-msgid "__diagnostic"
-msgstr "Diagnosis"
-
 msgid "__category1"
 msgstr "Awareness of security and compliance"
 
 msgid "__category2"
-msgstr "Employee management"
+msgstr "test"
 
 msgid "__category3"
 msgstr "Third-party management"
@@ -225,10 +222,13 @@ msgid "__question31help"
 msgstr "Have people been made aware?<br>Who to contact, and how?"
 
 msgid "__question32"
-msgstr "Is there a recovery plan?"
+msgstr "Is there a recovery plan ?"
 
 msgid "__question32help"
-msgstr "Outline or comprehensive?"
+msgstr "Outline or comprehensive ?"
+
+msgid "__diagnostic"
+msgstr "Diagnosis"
 
 msgid "__welcome"
 msgstr "Welcome to CASES Diagnostic"
@@ -317,11 +317,20 @@ msgstr "Record and continue"
 msgid "__add_a_question"
 msgstr "Add a question"
 
+msgid "__add_a_category"
+msgstr "Add a category"
+
+msgid "__add_a_language"
+msgstr "Add a language"
+
 msgid "__add"
 msgstr "Add"
 
 msgid "__question"
 msgstr "Question"
+
+msgid "__languages"
+msgstr "Languages"
 
 msgid "__export"
 msgstr "Export"
@@ -389,6 +398,9 @@ msgstr "Questions"
 msgid "__translation_key"
 msgstr "Translation key"
 
+msgid "__translation"
+msgstr "Translation"
+
 msgid "__category"
 msgstr "Category"
 
@@ -400,6 +412,9 @@ msgstr "Action"
 
 msgid "__modify_question"
 msgstr "Change question"
+
+msgid "__modify_category"
+msgstr "Change category"
 
 msgid "__admin"
 msgstr "Administration"
@@ -473,7 +488,7 @@ msgstr "Importance levels"
 msgid "__maturity_none"
 msgstr "Fragile"
 
-msgid "__maturity_plan"
+msgid "__maturity_NA"
 msgstr "N/A"
 
 msgid "__maturity_medium"
@@ -511,3 +526,6 @@ msgstr "Summary of evaluation"
 
 msgid "__categories_maturities"
 msgstr "Maturities by category"
+
+msgid "__error_exist"
+msgstr "This key already exist"

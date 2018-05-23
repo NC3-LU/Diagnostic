@@ -10,7 +10,7 @@ DBUSER_DIAGNOSTIC='diagnostic'						#The DB user that will be used for the diagn
 DBPASSWORD_DIAGNOSTIC="$(openssl rand -hex 32)"		#The password of the user diagnostic of the DB; Random by default
 DBUSER_ADMIN='root'									#The administrator login of the DB
 DBPASSWORD_ADMIN="$(openssl rand -hex 32)"			#The password of the administrator of the DB; Random by default
-DEFAULT_LANGUAGE='en_EN'							#The default and main language of the diagnostic 
+DEFAULT_LANGUAGE='en'							#The default and main language of the diagnostic 
 IP_ADDRESS='10.0.0.102'								#The IP address where you will find the diagnostic
 DISABLE_MXCHECK=true								#If the VM is connected on internet (which is depreciate), it could check the validity of the mail used. If it set to false, no check are done.
 
