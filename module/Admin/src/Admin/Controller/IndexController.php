@@ -25,6 +25,7 @@ class IndexController extends AbstractController
     protected $userForm;
     protected $adminQuestionForm;
     protected $adminCategoryForm;
+    protected $adminLanguageForm;
 
     /**
      * Index
@@ -154,14 +155,14 @@ class IndexController extends AbstractController
         ]);
     }
 
-     /**
+    /**
      * Categories
      *
      * @return ViewModel
      */
     public function categoriesAction()
     {
-        //retrieve questions
+        //retrieve categories
         $categoryService = $this->get('categoryService');
         $categories = $categoryService->getBddCategories();
 
@@ -169,6 +170,79 @@ class IndexController extends AbstractController
         return new ViewModel([
             'categories' => $categories
         ]);
+    }
+
+    /**
+     * Languages
+     *
+     * @return ViewModel
+     */
+    public function languagesAction()
+    {
+	$_SESSION['change_language'] = 'fr';
+
+	if (isset($_POST['change_language_ref'])){
+	    $_SESSION['change_language'] = 'en';
+	}
+
+	// Search the translation key in order to know the translation to change
+	for ($i=1; $i<300; $i++){
+	    if (isset($_POST['mod'.$i])){
+		if ($_SESSION['lang'] == 1) {
+	        $file = fopen('/var/www/diagnostic/language/fr.po', 'r');
+		$fileCount = -1;
+		$temp_fr = 0;
+        	while (!feof($file)) {
+                    $temp = fgets($file, 4096);
+		    $fileCount++;
+	            if(substr($temp, 7, -2) == $_SESSION['key_fr'][$i]){
+			$temp_fr = $fileCount;
+		    }
+         	}
+		fclose($file);
+
+		$file = fopen('/var/www/diagnostic/language/fr.po', 'r');
+		$contents = fread($file, filesize('/var/www/diagnostic/language/fr.po'));
+		fclose($file);
+   		$contents = explode(PHP_EOL, $contents); // PHP_EOL equals to /n in Linux
+		$contents[$temp_fr+1] = 'msgstr ' . '"' . $_POST['translation'.$i] . '"'; // Change the translation with the new one
+ 		$contents = array_values($contents);
+ 		$contents = implode(PHP_EOL, $contents);
+		$file = fopen("/var/www/diagnostic/language/fr.po", "w");
+   		fwrite($file, $contents); // Write the file without the deleted files
+		fclose($file);
+
+		shell_exec('msgfmt /var/www/diagnostic/language/fr.po -o /var/www/diagnostic/language/fr.mo');
+		}
+
+		if ($_SESSION['lang'] == 2) {
+	        $file = fopen("/var/www/diagnostic/language/en.po", "r");
+		$fileCount = -1;
+		$temp_fr = 0;
+        	while (!feof($file)) {
+                    $temp = fgets($file, 4096);
+		    $fileCount++;
+	            if(substr($temp, 7, -2) == $_SESSION['key_fr'][$i]){
+			$temp_fr = $fileCount;
+		    }
+         	}
+		fclose($file);
+
+		$file = fopen("/var/www/diagnostic/language/en.po", "r");
+		$contents = fread($file, filesize("/var/www/diagnostic/language/en.po"));
+		fclose($file);
+   		$contents = explode(PHP_EOL, $contents); // PHP_EOL equals to /n in Linux
+		$contents[$temp_fr+1] = 'msgstr ' . '"' . $_POST['translation'.$i] . '"'; // Change the translation with the new one
+ 		$contents = array_values($contents);
+ 		$contents = implode(PHP_EOL, $contents);
+		$file = fopen("/var/www/diagnostic/language/en.po", "w");
+   		fwrite($file, $contents); // Write the file without the deleted files
+		fclose($file);
+
+		shell_exec('msgfmt /var/www/diagnostic/language/en.po -o /var/www/diagnostic/language/en.mo');
+		}
+	    }
+	}
     }
 
     /**
@@ -181,82 +255,65 @@ class IndexController extends AbstractController
 	// Session value to know if the translation key already exist
         $_SESSION['erreur_exist'] = 0;
 
+	$tabToGet = ['translation_key', 'category_id', 'threshold', 'csrf', 'submit'];
+
         $form = $this->get('adminQuestionForm');
 
         //form is post and valid
         $request = $this->getRequest();
         if ($request->isPost()) {
             $form->setData($request->getPost());
-  	    // Determine if the translation key already exist
-            $cmd="grep -c -w $_POST[translation_key] /var/www/diagnostic/language/fr_FR.po";
+
+	    // Determine if the translation key already exist
+            $cmd='grep -c -w ' . $request->getPost('translation_key') . ' /var/www/diagnostic/language/en.po';
             if(exec($cmd) != 0){ $_SESSION['erreur_exist'] = 1;}
 
             if ($form->isValid() && $_SESSION['erreur_exist'] == 0) {
-                $formData = $form->getData();
+                $formData = [];
+		foreach ($tabToGet as $key) {
+		    $formData[$key] = $form->getData()[$key];
+		}
                 $questionService = $this->get('questionService');
                 $questionService->create((array)$formData);
                 $questionService->resetCache();
 
-		// Open the french file and write the new question with its help
-		$file = fopen('/var/www/diagnostic/language/fr_FR.po', 'a+');
-		fputs($file, PHP_EOL);
-		fputs($file,  'msgid ' . '"' . $_POST[translation_key] . '"');
-		fputs($file, PHP_EOL);
-		fputs($file,  'msgstr' . ' ' . '"' . $_POST[translation_fr] . '"');
-		fputs($file, PHP_EOL);
-		fputs($file, PHP_EOL);
-		fputs($file,  'msgid' . ' ' . '"' . $_POST[translation_key] . help . '"');
-		fputs($file, PHP_EOL);
-		if($_POST['help_fr'] == ""){
-		    fputs($file,  'msgstr' . ' ' . '"' . ' ' . '"');
+		// Add translation to the .po files.
+		$file_lang = fopen('/var/www/diagnostic/language/languages.txt', 'r');
+		for ($i=1; $i<$_SESSION['nb_lang']; $i++) {
+		    $temp_lang = fgets($file_lang, 4096);
+		    rename('/var/www/diagnostic/language/' . substr($temp_lang, 0, -1) . '.po', '/var/www/diagnostic/language/' . substr($temp_lang, 0, -1) . '_temp.po');
+		    $file_temp = fopen('/var/www/diagnostic/language/' . substr($temp_lang, 0, -1) . '_temp.po', 'r');
+		    $file = fopen('/var/www/diagnostic/language/' . substr($temp_lang, 0, -1) . '.po', 'w');
+		    while (!feof($file_temp)) {
+		        $temp = fgets($file_temp, 4096);
+		        fputs($file, $temp);
+		    	if (substr($temp, 7, -2) == '__question' . ($_SESSION['nb_questions']-1) . 'help') {
+			    $temp = fgets($file_temp, 4096);
+			    fputs($file, $temp);
+			    fputs($file, PHP_EOL);
+			    fputs($file,  'msgid "' . $request->getPost('translation_key') . '"');
+			    fputs($file, PHP_EOL);
+			    fputs($file,  'msgstr "' . $request->getPost('translation_' . substr($temp_lang, 0, -1)) . '"');
+			    fputs($file, PHP_EOL);
+			    fputs($file, PHP_EOL);
+			    fputs($file,  'msgid "' . $request->getPost('translation_key') . 'help"');
+			    fputs($file, PHP_EOL);
+			    if($request->getPost('help_' . substr($temp_lang, 0, -1)) == ''){
+			    	fputs($file,  'msgstr " "');
+			    }
+			    else{
+			    	fputs($file,  'msgstr "' . $request->getPost('help_' . substr($temp_lang, 0, -1)) . '"');
+			    }
+			    fputs($file, PHP_EOL);
+			}
+		    }
+		    fclose($file_temp);
+		    fclose($file);
+		    unlink('/var/www/diagnostic/language/' . substr($temp_lang, 0, -1) . '_temp.po');
+		    // compile from po to mo
+		    shell_exec('msgfmt /var/www/diagnostic/language/' . substr($temp_lang, 0, -1) . '.po -o /var/www/diagnostic/language/' . substr($temp_lang, 0, -1) . '.mo');
 		}
-		else{
-		    fputs($file,  'msgstr' . ' ' . '"' . $_POST[help_fr] . '"');
-		}
-		fputs($file, PHP_EOL);
-		fclose($file);
-		// compile from po to mo
-		shell_exec('msgfmt /var/www/diagnostic/language/fr_FR.po -o /var/www/diagnostic/language/fr_FR.mo');
-
-		// Open the english file and write the new question with its help
-		$file = fopen('/var/www/diagnostic/language/en_EN.po', 'a+');
-		fputs($file, PHP_EOL);
-		fputs($file,  'msgid' . ' ' . '"' . $_POST[translation_key] . '"');
-		fputs($file, PHP_EOL);
-		fputs($file,  'msgstr' . ' ' . '"' . $_POST[translation_en] . '"');
-		fputs($file, PHP_EOL);
-		fputs($file, PHP_EOL);
-		fputs($file,  'msgid' . ' ' . '"' . $_POST[translation_key] . help . '"');
-		fputs($file, PHP_EOL);
-		if($_POST['help_en'] == ""){
-		    fputs($file,  'msgstr' . ' ' . '"' . ' ' . '"');
-		}
-		else{
-		    fputs($file,  'msgstr' . ' ' . '"' . $_POST[help_en] . '"');
-		}
-		fputs($file, PHP_EOL);
-		fclose($file);
-		shell_exec('msgfmt /var/www/diagnostic/language/en_EN.po -o /var/www/diagnostic/language/en_EN.mo');
-
-		// Open the german file and write the new question with its help
-		$file = fopen('/var/www/diagnostic/language/de_DE.po', 'a+');
-		fputs($file, PHP_EOL);
-		fputs($file,  'msgid' . ' ' . '"' . $_POST[translation_key] . '"');
-		fputs($file, PHP_EOL);
-		fputs($file,  'msgstr' . ' ' . '"' . $_POST[translation_de] . '"');
-		fputs($file, PHP_EOL);
-		fputs($file, PHP_EOL);
-		fputs($file,  'msgid' . ' ' . '"' . $_POST[translation_key] . help . '"');
-		fputs($file, PHP_EOL);
-		if($_POST['help_de'] == ""){
-		    fputs($file,  'msgstr' . ' ' . '"' . ' ' . '"');
-		}
-		else{
-		    fputs($file,  'msgstr' . ' ' . '"' . $_POST[help_de] . '"');
-		}
-		fputs($file, PHP_EOL);
-		fclose($file);
-		shell_exec('msgfmt /var/www/diagnostic/language/de_DE.po -o /var/www/diagnostic/language/de_DE.mo');
+		fclose($file_lang);
 
 		//redirect
                 return $this->redirect()->toRoute('admin', ['controller' => 'index', 'action' => 'questions']);
@@ -279,6 +336,8 @@ class IndexController extends AbstractController
 	// Session value to know if the translation key already exist
 	$_SESSION['erreur_exist'] = 0;
 
+	$tabToGet = ['translation_key', 'csrf', 'submit'];
+
         $form = $this->get('adminCategoryForm');
 
         //form is post and valid
@@ -286,45 +345,46 @@ class IndexController extends AbstractController
         if ($request->isPost()) {
             $form->setData($request->getPost());
 
-	    // Test if the translation key exist in the file. If it doesn't exist, exec($cmd) != 0
-	    $cmd="grep -c -w $_POST[translation_key] /var/www/diagnostic/language/fr_FR.po";
-	    if(exec($cmd) != 0){ $_SESSION['erreur_exist'] = 1;}
+	    // Determine if the translation key already exist
+            $cmd='grep -c -w ' . $request->getPost('translation_key') . ' /var/www/diagnostic/language/en.po';
+            if(exec($cmd) != 0){ $_SESSION['erreur_exist'] = 1;}
+
             if ($form->isValid() && $_SESSION['erreur_exist'] == 0) {
-                $formData = $form->getData();
+                $formData = [];
+                foreach ($tabToGet as $key) {
+                    $formData[$key] = $form->getData()[$key];
+                }
                 $categoryService = $this->get('categoryService');
                 $categoryService->create((array)$formData);
                 $categoryService->resetCache();
 
-		// Open the french file and write the new category
-		$file = fopen('/var/www/diagnostic/language/fr_FR.po', 'a+');
-		fputs($file, PHP_EOL);
-		fputs($file,  'msgid' . ' ' . '"' . $_POST[translation_key] . '"');
-		fputs($file, PHP_EOL);
-		fputs($file,  'msgstr' . ' ' . '"' . $_POST[translation_fr] . '"');
-		fputs($file, PHP_EOL);
-		fclose($file);
-		// compile from po to mo
-		shell_exec('msgfmt /var/www/diagnostic/language/fr_FR.po -o /var/www/diagnostic/language/fr_FR.mo');
-
-		// Open the english file and write the new category
-		$file = fopen('/var/www/diagnostic/language/en_EN.po', 'a+');
-		fputs($file, PHP_EOL);
-		fputs($file,  'msgid' . ' ' . '"' . $_POST[translation_key] . '"');
-		fputs($file, PHP_EOL);
-		fputs($file,  'msgstr' . ' ' . '"' . $_POST[translation_en] . '"');
-		fputs($file, PHP_EOL);
-		fclose($file);
-		shell_exec('msgfmt /var/www/diagnostic/language/en_EN.po -o /var/www/diagnostic/language/en_EN.mo');
-
-		// Open the german file and write the new category
-		$file = fopen('/var/www/diagnostic/language/de_DE.po', 'a+');
-		fputs($file, PHP_EOL);
-		fputs($file,  'msgid' . ' ' . '"' . $_POST[translation_key] . '"');
-		fputs($file, PHP_EOL);
-		fputs($file,  'msgstr' . ' ' . '"' . $_POST[translation_de] . '"');
-		fputs($file, PHP_EOL);
-		fclose($file);
-		shell_exec('msgfmt /var/www/diagnostic/language/de_DE.po -o /var/www/diagnostic/language/de_DE.mo');
+		// Add translation to the .po files.
+                $file_lang = fopen('/var/www/diagnostic/language/languages.txt', 'r');
+                for ($i=1; $i<$_SESSION['nb_lang']; $i++) {
+                    $temp_lang = fgets($file_lang, 4096);
+                    rename('/var/www/diagnostic/language/' . substr($temp_lang, 0, -1) . '.po', '/var/www/diagnostic/language/' . substr($temp_lang, 0, -1) . '_temp.po');
+                    $file_temp = fopen('/var/www/diagnostic/language/' . substr($temp_lang, 0, -1) . '_temp.po', 'r');
+                    $file = fopen('/var/www/diagnostic/language/' . substr($temp_lang, 0, -1) . '.po', 'w');
+                    while (!feof($file_temp)) {
+                        $temp = fgets($file_temp, 4096);
+                        fputs($file, $temp);
+                        if (substr($temp, 7, -2) == '__category' . ($_SESSION['nb_categories']-1)) {
+                            $temp = fgets($file_temp, 4096);
+                            fputs($file, $temp);
+                            fputs($file, PHP_EOL);
+                            fputs($file,  'msgid "' . $request->getPost('translation_key') . '"');
+                            fputs($file, PHP_EOL);
+                            fputs($file,  'msgstr "' . $request->getPost('translation_' . substr($temp_lang, 0, -1)) . '"');
+                            fputs($file, PHP_EOL);
+			}
+                    }
+                    fclose($file_temp);
+                    fclose($file);
+                    unlink('/var/www/diagnostic/language/' . substr($temp_lang, 0, -1) . '_temp.po');
+                    // compile from po to mo
+                    shell_exec('msgfmt /var/www/diagnostic/language/' . substr($temp_lang, 0, -1) . '.po -o /var/www/diagnostic/language/' . substr($temp_lang, 0, -1) . '.mo');
+                }
+                fclose($file_lang);
 
 		//redirect
                 return $this->redirect()->toRoute('admin', ['controller' => 'index', 'action' => 'categories']);
@@ -348,6 +408,8 @@ class IndexController extends AbstractController
 	// Session value to know if the translation key already exist
 	$_SESSION['erreur_exist'] = 0;
 
+	$tabToGet = ['translation_key', 'category_id', 'threshold', 'csrf', 'submit'];
+
         $id = $this->getEvent()->getRouteMatch()->getParam('id');
 
         if (is_null($id)) {
@@ -363,220 +425,114 @@ class IndexController extends AbstractController
 
 	foreach ($currentQuestion as $question) {
             if ($question->getId() == $id) {
-                $form->bind($question);
+                $form->get('translation_key')->setValue($question->getTranslationKey());
 		$cat = $question; // $cat equal to the question to modify
             }
         }
 
 	// Display the current value of the translation in the form-text (all languages)
-   	$file = fopen("/var/www/diagnostic/language/fr_FR.po", "r");
-        while (!feof($file)) { // Read the file
-            $temp = fgets($file, 4096); // Variable which contains one by one lines of the file
-	    // This condition determines where the translation key is in the file, and put its translation in a session variable
-	    if($temp == 'msgid '.'"'.$cat->getTranslationKey().'"'.PHP_EOL){$_SESSION['value_fr'] = fgets($file, 4096);}
-        }
-        fclose($file);
-	$_SESSION['value_fr'] = substr($_SESSION['value_fr'], 8, -2);
-
-   	$file = fopen("/var/www/diagnostic/language/en_EN.po", "r");
-        while (!feof($file)) {
-            $temp = fgets($file, 4096);
-	    if($temp == 'msgid '.'"'.$cat->getTranslationKey().'"'.PHP_EOL){$_SESSION['value_en'] = fgets($file, 4096);}
-        }
-        fclose($file);
-	$_SESSION['value_en'] = substr($_SESSION['value_en'], 8, -2);
-
-   	$file = fopen("/var/www/diagnostic/language/de_DE.po", "r");
-        while (!feof($file)) {
-            $temp = fgets($file, 4096);
-	    if($temp == 'msgid '.'"'.$cat->getTranslationKey().'"'.PHP_EOL){$_SESSION['value_de'] = fgets($file, 4096);}
-        }
-        fclose($file);
-	$_SESSION['value_de'] = substr($_SESSION['value_de'], 8, -2);
-
-
-   	$file = fopen("/var/www/diagnostic/language/fr_FR.po", "r");
-        while (!feof($file)) {
-            $temp = fgets($file, 4096);
-	    if($temp == 'msgid '.'"'.$cat->getTranslationKey().'help'.'"'.PHP_EOL){$_SESSION['value_fr_help'] = fgets($file, 4096);}
-        }
-        fclose($file);
-	$_SESSION['value_fr_help'] = substr($_SESSION['value_fr_help'], 8, -2);
-
-   	$file = fopen("/var/www/diagnostic/language/en_EN.po", "r");
-        while (!feof($file)) {
-            $temp = fgets($file, 4096);
-	    if($temp == 'msgid '.'"'.$cat->getTranslationKey().'help'.'"'.PHP_EOL){$_SESSION['value_en_help'] = fgets($file, 4096);}
-        }
-        fclose($file);
-	$_SESSION['value_en_help'] = substr($_SESSION['value_en_help'], 8, -2);
-
-   	$file = fopen("/var/www/diagnostic/language/de_DE.po", "r");
-        while (!feof($file)) {
-            $temp = fgets($file, 4096);
-	    if($temp == 'msgid '.'"'.$cat->getTranslationKey().'help'.'"'.PHP_EOL){$_SESSION['value_de_help'] = fgets($file, 4096);}
-        }
-        fclose($file);
-	$_SESSION['value_de_help'] = substr($_SESSION['value_de_help'], 8, -2);
-
-
-	// Create variables which will determine where to delete previous information in the translation files
-	$fileCount = -1; // Variable to determine the position of the current line
-	$temp_fr = 0;
-   	$file = fopen("/var/www/diagnostic/language/fr_FR.po", "r");
-        while (!feof($file)) {
-            $temp = fgets($file, 4096);
-            $fileCount++;
-	    if($temp == 'msgid '.'"'.$cat->getTranslationKey().'"'.PHP_EOL){$temp_fr = $fileCount;}
-        }
-        fclose($file);
-
-	$fileCount = -1;
-	$temp_en = 0;
-   	$file = fopen("/var/www/diagnostic/language/en_EN.po", "r");
-        while (!feof($file)) {
-            $temp = fgets($file, 4096);
-            $fileCount++;
-	    if($temp == 'msgid '.'"'.$cat->getTranslationKey().'"'.PHP_EOL){$temp_en = $fileCount;}
-        }
-        fclose($file);
-
-	$fileCount = -1;
-	$temp_de = 0;
-   	$file = fopen("/var/www/diagnostic/language/de_DE.po", "r");
-        while (!feof($file)) {
-            $temp = fgets($file, 4096);
-            $fileCount++;
-	    if($temp == 'msgid '.'"'.$cat->getTranslationKey().'"'.PHP_EOL){$temp_de = $fileCount;}
-        }
-        fclose($file);
-
+	$file_lang = fopen('/var/www/diagnostic/language/languages.txt', 'r');
+	for ($i=1; $i<$_SESSION['nb_lang']; $i++) {
+	    $temp_lang = fgets($file_lang, 4096);
+   	    $file = fopen('/var/www/diagnostic/language/' . substr($temp_lang, 0, -1) . '.po', 'r');
+            while (!feof($file)) { // Read the file
+                $temp = fgets($file, 4096); // Variable which contains one by one lines of the file
+	        // This condition determines where the translation key is in the file, and put its translation in a session variable
+	        if($temp == 'msgid "' . $cat->getTranslationKey() . '"' . PHP_EOL){$_SESSION['value_' . substr($temp_lang, 0, -1)] = fgets($file, 4096);}
+		if($temp == 'msgid "' . $cat->getTranslationKey() . 'help"' . PHP_EOL){$_SESSION['value_' . substr($temp_lang, 0, -1) . '_help'] = fgets($file, 4096);}
+            }
+            fclose($file);
+	    $_SESSION['value_' . substr($temp_lang, 0, -1)] = substr($_SESSION['value_' . substr($temp_lang, 0, -1)], 8, -2);
+	    $_SESSION['value_' . substr($temp_lang, 0, -1) . '_help'] = substr($_SESSION['value_' . substr($temp_lang, 0, -1) . '_help'], 8, -2);
+	}
+	fclose($file_lang);
 
         //form is post and valid
         $request = $this->getRequest();
         if ($request->isPost()) {
             $form->setData($request->getPost());
+
 	    // Determine if the translation key already exist
-	    $cmd="grep -c -w $_POST[translation_key] /var/www/diagnostic/language/fr_FR.po";
+	    $cmd='grep -c -w ' . $request->getPost('translation_key') . ' /var/www/diagnostic/language/en.po';
             if(exec($cmd) != 0){ $_SESSION['erreur_exist'] = 1;}
 	    // If the translation key is the same than the current one, there is no error. Happens when you only want to change translations
-	    if($_POST['translation_key'] == $cat->getTranslationKey()){$_SESSION['erreur_exist'] = 0;}
+	    if($request->getPost('translation_key') == $cat->getTranslationKey()){$_SESSION['erreur_exist'] = 0;}
+
             if ($form->isValid() && $_SESSION['erreur_exist'] == 0) {
-                $formData = $form->getData();
+                $formData = [];
+                foreach ($tabToGet as $key) {
+                    $formData[$key] = $form->getData()[$key];
+                }
 
                 $questionService->update($id, (array)$formData);
-
                 $questionService->resetCache();
 
-		// Open the translation files and delete previous questions in order to add them with changes.
-		$file = fopen("/var/www/diagnostic/language/fr_FR.po", "r");
-   		$contents = fread($file, filesize("/var/www/diagnostic/language/fr_FR.po"));
-		fclose($file);
-   		$contents = explode(PHP_EOL, $contents); // PHP_EOL equals to /n in Linux
-   		unset($contents[$temp_fr-1]); // Delete the line break
-		unset($contents[$temp_fr]); // Delete the translation key
-		unset($contents[$temp_fr+1]); // Delete the translation
-		unset($contents[$temp_fr+2]); // Delete the line break
-		unset($contents[$temp_fr+3]); // Delete the help translation key
-		unset($contents[$temp_fr+4]); // Delete the help translation
-   		$contents = array_values($contents);
-  		$contents = implode(PHP_EOL, $contents);
-		$file = fopen("/var/www/diagnostic/language/fr_FR.po", "w");
-   		fwrite($file, $contents); // Write the file without the deleted files
-		fclose($file);
+		// Create variables which will determine where to delete previous information in the translation files
+		$file_lang = fopen('/var/www/diagnostic/language/languages.txt', 'r');
+        	for ($i=1; $i<$_SESSION['nb_lang']; $i++) {
+            	    $temp_lang = fgets($file_lang, 4096);
+            	    $fileCount = -1; // Variable to determine the position of the current line
+            	    $num_line = 0;
+            	    $file = fopen('/var/www/diagnostic/language/' . substr($temp_lang, 0, -1) . '.po', 'r');
+            	    while (!feof($file)) {
+                	$temp = fgets($file, 4096);
+                	$fileCount++;
+                	if($temp == 'msgid "' . $cat->getTranslationKey() . '"' . PHP_EOL){$num_line = $fileCount; break;}
+            	    }
+            	    fclose($file);
 
-		// Open the translation files and write the new question with its help
-		$file = fopen('/var/www/diagnostic/language/fr_FR.po', 'a+');
-		fputs($file, PHP_EOL);
-		fputs($file,  'msgid' . ' ' . '"' . $_POST[translation_key] . '"');
-		fputs($file, PHP_EOL);
-		fputs($file,  'msgstr' . ' ' . '"' . $_POST[translation_fr] . '"');
-		fputs($file, PHP_EOL);
-		fputs($file, PHP_EOL);
-		fputs($file,  'msgid' . ' ' . '"' . $_POST[translation_key] . help . '"');
-		fputs($file, PHP_EOL);
-		if($_POST['help_fr'] == ""){
-		    fputs($file,  'msgstr' . ' ' . '"' . ' ' . '"');
+		    // Rewrite the new translations
+		    rename('/var/www/diagnostic/language/' . substr($temp_lang, 0, -1) . '.po', '/var/www/diagnostic/language/' . substr($temp_lang, 0, -1) . '_temp.po');
+                    $file_temp = fopen('/var/www/diagnostic/language/' . substr($temp_lang, 0, -1) . '_temp.po', 'r');
+                    $file = fopen('/var/www/diagnostic/language/' . substr($temp_lang, 0, -1) . '.po', 'w');
+                    while (!feof($file_temp)) {
+                        $temp = fgets($file_temp, 4096);
+                        fputs($file, $temp);
+                        if (substr($temp, 7, -2) == $cat->getTranslationKey() . 'help') {
+                            $temp = fgets($file_temp, 4096);
+                            fputs($file, $temp);
+                            fputs($file, PHP_EOL);
+                            fputs($file,  'msgid "' . $request->getPost('translation_key') . '"');
+                            fputs($file, PHP_EOL);
+                            fputs($file,  'msgstr "' . $request->getPost('translation_' . substr($temp_lang, 0, -1)) . '"');
+                            fputs($file, PHP_EOL);
+                            fputs($file, PHP_EOL);
+                            fputs($file,  'msgid "' . $request->getPost('translation_key') . 'help"');
+                            fputs($file, PHP_EOL);
+                            if($request->getPost('help_' . substr($temp_lang, 0, -1)) == ''){
+                                fputs($file,  'msgstr " "');
+                            }
+                            else{
+                                fputs($file,  'msgstr "' . $request->getPost('help_' . substr($temp_lang, 0, -1)) . '"');
+                            }
+                            fputs($file, PHP_EOL);
+                        }
+                    }
+                    fclose($file_temp);
+                    fclose($file);
+                    unlink('/var/www/diagnostic/language/' . substr($temp_lang, 0, -1) . '_temp.po');
+
+		    // Open the translation files and delete previous questions in order to add them with changes.
+	 	    $file = fopen('/var/www/diagnostic/language/' . substr($temp_lang, 0, -1) . '.po', 'r');
+   		    $contents = fread($file, filesize('/var/www/diagnostic/language/' . substr($temp_lang, 0, -1) . '.po'));
+		    fclose($file);
+   		    $contents = explode(PHP_EOL, $contents); // PHP_EOL equals to /n in Linux
+   		    unset($contents[$num_line-1]); // Delete the line break
+	      	    unset($contents[$num_line]); // Delete the translation key
+		    unset($contents[$num_line+1]); // Delete the translation
+		    unset($contents[$num_line+2]); // Delete the line break
+		    unset($contents[$num_line+3]); // Delete the help translation key
+		    unset($contents[$num_line+4]); // Delete the help translation
+   		    $contents = array_values($contents);
+  		    $contents = implode(PHP_EOL, $contents);
+		    $file = fopen('/var/www/diagnostic/language/' . substr($temp_lang, 0, -1) . '.po', 'w');
+   		    fwrite($file, $contents); // Write the file without the deleted files
+		    fclose($file);
+
+                    // compile from po to mo
+                    shell_exec('msgfmt /var/www/diagnostic/language/' . substr($temp_lang, 0, -1) . '.po -o /var/www/diagnostic/language/' . substr($temp_lang, 0, -1) . '.mo');
 		}
-		else{
-		    fputs($file,  'msgstr' . ' ' . '"' . $_POST[help_fr] . '"');
-		}
-		fputs($file, PHP_EOL);
-		fclose($file);
-
-		shell_exec('msgfmt /var/www/diagnostic/language/fr_FR.po -o /var/www/diagnostic/language/fr_FR.mo');
-
-		$file = fopen("/var/www/diagnostic/language/en_EN.po", "r");
-   		$contents = fread($file, filesize("/var/www/diagnostic/language/en_EN.po"));
-		fclose($file);
-   		$contents = explode(PHP_EOL, $contents);
-   		unset($contents[$temp_en-1]);
-		unset($contents[$temp_en]);
-		unset($contents[$temp_en+1]);
-		unset($contents[$temp_en+2]);
-		unset($contents[$temp_en+3]);
-		unset($contents[$temp_en+4]);
-   		$contents = array_values($contents);
-  		$contents = implode(PHP_EOL, $contents);
-		$file = fopen("/var/www/diagnostic/language/en_EN.po", "w");
-   		fwrite($file, $contents);
-		fclose($file);
-
-		$file = fopen('/var/www/diagnostic/language/en_EN.po', 'a+');
-		fputs($file, PHP_EOL);
-		fputs($file,  'msgid' . ' ' . '"' . $_POST[translation_key] . '"');
-		fputs($file, PHP_EOL);
-		fputs($file,  'msgstr' . ' ' . '"' . $_POST[translation_en] . '"');
-		fputs($file, PHP_EOL);
-		fputs($file, PHP_EOL);
-		fputs($file,  'msgid' . ' ' . '"' . $_POST[translation_key] . help . '"');
-		fputs($file, PHP_EOL);
-		if($_POST['help_en'] == ""){
-		    fputs($file,  'msgstr' . ' ' . '"' . ' ' . '"');
-		}
-		else{
-		    fputs($file,  'msgstr' . ' ' . '"' . $_POST[help_en] . '"');
-		}
-		fputs($file, PHP_EOL);
-		fclose($file);
-
-		shell_exec('msgfmt /var/www/diagnostic/language/en_EN.po -o /var/www/diagnostic/language/en_EN.mo');
-
-		$file = fopen("/var/www/diagnostic/language/de_DE.po", "r");
-   		$contents = fread($file, filesize("/var/www/diagnostic/language/de_DE.po"));
-		fclose($file);
-   		$contents = explode(PHP_EOL, $contents);
-		unset($contents[$temp_de-1]);
-		unset($contents[$temp_de]);
-		unset($contents[$temp_de+1]);
-		unset($contents[$temp_de+2]);
-		unset($contents[$temp_de+3]);
-		unset($contents[$temp_de+4]);
-   		$contents = array_values($contents);
-  		$contents = implode(PHP_EOL, $contents);
-		$file = fopen("/var/www/diagnostic/language/de_DE.po", "w");
-   		fwrite($file, $contents);
-		fclose($file);
-
-		$file = fopen('/var/www/diagnostic/language/de_DE.po', 'a+');
-		fputs($file, PHP_EOL);
-		fputs($file,  'msgid' . ' ' . '"' . $_POST[translation_key] . '"');
-		fputs($file, PHP_EOL);
-		fputs($file,  'msgstr' . ' ' . '"' . $_POST[translation_de] . '"');
-		fputs($file, PHP_EOL);
-		fputs($file, PHP_EOL);
-		fputs($file,  'msgid' . ' ' . '"' . $_POST[translation_key] . help . '"');
-		fputs($file, PHP_EOL);
-		if($_POST['help_de'] == ""){
-		    fputs($file,  'msgstr' . ' ' . '"' . ' ' . '"');
-		}
-		else{
-		    fputs($file,  'msgstr' . ' ' . '"' . $_POST[help_de] . '"');
-		}
-		fputs($file, PHP_EOL);
-		fclose($file);
-
-		shell_exec('msgfmt /var/www/diagnostic/language/de_DE.po -o /var/www/diagnostic/language/de_DE.mo');
+		fclose($file_lang);
 
                 //redirect
                 return $this->redirect()->toRoute('admin', ['controller' => 'index', 'action' => 'questions']);
@@ -601,7 +557,9 @@ class IndexController extends AbstractController
 	// Session value to know if the translation key already exist
 	$_SESSION['erreur_exist'] = 0;
 
-        $id = $this->getEvent()->getRouteMatch()->getParam('id');
+   	$tabToGet = ['translation_key', 'csrf', 'submit'];
+
+	$id = $this->getEvent()->getRouteMatch()->getParam('id');
 
         if (is_null($id)) {
             throw new \Exception('Category not exist');
@@ -616,156 +574,99 @@ class IndexController extends AbstractController
 
 	foreach ($currentCategory as $category) {
             if ($category->getId() == $id) {
-                $form->bind($category);
+                $form->get('translation_key')->setValue($category->getTranslationKey());
 		$cat = $category; // $cat equal to the category to modify
             }
         }
 
 	// Display the current value of the translation in the form-text (all languages)
-   	$file = fopen("/var/www/diagnostic/language/fr_FR.po", "r");
-        while (!feof($file)) { // Read the file
-            $temp = fgets($file, 4096); // Variable which contains one by one lines of the file
-	    // This condition determines where the translation key is in the file, and put its translation in a session variable
-	    if($temp == 'msgid '.'"'.$cat->getTranslationKey().'"'.PHP_EOL){$_SESSION['value_fr'] = fgets($file, 4096);}
+        $file_lang = fopen('/var/www/diagnostic/language/languages.txt', 'r');
+        for ($i=1; $i<$_SESSION['nb_lang']; $i++) {
+            $temp_lang = fgets($file_lang, 4096);
+            $file = fopen('/var/www/diagnostic/language/' . substr($temp_lang, 0, -1) . '.po', 'r');
+            while (!feof($file)) { // Read the file
+                $temp = fgets($file, 4096); // Variable which contains one by one lines of the file
+                // This condition determines where the translation key is in the file, and put its translation in a session variable
+                if($temp == 'msgid "' . $cat->getTranslationKey() . '"' . PHP_EOL){$_SESSION['value_' . substr($temp_lang, 0, -1)] = fgets($file, 4096);}
+            }
+            fclose($file);
+            $_SESSION['value_' . substr($temp_lang, 0, -1)] = substr($_SESSION['value_' . substr($temp_lang, 0, -1)], 8, -2);
         }
-        fclose($file);
-	$_SESSION['value_fr'] = substr($_SESSION['value_fr'], 8, -2);
-
-   	$file = fopen("/var/www/diagnostic/language/en_EN.po", "r");
-        while (!feof($file)) {
-            $temp = fgets($file, 4096);
-	    if($temp == 'msgid '.'"'.$cat->getTranslationKey().'"'.PHP_EOL){$_SESSION['value_en'] = fgets($file, 4096);}
-        }
-        fclose($file);
-	$_SESSION['value_en'] = substr($_SESSION['value_en'], 8, -2);
-
-   	$file = fopen("/var/www/diagnostic/language/de_DE.po", "r");
-        while (!feof($file)) {
-            $temp = fgets($file, 4096);
-	    if($temp == 'msgid '.'"'.$cat->getTranslationKey().'"'.PHP_EOL){$_SESSION['value_de'] = fgets($file, 4096);}
-        }
-        fclose($file);
-	$_SESSION['value_de'] = substr($_SESSION['value_de'], 8, -2);
-
-
-	// Create variables which will determine where to delete previous information in the translation files
-	$fileCount = -1; // Variable to determine the position of the current line
-	$temp_fr = 0;
-   	$file = fopen("/var/www/diagnostic/language/fr_FR.po", "r");
-        while (!feof($file)) {
-            $temp = fgets($file, 4096);
-            $fileCount++;
-	    if($temp == 'msgid '.'"'.$cat->getTranslationKey().'"'.PHP_EOL){$temp_fr = $fileCount;}
-        }
-        fclose($file);
-
-	$fileCount = -1;
-	$temp_en = 0;
-   	$file = fopen("/var/www/diagnostic/language/en_EN.po", "r");
-        while (!feof($file)) {
-            $temp = fgets($file, 4096);
-            $fileCount++;
-	    if($temp == 'msgid '.'"'.$cat->getTranslationKey().'"'.PHP_EOL){$temp_en = $fileCount;}
-        }
-        fclose($file);
-
-	$fileCount = -1;
-	$temp_de = 0;
-   	$file = fopen("/var/www/diagnostic/language/de_DE.po", "r");
-        while (!feof($file)) {
-            $temp = fgets($file, 4096);
-            $fileCount++;
-	    if($temp == 'msgid '.'"'.$cat->getTranslationKey().'"'.PHP_EOL){$temp_de = $fileCount;}
-        }
-        fclose($file);
-
+        fclose($file_lang);
 
         //form is post and valid
         $request = $this->getRequest();
         if ($request->isPost()) {
             $form->setData($request->getPost());
-	    // Determine if the translation key already exist
-	    $cmd="grep -c -w $_POST[translation_key] /var/www/diagnostic/language/fr_FR.po";
+
+            // Determine if the translation key already exist
+            $cmd='grep -c -w ' . $request->getPost('translation_key') . ' /var/www/diagnostic/language/en.po';
             if(exec($cmd) != 0){ $_SESSION['erreur_exist'] = 1;}
-	    // If the translation key is the same than the current one, there is no error. Happens when you only want to change translations
-	    if($_POST['translation_key'] == $cat->getTranslationKey()){$_SESSION['erreur_exist'] = 0;}
+            // If the translation key is the same than the current one, there is no error. Happens when you only want to change translations
+            if($request->getPost('translation_key') == $cat->getTranslationKey()){$_SESSION['erreur_exist'] = 0;}
+
             if ($form->isValid() && $_SESSION['erreur_exist'] == 0) {
-                $formData = $form->getData();
+                $formData = [];
+                foreach ($tabToGet as $key) {
+                    $formData[$key] = $form->getData()[$key];
+                }
 
                 $categoryService->update($id, (array)$formData);
-
                 $categoryService->resetCache();
 
-		// Open the translation files and delete previous questions in order to add them with changes.
-		$file = fopen("/var/www/diagnostic/language/fr_FR.po", "r");
-   		$contents = fread($file, filesize("/var/www/diagnostic/language/fr_FR.po"));
-		fclose($file);
-   		$contents = explode(PHP_EOL, $contents); // PHP_EOL equals to /n in Linux
-   		unset($contents[$temp_fr-1]); // Delete the line break
-		unset($contents[$temp_fr]); // Delete the translation key
-		unset($contents[$temp_fr+1]); // Delete the translation
-   		$contents = array_values($contents);
-  		$contents = implode(PHP_EOL, $contents);
-		$file = fopen("/var/www/diagnostic/language/fr_FR.po", "w");
-   		fwrite($file, $contents); // Write the file without the deleted files
-		fclose($file);
+	        // Create variables which will determine where to delete previous information in the translation files
+                $file_lang = fopen('/var/www/diagnostic/language/languages.txt', 'r');
+                for ($i=1; $i<$_SESSION['nb_lang']; $i++) {
+                    $temp_lang = fgets($file_lang, 4096);
+                    $fileCount = -1; // Variable to determine the position of the current line
+                    $num_line = 0;
+                    $file = fopen('/var/www/diagnostic/language/' . substr($temp_lang, 0, -1) . '.po', 'r');
+                    while (!feof($file)) {
+                        $temp = fgets($file, 4096);
+                        $fileCount++;
+                        if($temp == 'msgid "' . $cat->getTranslationKey() . '"' . PHP_EOL){$num_line = $fileCount; break;}
+                    }
+                    fclose($file);
 
-		// Open the translation files and write the new category
-		$file = fopen('/var/www/diagnostic/language/fr_FR.po', 'a+');
-		fputs($file, PHP_EOL);
-		fputs($file,  'msgid' . ' ' . '"' . $_POST[translation_key] . '"');
-		fputs($file, PHP_EOL);
-		fputs($file,  'msgstr' . ' ' . '"' . $_POST[translation_fr] . '"');
-		fputs($file, PHP_EOL);
-		fclose($file);
+                    // Rewrite the new translations
+                    rename('/var/www/diagnostic/language/' . substr($temp_lang, 0, -1) . '.po', '/var/www/diagnostic/language/' . substr($temp_lang, 0, -1) . '_temp.po');
+                    $file_temp = fopen('/var/www/diagnostic/language/' . substr($temp_lang, 0, -1) . '_temp.po', 'r');
+                    $file = fopen('/var/www/diagnostic/language/' . substr($temp_lang, 0, -1) . '.po', 'w');
+                    while (!feof($file_temp)) {
+                        $temp = fgets($file_temp, 4096);
+                        fputs($file, $temp);
+                        if (substr($temp, 7, -2) == $cat->getTranslationKey()) {
+                            $temp = fgets($file_temp, 4096);
+                            fputs($file, $temp);
+                            fputs($file, PHP_EOL);
+                            fputs($file,  'msgid "' . $request->getPost('translation_key') . '"');
+                            fputs($file, PHP_EOL);
+                            fputs($file,  'msgstr "' . $request->getPost('translation_' . substr($temp_lang, 0, -1)) . '"');
+                            fputs($file, PHP_EOL);
+                        }
+		    }
+                    fclose($file_temp);
+                    fclose($file);
+                    unlink('/var/www/diagnostic/language/' . substr($temp_lang, 0, -1) . '_temp.po');
 
-		shell_exec('msgfmt /var/www/diagnostic/language/fr_FR.po -o /var/www/diagnostic/language/fr_FR.mo');
+                    // Open the translation files and delete previous questions in order to add them with changes.
+                    $file = fopen('/var/www/diagnostic/language/' . substr($temp_lang, 0, -1) . '.po', 'r');
+                    $contents = fread($file, filesize('/var/www/diagnostic/language/' . substr($temp_lang, 0, -1) . '.po'));
+                    fclose($file);
+                    $contents = explode(PHP_EOL, $contents); // PHP_EOL equals to /n in Linux
+                    unset($contents[$num_line-1]); // Delete the line break
+                    unset($contents[$num_line]); // Delete the translation key
+                    unset($contents[$num_line+1]); // Delete the translation
+                    $contents = array_values($contents);
+                    $contents = implode(PHP_EOL, $contents);
+                    $file = fopen('/var/www/diagnostic/language/' . substr($temp_lang, 0, -1) . '.po', 'w');
+                    fwrite($file, $contents); // Write the file without the deleted files
+                    fclose($file);
 
-		$file = fopen("/var/www/diagnostic/language/en_EN.po", "r");
-   		$contents = fread($file, filesize("/var/www/diagnostic/language/en_EN.po"));
-		fclose($file);
-   		$contents = explode(PHP_EOL, $contents);
-   		unset($contents[$temp_en-1]);
-		unset($contents[$temp_en]);
-		unset($contents[$temp_en+1]);
-   		$contents = array_values($contents);
-  		$contents = implode(PHP_EOL, $contents);
-		$file = fopen("/var/www/diagnostic/language/en_EN.po", "w");
-   		fwrite($file, $contents);
-		fclose($file);
-
-		$file = fopen('/var/www/diagnostic/language/en_EN.po', 'a+');
-		fputs($file, PHP_EOL);
-		fputs($file,  'msgid' . ' ' . '"' . $_POST[translation_key] . '"');
-		fputs($file, PHP_EOL);
-		fputs($file,  'msgstr' . ' ' . '"' . $_POST[translation_en] . '"');
-		fputs($file, PHP_EOL);
-		fclose($file);
-
-		shell_exec('msgfmt /var/www/diagnostic/language/en_EN.po -o /var/www/diagnostic/language/en_EN.mo');
-
-		$file = fopen("/var/www/diagnostic/language/de_DE.po", "r");
-   		$contents = fread($file, filesize("/var/www/diagnostic/language/de_DE.po"));
-		fclose($file);
-   		$contents = explode(PHP_EOL, $contents);
-		unset($contents[$temp_de-1]);
-		unset($contents[$temp_de]);
-		unset($contents[$temp_de+1]);
-   		$contents = array_values($contents);
-  		$contents = implode(PHP_EOL, $contents);
-		$file = fopen("/var/www/diagnostic/language/de_DE.po", "w");
-   		fwrite($file, $contents);
-		fclose($file);
-
-		$file = fopen('/var/www/diagnostic/language/de_DE.po', 'a+');
-		fputs($file, PHP_EOL);
-		fputs($file,  'msgid' . ' ' . '"' . $_POST[translation_key] . '"');
-		fputs($file, PHP_EOL);
-		fputs($file,  'msgstr' . ' ' . '"' . $_POST[translation_de] . '"');
-		fputs($file, PHP_EOL);
-		fclose($file);
-
-		shell_exec('msgfmt /var/www/diagnostic/language/de_DE.po -o /var/www/diagnostic/language/de_DE.mo');
+                    // compile from po to mo
+                    shell_exec('msgfmt /var/www/diagnostic/language/' . substr($temp_lang, 0, -1) . '.po -o /var/www/diagnostic/language/' . substr($temp_lang, 0, -1) . '.mo');
+                }
+                fclose($file_lang);
 
                 //redirect
                 return $this->redirect()->toRoute('admin', ['controller' => 'index', 'action' => 'categories']);
@@ -835,87 +736,38 @@ class IndexController extends AbstractController
             throw new \Exception('Question not exist');
         }
 
-	// See comments in the add function
-	$fileCount = -1;
-	$temp_fr = 0;
-   	$file = fopen("/var/www/diagnostic/language/fr_FR.po", "r");
-        while (!feof($file)) {
-            $temp = fgets($file, 4096);
-            $fileCount++;
-	    if($temp == 'msgid '.'"'.$cat->getTranslationKey().'"'.PHP_EOL){$temp_fr = $fileCount;}
-        }
-        fclose($file);
+	// Delete translations from the translation files
+	$file_lang = fopen('/var/www/diagnostic/language/languages.txt', 'r');
+	for ($i=1; $i<$_SESSION['nb_lang']; $i++) {
+	    $temp_lang = fgets($file_lang, 4096);
+	    $fileCount = -1;
+	    $num_line = 0;
+   	    $file = fopen('/var/www/diagnostic/language/' . substr($temp_lang, 0, -1) . '.po', 'r');
+            while (!feof($file)) {
+                $temp = fgets($file, 4096);
+                $fileCount++;
+	        if($temp == 'msgid "' . $cat->getTranslationKey() . '"' . PHP_EOL){$num_line = $fileCount;}
+            }
+            fclose($file);
 
-	$file = fopen("/var/www/diagnostic/language/fr_FR.po", "r");
-   	$contents = fread($file, filesize("/var/www/diagnostic/language/fr_FR.po"));
-	fclose($file);
-   	$contents = explode(PHP_EOL, $contents);
-   	unset($contents[$temp_fr-1]);
-	unset($contents[$temp_fr]);
-	unset($contents[$temp_fr+1]);
-	unset($contents[$temp_fr+2]);
-	unset($contents[$temp_fr+3]);
-	unset($contents[$temp_fr+4]);
-   	$contents = array_values($contents);
-  	$contents = implode(PHP_EOL, $contents);
-	$file = fopen("/var/www/diagnostic/language/fr_FR.po", "w");
-   	fwrite($file, $contents);
-	fclose($file);
-	shell_exec('msgfmt /var/www/diagnostic/language/fr_FR.po -o /var/www/diagnostic/language/fr_FR.mo');
-
-	$fileCount = -1;
-	$temp_en = 0;
-   	$file = fopen("/var/www/diagnostic/language/en_EN.po", "r");
-        while (!feof($file)) {
-            $temp = fgets($file, 4096);
-            $fileCount++;
-	    if($temp == 'msgid '.'"'.$cat->getTranslationKey().'"'.PHP_EOL){$temp_en = $fileCount;}
-        }
-        fclose($file);
-
-	$file = fopen("/var/www/diagnostic/language/en_EN.po", "r");
-   	$contents = fread($file, filesize("/var/www/diagnostic/language/en_EN.po"));
-	fclose($file);
-   	$contents = explode(PHP_EOL, $contents);
-   	unset($contents[$temp_en-1]);
-	unset($contents[$temp_en]);
-	unset($contents[$temp_en+1]);
-	unset($contents[$temp_en+2]);
-	unset($contents[$temp_en+3]);
-	unset($contents[$temp_en+4]);
-   	$contents = array_values($contents);
-  	$contents = implode(PHP_EOL, $contents);
-	$file = fopen("/var/www/diagnostic/language/en_EN.po", "w");
-   	fwrite($file, $contents);
-	fclose($file);
-	shell_exec('msgfmt /var/www/diagnostic/language/en_EN.po -o /var/www/diagnostic/language/en_EN.mo');
-
-	$fileCount = -1;
-	$temp_de = 0;
-   	$file = fopen("/var/www/diagnostic/language/de_DE.po", "r");
-        while (!feof($file)) {
-            $temp = fgets($file, 4096);
-            $fileCount++;
-	    if($temp == 'msgid '.'"'.$cat->getTranslationKey().'"'.PHP_EOL){$temp_de = $fileCount;}
-        }
-        fclose($file);
-
-	$file = fopen("/var/www/diagnostic/language/de_DE.po", "r");
-   	$contents = fread($file, filesize("/var/www/diagnostic/language/de_DE.po"));
-	fclose($file);
-   	$contents = explode(PHP_EOL, $contents);
-   	unset($contents[$temp_de-1]);
-	unset($contents[$temp_de]);
-	unset($contents[$temp_de+1]);
-	unset($contents[$temp_de+2]);
-	unset($contents[$temp_de+3]);
-	unset($contents[$temp_de+4]);
-   	$contents = array_values($contents);
-  	$contents = implode(PHP_EOL, $contents);
-	$file = fopen("/var/www/diagnostic/language/de_DE.po", "w");
-   	fwrite($file, $contents);
-	fclose($file);
-	shell_exec('msgfmt /var/www/diagnostic/language/de_DE.po -o /var/www/diagnostic/language/de_DE.mo');
+	    $file = fopen('/var/www/diagnostic/language/' . substr($temp_lang, 0, -1) . '.po', 'r');
+   	    $contents = fread($file, filesize('/var/www/diagnostic/language/' . substr($temp_lang, 0, -1) . '.po'));
+	    fclose($file);
+   	    $contents = explode(PHP_EOL, $contents);
+   	    unset($contents[$num_line-1]);
+	    unset($contents[$num_line]);
+	    unset($contents[$num_line+1]);
+	    unset($contents[$num_line+2]);
+	    unset($contents[$num_line+3]);
+	    unset($contents[$num_line+4]);
+   	    $contents = array_values($contents);
+  	    $contents = implode(PHP_EOL, $contents);
+	    $file = fopen('/var/www/diagnostic/language/' . substr($temp_lang, 0, -1) . '.po', 'w');
+   	    fwrite($file, $contents);
+	    fclose($file);
+	    shell_exec('msgfmt /var/www/diagnostic/language/' . substr($temp_lang, 0, -1) . '.po -o /var/www/diagnostic/language/' . substr($temp_lang, 0, -1) . '.mo');
+	}
+	fclose($file_lang);
 
 	$questionService->delete($id);
 
@@ -953,161 +805,69 @@ class IndexController extends AbstractController
         $questions = $questionService->getBddQuestions();
         foreach ($questions as $question) {
 	    if($question->getCategoryTranslationKey() == $cat->getTranslationKey()){
-		$fileCount = -1;
-		$temp_fr = 0;
-   		$file = fopen("/var/www/diagnostic/language/fr_FR.po", "r");
-	        while (!feof($file)) {
-        	    $temp = fgets($file, 4096);
-	            $fileCount++;
-		    if($temp == 'msgid '.'"'.$question->getTranslationKey().'"'.PHP_EOL){$temp_fr = $fileCount;}
-       	 	}
-        	fclose($file);
+		$file_lang = fopen('/var/www/diagnostic/language/languages.txt', 'r');
+        	for ($i=1; $i<$_SESSION['nb_lang']; $i++) {
+            	    $temp_lang = fgets($file_lang, 4096);
+            	    $fileCount = -1;
+            	    $num_line = 0;
+            	    $file = fopen('/var/www/diagnostic/language/' . substr($temp_lang, 0, -1) . '.po', 'r');
+	            while (!feof($file)) {
+        	        $temp = fgets($file, 4096);
+	                $fileCount++;
+		        if($temp == 'msgid "' . $question->getTranslationKey() . '"'.PHP_EOL){$num_line = $fileCount;}
+       	 	    }
+         	    fclose($file);
 
-		$file = fopen("/var/www/diagnostic/language/fr_FR.po", "r");
-	   	$contents = fread($file, filesize("/var/www/diagnostic/language/fr_FR.po"));
-		fclose($file);
-   		$contents = explode(PHP_EOL, $contents);
-	   	unset($contents[$temp_fr-1]);
-		unset($contents[$temp_fr]);
-		unset($contents[$temp_fr+1]);
-		unset($contents[$temp_fr+2]);
-		unset($contents[$temp_fr+3]);
-		unset($contents[$temp_fr+4]);
-	   	$contents = array_values($contents);
-	  	$contents = implode(PHP_EOL, $contents);
-		$file = fopen("/var/www/diagnostic/language/fr_FR.po", "w");
-	   	fwrite($file, $contents);
-		fclose($file);
-		shell_exec('msgfmt /var/www/diagnostic/language/fr_FR.po -o /var/www/diagnostic/language/fr_FR.mo');
-
-		$fileCount = -1;
-		$temp_en = 0;
-   		$file = fopen("/var/www/diagnostic/language/en_EN.po", "r");
-      		while (!feof($file)) {
-            	    $temp = fgets($file, 4096);
-            	    $fileCount++;
-	   	    if($temp == 'msgid '.'"'.$question->getTranslationKey().'"'.PHP_EOL){$temp_en = $fileCount;}
-        	}
-        	fclose($file);
-
-		$file = fopen("/var/www/diagnostic/language/en_EN.po", "r");
-   		$contents = fread($file, filesize("/var/www/diagnostic/language/en_EN.po"));
-		fclose($file);
-   		$contents = explode(PHP_EOL, $contents);
-   		unset($contents[$temp_en-1]);
-		unset($contents[$temp_en]);
-		unset($contents[$temp_en+1]);
-		unset($contents[$temp_en+2]);
-		unset($contents[$temp_en+3]);
-		unset($contents[$temp_en+4]);
-   		$contents = array_values($contents);
-  		$contents = implode(PHP_EOL, $contents);
-		$file = fopen("/var/www/diagnostic/language/en_EN.po", "w");
-   		fwrite($file, $contents);
-		fclose($file);
-		shell_exec('msgfmt /var/www/diagnostic/language/en_EN.po -o /var/www/diagnostic/language/en_EN.mo');
-
-		$fileCount = -1;
-		$temp_de = 0;
-   		$file = fopen("/var/www/diagnostic/language/de_DE.po", "r");
-       		while (!feof($file)) {
-            	    $temp = fgets($file, 4096);
-             	    $fileCount++;
-	    	    if($temp == 'msgid '.'"'.$question->getTranslationKey().'"'.PHP_EOL){$temp_de = $fileCount;}
-        	}
-        	fclose($file);
-
-		$file = fopen("/var/www/diagnostic/language/de_DE.po", "r");
-   		$contents = fread($file, filesize("/var/www/diagnostic/language/de_DE.po"));
-		fclose($file);
-   		$contents = explode(PHP_EOL, $contents);
-   		unset($contents[$temp_de-1]);
-		unset($contents[$temp_de]);
-		unset($contents[$temp_de+1]);
-		unset($contents[$temp_de+2]);
-		unset($contents[$temp_de+3]);
-		unset($contents[$temp_de+4]);
-   		$contents = array_values($contents);
-  		$contents = implode(PHP_EOL, $contents);
-		$file = fopen("/var/www/diagnostic/language/de_DE.po", "w");
-   		fwrite($file, $contents);
-		fclose($file);
-		shell_exec('msgfmt /var/www/diagnostic/language/de_DE.po -o /var/www/diagnostic/language/de_DE.mo');
+		    $file = fopen('/var/www/diagnostic/language/' . substr($temp_lang, 0, -1) . '.po', 'r');
+            	    $contents = fread($file, filesize('/var/www/diagnostic/language/' . substr($temp_lang, 0, -1) . '.po'));
+            	    fclose($file);
+            	    $contents = explode(PHP_EOL, $contents);
+            	    unset($contents[$num_line-1]);
+            	    unset($contents[$num_line]);
+            	    unset($contents[$num_line+1]);
+            	    unset($contents[$num_line+2]);
+            	    unset($contents[$num_line+3]);
+            	    unset($contents[$num_line+4]);
+            	    $contents = array_values($contents);
+            	    $contents = implode(PHP_EOL, $contents);
+            	    $file = fopen('/var/www/diagnostic/language/' . substr($temp_lang, 0, -1) . '.po', 'w');
+            	    fwrite($file, $contents);
+            	    fclose($file);
+            	    shell_exec('msgfmt /var/www/diagnostic/language/' . substr($temp_lang, 0, -1) . '.po -o /var/www/diagnostic/language/' . substr($temp_lang, 0, -1) . '.mo');
+		}
+		fclose($file_lang);
   	    }
         }
 
-	// See comments in the add function above
-	$fileCount = -1;
-	$temp_fr = 0;
-   	$file = fopen("/var/www/diagnostic/language/fr_FR.po", "r");
-        while (!feof($file)) {
-            $temp = fgets($file, 4096);
-            $fileCount++;
-	    if($temp == 'msgid '.'"'.$cat->getTranslationKey().'"'.PHP_EOL){$temp_fr = $fileCount;}
-        }
-        fclose($file);
+	// See comments in the delete function above
+	$file_lang = fopen('/var/www/diagnostic/language/languages.txt', 'r');
+        for ($i=1; $i<$_SESSION['nb_lang']; $i++) {
+            $temp_lang = fgets($file_lang, 4096);
+            $fileCount = -1;
+            $num_line = 0;
+            $file = fopen('/var/www/diagnostic/language/' . substr($temp_lang, 0, -1) . '.po', 'r');
+            while (!feof($file)) {
+                $temp = fgets($file, 4096);
+                $fileCount++;
+                if($temp == 'msgid "' . $cat->getTranslationKey() . '"' . PHP_EOL){$num_line = $fileCount;}
+            }
+            fclose($file);
 
-	$file = fopen("/var/www/diagnostic/language/fr_FR.po", "r");
-   	$contents = fread($file, filesize("/var/www/diagnostic/language/fr_FR.po"));
-	fclose($file);
-   	$contents = explode(PHP_EOL, $contents);
-   	unset($contents[$temp_fr-1]);
-	unset($contents[$temp_fr]);
-	unset($contents[$temp_fr+1]);
-   	$contents = array_values($contents);
-  	$contents = implode(PHP_EOL, $contents);
-	$file = fopen("/var/www/diagnostic/language/fr_FR.po", "w");
-   	fwrite($file, $contents);
-	fclose($file);
-	shell_exec('msgfmt /var/www/diagnostic/language/fr_FR.po -o /var/www/diagnostic/language/fr_FR.mo');
-
-	$fileCount = -1;
-	$temp_en = 0;
-   	$file = fopen("/var/www/diagnostic/language/en_EN.po", "r");
-        while (!feof($file)) {
-            $temp = fgets($file, 4096);
-            $fileCount++;
-	    if($temp == 'msgid '.'"'.$cat->getTranslationKey().'"'.PHP_EOL){$temp_en = $fileCount;}
-        }
-        fclose($file);
-
-	$file = fopen("/var/www/diagnostic/language/en_EN.po", "r");
-   	$contents = fread($file, filesize("/var/www/diagnostic/language/en_EN.po"));
-	fclose($file);
-   	$contents = explode(PHP_EOL, $contents);
-   	unset($contents[$temp_en-1]);
-	unset($contents[$temp_en]);
-	unset($contents[$temp_en+1]);
-   	$contents = array_values($contents);
-  	$contents = implode(PHP_EOL, $contents);
-	$file = fopen("/var/www/diagnostic/language/en_EN.po", "w");
-   	fwrite($file, $contents);
-	fclose($file);
-	shell_exec('msgfmt /var/www/diagnostic/language/en_EN.po -o /var/www/diagnostic/language/en_EN.mo');
-
-	$fileCount = -1;
-	$temp_de = 0;
-   	$file = fopen("/var/www/diagnostic/language/de_DE.po", "r");
-        while (!feof($file)) {
-            $temp = fgets($file, 4096);
-            $fileCount++;
-	    if($temp == 'msgid '.'"'.$cat->getTranslationKey().'"'.PHP_EOL){$temp_de = $fileCount;}
-        }
-        fclose($file);
-
-	$file = fopen("/var/www/diagnostic/language/de_DE.po", "r");
-   	$contents = fread($file, filesize("/var/www/diagnostic/language/de_DE.po"));
-	fclose($file);
-   	$contents = explode(PHP_EOL, $contents);
-   	unset($contents[$temp_de-1]);
-	unset($contents[$temp_de]);
-	unset($contents[$temp_de+1]);
-   	$contents = array_values($contents);
-  	$contents = implode(PHP_EOL, $contents);
-	$file = fopen("/var/www/diagnostic/language/de_DE.po", "w");
-   	fwrite($file, $contents);
-	fclose($file);
-	shell_exec('msgfmt /var/www/diagnostic/language/de_DE.po -o /var/www/diagnostic/language/de_DE.mo');
+            $file = fopen('/var/www/diagnostic/language/' . substr($temp_lang, 0, -1) . '.po', 'r');
+            $contents = fread($file, filesize('/var/www/diagnostic/language/' . substr($temp_lang, 0, -1) . '.po'));
+            fclose($file);
+            $contents = explode(PHP_EOL, $contents);
+            unset($contents[$num_line-1]);
+            unset($contents[$num_line]);
+            unset($contents[$num_line+1]);
+            $contents = array_values($contents);
+            $contents = implode(PHP_EOL, $contents);
+            $file = fopen('/var/www/diagnostic/language/' . substr($temp_lang, 0, -1) . '.po', 'w');
+            fwrite($file, $contents);
+            fclose($file);
+            shell_exec('msgfmt /var/www/diagnostic/language/' . substr($temp_lang, 0, -1) . '.po -o /var/www/diagnostic/language/' . substr($temp_lang, 0, -1) . '.mo');
+	}
+	fclose($file_lang);
 
 	$categoryService->delete($id);
 

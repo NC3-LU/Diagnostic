@@ -116,7 +116,7 @@ return [
     ],
 
     'translator' => [
-        'locale' => 'en_EN',
+        'locale' => 'en',
         'translation_file_patterns' => [
             [
                 'type' => 'gettext',
@@ -142,6 +142,11 @@ return [
                 'label' => '__categories',
                 'route' => 'admin',
                 'action' => 'categories',
+            ],
+	    [
+                'label' => '__languages',
+                'route' => 'admin',
+                'action' => 'languages',
             ],
         ],
     ],

@@ -985,15 +985,16 @@ class IndexController extends AbstractController
         $id = $this->getEvent()->getRouteMatch()->getParam('id');
 
         $container = new Container('diagnostic');
-        if ($id == 1) {
-            $container->language = 'fr_FR';
+
+	$file_lang = fopen('/var/www/diagnostic/language/languages.txt', 'r');
+	for ($i=1; $i<$_SESSION['nb_lang']; $i++) {
+	    $temp_lang = fgets($file_lang, 4096);
+            if ($id == $i) {
+                $container->language = substr($temp_lang, 0, -1);
+            }
         }
-        if ($id == 2) {
-            $container->language = 'en_EN';
-        }
-	if ($id == 3) {
-            $container->language = 'de_DE';
-        }
+	fclose($file_lang);
+
         //redirection
         $this->redirect()->toUrl($this->getRequest()->getHeader('Referer')->getUri());
     }

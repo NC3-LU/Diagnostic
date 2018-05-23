@@ -42,19 +42,19 @@
                     <br>
                     <?php
                     $locale = $this->plugin('translate')->getTranslator()->getLocale();
-                    if ($this->plugin('translate')->getTranslator()->getLocale() == 'en_EN') {
-                        $frClass = '';
-                        $enClass = 'btn-info';
-			$deClass = '';
-                    } else if ($this->plugin('translate')->getTranslator()->getLocale() == 'fr_FR') {
-                        $frClass = 'btn-info';
-                        $enClass = '';
-			$deClass = '';
-                    } else { // German language added
-			$frClass = '';
-                        $enClass = '';
-			$deClass = 'btn-info';
+                    $file = fopen("/var/www/diagnostic/language/languages.txt", "r");
+		    $i = 1;
+		    $_SESSION['nb_lang'] = 0;
+		    while (!feof($file)) {
+			$temp = fgets($file, 4096);
+			$lang[$i] = 'test';
+		        if ($locale.PHP_EOL == $temp) {
+			    $lang[$i] = 'btn-info';
+                        }
+		        $i++;
+			$_SESSION['nb_lang']++;
 		    }
+		    fclose($file);
 
                     ?>
                     <table width="100%">
@@ -82,33 +82,25 @@
                                     <?php
                                 }
                                 ?>
-                            </td>
-                            <td width="75">
-                                <a href="<?php echo $this->url('diagnostic', ['action' => 'language', 'id' => 1]); ?>">
-                                    <button type="submit" name="language" value="fr"
-                                            class="btn-default btn-blue btn-sm <?php echo $frClass ?>"><span
-                                                class="text-uppercase"><span class="flag-icon flag-icon-fr"></span>&nbsp;&nbsp;fr</span>
-                                    </button>
-                                </a>
-                            </td>
-                            <td width="75">
-                                <a href="<?php echo $this->url('diagnostic', ['action' => 'language', 'id' => 2]); ?>">
-                                    <button type="submit" name="language" value="en"
-                                            class="btn-default btn-blue btn-sm <?php echo $enClass ?>"><span
-                                                class="text-uppercase"><span class="flag-icon flag-icon-gb"></span>&nbsp;&nbsp;en</span>
-                                    </button>
-                                </a>
-                            </td>
-			     <!-- // German language added -->
-			     <td width="75">
-                               <!-- <a href="<?php echo $this->url('diagnostic', ['action' => 'language', 'id' => 3]); ?>">-->
-                                    <button type="submit" name="language" value="de" onclick="toggle_txt ();"
-                                            class="btn-default btn-blue btn-sm <?php echo $deClass ?>"><span
-                                                class="text-uppercase"><span class="flag-icon flag-icon-de"></span>&nbsp;&nbsp;de</span>
-                                    </button>
-                                </a>
-                            </td>
-			    <span id="span_txt" style="display:none;">Not yet available</span>
+			    </td>
+
+			    <?php
+			    $file = fopen("/var/www/diagnostic/language/languages.txt", "r");
+			    for ($i=1; $i<$_SESSION['nb_lang']; $i++) {
+			        $temp = fgets($file, 4096);
+			    ?>
+                                <td width='75'>
+                                    <a href="<?php echo $this->url('diagnostic', ['action' => 'language', 'id' => $i]); ?>">
+                                        <button type='submit' name='language' value=<?= $temp ?>
+                                            class='btn-default btn-blue btn-sm <?php echo $lang[$i] ?>'><span
+                                            class='text-uppercase'><span class='flag-icon flag-icon-<?php echo $temp ?>'></span>&nbsp;&nbsp;<?= $temp ?></span>
+                                        </button>
+                                    </a>
+                                </td>
+			    <?php
+			    }
+			    fclose($file);
+			    ?>
                         </tr>
                     </table>
 
@@ -185,15 +177,5 @@
     </div>
 </div>
 </body>
-
-<!-- // Display the not yet available txt -->
-<script>
-function toggle_txt () {
-  var span = document.getElementById("span_txt");
-  if(span.style.display == "none") {
-    span.style.display = "inline";
-  }
-}
-</script>
 
 </html>

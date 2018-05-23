@@ -1,21 +1,11 @@
-<?php use Zend\Form\Element;
+<?php
 
-$title = $this->translate('__diagnostic');
+use Zend\Form\Element;
+use Zend\Form\Form;
+use Zend\Form\Fieldset;
+
+$title = $this->translate('__question');
 $this->headTitle($title);
-
-// Creation of translation form-text
-$translation_fr = new Element\Text('translation_fr');
-$translation_en = new Element\Text('translation_en');
-$translation_de = new Element\Text('translation_de');
-$help_fr = new Element\Text('help_fr');
-$help_en = new Element\Text('help_en');
-$help_de = new Element\Text('help_de');
-$translation_fr->setAttribute('class','form-control');
-$translation_en->setAttribute('class','form-control');
-$translation_de->setAttribute('class','form-control');
-$help_fr->setAttribute('class','form-control');
-$help_en->setAttribute('class','form-control');
-$help_de->setAttribute('class','form-control');
 
 $this->form->setAttribute('action', $this->url('admin', ['action' => 'add-question']));
 $this->form->prepare(); ?>
@@ -25,7 +15,9 @@ $this->form->prepare(); ?>
     <div class="col-lg-6 text-left">
         <h2><?= $this->translate('__add_a_question') ?></h2>
         <br/>
+
         <?= $this->form()->openTag($form) ?>
+
         <table class="table table-responsive table-borderless">
 	    <tr>
                 <td><label><?= $this->translate($form->get('translation_key')->getLabel()) ?></label></td>
@@ -41,42 +33,45 @@ $this->form->prepare(); ?>
                 </td>
             </tr>
 	    <!-- // Translations label and form-text -->
-	    <tr>
-                <td><label><?= $this->translate('__translation') ?></label>&nbsp;<span class="flag-icon flag-icon-fr"></span></td>
-                <td>
-                    <?= $this->formText($translation_fr) ?>
-                </td>
-            </tr>
-	    <tr>
-                <td><label><?= $this->translate('__help') ?></label>&nbsp;<span class="flag-icon flag-icon-fr"></span></td>
-                <td>
-                    <?= $this->formText($help_fr) ?>
-                </td>
-            </tr>
-	    <tr>
-                <td><label><?= $this->translate('__translation') ?></label>&nbsp;<span class="flag-icon flag-icon-gb"></span></td>
-                <td>
-                    <?= $this->formText($translation_en) ?>
-                </td>
-            </tr>
-	    <tr>
-                <td><label><?= $this->translate('__help') ?></label>&nbsp;<span class="flag-icon flag-icon-gb"></span></td>
-                <td>
-                    <?= $this->formText($help_en) ?>
-                </td>
-            </tr>
-	    <tr>
-                <td><label><?= $this->translate('__translation') ?></label>&nbsp;<span class="flag-icon flag-icon-de"></span></td>
-                <td>
-                    <?= $this->formText($translation_de) ?>
-                </td>
-            </tr>
-	    <tr>
-                <td><label><?= $this->translate('__help') ?></label>&nbsp;<span class="flag-icon flag-icon-de"></span></td>
-                <td>
-                    <?= $this->formText($help_de) ?>
-                </td>
-            </tr>
+	    <?php
+	    $file = fopen("/var/www/diagnostic/language/languages.txt", "r");
+	    for($i=1; $i<$_SESSION['nb_lang']; $i++) {
+		$temp = fgets($file, 4096);
+
+		// Creation translation form
+		$translation = new Element('translation_' . substr($temp, 0, -1)); // substr is for deleting the /n
+		$translation->setLabel('__translation');
+		$translation->setAttributes([
+    	    	    'type'  => 'text',
+    	    	    'class' => 'form-control'
+		]);
+		$form->add($translation);
+
+		// Creation help form
+		$help = new Element('help_' . substr($temp, 0, -1));
+		$help->setLabel('__help');
+		$help->setAttributes([
+    	    	    'type'  => 'text',
+    	    	    'class' => 'form-control'
+		]);
+		$form->add($help);
+	        ?>
+		<tr>
+                    <td><label><?= $this->translate($form->get('translation_' . substr($temp, 0, -1))->getLabel()) ?></label>&nbsp;<span class="flag-icon flag-icon-<?= $temp ?>"></span></td>
+                    <td>
+                        <?= $this->formText($form->get('translation_' . substr($temp, 0, -1))) ?>
+                    </td>
+                </tr>
+	        <tr>
+                    <td><label><?= $this->translate($form->get('help_' . substr($temp, 0, -1))->getLabel()) ?></label>&nbsp;<span class="flag-icon flag-icon-<?= $temp ?>"></span></td>
+                    <td>
+                        <?= $this->formText($form->get('help_' . substr($temp, 0, -1))) ?>
+                    </td>
+                </tr>
+	    <?php
+	    }
+	    fclose($file);
+	    ?>
             <tr>
                 <td><label><?= $this->translate($form->get('category_id')->getLabel()) ?></label></td>
                 <td>

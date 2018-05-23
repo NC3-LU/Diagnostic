@@ -21,6 +21,6 @@ class IndexControllerFactory extends AbstractControllerFactory
     ];
 
     protected $forms = [
-        'user', 'adminQuestion', 'adminCategory'
+        'user', 'adminQuestion', 'adminCategory', 'adminLanguage'
     ];
 }

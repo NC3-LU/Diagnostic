@@ -11,14 +11,11 @@ msgstr ""
 "Last-Translator: \n"
 "Language-Team: \n"
 
-msgid "__diagnostic"
-msgstr "Diagnosis"
-
 msgid "__category1"
 msgstr "Awareness of security and compliance"
 
 msgid "__category2"
-msgstr "Employee management"
+msgstr "test"
 
 msgid "__category3"
 msgstr "Third-party management"
@@ -34,6 +31,21 @@ msgstr "IS infrastructure and composition"
 
 msgid "__category7"
 msgstr "Information system"
+
+msgid "__category8"
+msgstr "Incident and business continuity "
+
+msgid "__question1"
+msgstr "What security mechanisms already exist (other than technical mechanisms)?"
+
+msgid "__question1help"
+msgstr "Is there:<br><ul><li>a security policy?</li><li>a user or administrator charter?</li><li>procedures (e.g. back-up)?</li><li>in-house instructions?</li><li>etc</li></ul>"
+
+msgid "__question2"
+msgstr "What is the core business? The most sensitive processes/items of information?"
+
+msgid "__question2help"
+msgstr "Conscious of major assets? (services, processes, information, etc)"
 
 msgid "__question3"
 msgstr "What compliance obligations does the job involve?"
@@ -203,6 +215,21 @@ msgstr "How do you manage the disposal of hardware?"
 msgid "__question30help"
 msgstr "User work-stations? Servers? etc"
 
+msgid "__question31"
+msgstr "Is any incident management in place?"
+
+msgid "__question31help"
+msgstr "Have people been made aware?<br>Who to contact, and how?"
+
+msgid "__question32"
+msgstr "Is there a recovery plan ?"
+
+msgid "__question32help"
+msgstr "Outline or comprehensive ?"
+
+msgid "__diagnostic"
+msgstr "Diagnosis"
+
 msgid "__welcome"
 msgstr "Welcome to CASES Diagnostic"
 
@@ -293,11 +320,17 @@ msgstr "Add a question"
 msgid "__add_a_category"
 msgstr "Add a category"
 
+msgid "__add_a_language"
+msgstr "Add a language"
+
 msgid "__add"
 msgstr "Add"
 
 msgid "__question"
 msgstr "Question"
+
+msgid "__languages"
+msgstr "Languages"
 
 msgid "__export"
 msgstr "Export"
@@ -390,7 +423,7 @@ msgid "__document_name"
 msgstr "Document name"
 
 msgid "__company"
-msgstr "Company"
+msgstr "Campany"
 
 msgid "__version"
 msgstr "Version"
@@ -496,30 +529,3 @@ msgstr "Maturities by category"
 
 msgid "__error_exist"
 msgstr "This key already exist"
-
-msgid "__question2"
-msgstr "What is the core business? The most sensitive processes/items of information?"
-
-msgid "__question2help"
-msgstr "Conscious of major assets? (services, processes, information, etc)"
-
-msgid "__question1"
-msgstr "What security mechanisms already exist (other than technical mechanisms)?"
-
-msgid "__question1help"
-msgstr "Is there:<br><ul><li>a security policy?</li><li>a user or administrator charter?</li><li>procedures (e.g. back-up)?</li><li>in-house instructions?</li><li>etc</li></ul>"
-
-msgid "__question31"
-msgstr "Is any incident management in place?"
-
-msgid "__question31help"
-msgstr "Have people been made aware?<br>Who to contact, and how?"
-
-msgid "__question32"
-msgstr "Is there a recovery plan?"
-
-msgid "__question32help"
-msgstr "Outline or comprehensive?"
-
-msgid "__category8"
-msgstr "Incident and business continuity "

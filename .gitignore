@@ -6,7 +6,6 @@ vendor/
 data/img/*.png
 .DS_Store
 .idea
-public/img/
 public/js/
 public/fonts/
 public/css/

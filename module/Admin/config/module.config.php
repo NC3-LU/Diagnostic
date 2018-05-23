@@ -49,11 +49,13 @@ return [
         'factories' => [
             'AdminQuestionForm' => 'Admin\Form\QuestionFormFactory',
 	    'AdminCategoryForm' => 'Admin\Form\CategoryFormFactory',
+	    'AdminLanguageForm' => 'Admin\Form\LanguageFormFactory',
         ],
         'invokables' => [
             'UserForm' => 'Admin\Form\UserForm',
             'NewQuestionForm' => 'Admin\Form\QuestionForm',
 	    'NewCategoryForm' => 'Admin\Form\CategoryForm',
+	    'NewLanguageForm' => 'Admin\Form\LanguageForm',
         ],
     ],
 ];

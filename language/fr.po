@@ -11,9 +11,6 @@ msgstr ""
 "Last-Translator: \n"
 "Language-Team: \n"
 
-msgid "__diagnostic"
-msgstr "Diagnostic"
-
 msgid "__category1"
 msgstr "Sensibilité à la sécurité et conformité"
 
@@ -34,6 +31,21 @@ msgstr "Infrastructure et composition du SI"
 
 msgid "__category7"
 msgstr "Système d'information"
+
+msgid "__category8"
+msgstr "Incident et continuité d'activité"
+
+msgid "__question1"
+msgstr "Quels sont les mécanismes de sécurité existants (autres que techniques) ?"
+
+msgid "__question1help"
+msgstr "Existe-t-il ?<br><ul><li>Une politique de sécurité</li><li>Une charte utilisateur ou administrateur</li><li>Des procédures (backup par ex.)</li><li>Des consignes internes</li><li>Etc.</li></ul>"
+
+msgid "__question2"
+msgstr "Quel est le coeur de métier ? Processus/informations les plus sensibles ?"
+
+msgid "__question2help"
+msgstr "Conscience des actifs importants ? (services, processus, information, etc.)"
 
 msgid "__question3"
 msgstr "Quelles sont les obligations de conformité induites par le métier ?"
@@ -203,6 +215,21 @@ msgstr "Comment gérez-vous la mise au rebut du matériel ?"
 msgid "__question30help"
 msgstr "Poste de travail des utilisateurs ? Serveurs ? etc."
 
+msgid "__question31"
+msgstr "Y-a-t-il une gestion des incidents ?"
+
+msgid "__question31help"
+msgstr "Les personnes sont-elles sensibilisées ?<br>À qui s'adresser et comment ?"
+
+msgid "__question32"
+msgstr "Existe-t-il un plan de reprise ?"
+
+msgid "__question32help"
+msgstr "Ébauche ou complet ?"
+
+msgid "__diagnostic"
+msgstr "Diagnostic"
+ 
 msgid "__welcome"
 msgstr "Bienvenue au diagnostic de Cases"
 
@@ -231,7 +258,7 @@ msgid "__email"
 msgstr "Email"
 
 msgid "__logout"
-msgstr "Se déconnecter"
+msgstr "Déconnexion"
 
 msgid "__password_forgotten"
 msgstr "Mot de passe oublié ?"
@@ -293,11 +320,17 @@ msgstr "Ajouter une question"
 msgid "__add_a_category"
 msgstr "Ajouter une catégorie"
 
+msgid "__add_a_language"
+msgstr "Ajouter une langue"
+
 msgid "__add"
 msgstr "Ajouter"
 
 msgid "__question"
 msgstr "Question"
+
+msgid "__languages"
+msgstr "Langues"
 
 msgid "__export"
 msgstr "Exporter"
@@ -517,30 +550,3 @@ msgstr "Le mot de passe et la confirmation doivent être identiques"
 
 msgid "__error_exist"
 msgstr "Cette clé existe déjà"
-
-msgid "__question2"
-msgstr "Quel est le coeur de métier ? Processus/informations les plus sensibles ?"
-
-msgid "__question2help"
-msgstr "Conscience des actifs importants ? (services, processus, information, etc.)"
-
-msgid "__question1"
-msgstr "Quels sont les mécanismes de sécurité existants (autres que techniques) ?"
-
-msgid "__question1help"
-msgstr "Existe-t-il ?<br><ul><li>Une politique de sécurité</li><li>Une charte utilisateur ou administrateur</li><li>Des procédures (backup par ex.)</li><li>Des consignes internes</li><li>Etc.</li></ul>"
-
-msgid "__question31"
-msgstr "Y-a-t-il une gestion des incidents ?"
-
-msgid "__question31help"
-msgstr "Les personnes sont-elles sensibilisées ?<br>À qui s'adresser et comment ?"
-
-msgid "__question32"
-msgstr "Existe-t-il un plan de reprise ?"
-
-msgid "__question32help"
-msgstr "Ébauche ou complet ?"
-
-msgid "__category8"
-msgstr "Incident et continuité d'activité"
