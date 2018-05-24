@@ -22,6 +22,7 @@ class IndexController extends AbstractController
     protected $userTokenService;
     protected $questionService;
     protected $categoryService;
+    protected $languageService;
     protected $userForm;
     protected $adminQuestionForm;
     protected $adminCategoryForm;
@@ -181,6 +182,8 @@ class IndexController extends AbstractController
     {
 	$_SESSION['change_language'] = 'fr';
 
+	$form = $this->get('adminLanguageForm');
+
 	if (isset($_POST['change_language_ref'])){
 	    $_SESSION['change_language'] = 'en';
 	}
@@ -243,6 +246,11 @@ class IndexController extends AbstractController
 		}
 	    }
 	}
+
+	//send to view
+        return new ViewModel([
+            'form' => $form
+        ]);
     }
 
     /**

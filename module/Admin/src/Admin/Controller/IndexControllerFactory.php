@@ -18,6 +18,7 @@ class IndexControllerFactory extends AbstractControllerFactory
         'userTokenService' => 'Diagnostic\Service\UserTokenService',
         'questionService' => 'Diagnostic\Service\QuestionService',
 	'categoryService' => 'Diagnostic\Service\CategoryService',
+	'languageService' => 'Diagnostic\Service\LanguageService',
     ];
 
     protected $forms = [

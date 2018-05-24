@@ -68,6 +68,7 @@ return [
             'navigation' => 'Zend\Navigation\Service\DefaultNavigationFactory',
             'Diagnostic\Service\QuestionService' => 'Diagnostic\Service\QuestionServiceFactory',
 	    'Diagnostic\Service\CategoryService' => 'Diagnostic\Service\CategoryServiceFactory',
+	    'Diagnostic\Service\LanguageService' => 'Diagnostic\Service\LanguageServiceFactory',
             'Diagnostic\Service\CalculService' => 'Diagnostic\Service\CalculServiceFactory',
             'Diagnostic\Service\MailService' => 'Diagnostic\Service\MailServiceFactory',
             'Diagnostic\Service\UserService' => 'Diagnostic\Service\UserServiceFactory',
@@ -85,7 +86,6 @@ return [
             'PasswordForgottenForm' => 'Diagnostic\Form\PasswordForgottenForm',
             'NewPasswordForm' => 'Diagnostic\Form\NewPasswordForm',
             'QuestionForm' => 'Diagnostic\Form\QuestionForm',
-	    'CategoryForm' => 'Diagnostic\Form\CategoryForm',
             'InformationForm' => 'Diagnostic\Form\InformationForm',
             'AddQuestionForm' => 'Diagnostic\Form\AddQuestionForm',
             'DownloadForm' => 'Diagnostic\Form\DownloadForm',
@@ -143,11 +143,11 @@ return [
                 'route' => 'admin',
                 'action' => 'categories',
             ],
-	    [
+	    /*[
                 'label' => '__languages',
                 'route' => 'admin',
                 'action' => 'languages',
-            ],
+            ],*/
         ],
     ],
 ];
