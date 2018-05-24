@@ -33,7 +33,6 @@ class IndexController extends AbstractController
     protected $uploadForm;
     protected $loginForm;
     protected $questionForm;
-    protected $categoryForm;
     protected $informationForm;
     protected $addQuestionForm;
     protected $passwordForgottenForm;
@@ -41,7 +40,6 @@ class IndexController extends AbstractController
     protected $linkDownloadForm;
     protected $downloadForm;
     protected $questionService;
-    protected $categoryService;
     protected $userService;
     protected $userTokenService;
     protected $mailService;

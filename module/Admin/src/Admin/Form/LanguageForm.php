@@ -11,6 +11,32 @@ use Zend\Form\Form;
  */
 class LanguageForm extends Form
 {
+
+    /**
+     * Languages
+     *
+     * @var array
+     */
+    protected $languages = [];
+
+    /**
+     * @return array
+     */
+    public function getLanguages()
+    {
+        return $this->languages;
+    }
+
+    /**
+     * @param array $languages
+     * @return LanguageForm
+     */
+    public function setLanguages($languages)
+    {
+        $this->languages = $languages;
+        return $this;
+    }
+
     /**
      * Init
      */
@@ -20,10 +46,11 @@ class LanguageForm extends Form
             'name' => 'add_language',
             'type' => 'Select',
             'options' => [
-                'label' => 'add_a_language'
+                'label' => '__add_a_language',
+		'value_options' => $this->getLanguages(),
             ],
             'attributes' => [
-                'class' => 'form-control',
+                'class' => '',
             ]
         ]);
 
@@ -31,10 +58,10 @@ class LanguageForm extends Form
             'name' => 'language_ref',
             'type' => 'Select',
             'options' => [
-                'label' => 'language_ref'
+                'label' => '__translation_ref'
             ],
             'attributes' => [
-                'class' => 'form-control',
+                'class' => '',
             ]
         ]);
 
@@ -70,7 +97,7 @@ class LanguageForm extends Form
             'name' => 'submit_lang_ref',
             'type' => 'Submit',
             'attributes' => [
-                'value' => '__add',
+                'value' => 'Ok',
                 'class' => 'btn btn-success',
             ],
         ]);
