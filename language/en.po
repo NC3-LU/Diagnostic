@@ -323,6 +323,9 @@ msgstr "Add a category"
 msgid "__add_a_language"
 msgstr "Add a language"
 
+msgid "__add_a_translation"
+msgstr "Add a translation"
+
 msgid "__add"
 msgstr "Add"
 
@@ -377,11 +380,17 @@ msgstr "User details"
 msgid "__modify"
 msgstr "Change"
 
+msgid "__modify_all"
+msgstr "Change all translations"
+
 msgid "__questions"
 msgstr "Questions"
 
 msgid "__translation_key"
 msgstr "Translation key"
+
+msgid "__translation_ref"
+msgstr "Reference translation"
 
 msgid "__translation"
 msgstr "Translation"
@@ -514,6 +523,15 @@ msgstr "Maturities by category"
 
 msgid "__error_exist"
 msgstr "This key already exist"
+
+msgid "__error_exist2"
+msgstr "This language already exist"
+
+msgid "__error_exist3"
+msgstr "This language has not been added"
+
+msgid "__delete_lang"
+msgstr "Do you really want to delete this language ?"
 
 msgid "__mail_password_forgotten_subject"
 msgstr "CASES diagnosis - password forgotten"

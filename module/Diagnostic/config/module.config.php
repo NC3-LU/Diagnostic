@@ -143,11 +143,11 @@ return [
                 'route' => 'admin',
                 'action' => 'categories',
             ],
-	    /*[
+	    [
                 'label' => '__languages',
                 'route' => 'admin',
                 'action' => 'languages',
-            ],*/
+            ],
         ],
     ],
 ];

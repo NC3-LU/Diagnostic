@@ -18,6 +18,7 @@ class LanguageForm extends Form
      * @var array
      */
     protected $languages = [];
+    protected $languages_ref = [];
 
     /**
      * @return array
@@ -38,11 +39,29 @@ class LanguageForm extends Form
     }
 
     /**
+     * @return array
+     */
+    public function getLanguagesRef()
+    {
+        return $this->languages_ref;
+    }
+
+    /**
+     * @param array $languages
+     * @return LanguageForm
+     */
+    public function setLanguagesRef($languages_ref)
+    {
+        $this->languages_ref = $languages_ref;
+        return $this;
+    }
+
+    /**
      * Init
      */
     public function init()
     {
-        $this->add([
+	$this->add([
             'name' => 'add_language',
             'type' => 'Select',
             'options' => [
@@ -58,7 +77,8 @@ class LanguageForm extends Form
             'name' => 'language_ref',
             'type' => 'Select',
             'options' => [
-                'label' => '__translation_ref'
+                'label' => '__translation_ref',
+		'value_options' => $this->getLanguagesRef(),
             ],
             'attributes' => [
                 'class' => '',
@@ -106,7 +126,16 @@ class LanguageForm extends Form
             'name' => 'submit_all',
             'type' => 'Submit',
             'attributes' => [
-                'value' => '__modify',
+                'value' => '__modify_all',
+                'class' => 'btn btn-success',
+            ],
+        ]);
+
+	$this->add([
+            'name' => 'submit_translation_add',
+            'type' => 'Submit',
+            'attributes' => [
+                'value' => '__add_a_translation',
                 'class' => 'btn btn-success',
             ],
         ]);

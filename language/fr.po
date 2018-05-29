@@ -323,6 +323,9 @@ msgstr "Ajouter une catégorie"
 msgid "__add_a_language"
 msgstr "Ajouter une langue"
 
+msgid "__add_a_translation"
+msgstr "Ajouter une traduction"
+
 msgid "__add"
 msgstr "Ajouter"
 
@@ -349,21 +352,6 @@ msgstr "Seuil max"
 
 msgid "__rapport"
 msgstr "Rapport"
-
-msgid "__mail_password_forgotten_subject"
-msgstr "Diagnostic Cases - Mot de passe oublié"
-
-msgid "__mail_password_forgotten_content1"
-msgstr "Vous avez oublié votre mot de passe pour le <strong>diagnostic Cases</strong>"
-
-msgid "__mail_password_forgotten_content2"
-msgstr "Pour créer un nouveau mot de passe, merci de cliquer sur le bouton suivant :"
-
-msgid "__mail_password_forgotten_content3"
-msgstr "Si vous n'êtes pas concerné par ce mail, merci d'ignorer ce message"
-
-msgid "__mail_password_forgotten_link"
-msgstr "NOUVEAU MOT DE PASSE"
 
 msgid "__results"
 msgstr "Résultat"
@@ -392,11 +380,17 @@ msgstr "Détails de l'utilisateur"
 msgid "__modify"
 msgstr "Modifier"
 
+msgid "__modify_all"
+msgstr "Modifier toutes les traductions"
+
 msgid "__questions"
 msgstr "Questions"
 
 msgid "__translation_key"
 msgstr "Clef de traduction"
+
+msgid "__translation_ref"
+msgstr "Traduction de référence"
 
 msgid "__translation"
 msgstr "Traduction"
@@ -527,6 +521,33 @@ msgstr "Synthèse sur l'évaluation"
 msgid "__categories_maturities"
 msgstr "Maturités par catégories"
 
+msgid "__error_exist"
+msgstr "Cette clé existe déjà"
+
+msgid "__error_exist2"
+msgstr "Cette langue existe déjà"
+
+msgid "__error_exist3"
+msgstr "Cette langue n'a pas été ajoutée"
+
+msgid "__delete_lang"
+msgstr "Voulez-vous vraiment supprimer cette langue ?"
+
+msgid "__mail_password_forgotten_subject"
+msgstr "Diagnostic Cases - Mot de passe oublié"
+
+msgid "__mail_password_forgotten_content1"
+msgstr "Vous avez oublié votre mot de passe pour le <strong>diagnostic Cases</strong>"
+
+msgid "__mail_password_forgotten_content2"
+msgstr "Pour créer un nouveau mot de passe, merci de cliquer sur le bouton suivant :"
+
+msgid "__mail_password_forgotten_content3"
+msgstr "Si vous n'êtes pas concerné par ce mail, merci d'ignorer ce message"
+
+msgid "__mail_password_forgotten_link"
+msgstr "NOUVEAU MOT DE PASSE"
+
 msgid "Value is required and can't be empty"
 msgstr "La valeur est requise et ne peut pas être vide"
 
@@ -547,6 +568,3 @@ msgstr "Le mot de passe doit contenir au moins 8 caractères"
 
 msgid "The two given tokens do not match"
 msgstr "Le mot de passe et la confirmation doivent être identiques"
-
-msgid "__error_exist"
-msgstr "Cette clé existe déjà"

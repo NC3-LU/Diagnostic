@@ -15,7 +15,7 @@ msgid "__category1"
 msgstr "Awareness of security and compliance"
 
 msgid "__category2"
-msgstr "test"
+msgstr "Employee management"
 
 msgid "__category3"
 msgstr "Third-party management"
@@ -350,21 +350,6 @@ msgstr "Upper threshold"
 msgid "__rapport"
 msgstr "Report"
 
-msgid "__mail_password_forgotten_subject"
-msgstr "CASES diagnosis - password forgotten"
-
-msgid "__mail_password_forgotten_content1"
-msgstr "You have forgotten your password for the <strong>CASES diagnosis</strong>"
-
-msgid "__mail_password_forgotten_content2"
-msgstr "To create a new password, please click on the button below:"
-
-msgid "__mail_password_forgotten_content3"
-msgstr "If this e-mail does not concern you, please ignore this message"
-
-msgid "__mail_password_forgotten_link"
-msgstr "NEW PASSWORD"
-
 msgid "__results"
 msgstr "Results"
 
@@ -397,6 +382,9 @@ msgstr "Questions"
 
 msgid "__translation_key"
 msgstr "Translation key"
+
+msgid "__translation_ref"
+msgstr "Reference translation"
 
 msgid "__translation"
 msgstr "Translation"
@@ -529,3 +517,18 @@ msgstr "Maturities by category"
 
 msgid "__error_exist"
 msgstr "This key already exist"
+
+msgid "__mail_password_forgotten_subject"
+msgstr "CASES diagnosis - password forgotten"
+
+msgid "__mail_password_forgotten_content1"
+msgstr "You have forgotten your password for the <strong>CASES diagnosis</strong>"
+
+msgid "__mail_password_forgotten_content2"
+msgstr "To create a new password, please click on the button below:"
+
+msgid "__mail_password_forgotten_content3"
+msgstr "If this e-mail does not concern you, please ignore this message"
+
+msgid "__mail_password_forgotten_link"
+msgstr "NEW PASSWORD"

@@ -180,76 +180,230 @@ class IndexController extends AbstractController
      */
     public function languagesAction()
     {
-	$_SESSION['change_language'] = 'fr';
+	// Variable to display error message when adding or deleting a language
+	$lang_exist = 0;
+	$lang_exist2 = 0;
+
+        //retrieve questions
+        $questionService = $this->get('questionService');
+        $questions = $questionService->getBddQuestions();
 
 	$form = $this->get('adminLanguageForm');
+	$request = $this->getRequest();
 
-	if (isset($_POST['change_language_ref'])){
-	    $_SESSION['change_language'] = 'en';
+	if ($request->isPost()) {
+	    $form->setData($request->getPost());
+
+
+	    // Don't reset the reference language when clicking a button
+	    if (isset($_POST['submit_lang_add']) || isset($_POST['submit_lang_del']) || isset($_POST['submit_lang_ref']) || isset($_POST['submit_all']) || isset($_POST['submit_translation_add'])) {
+	        $_SESSION['base_lang'] = 1;
+	    }
+
+	    // Skip categories and questions
+	    $file = fopen('/var/www/diagnostic/language/fr.po', 'r');
+	    $nb_translation = 0;
+	    $fileCount = 3;
+            while (!feof($file)) {
+                $temp = fgets($file, 4096);
+                if (substr($temp, 7, -2) == '__question' . ($_SESSION['nb_questions']-1) . 'help') {$temp = fgets($file, 4096); $temp = fgets($file, 4096); break;}
+            }
+            while (!feof($file)) {
+                $temp = fgets($file, 4096);
+	        if ($fileCount == 3) {$nb_translation++; $fileCount=0;}
+	        $fileCount++;
+            }
+	    fclose($file);
+
+	    // num_line2 is used to change all translations in 1 button
+	    $file = fopen('/var/www/diagnostic/language/fr.po', 'r');
+	    $num_line2 = -1;
+            while (!feof($file)) {
+                $temp = fgets($file, 4096);
+	 	$num_line2++;
+                if (substr($temp, 7, -2) == '__diagnostic') {$num_line2++; break;}
+            }
+	    fclose($file);
+
+	    // Search the translation key in order to know the translation to change
+	    $file_lang = fopen('/var/www/diagnostic/language/languages.txt', 'r');
+	    for ($j=0; $j<$_SESSION['nb_lang']; $j++) {
+	        $temp_lang = fgets($file_lang, 4096);
+	        if ($_SESSION['lang'] == substr($temp_lang, 0, -1)) {
+
+		    // Action to modify one translation
+		    for ($i=1; $i<=$nb_translation; $i++){
+	    	        if (isset($_POST['mod'.$i])){
+			    $_SESSION['base_lang'] = 1;
+	            	    $file = fopen('/var/www/diagnostic/language/' . substr($temp_lang, 0, -1) . '.po', 'r');
+		    	    $fileCount = -1;
+		    	    $num_line = 0;
+        	    	    while (!feof($file)) {
+                                $temp = fgets($file, 4096);
+		                $fileCount++;
+	                        if(substr($temp, 7, -2) == $_SESSION['key_' . substr($temp_lang, 0, -1)][$i]){
+			    	    $num_line = $fileCount;
+		                }
+         	            }
+		    	    fclose($file);
+
+			    $file = fopen('/var/www/diagnostic/language/' . substr($temp_lang, 0, -1) . '.po', 'r');
+			    $contents = fread($file, filesize('/var/www/diagnostic/language/' . substr($temp_lang, 0, -1) . '.po'));
+			    fclose($file);
+   			    $contents = explode(PHP_EOL, $contents); // PHP_EOL equals to /n in Linux
+			    $contents[$num_line+1] = 'msgstr ' . '"' . $request->getPost('translation'.$i) . '"'; // Change the translation with the new one
+ 			    $contents = array_values($contents);
+ 			    $contents = implode(PHP_EOL, $contents);
+			    $file = fopen('/var/www/diagnostic/language/' . substr($temp_lang, 0, -1) . '.po', 'w');
+   			    fwrite($file, $contents); // Write the file with the new translation
+			    fclose($file);
+
+			    shell_exec('msgfmt /var/www/diagnostic/language/' . substr($temp_lang, 0, -1) . '.po -o /var/www/diagnostic/language/' . substr($temp_lang, 0, -1) . '.mo');
+		        }
+		    }
+
+		    // Action to modify all translations
+		    $file2 = fopen('/var/www/diagnostic/language/' . substr($temp_lang, 0, -1) . '.po', 'r');
+		    $contents2 = fread($file2, filesize('/var/www/diagnostic/language/' . substr($temp_lang, 0, -1) . '.po'));
+	            fclose($file2);
+   		    $contents2 = explode(PHP_EOL, $contents2); // PHP_EOL equals to /n in Linux
+
+		    for ($i=1; $i<=$nb_translation; $i++){
+
+			if (isset($_POST['submit_all'])){
+			    $contents2[$num_line2] = 'msgstr ' . '"' . $request->getPost('translation'.$i) . '"'; // Change the translation with the new one
+			    $num_line2+=3;
+			}
+		    }
+
+		    $contents2 = array_values($contents2);
+ 		    $contents2 = implode(PHP_EOL, $contents2);
+		    $file2 = fopen('/var/www/diagnostic/language/' . substr($temp_lang, 0, -1) . '.po', 'w');
+   	            fwrite($file2, $contents2); // Write the file with the new translation
+		    fclose($file2);
+
+		    shell_exec('msgfmt /var/www/diagnostic/language/' . substr($temp_lang, 0, -1) . '.po -o /var/www/diagnostic/language/' . substr($temp_lang, 0, -1) . '.mo');
+	        }
+
+	        // change reference language thanks to the session value
+	        if (isset($_POST['submit_lang_ref'])){
+	            if ($request->getPost('language_ref') == $j) {
+	                $_SESSION['change_language'] = substr($temp_lang, 0, -1);
+	            }
+	        }
+	    }
+	    fclose($file_lang);
+
+	    // Add a language
+	    if (isset($_POST['submit_lang_add'])) {
+	        $file_lang = fopen('/var/www/diagnostic/language/code_country.txt', 'r');
+	        $fileCount = 0;
+	        while (!feof($file_lang)) {
+	            $temp_lang = fgets($file_lang, 4096);
+		    $fileCount++;
+	        }
+	        fclose($file_lang);
+
+	        $file_lang = fopen('/var/www/diagnostic/language/code_country.txt', 'r');
+	        for ($i=0; $i<$fileCount; $i++) {
+	            $temp_lang = fgets($file_lang, 4096);
+		    if ($request->getPost('add_language') == $i) {
+		        $temp = $temp_lang;
+		        $file_temp = fopen('/var/www/diagnostic/language/languages.txt', 'a+');
+			while (!feof($file_temp)) {
+                	    $temp_lang = fgets($file_temp, 4096);
+                	    if ($temp_lang == $temp) {$lang_exist=1; break;}
+            		}
+
+			if ($lang_exist == 0) {
+		            fputs($file_temp, $temp);
+
+			    // Creation .po file
+			    $new_file = fopen('/var/www/diagnostic/language/' . substr($temp, 0, -1) . '.po', 'a+');
+			    $fr_file = fopen('/var/www/diagnostic/language/fr.po', 'r');
+			    while (!feof($fr_file)) {
+                	        $fr_temp = fgets($fr_file, 4096);
+                	    	if (substr($fr_temp, 7, -2) == '__category1') {break;}
+			    	fputs($new_file, $fr_temp);
+            		    }
+			    $fileCount = 1;
+			    while (!feof($fr_file)) {
+                	    	if ($fileCount == 1) {fputs($new_file, $fr_temp);}
+			    	elseif ($fileCount == 2) {fputs($new_file, 'msgstr ""');}
+			    	else {fputs($new_file, PHP_EOL); fputs($new_file, PHP_EOL); $fileCount = 0;}
+			    	$fr_temp = fgets($fr_file, 4096);
+			    	$fileCount++;
+            		    }
+			    fputs($new_file, PHP_EOL);
+			    fclose($fr_file);
+			    fclose($new_file);
+			    fclose($file_temp);
+			    shell_exec('msgfmt /var/www/diagnostic/language/' . substr($temp, 0, -1) . '.po -o /var/www/diagnostic/language/' . substr($temp, 0, -1) . '.mo');
+			}
+	            }
+	        }
+		fclose($file_lang);
+  	    }
+
+	    // Delete a language
+	    if (isset($_POST['submit_lang_del'])) {
+		$lang_exist2 = 2;
+
+	        $file_lang = fopen('/var/www/diagnostic/language/code_country.txt', 'r');
+	        $fileCount = 0;
+	        while (!feof($file_lang)) {
+	            $temp_lang = fgets($file_lang, 4096);
+		    $fileCount++;
+	        }
+	        fclose($file_lang);
+
+	        $file_lang = fopen('/var/www/diagnostic/language/code_country.txt', 'r');
+	        for ($i=0; $i<$fileCount; $i++) {
+	            $temp_lang = fgets($file_lang, 4096);
+		    if ($request->getPost('add_language') == $i) {
+		        $temp = $temp_lang;
+		        $file_temp = fopen('/var/www/diagnostic/language/languages.txt', 'r');
+		  	$num_line = -1;
+			while (!feof($file_temp)) {
+                	    $temp_lang = fgets($file_temp, 4096);
+			    $num_line++;
+                	    if ($temp_lang == $temp) {$lang_exist2=1; break;}
+            		}
+			fclose($file_temp);
+
+			if ($lang_exist2 == 1) {
+
+		            $file_temp = fopen('/var/www/diagnostic/language/languages.txt', 'r');
+   		    	    $contents = fread($file_temp, filesize('/var/www/diagnostic/language/languages.txt'));
+		    	    fclose($file_temp);
+   		    	    $contents = explode(PHP_EOL, $contents); // PHP_EOL equals to /n in Linux
+   		    	    unset($contents[$num_line]); // Delete the language
+	      	    	    $contents = array_values($contents);
+  		    	    $contents = implode(PHP_EOL, $contents);
+		    	    $file_temp = fopen('/var/www/diagnostic/language/languages.txt', 'w');
+   		    	    fwrite($file_temp, $contents); // Write the file without the deleted files
+		    	    fclose($file_temp);
+
+			    unlink('/var/www/diagnostic/language/' . substr($temp_lang, 0, -1) . '.po');
+			    unlink('/var/www/diagnostic/language/' . substr($temp_lang, 0, -1) . '.mo');
+			}
+	            }
+	        }
+		fclose($file_lang);
+	    }
 	}
 
-	// Search the translation key in order to know the translation to change
-	for ($i=1; $i<300; $i++){
-	    if (isset($_POST['mod'.$i])){
-		if ($_SESSION['lang'] == 1) {
-	        $file = fopen('/var/www/diagnostic/language/fr.po', 'r');
-		$fileCount = -1;
-		$temp_fr = 0;
-        	while (!feof($file)) {
-                    $temp = fgets($file, 4096);
-		    $fileCount++;
-	            if(substr($temp, 7, -2) == $_SESSION['key_fr'][$i]){
-			$temp_fr = $fileCount;
-		    }
-         	}
-		fclose($file);
-
-		$file = fopen('/var/www/diagnostic/language/fr.po', 'r');
-		$contents = fread($file, filesize('/var/www/diagnostic/language/fr.po'));
-		fclose($file);
-   		$contents = explode(PHP_EOL, $contents); // PHP_EOL equals to /n in Linux
-		$contents[$temp_fr+1] = 'msgstr ' . '"' . $_POST['translation'.$i] . '"'; // Change the translation with the new one
- 		$contents = array_values($contents);
- 		$contents = implode(PHP_EOL, $contents);
-		$file = fopen("/var/www/diagnostic/language/fr.po", "w");
-   		fwrite($file, $contents); // Write the file without the deleted files
-		fclose($file);
-
-		shell_exec('msgfmt /var/www/diagnostic/language/fr.po -o /var/www/diagnostic/language/fr.mo');
-		}
-
-		if ($_SESSION['lang'] == 2) {
-	        $file = fopen("/var/www/diagnostic/language/en.po", "r");
-		$fileCount = -1;
-		$temp_fr = 0;
-        	while (!feof($file)) {
-                    $temp = fgets($file, 4096);
-		    $fileCount++;
-	            if(substr($temp, 7, -2) == $_SESSION['key_fr'][$i]){
-			$temp_fr = $fileCount;
-		    }
-         	}
-		fclose($file);
-
-		$file = fopen("/var/www/diagnostic/language/en.po", "r");
-		$contents = fread($file, filesize("/var/www/diagnostic/language/en.po"));
-		fclose($file);
-   		$contents = explode(PHP_EOL, $contents); // PHP_EOL equals to /n in Linux
-		$contents[$temp_fr+1] = 'msgstr ' . '"' . $_POST['translation'.$i] . '"'; // Change the translation with the new one
- 		$contents = array_values($contents);
- 		$contents = implode(PHP_EOL, $contents);
-		$file = fopen("/var/www/diagnostic/language/en.po", "w");
-   		fwrite($file, $contents); // Write the file without the deleted files
-		fclose($file);
-
-		shell_exec('msgfmt /var/www/diagnostic/language/en.po -o /var/www/diagnostic/language/en.mo');
-		}
-	    }
+	// english language when refreshing the page
+	if ($_SESSION['base_lang'] == 0) {
+	    $_SESSION['change_language'] = 'en';
 	}
 
 	//send to view
         return new ViewModel([
-            'form' => $form
+            'form' => $form,
+	    'questions' => $questions,
+	    'lang_exist' => $lang_exist,
+	    'lang_exist2' => $lang_exist2
         ]);
     }
 
