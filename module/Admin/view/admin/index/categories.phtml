@@ -4,6 +4,8 @@ $this->headTitle($title);
 $_SESSION['nb_categories'] = 1; // Count number of category
 ?>
 
+<script>var delete_category = <?php echo json_encode($this->translate('__delete_category')) ?></script>
+
 <div class="row">
     <div class="col-lg-2"></div>
     <div class="col-lg-8 text-left">
@@ -34,7 +36,7 @@ $_SESSION['nb_categories'] = 1; // Count number of category
                     <td align="center">
                         <a href="<?= $urlModify ?>"><span class="glyphicon glyphicon-pencil"></span></a>
                         &nbsp;&nbsp;
-                        <a href="<?= $urlDelete ?>"><span class="glyphicon glyphicon-remove"></span></a>
+                        <a href="<?= $urlDelete ?>" onclick='return confirm(delete_category)'><span class="glyphicon glyphicon-remove"></span></a>
                     </td>
                 </tr>
 		<?php

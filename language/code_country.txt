@@ -64,6 +64,7 @@ ec
 ee
 eg
 eh
+en
 er
 es
 et
@@ -75,7 +76,6 @@ fm
 fo
 fr
 ga
-gb
 gd
 ge
 gf

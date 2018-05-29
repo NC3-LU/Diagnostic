@@ -4,6 +4,8 @@ $this->headTitle($title);
 $_SESSION['nb_questions'] = 1; // Count number of question
 ?>
 
+<script>var delete_question = <?php echo json_encode($this->translate('__delete_question')) ?></script>
+
 <div class="row">
     <div class="col-lg-12 text-left">
         <h2><?= $this->translate('__questions') ?></h2>
@@ -37,7 +39,7 @@ $_SESSION['nb_questions'] = 1; // Count number of question
                     <td align="center">
                         <a href="<?= $urlModify ?>"><span class="glyphicon glyphicon-pencil"></span></a>
                         &nbsp;&nbsp;
-                        <a href="<?= $urlDelete ?>"><span class="glyphicon glyphicon-remove"></span></a>
+                        <a href="<?= $urlDelete ?>" onclick='return confirm(delete_question)'><span class="glyphicon glyphicon-remove"></span></a>
                     </td>
                 </tr>
                 <?php

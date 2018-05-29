@@ -530,8 +530,17 @@ msgstr "Cette langue existe déjà"
 msgid "__error_exist3"
 msgstr "Cette langue n'a pas été ajoutée"
 
+msgid "__error_exist4"
+msgstr "Vous ne pouvez pas supprimer cette langue"
+
 msgid "__delete_lang"
 msgstr "Voulez-vous vraiment supprimer cette langue ?"
+
+msgid "__delete_question"
+msgstr "Voulez-vous vraiment supprimer cette question ?"
+
+msgid "__delete_category"
+msgstr "Voulez-vous vraiment supprimer cette catégorie ?"
 
 msgid "__mail_password_forgotten_subject"
 msgstr "Diagnostic Cases - Mot de passe oublié"

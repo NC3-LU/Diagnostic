@@ -183,6 +183,7 @@ class IndexController extends AbstractController
 	// Variable to display error message when adding or deleting a language
 	$lang_exist = 0;
 	$lang_exist2 = 0;
+	$lang_exist3 = 0;
 
         //retrieve questions
         $questionService = $this->get('questionService');
@@ -337,16 +338,17 @@ class IndexController extends AbstractController
 			    fputs($new_file, PHP_EOL);
 			    fclose($fr_file);
 			    fclose($new_file);
-			    fclose($file_temp);
+
 			    shell_exec('msgfmt /var/www/diagnostic/language/' . substr($temp, 0, -1) . '.po -o /var/www/diagnostic/language/' . substr($temp, 0, -1) . '.mo');
 			}
+			fclose($file_temp);
 	            }
 	        }
 		fclose($file_lang);
   	    }
 
 	    // Delete a language
-	    if (isset($_POST['submit_lang_del'])) {
+	    if (isset($_POST['submit_lang_del']) && $lang_exist3 == 0) {
 		$lang_exist2 = 2;
 
 	        $file_lang = fopen('/var/www/diagnostic/language/code_country.txt', 'r');
@@ -371,7 +373,10 @@ class IndexController extends AbstractController
             		}
 			fclose($file_temp);
 
-			if ($lang_exist2 == 1) {
+			// Avoid to delete english and french languages, which are used to create other languages
+			if ($temp_lang == 'fr' . PHP_EOL || $temp_lang == 'en' . PHP_EOL) {$lang_exist3=1;}
+
+			if ($lang_exist2 == 1 && $lang_exist3 == 0) {
 
 		            $file_temp = fopen('/var/www/diagnostic/language/languages.txt', 'r');
    		    	    $contents = fread($file_temp, filesize('/var/www/diagnostic/language/languages.txt'));
@@ -403,7 +408,8 @@ class IndexController extends AbstractController
             'form' => $form,
 	    'questions' => $questions,
 	    'lang_exist' => $lang_exist,
-	    'lang_exist2' => $lang_exist2
+	    'lang_exist2' => $lang_exist2,
+	    'lang_exist3' => $lang_exist3
         ]);
     }
 
