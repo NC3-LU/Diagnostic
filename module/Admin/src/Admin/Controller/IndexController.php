@@ -216,6 +216,21 @@ class IndexController extends AbstractController
             }
 	    fclose($file);
 
+	    // English translation hasn't the same number of translations
+	    $file = fopen('/var/www/diagnostic/language/en.po', 'r');
+	    $nb_translation2 = 0;
+	    $fileCount = 3;
+            while (!feof($file)) {
+                $temp = fgets($file, 4096);
+                if (substr($temp, 7, -2) == '__question' . ($_SESSION['nb_questions']-1) . 'help') {$temp = fgets($file, 4096); $temp = fgets($file, 4096); break;}
+            }
+            while (!feof($file)) {
+                $temp = fgets($file, 4096);
+	        if ($fileCount == 3) {$nb_translation2++; $fileCount=0;}
+	        $fileCount++;
+            }
+	    fclose($file);
+
 	    // num_line2 is used to change all translations in 1 button
 	    $file = fopen('/var/www/diagnostic/language/fr.po', 'r');
 	    $num_line2 = -1;
@@ -231,6 +246,9 @@ class IndexController extends AbstractController
 	    for ($j=0; $j<$_SESSION['nb_lang']; $j++) {
 	        $temp_lang = fgets($file_lang, 4096);
 	        if ($_SESSION['lang'] == substr($temp_lang, 0, -1)) {
+
+		    // The english language has less translations
+		    if (substr($temp_lang, 0, -1) == 'en') {$nb_translation=$nb_translation2;}
 
 		    // Action to modify one translation
 		    for ($i=1; $i<=$nb_translation; $i++){
@@ -264,26 +282,25 @@ class IndexController extends AbstractController
 		    }
 
 		    // Action to modify all translations
-		    $file2 = fopen('/var/www/diagnostic/language/' . substr($temp_lang, 0, -1) . '.po', 'r');
-		    $contents2 = fread($file2, filesize('/var/www/diagnostic/language/' . substr($temp_lang, 0, -1) . '.po'));
-	            fclose($file2);
-   		    $contents2 = explode(PHP_EOL, $contents2); // PHP_EOL equals to /n in Linux
+		    if (isset($_POST['submit_all'])){
+			$file2 = fopen('/var/www/diagnostic/language/' . substr($temp_lang, 0, -1) . '.po', 'r');
+			$contents2 = fread($file2, filesize('/var/www/diagnostic/language/' . substr($temp_lang, 0, -1) . '.po'));
+		        fclose($file2);
+   			$contents2 = explode(PHP_EOL, $contents2); // PHP_EOL equals to /n in Linux
 
-		    for ($i=1; $i<=$nb_translation; $i++){
-
-			if (isset($_POST['submit_all'])){
+			for ($i=1; $i<=$nb_translation; $i++){
 			    $contents2[$num_line2] = 'msgstr ' . '"' . $request->getPost('translation'.$i) . '"'; // Change the translation with the new one
 			    $num_line2+=3;
 			}
+
+			$contents2 = array_values($contents2);
+ 			$contents2 = implode(PHP_EOL, $contents2);
+			$file2 = fopen('/var/www/diagnostic/language/' . substr($temp_lang, 0, -1) . '.po', 'w');
+   	       		fwrite($file2, $contents2); // Write the file with the new translation
+			fclose($file2);
+
+		        shell_exec('msgfmt /var/www/diagnostic/language/' . substr($temp_lang, 0, -1) . '.po -o /var/www/diagnostic/language/' . substr($temp_lang, 0, -1) . '.mo');
 		    }
-
-		    $contents2 = array_values($contents2);
- 		    $contents2 = implode(PHP_EOL, $contents2);
-		    $file2 = fopen('/var/www/diagnostic/language/' . substr($temp_lang, 0, -1) . '.po', 'w');
-   	            fwrite($file2, $contents2); // Write the file with the new translation
-		    fclose($file2);
-
-		    shell_exec('msgfmt /var/www/diagnostic/language/' . substr($temp_lang, 0, -1) . '.po -o /var/www/diagnostic/language/' . substr($temp_lang, 0, -1) . '.mo');
 	        }
 
 	        // change reference language thanks to the session value
