@@ -542,6 +542,9 @@ msgstr "Voulez-vous vraiment supprimer cette question ?"
 msgid "__delete_category"
 msgstr "Voulez-vous vraiment supprimer cette catégorie ?"
 
+msgid "__delete_trans"
+msgstr "Voulez-vous vraiment supprimer cette traduction ?"
+
 msgid "__mail_password_forgotten_subject"
 msgstr "Diagnostic Cases - Mot de passe oublié"
 

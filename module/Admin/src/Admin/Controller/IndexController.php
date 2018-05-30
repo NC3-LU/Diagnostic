@@ -27,6 +27,7 @@ class IndexController extends AbstractController
     protected $adminQuestionForm;
     protected $adminCategoryForm;
     protected $adminLanguageForm;
+    protected $adminAddLanguageForm;
 
     /**
      * Index
@@ -184,6 +185,7 @@ class IndexController extends AbstractController
 	$lang_exist = 0;
 	$lang_exist2 = 0;
 	$lang_exist3 = 0;
+	$test = 0;
 
         //retrieve questions
         $questionService = $this->get('questionService');
@@ -216,21 +218,6 @@ class IndexController extends AbstractController
             }
 	    fclose($file);
 
-	    // English translation hasn't the same number of translations
-	    $file = fopen('/var/www/diagnostic/language/en.po', 'r');
-	    $nb_translation2 = 0;
-	    $fileCount = 3;
-            while (!feof($file)) {
-                $temp = fgets($file, 4096);
-                if (substr($temp, 7, -2) == '__question' . ($_SESSION['nb_questions']-1) . 'help') {$temp = fgets($file, 4096); $temp = fgets($file, 4096); break;}
-            }
-            while (!feof($file)) {
-                $temp = fgets($file, 4096);
-	        if ($fileCount == 3) {$nb_translation2++; $fileCount=0;}
-	        $fileCount++;
-            }
-	    fclose($file);
-
 	    // num_line2 is used to change all translations in 1 button
 	    $file = fopen('/var/www/diagnostic/language/fr.po', 'r');
 	    $num_line2 = -1;
@@ -241,17 +228,15 @@ class IndexController extends AbstractController
             }
 	    fclose($file);
 
-	    // Search the translation key in order to know the translation to change
+	    // Search the translation key in order to know the translation to change or delete
 	    $file_lang = fopen('/var/www/diagnostic/language/languages.txt', 'r');
-	    for ($j=0; $j<$_SESSION['nb_lang']; $j++) {
+	    for ($j=1; $j<$_SESSION['nb_lang']; $j++) {
 	        $temp_lang = fgets($file_lang, 4096);
 	        if ($_SESSION['lang'] == substr($temp_lang, 0, -1)) {
 
-		    // The english language has less translations
-		    if (substr($temp_lang, 0, -1) == 'en') {$nb_translation=$nb_translation2;}
-
 		    // Action to modify one translation
 		    for ($i=1; $i<=$nb_translation; $i++){
+			// Modify translation
 	    	        if (isset($_POST['mod'.$i])){
 			    $_SESSION['base_lang'] = 1;
 	            	    $file = fopen('/var/www/diagnostic/language/' . substr($temp_lang, 0, -1) . '.po', 'r');
@@ -279,6 +264,21 @@ class IndexController extends AbstractController
 
 			    shell_exec('msgfmt /var/www/diagnostic/language/' . substr($temp_lang, 0, -1) . '.po -o /var/www/diagnostic/language/' . substr($temp_lang, 0, -1) . '.mo');
 		        }
+
+
+			if (isset($_POST['del'.$i])){
+	            	    $file = fopen('/var/www/diagnostic/language/' . substr($temp_lang, 0, -1) . '.po', 'r');
+		    	    $fileCount = -1;
+		    	    $num_line3 = 0;
+        	    	    while (!feof($file)) {
+                                $temp = fgets($file, 4096);
+		                $fileCount++;
+	                        if(substr($temp, 7, -2) == $_SESSION['key_'  . substr($temp_lang, 0, -1)][$i]){
+			    	    $num_line3 = $fileCount;
+		                }
+         	            }
+		    	    fclose($file);
+			}
 		    }
 
 		    // Action to modify all translations
@@ -305,10 +305,38 @@ class IndexController extends AbstractController
 
 	        // change reference language thanks to the session value
 	        if (isset($_POST['submit_lang_ref'])){
-	            if ($request->getPost('language_ref') == $j) {
+	            if ($request->getPost('language_ref') == $j-1) {
 	                $_SESSION['change_language'] = substr($temp_lang, 0, -1);
 	            }
 	        }
+	    }
+	    fclose($file_lang);
+
+	    $file_lang = fopen('/var/www/diagnostic/language/languages.txt', 'r');
+	    for ($j=1; $j<$_SESSION['nb_lang']; $j++) {
+	        $temp_lang = fgets($file_lang, 4096);
+		// Delete translation
+		for ($i=1; $i<=$nb_translation; $i++){
+		    // Delete translation
+		    if (isset($_POST['del'.$i])){
+			$_SESSION['base_lang'] = 1;
+
+			$file = fopen('/var/www/diagnostic/language/' . substr($temp_lang, 0, -1) . '.po', 'r');
+			$contents = fread($file, filesize('/var/www/diagnostic/language/' . substr($temp_lang, 0, -1) . '.po'));
+			fclose($file);
+   			$contents = explode(PHP_EOL, $contents); // PHP_EOL equals to /n in Linux
+			unset($contents[$num_line3-1]); // Delete the line break
+			unset($contents[$num_line3]); // Delete the translation key
+			unset($contents[$num_line3+1]); // Delete the translation
+ 			$contents = array_values($contents);
+ 			$contents = implode(PHP_EOL, $contents);
+			$file = fopen('/var/www/diagnostic/language/' . substr($temp_lang, 0, -1) . '.po', 'w');
+   			fwrite($file, $contents); // Write the file with the new translation
+			fclose($file);
+
+			shell_exec('msgfmt /var/www/diagnostic/language/' . substr($temp_lang, 0, -1) . '.po -o /var/www/diagnostic/language/' . substr($temp_lang, 0, -1) . '.mo');
+		    }
+		}
 	    }
 	    fclose($file_lang);
 
@@ -573,6 +601,57 @@ class IndexController extends AbstractController
 
 		//redirect
                 return $this->redirect()->toRoute('admin', ['controller' => 'index', 'action' => 'categories']);
+            }
+        }
+
+        //send to view
+        return new ViewModel([
+            'form' => $form
+        ]);
+    }
+
+    /**
+     * Add language
+     *
+     * @return ViewModel
+     */
+    public function addLanguageAction()
+    {
+	// Session value to know if the translation key already exist
+	$_SESSION['erreur_exist'] = 0;
+
+        $form = $this->get('adminAddLanguageForm');
+
+        //form is post and valid
+        $request = $this->getRequest();
+        if ($request->isPost()) {
+            $form->setData($request->getPost());
+
+	    // Determine if the translation key already exist
+            $cmd='grep -c -w ' . $request->getPost('translation_key') . ' /var/www/diagnostic/language/en.po';
+            if(exec($cmd) != 0){ $_SESSION['erreur_exist'] = 1;}
+
+            if ($form->isValid() && $_SESSION['erreur_exist'] == 0) {
+
+		// Add translation to the .po files.
+                $file_lang = fopen('/var/www/diagnostic/language/languages.txt', 'r');
+                for ($i=1; $i<$_SESSION['nb_lang']; $i++) {
+                    $temp_lang = fgets($file_lang, 4096);
+                    $file = fopen('/var/www/diagnostic/language/' . substr($temp_lang, 0, -1) . '.po', 'a+');
+                    fputs($file, PHP_EOL);
+                    fputs($file,  'msgid "' . $request->getPost('translation_key') . '"');
+                    fputs($file, PHP_EOL);
+                    fputs($file,  'msgstr "' . $request->getPost('translation_' . substr($temp_lang, 0, -1)) . '"');
+                    fputs($file, PHP_EOL);
+                    fclose($file);
+
+                    // compile from po to mo
+                    shell_exec('msgfmt /var/www/diagnostic/language/' . substr($temp_lang, 0, -1) . '.po -o /var/www/diagnostic/language/' . substr($temp_lang, 0, -1) . '.mo');
+                }
+                fclose($file_lang);
+
+		//redirect
+                return $this->redirect()->toRoute('admin', ['controller' => 'index', 'action' => 'languages']);
             }
         }
 

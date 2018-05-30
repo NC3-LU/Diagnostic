@@ -14,7 +14,10 @@ endforeach;
 
 ?>
 
-<script>var delete_lang = <?php echo json_encode($this->translate('__delete_lang')) ?></script>
+<script>
+    var delete_lang = <?php echo json_encode($this->translate('__delete_lang')) ?>;
+    var delete_trans = <?php echo json_encode($this->translate('__delete_trans')) ?>;
+</script>
 
 <div class="row">
 
@@ -101,7 +104,7 @@ endforeach;
 			echo '<td style=text-align:center>';
 			echo $this->formSubmit($form->get('mod' . $k)->setValue($this->translate('__modify')));
 			echo "&nbsp;&nbsp;";
-			echo $this->formSubmit($form->get('del'.$k)->setValue($this->translate('__delete')));
+			echo $this->formSubmit($form->get('del'.$k)->setValue($this->translate('__delete'))->setAttribute('onClick', 'return confirm(delete_trans)'));
 			echo "</td></div></tr>";
 			$k++;
 			$z++;
@@ -151,7 +154,7 @@ endforeach;
 	<tr>
 	    <td></td>
 	    <td style="text-align:center">
-		<?= $this->formSubmit($form->get('submit_translation_add')) ?>
+		<a href="<?php echo $this->url('admin', ['action' => 'add-language']) ?>"><span name='language' class='btn btn-success'><?= $this->translate('__add_a_translation') ?></span></a>
 	        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 		<?= $this->formSubmit($form->get('submit_all')) ?>
 	    </td>

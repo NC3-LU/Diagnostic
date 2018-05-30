@@ -36,7 +36,7 @@ msgid "__category8"
 msgstr "Incident and business continuity "
 
 msgid "__question1"
-msgstr "What security mechanisms already exist (other than technical mechanisms)?"
+msgstr "test What security mechanisms already exist (other than technical mechanisms)"
 
 msgid "__question1help"
 msgstr "Is there:<br><ul><li>a security policy?</li><li>a user or administrator charter?</li><li>procedures (e.g. back-up)?</li><li>in-house instructions?</li><li>etc</li></ul>"
@@ -542,6 +542,9 @@ msgstr "Do you really want to delete this question ?"
 msgid "__delete_category"
 msgstr "Do you really want to delete this category ?"
 
+msgid "__delete_trans"
+msgstr "Do you really want to delete this translation ?"
+
 msgid "__mail_password_forgotten_subject"
 msgstr "CASES diagnosis - password forgotten"
 
@@ -556,3 +559,24 @@ msgstr "If this e-mail does not concern you, please ignore this message"
 
 msgid "__mail_password_forgotten_link"
 msgstr "NEW PASSWORD"
+
+msgid "Value is required and can't be empty"
+msgstr "Value is required and can't be empty"
+
+msgid "The input is not a valid email address. Use the basic format local-part@hostname"
+msgstr "The input is not a valid email address. Use the basic format local-part@hostname"
+
+msgid "password must contain at least one uppercase letter"
+msgstr "password must contain at least one uppercase letter"
+
+msgid "password must contain at least one digit character"
+msgstr "password must contain at least one digit character"
+
+msgid "password must contain at least one special character"
+msgstr "password must contain at least one special character"
+
+msgid "password must be at least 8 characters in length"
+msgstr "password must be at least 8 characters in length"
+
+msgid "The two given tokens do not match"
+msgstr "The two given tokens do not match"
