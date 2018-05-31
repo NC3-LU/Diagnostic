@@ -9,7 +9,7 @@ use Zend\ServiceManager\ServiceLocatorInterface;
  * Language Form Factory
  *
  * @package Admin\Factory
- * @author Jerome De Almeida <jerome.dealmeida@vesperiagroup.com>
+ * @author Romain DESJARDINS
  */
 class LanguageFormFactory implements FactoryInterface
 {

@@ -7,7 +7,7 @@ use Zend\Form\Form;
  * Language Form
  *
  * @package Diagnostic\Form
- * @author Jerome De Almeida <jerome.dealmeida@vesperiagroup.com>
+ * @author Romain DESJARDINS
  */
 class LanguageForm extends Form
 {
@@ -127,15 +127,6 @@ class LanguageForm extends Form
             'type' => 'Submit',
             'attributes' => [
                 'value' => '__modify_all',
-                'class' => 'btn btn-success',
-            ],
-        ]);
-
-	$this->add([
-            'name' => 'submit_translation_add',
-            'type' => 'Submit',
-            'attributes' => [
-                'value' => '__add_a_translation',
                 'class' => 'btn btn-success',
             ],
         ]);

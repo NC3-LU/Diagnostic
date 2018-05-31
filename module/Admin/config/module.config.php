@@ -48,16 +48,16 @@ return [
     'form_elements' => [
         'factories' => [
             'AdminQuestionForm' => 'Admin\Form\QuestionFormFactory',
-	    'AdminCategoryForm' => 'Admin\Form\CategoryFormFactory',
-	    'AdminLanguageForm' => 'Admin\Form\LanguageFormFactory',
-	    'AdminAddLanguageForm' => 'Admin\Form\AddLanguageFormFactory',
+            'AdminCategoryForm' => 'Admin\Form\CategoryFormFactory',
+            'AdminLanguageForm' => 'Admin\Form\LanguageFormFactory',
+            'AdminAddLanguageForm' => 'Admin\Form\AddLanguageFormFactory',
         ],
         'invokables' => [
             'UserForm' => 'Admin\Form\UserForm',
             'NewQuestionForm' => 'Admin\Form\QuestionForm',
-	    'NewCategoryForm' => 'Admin\Form\CategoryForm',
-	    'NewLanguageForm' => 'Admin\Form\LanguageForm',
-	    'NewAddLanguageForm' => 'Admin\Form\AddLanguageForm',
+            'NewCategoryForm' => 'Admin\Form\CategoryForm',
+            'NewLanguageForm' => 'Admin\Form\LanguageForm',
+            'NewAddLanguageForm' => 'Admin\Form\AddLanguageForm',
         ],
     ],
 ];

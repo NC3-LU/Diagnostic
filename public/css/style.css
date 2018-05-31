@@ -137,15 +137,6 @@ div.container a.brand {
 .matNA {
 	background-image:url(/img/mat_NA.png);
 }
-.gravity1 {
-	background-image:url(/img/gravity_1.png);
-}
-.gravity2 {
-	background-image:url(/img/gravity_2.png);
-}
-.gravity3 {
-	background-image:url(/img/gravity_3.png);
-}
 
 .notes-area {
 	height: 200px  !important;

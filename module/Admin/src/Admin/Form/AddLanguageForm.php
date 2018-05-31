@@ -4,10 +4,10 @@ namespace Admin\Form;
 use Zend\Form\Form;
 
 /**
- * Language Form
+ * Add Language Form
  *
  * @package Diagnostic\Form
- * @author Jerome De Almeida <jerome.dealmeida@vesperiagroup.com>
+ * @author Romain DESJARDINS
  */
 class AddLanguageForm extends Form
 {

@@ -14,6 +14,7 @@ endforeach;
 
 ?>
 
+<!-- // Display confirmation when you want to delete a language or a translation -->
 <script>
     var delete_lang = <?php echo json_encode($this->translate('__delete_lang')) ?>;
     var delete_trans = <?php echo json_encode($this->translate('__delete_trans')) ?>;
@@ -22,10 +23,12 @@ endforeach;
 <div class="row">
 
     <?= $this->form()->openTag($form) ?>
+
     <span style="float:right"><?= $this->translate($form->get('add_language')->getLabel()) ?>
     <?= $this->formSelect($form->get('add_language')) ?>
     <?= $this->formSubmit($form->get('submit_lang_add')) ?>
     <?= $this->formSubmit($form->get('submit_lang_del')->setAttribute('onClick', 'return confirm(delete_lang)')) ?>
+    <!-- // Display error if you want : to add a language already added, to delete a language which has not been added, to delete english -->
     <?php if($lang_exist == 1){ echo "<ul class='bg-danger'> <li>" . $this->translate('__error_exist2'). "</li></ul>"; } ?>
     <?php if($lang_exist2 == 2){ echo "<ul class='bg-danger'> <li>" . $this->translate('__error_exist3'). "</li></ul>"; } ?>
     <?php if($lang_exist3 == 1){ echo "<ul class='bg-danger'> <li>" . $this->translate('__error_exist4'). "</li></ul>"; } ?></span>
@@ -37,130 +40,130 @@ endforeach;
 
     <table class="table table-responsive">
 
-	<tr>
+        <tr>
             <th style="text-align: center"><?= $this->translate('__translation_key'); ?></th>
             <th style="text-align: center;"><?= $this->translate('__translation'); ?></th>
-	    <th style="text-align: center;"><?= $this->translate($form->get('language_ref')->getLabel()); ?> &nbsp; <?= $this->formSelect($form->get('language_ref')) ?> &nbsp; <?= $this->formSubmit($form->get('submit_lang_ref')) ?></th>
-	    <th style="text-align: center;"><?= $this->translate('__action'); ?></th>
+            <th style="text-align: center;"><?= $this->translate($form->get('language_ref')->getLabel()); ?> &nbsp; <?= $this->formSelect($form->get('language_ref')) ?> &nbsp; <?= $this->formSubmit($form->get('submit_lang_ref')) ?></th>
+            <th style="text-align: center;"><?= $this->translate('__action'); ?></th>
         </tr>
 
-	<?php
+        <?php
+        $location_lang = '/var/www/diagnostic/language/';
+        $file_lang = fopen($location_lang . 'languages.txt', 'r');
+        for ($i=1; $i<$_SESSION['nb_lang']; $i++) {
+            $temp_lang = fgets($file_lang, 4096);
 
-	$file_lang = fopen('/var/www/diagnostic/language/languages.txt', 'r');
-	for ($i=1; $i<$_SESSION['nb_lang']; $i++) {
-	    $temp_lang = fgets($file_lang, 4096);
+            if ($this->plugin('translate')->getTranslator()->getLocale() == substr($temp_lang, 0, -1)) {
 
-	    if ($this->plugin('translate')->getTranslator()->getLocale() == substr($temp_lang, 0, -1)) {
+                $_SESSION['lang'] = substr($temp_lang, 0, -1);
 
-	        $_SESSION['lang'] = substr($temp_lang, 0, -1);
+                $trans_key = 3; $trans = 2; $num_button = 1; $id_trans_ref = 1;
 
-		$n = 3; $j = 2; $k = 1; $z = 1;
+                $file = fopen($location_lang . substr($temp_lang, 0, -1) . '.po', 'r');
+                // Go to translations to display in the po file
+                while (!feof($file)) {
+                    $temp = fgets($file, 4096);
+                    if (substr($temp, 7, -2) == '__question' . ($_SESSION['nb_questions']-1) . 'help') {$temp = fgets($file, 4096); $temp = fgets($file, 4096); break;}
+                }
+                while (!feof($file)) {
+                    $temp = fgets($file, 4096);
 
-		$file = fopen('/var/www/diagnostic/language/' . substr($temp_lang, 0, -1) . '.po', 'r');
-		// Go to the first msgid in the po file
-	        while (!feof($file)) {
-		    $temp = fgets($file, 4096);
-		    if (substr($temp, 7, -2) == '__question' . ($_SESSION['nb_questions']-1) . 'help') {$temp = fgets($file, 4096); $temp = fgets($file, 4096); break;}
-		}
-		while (!feof($file)) {
-	    	    $temp = fgets($file, 4096);
-
-		    // Creation translation form
-       		    $translation = new Element('translation' . $k);
-       	   	    $translation->setAttributes([
+                    // Creation translation form
+                    $translation = new Element('translation' . $num_button);
+                    $translation->setAttributes([
                         'type'  => 'text',
                         'class' => 'form-control'
                     ]);
                     $form->add($translation);
 
-		    // Creation translation form
-	            $submit = new Element('mod' . $k);
-      		    $submit->setAttributes([
+                    // Creation modify form
+                    $submit = new Element('mod' . $num_button);
+                    $submit->setAttributes([
                         'type'  => 'submit',
                         'class' => 'btn btn-success'
                     ]);
                     $form->add($submit);
 
-	    	    // Creation translation form
-            	    $submit = new Element('del' . $k);
-            	    $submit->setAttributes([
+                    // Creation delete form
+                    $submit = new Element('del' . $num_button);
+                    $submit->setAttributes([
                         'type'  => 'submit',
-                	'class' => 'btn btn-success'
-            	    ]);
-            	    $form->add($submit);
+                        'class' => 'btn btn-success'
+                    ]);
+                    $form->add($submit);
 
-   	    	    if($n==3){
-			echo "<tr><td class=col-lg-2 style=text-align:center>";
-			echo $_SESSION['key_' . substr($temp_lang, 0, -1)][$k]=substr($temp, 7, -2);
-			echo "</td>";
-			$n=0;
-		    }
-	    	    if($j==3){
-			echo "<td class=col-lg-5>";
-			echo $this->formText($form->get('translation'.$k)->setValue(substr($temp, 8, -2)));
-			echo '</td>';
-			echo '<td id="' . $z . '" style=text-align:center; class=col-lg-3>';
-	    	    	echo '</td>';
-			echo '<td style=text-align:center>';
-			echo $this->formSubmit($form->get('mod' . $k)->setValue($this->translate('__modify')));
-			echo "&nbsp;&nbsp;";
-			echo $this->formSubmit($form->get('del'.$k)->setValue($this->translate('__delete'))->setAttribute('onClick', 'return confirm(delete_trans)'));
-			echo "</td></div></tr>";
-			$k++;
-			$z++;
-			$j=0;
-		    }
-		    $n++;
-	            $j++;
-	        }
-	        fclose($file);
-	    }
+                    if($trans_key==3){
+                        echo "<tr><td class=col-lg-2 style=text-align:center>";
+                        echo $_SESSION['key_' . substr($temp_lang, 0, -1)][$num_button]=substr($temp, 7, -2);
+                        echo "</td>";
+                        $trans_key=0;
+                    }
+                    if($trans==3){
+                        echo "<td class=col-lg-5>";
+                        echo $this->formText($form->get('translation'.$num_button)->setValue(substr($temp, 8, -2)));
+                        echo '</td>';
+                        echo '<td id="' . $id_trans_ref . '" style=text-align:center; class=col-lg-3>';
+                        echo '</td>';
+                        echo '<td style=text-align:center>';
+                        echo $this->formSubmit($form->get('mod' . $num_button)->setValue($this->translate('__modify')));
+                        echo "&nbsp;&nbsp;";
+                        echo $this->formSubmit($form->get('del'.$num_button)->setValue($this->translate('__delete'))->setAttribute('onClick', 'return confirm(delete_trans)'));
+                        echo "</td></div></tr>";
+                        $num_button++;
+                        $id_trans_ref++;
+                        $trans=0;
+                    }
+                    $trans_key++;
+                    $trans++;
+                }
+                fclose($file);
+            }
         }
-	fclose($file_lang);
+        fclose($file_lang);
 
-	$file_lang = fopen('/var/www/diagnostic/language/languages.txt', 'r');
-	for ($i=1; $i<$_SESSION['nb_lang']; $i++) {
-	    $temp_lang = fgets($file_lang, 4096);
+        $file_lang = fopen($location_lang . 'languages.txt', 'r');
+        for ($i=1; $i<$_SESSION['nb_lang']; $i++) {
+            $temp_lang = fgets($file_lang, 4096);
 
-	    if ($_SESSION['change_language'] == substr($temp_lang, 0, -1)) {
+            if ($_SESSION['change_language'] == substr($temp_lang, 0, -1)) {
 
-		$j = 2; $z = 1;
+                $trans = 2; $id_trans_ref = 1;
 
-		$file = fopen('/var/www/diagnostic/language/' . substr($temp_lang, 0, -1) . '.po', 'r');
-		// Go to the first msgid in the po file
-	        while (!feof($file)) {
-		    $temp = fgets($file, 4096);
-		    if (substr($temp, 7, -2) == '__question' . ($_SESSION['nb_questions']-1) . 'help') {$temp = fgets($file, 4096); $temp = fgets($file, 4096); break;}
-		}
-		while (!feof($file)) {
-	    	    $temp = fgets($file, 4096);
+                $file = fopen($location_lang . substr($temp_lang, 0, -1) . '.po', 'r');
+                // Go to the first msgid in the po file
+                while (!feof($file)) {
+                    $temp = fgets($file, 4096);
+                    if (substr($temp, 7, -2) == '__question' . ($_SESSION['nb_questions']-1) . 'help') {$temp = fgets($file, 4096); $temp = fgets($file, 4096); break;}
+                }
+                while (!feof($file)) {
+                    $temp = fgets($file, 4096);
 
-		    if($j==3){
-		    	?>
-		    	<script>
-		            document.getElementById('<?php echo $z ?>').innerHTML = "<?= htmlentities(substr($temp, 8, -2)) ?>";
-		    	</script>
-		    	<?php
-		    	$z++;
-			$j=0;
-		    }
-		    $j++;
-	    	}
-		fclose($file);
-	    }
-	}
-	fclose($file_lang);
-	?>
-	<tr>
-	    <td></td>
-	    <td style="text-align:center">
-		<a href="<?php echo $this->url('admin', ['action' => 'add-language']) ?>"><span name='language' class='btn btn-success'><?= $this->translate('__add_a_translation') ?></span></a>
-	        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-		<?= $this->formSubmit($form->get('submit_all')) ?>
-	    </td>
-	    <td></td>
-	    <td></td>
-	</tr>
+                    if($trans==3){
+                        ?>
+                        <script>
+                            document.getElementById('<?php echo $id_trans_ref ?>').innerHTML = "<?= htmlentities(substr($temp, 8, -2)) ?>";
+                        </script>
+                        <?php
+                        $id_trans_ref++;
+                        $trans=0;
+                    }
+                    $trans++;
+                }
+                fclose($file);
+            }
+        }
+        fclose($file_lang);
+        ?>
+        <tr>
+            <td></td>
+            <td style="text-align:center">
+                <a href="<?php echo $this->url('admin', ['action' => 'add-language']) ?>"><span name='language' class='btn btn-success'><?= $this->translate('__add_a_translation') ?></span></a>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <?= $this->formSubmit($form->get('submit_all')) ?>
+            </td>
+            <td></td>
+            <td></td>
+        </tr>
     </table>
 
     <?= $this->form()->closeTag() ?>

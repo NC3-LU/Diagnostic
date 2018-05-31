@@ -10,7 +10,7 @@ use Zend\ServiceManager\ServiceLocatorInterface;
  * Add Language Form Factory
  *
  * @package Admin\Factory
- * @author Jerome De Almeida <jerome.dealmeida@vesperiagroup.com>
+ * @author Romain DESJARDINS
  */
 class AddLanguageFormFactory implements FactoryInterface
 {
@@ -24,7 +24,7 @@ class AddLanguageFormFactory implements FactoryInterface
     {
         $form = new AddLanguageForm();
 
-	$addLanguageFormFilter = new AddLanguageFormFilter($serviceLocator->getServiceLocator()->get('Zend\Db\Adapter\Adapter'));
+        $addLanguageFormFilter = new AddLanguageFormFilter($serviceLocator->getServiceLocator()->get('Zend\Db\Adapter\Adapter'));
         $form->setInputFilter($addLanguageFormFilter);
 
         return $form;

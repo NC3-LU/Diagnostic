@@ -1,4 +1,4 @@
-<?php echo $this->doctype(); $_SESSION['base_lang'] = 0?>
+<?php echo $this->doctype(); $_SESSION['base_lang'] = 0?> <!-- // Reset language when refreshing a page (0 = English) -->
 
 <html lang="en">
 <head>
@@ -39,22 +39,25 @@
 				height="80"></a></div>
                 <div class="col-lg-4 text-center"><h1>DIAGNOSTIC CASES</h1></div>
                 <div class="col-lg-3 text-right">
-                    <br>
+                    <br />
                     <?php
+		    // Determine which button is active related to the active language //
                     $locale = $this->plugin('translate')->getTranslator()->getLocale();
-                    $file_lang = fopen("/var/www/diagnostic/language/languages.txt", "r");
-		    $i = 1;
-		    $_SESSION['nb_lang'] = 0;
-		    while (!feof($file_lang)) {
-			$temp_lang = fgets($file_lang, 4096);
-			$_SESSION['class_lang'][$i] = '';
-		        if ($locale.PHP_EOL == $temp_lang) {
-			    $_SESSION['class_lang'][$i] = 'btn-info';
+		    $location_lang = "/var/www/diagnostic/language/languages.txt";
+                    $file_lang = fopen($location_lang, "r");
+                    $i = 1;
+                    $_SESSION['nb_lang'] = 0;
+                    while (!feof($file_lang)) {
+       	                $temp_lang = fgets($file_lang, 4096);
+                        $_SESSION['class_lang'][$i] = '';
+                        if ($locale.PHP_EOL == $temp_lang) {
+                            $_SESSION['class_lang'][$i] = 'btn-info';
                         }
-		        $i++;
-			$_SESSION['nb_lang']++;
-		    }
-		    fclose($file_lang);
+                        $i++;
+                        $_SESSION['nb_lang']++;
+                    }
+                    fclose($file_lang);
+                    // *************************************************************** //
                     ?>
                     <table width="100%">
                         <tr>
@@ -84,10 +87,11 @@
 			    </td>
 
 			    <?php
-			    $file_lang = fopen("/var/www/diagnostic/language/languages.txt", "r");
-			    for ($i=1; $i<$_SESSION['nb_lang']; $i++) {
-			        $temp_lang = fgets($file_lang, 4096);
-			    ?>
+                            // Creation language button //
+                            $file_lang = fopen($location_lang, "r");
+                            for ($i=1; $i<$_SESSION['nb_lang']; $i++) {
+                                $temp_lang = fgets($file_lang, 4096);
+                            ?>
                                 <td width='75'>
                                     <a href="<?php echo $this->url('diagnostic', ['action' => 'language', 'id' => $i]); ?>">
                                         <button type='submit' name='language' value=<?= $temp_lang ?>
@@ -96,13 +100,13 @@
                                         </button>
                                     </a>
                                 </td>
-			    <?php
-			    }
-			    fclose($file_lang);
-			    ?>
+                            <?php
+                            }
+                            fclose($file_lang);
+                            // ************************ //
+                            ?>
                         </tr>
                     </table>
-
             </div>
                 <div class="col-lg-1"></div>
             </div>
