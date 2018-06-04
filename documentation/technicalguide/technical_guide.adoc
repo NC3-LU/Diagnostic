@@ -8,16 +8,16 @@ The purpose of this document is to describe each step you have to go through in 
 
 ==== PHP
 
-Install *php7.0* and following extensions :
+Install *php7.1* and following extensions :
 ----
-sudo apt-get install libapache2-mod-php7.0 php7.0-mcrypt php7.0-mysql php7.0-zip php-xml
+sudo apt-get install libapache2-mod-php7.1 php7.1-mcrypt php7.1-mysql php7.1-zip php-xml
 ----
 
 ==== APACHE
 
 Install *apache2* and enable following modules :
 ----
-sudo apt-get insall apache2
+sudo apt-get install apache2
 sudo a2enmod rewrite
 ----
 
@@ -62,7 +62,7 @@ Diagnostic application is available in both french and english. Find the *%%LANG
 ----
 /ROOT_DIRECTORY/module/Diagnostic/config/module.config.php
 ----
-and replace by either *"en_EN"* or *"fr_FR"*
+and replace by either *"en"* or *"fr"*
 
 ___
 
