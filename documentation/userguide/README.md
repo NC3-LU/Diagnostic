@@ -125,13 +125,17 @@ Imagine you need a specific question on the BYOD, and you think this
 should be really important. You have, in the same category, a question
 less important.
 
-If the threshold are respectively 60 and 40, then the maturity on a
-level is calculated this way: *((60/3 x maturity) + (40/3 x maturity))*
-where the maturity could be 0 if not managed, 1 if scheduled, 2 if more
-or less managed and 3 if managed. So if a policy is scheduled about BYOD
-and the other question is managed, the category will be *((60/3 x 1) +
-(40/3 x 3)) = 20 + 40 = 60* out of 100 (The maximal possible) of
-maturity for this category.
+If the threshold are respectively 10 and 5, then the maturity 
+on a level is calculated this way: ((10/3 x maturity) + (5/3 x maturity)) 
+where the maturity could be 0 if not managed, 1 if more or less managed
+and 2 if managed. So if a policy is more or less managed about BYOD and
+the other question is managed, the category will be ((15/3 x 1) + (10/3 x 2))
+= 5 + 6 = 11 out of 16 (The maximal possible) of maturity for this category.
+
+> **Tip**
+>
+> The maturity can also be not applicable, i.e. the question is not appropriate
+> for the enterprise. Thereby, the question is not calculated in the final result.
 
 Finally, just hit the green ‘Add’ button to add your new question and
 get back on the main page.
@@ -143,10 +147,10 @@ you have seen, what has been said during the interview, precision about
 what you want…
 
 The maturity panel is where you can set the current maturity on a scale
-of four levels (managed, more or less managed, scheduled, not managed).
-You will also have bullet points to think when you ask the question,
-what you should have in mind when you asking it, and what kind of answer
-you should have.
+of four levels (managed, more or less managed, not managed and not applicable).
+You will also have some reminders to think when you ask the question,
+what you should have in mind when you asking it, and what kind of answer you
+should have.
 
 The maturity target panel is the maturity level that the company should
 have. It’s not necessarily managed, so the information security could be
@@ -424,10 +428,12 @@ report as a ‘.docx’.
 
 ![Report Screen](img/UG_Diagnostic_026.PNG)
 
-The first graph that you can see is the maturity by domains with the
-risk cartography and more precisely with the tab on the right. You will
-also find the recommendation tab which briefly summarizes the
-recommendations, their gravity and their current and target maturity.
+The first graph that you can see is the maturity by domains with the risk
+cartography and more precisely with the tab on the right. The colors determine
+the level of maturity of each category (red when maturity is under 33%, orange
+between 33% and 66% and green over 66%). You will also find the recommendation
+tab which briefly summarizes the recommendations, their gravity and their
+current and target maturity.
 
 ![Recommendation Tab](img/UG_Diagnostic_027.PNG)
 
