@@ -21,7 +21,7 @@ the mail will not be sent.
 
 ![Change Password](img/UG_Diagnostic_004.PNG)
 
-Then, you just need to create your first own diagnostic. For that, just
+Then, you just need to create your first own diagnosis. For that, just
 log in to the main connexion screen, by giving your mail and your new
 password. Then, just click on the ‘Log in’ button.
 
@@ -35,15 +35,15 @@ password. Then, just click on the ‘Log in’ button.
 > **Tip**
 >
 > This script should be used only in a closed environment which does not
-> have a network connexion. This script needs to have the username of the 
+> have a network connexion. This script needs to have the username of the
 > user that wants to change his password. (Ex: `./changePassword.sh "diagnostic@cases.lu"`).
 > The password needs to have at least a lower case, an upper case, a digit
 > and a special char, and at least 8 characters.  
 
-Begin a Diagnostic as a User
+Begin a Diagnosis as a User
 ============================
 
-![Main Page – Information about organisation](img/UG_Diagnostic_005.PNG)
+![Main Page – Information about organization](img/UG_Diagnostic_005.PNG)
 
 On the header, at the right side (**1.** on the picture), you can set,
 by clicking on the corresponding button, your language (**French** and
@@ -53,27 +53,27 @@ the application, you should see the admin menu access button near the
 red button use to disconnect.
 
 On the top of the screen but below the header, at left, you could see a
-button where you could just resume form an old diagnostic (**2.** on the
+button where you could just resume form an old diagnosis (**2.** on the
 picture).
 
 Just below, you have the navigation panel (**3.** on the picture), which
 we will describe just a little later. Same for the two buttons used to
-get the report or save the current Diagnostic (**4.** on the picture).
+get the report or save the current Diagnosis (**4.** on the picture).
 
 Finally, on the right of the screen, you have a free-text panel, where
 you should put some text which will be in the report (**5.** on the
 picture). Most of the time, the introduction is used to give the context
-of this diagnostic, and some info that could be useful when you read the
+of this diagnosis, and some info that could be useful when you read the
 report.
 
-![Main Page – Information about organisation with
+![Main Page – Information about organization with
 text](img/UG_Diagnostic_006.PNG)
 
 Then, to save your work, you should just hit ‘Record and continue’. In
 the navigation panel, the theme should be green to indicate that there
 is already some text.
 
-The summary, which is the last part of the Diagnostic, is a short
+The summary, which is the last part of the Diagnosis, is a short
 description of the most important points in it. The most important
 recommendations, what should be done next…
 
@@ -89,13 +89,13 @@ the current one. The green one is saved and contains text. By clicking
 on the main theme, question about it will appear, and then you can go on
 the questions by clicking on them.
 
-The red cross near the question is for delete the question for this
-diagnostic.
+The red cross near the question is to delete the question for this
+diagnosis.
 
 > **Warning**
 >
-> If you make a new one, the question will appeared again. If you want
-> to make it disappear for all diagnostic that you make, you should just
+> If you make a new one, the question will appear again. If you want
+> to make it disappear for all diagnosis that you make, you should just
 > go in the administration panel to delete it.
 
 ![Main Page – Navigation Panel](img/UG_Diagnostic_007.PNG)
@@ -106,8 +106,8 @@ question](img/UG_Diagnostic_008.PNG) button.
 > **Warning**
 >
 > Be careful, when you do add a question this way, it will be only last
-> during this diagnostic. If you want to add a question for all yours
-> diagnostic, you should add it in the administration part.
+> during this diagnosis. If you want to add a question for all your
+> diagnosis, you should add it in the administration part.
 
 ![Add Question](img/UG_Diagnostic_009.PNG)
 
@@ -170,8 +170,8 @@ the second one is about the Questions.
 
 ![Administration Panel – User](img/UG_Diagnostic_011.PNG)
 
-You can see all the mail addresses which are authorised to connect to
-the diagnostic. You can click on the ![+ Add a
+You can see all the mail addresses which are authorized to connect to
+the diagnosis. You can click on the ![+ Add a
 user](img/UG_Diagnostic_014.PNG) button, so you can add a user.
 
 ![Administration Panel – Add User](img/UG_Diagnostic_015.PNG)
@@ -180,7 +180,7 @@ You can put a mail address, choose if this account has access to this
 interface, and just add it by clicking the blue button ‘Add’.
 
 On the page where you can see all mail which is allowed to connect to
-the Diagnostic, if you click on them, you should be able to modify the
+the Diagnosis, if you click on them, you should be able to modify the
 address or choose whether it is admin or not.
 
 ![Administration Panel – Modify User](img/UG_Diagnostic_016.PNG)
@@ -204,7 +204,7 @@ Questions Tab
 ### Question Screen
 
 The second tab list all the default questions that will appear when you
-open a new Diagnostic.
+open a new Diagnosis.
 
 ![Administration Panel – Questions](img/UG_Diagnostic_017.PNG)
 
@@ -228,59 +228,154 @@ The first field is for the translation key used by the PO file. The
 built-in question is done by giving two underscores, the tag "question"
 and the number of the questions (For example, "\_\_question33").
 
+Then you have some fields in which you can translate your question
+and its help.
+
 > **Tip**
 >
-> If the question is not found in the PO file, then the translation key
-> will be displayed. So if you don’t intend to used these files, you can
-> just put your question directly in the translation key.
-
-There are no obligations about it.
+> If you do not put translations, the name of the question will
+> be the key you wrote above. You can choose to translate in one language
+> and not in the others. Writing some help is optional, it depends
+> on your needs.
 
 You can also choose the category of the question, and its upper
 threshold as if you were adding a question which is not definitive.
 
-The diagnostic uses the PO files for translations. On the language
-folder (\[*Path\_to\_Diagnostic*\]/languages), you will find the .po
-files (uncompressed) and the .mo files (compiled).
-
-You can modify manually .po files to add an entry with a text editor, or
-a PO file editor (Like [POEdit](https://poedit.net/)).
-
-![Edition of the PO File on Notepad++](img/UG_Diagnostic_019.PNG)
-
-If you want to add the translation in another language, you need to
-modify the other file (In this example, the language is fr\_FR).
-
-![French translation of the question in
-Notepad++](img/UG_Diagnostic_020.PNG)
-
-Then, you will find the question in every diagnostic you will do.
+Then, you will find the question in every diagnosis you will do.
 
 ![Question added](img/UG_Diagnostic_021.PNG)
 
 ### Change a Question
 
 By editing, you will get on a similar interface as if you were adding a
-question. You can change details on the same ways, as you will also need
-to change .po and .mo files.
+question. You can change details on the same ways.
 
 ![Administration Panel – Change Questions](img/UG_Diagnostic_022.PNG)
 
 ### Delete a Question
 
 Just click on the blue cross (![Cross](img/UG_Diagnostic_013.PNG)) to
-definitly delete the question.
+definitly delete the question, with a confirmation message.
 
-> **Warning**
+Categories Tab
+-------------
+
+### Categories Screen
+
+The second tab list all the default categories that will appear when you
+open a new Diagnosis.
+
+![Administration Panel – Categories](img/UG_Diagnostic_036.PNG)
+
+In the ‘Category’ column, you have all the categories that will appear.
+The translation key is mainly used to link categories through all languages.
+To finish, the ‘action’ column represents the possibility to edit
+the category (by clicking the pen (![Pen](img/UG_Diagnostic_012.PNG)))
+or delete it (by clicking the cross (![Cross](img/UG_Diagnostic_013.PNG))).
+
+### Add a category
+
+You can also add categories by clicking the red ![+ Add a
+category](img/UG_Diagnostic_038.PNG) button.
+
+![Administration Panel – Add Categories](img/UG_Diagnostic_037.PNG)
+
+The first field is for the translation key used by the PO file.
+The built-in category is done by giving two underscores, the tag "category"
+and the number of the category (For example, "\_\_category9").
+
+Then you have some fields in which you can translate your category.
+
+> **Tip**
 >
-> Be extremely careful, there is no confirmation message when you delete
-> a question here.
+> If you do not put translations, the name of the category will be the
+> key you wrote above. You can choose to translate in one language
+> and not in the others.
 
-Resume or finish a Diagnostic
+Then, when you add your category, you will find it in every diagnosis
+you will do, as long as it contains at least one question.
+
+![Category added](img/UG_Diagnostic_039.PNG)
+
+### Change a Category
+
+By editing, you will get on a similar interface as if you were adding
+a category. You can change details on the same ways.
+
+![Administration Panel – Change Categories](img/UG_Diagnostic_040.PNG)
+
+### Delete a category
+
+Just click on the blue cross (![Cross](img/UG_Diagnostic_013.PNG))
+to definitely delete the category, with a confirmation message.
+
+Languages Tab
+-------------
+
+### Languages Screen
+
+The first tab list all the default translations that exist when you
+open a new Diagnosis.
+
+![Administration Panel – Languages](img/UG_Diagnostic_041.PNG)
+
+In the ‘Translation’ column, there is the name of the translation keys,
+translated in the current language. You can modify it directly by changing
+its text and then click the green button ‘Change’ on the same line.
+You can also delete a translation by clicking the green button ‘Delete’.
+
+The third tab is the Reference translation and will be useful when
+you translate another language.
+
+### Add a Language
+
+Indeed, at the top right of the page, you can add another language
+by selecting its code country and clicking the green button ‘Add’.
+You can also delete a language selected by clicking the button ‘Delete’.
+
+![Administration Panel – Add Languages](img/UG_Diagnostic_043.PNG)
+
+When the new language is added, a new button is created at the top
+right corner of the page, with the flag of the language chosen.
+You can click on the button.
+
+![Administration Panel – Language added](img/UG_Diagnostic_044.PNG)
+
+As you can see, the translation tab is empty, and you can then fill in
+translations as you want to. The Reference translation may help you
+filling translations, as you can choose a language to support you.
+
+At the end of the page, you have two buttons which are ‘Add a translation’
+and ‘Change all translations’.
+
+![Administration Panel – Add-Delete translation](img/UG_Diagnostic_042.PNG)
+
+‘Change all translations’ allows you to change multiple translations so
+that you do not have to change one by one all the translations.
+‘Add a translation’ is for adding a translation.
+
+> **Tip**
+>
+> Normally you won't use this last feature, unless you want to change
+> the code of the application and you need another translation.
+
+### Add a Translation
+
+![Administration Panel – Add Translations](img/UG_Diagnostic_045.PNG)
+
+The first field is for the translation key used by the PO file. You can put the key you need to translate.
+
+Then you have some fields in which you can translate your translation.
+
+> **Tip**
+>
+> If you do not put translations, the name of the translation will be empty.
+
+Resume or finish a Diagnosis
 =============================
 
 Before your session ends for security reason, or if you want to resume
-your diagnostic later, it is recommended to export often your work, by
+your diagnosis later, it is recommended to export often your work, by
 hitting the yellow button below the navigation panel.
 
 ![Exported file](img/UG_Diagnostic_023.PNG)
@@ -300,7 +395,7 @@ where
 
 -   s = second.
 
-There are two ways to load this diagnostic. The first one, at the
+There are two ways to load this diagnosis. The first one, at the
 connexion screen, doesn’t need to have an account to go on it.
 
 ![Connexion Screen](img/UG_Diagnostic_001.PNG)
@@ -310,11 +405,11 @@ mostly used to have another quick way to show an overview of the report.
 The other way is on the main page that you access just after getting
 connected.
 
-![Resume a Diagnostic](img/UG_Diagnostic_024.PNG)
+![Resume a Diagnosis](img/UG_Diagnostic_024.PNG)
 
 Just on the top of the navigation panel, you can load the file that you
 have downloaded, or that someone gives to you to resume or modify the
-Diagnostic.
+Diagnosis.
 
 Report
 ======
@@ -331,7 +426,7 @@ report as a ‘.docx’.
 
 The first graph that you can see is the maturity by domains with the
 risk cartography and more precisely with the tab on the right. You will
-also find the recommendation tab which briefly summarises the
+also find the recommendation tab which briefly summarizes the
 recommendations, their gravity and their current and target maturity.
 
 ![Recommendation Tab](img/UG_Diagnostic_027.PNG)
@@ -342,7 +437,7 @@ the target level.
 ![Current and Target Maturity Level](img/UG_Diagnostic_028.PNG)
 
 And you will also find the proportion of the category on the whole
-Diagnostic.
+Diagnosis.
 
 ![Proportion category](img/UG_Diagnostic_029.PNG)
 
@@ -355,9 +450,9 @@ that, click on the yellow button ‘Download deliverable.’
 ![Download deliverable](img/UG_Diagnostic_030.PNG)
 
 You will need to put a Document Name, the company which concerned by the
-Diagnostic, the version of the document (If there are multiple
-Diagnostics, or if you want to correct it…), a choice if it’s a draft or
-a final version of the Diagnostic, the classification of the document
+Diagnosis, the version of the document (If there are multiple
+Diagnoses, or if you want to correct it…), a choice if it’s a draft or
+a final version of the Diagnosis, the classification of the document
 (who can read it or have it, it’s a free text, so it can be chosen with
 TLP, or a classification on your own), and finally the name of the
 consultant and the name of the client. Most of that data will be found
@@ -367,13 +462,13 @@ Name*\]\_Date.docx.
 ![Report Downloaded](img/UG_Diagnostic_031.PNG)
 
 In the document, you can find on the Part 1.1 the free text in
-‘Information about organisation’ and on 2.1 the free text in ‘Summary of
+‘Information about organization’ and on 2.1 the free text in ‘Summary of
 evaluation’.
 
 ![Report Downloaded Part 2](img/UG_Diagnostic_032.PNG)
 
 Graphics and tabs which were on the report screen could mostly be found
-on in the document. a .do
+on in the document. a .docx
 
 ![Report Downloaded Part 3](img/UG_Diagnostic_033.PNG)
 
@@ -385,7 +480,7 @@ Modify the template report
 
 The template report is quite simple to understand. It can be found in :
 \[*PATH\_TO\_DIAGNOSTIC*\]/data/resources. There is some tags which
-corresponding to some fields in the diagnostic. You can find a complete
+corresponding to some fields in the diagnosis. You can find a complete
 list just below. Concerning the charts, some dummy pictures are in the
 document. Their name are "*image9.png*", "*image5.png*" and
 "*image10.png*".
@@ -398,29 +493,20 @@ And here is the dummy for the pie chart :
 
 As you can also see, tags which can be modified in their order, or that could be just delete are under the form "${TAGS}". A complete list of the different existing tags can be found just below.
 
-* \$\{CATEG\_\_PERCENT\_X\} (Where X is a number under 1 to 8) : The current percentage get in the category number X (Get automatically)
-* \$\{CATEG\_\_PERCENT\_TARGET\_X\} (Where X is a number under 1 to 8) : The aimed percentage get in the category number X (Get automatically)
-* \$\{CLASSIFICATION\} : Indication to know where and how the document could be spread (Field get just before download the report)
-* \$\{CLIENT\} : Name of the person who represents the company which has been the subject of the diagnostic (Field get just before download the report)
-* \$\{COMPANY\} : Name of the company which has been the subject of the diagnostic (Field get just before download the report)
-* \$\{CONSULTANT\} : Name of the security consultant or the company which has done the Diagnostic (Field get just before download the report)
-* \$\{DATE\} : The date when is generated the report (Done automatically, depending of the server date)
-* \$\{DOCUMENT\} : Name of the document (Field get just before download the report)Get automatically
-* \$\{EVALUATION\_SYNTHESYS\} : Some important conclusions of the diagnostic, or important information to underline (Field get on the last free-text field, "Summary of evaluation")
-* \$\{ORGANIZATION\_INFORMATION\} : Some information that is general on the company (Field get on the first free-text field, "Information about organisation")
-* \$\{PRISE\_NOTE\_Y\_X\} (Where X is a number under 1 to 8 and Y is a number under 1 to 4) : Contain a cross in the maturity Y for the current question in the category X (table of text)
-* \$\{PRISE\_NOTE\_Y\_X\} (Where X is a number under 1 to 8 and Y is a number under 1 to 2) : Contain a cross in the aimed maturity Y for the current question in the category X (table of text)
-* \$\{PRISE\_NOTE\_CATEG\_X\} (Where X is a number under 1 to 8) : The name of the category/security domain field number X (Get automatically)
-* \$\{PRISE\_NOTE\_COLLECT\_X\} (Where X is a number under 1 to 8) : The list of remarks corresponding to the question in the category number X (Recommandation field in a question, table of text)
-* \$\{PRISE\_NOTE\_RECOMM\_X\} (Where X is a number under 1 to 8) : The list of recommendation corresponding to the question in the category number X (Remarks field in a question, table of text)
-* \$\{PRISE\_NOTE\_TO\_COLLECT\_X\} (Where X is a number under 1 to 8) : The list of questions in the category number X (Get automatically, table of text)
-* \$\{RECOMM\_CURR\_MAT\} : The current maturity, set before the recommendation is implemented (Field get when you choose actual maturity of any question, table of text)
-* \$\{RECOMM\_DOM\} : The category that concerns the recommendation (Get automatically, table of text, depending on where recommendations are found)
-* \$\{RECOMM\_GRAV\} : The gravity that concerns the recommendation (Field get when you choose the gravity, table of text)
-* \$\{RECOMM\_NUM\} : The position numbers of all the recommendations set (Get automatically, table of numbers, depending on the number of recommendations)
-* \$\{RECOMM\_TARG\_MAT\} : The targeted maturity, set after the recommendation is implemented (Field get when you choose aimed maturity of any question, table of text)
-* \$\{RECOMM\_TEXT\} : The text all recommendations set (Field get when you put a recommendation to a question, table of text)
-* \$\{STATE\} : State of the document, to know if it’s still a draft, or a final version (Field get just before download the report)
-* \$\{VERSION\} : Versioning of the document (Field get just before download the report)
-
-
+* \$\{CATEG\_\_PERCENT} : The current percentage got in the categories (Got automatically)
+* \$\{CATEG\_\_PERCENT\_TARG} : The aimed percentage got in the categories (Got automatically)
+* \$\{CLASSIFICATION} : Indication to know where and how the document could be spread (Field got just before download the report)
+* \$\{CLIENT} : Name of the person who represents the company which has been the subject of the diagnosis (Field got just before download the report)
+* \$\{COMPANY} : Name of the company which has been the subject of the diagnosis (Field got just before download the report)
+* \$\{CONSULTANT} : Name of the security consultant or the company which has done the Diagnosis (Field got just before download the report)
+* \$\{DATE} : The date when is generated the report (Done automatically, depending of the server date)
+* \$\{DOCUMENT} : Name of the document (Field got just before download the report)
+* \$\{EVALUATION\_SYNTHESYS} : Some important conclusions of the diagnosis, or important information to underline (Field got on the last free-text field, "Summary of evaluation")
+* \$\{LEGEND\_PIE} : The legend of the pie chart which contains all the categories (Got automatically)
+* \$\{NOTES\_TABLE} : The table which contains all the notes, maturity, recommendation of each questions (Got automatically)
+* \$\{ORGANIZATION\_INFORMATION} : Some information that are general on the company (Field got on the first free-text field, "Information about organization")
+* \$\{PRISE\_NOTE_CATEG} : The name of the categories/securities domain field (Got automatically)
+* \$\{RECOMMENDATION\_TABLE} : The recommendation table (Got automatically)
+* \$\{STATE} : State of the document, to know if it's still a draft, or a final version (Field got just before download the report)
+* \$\{TYPE} : State of the document, to know if it's still a draft, or a final version (Field got just before download the report, other font text)
+* \$\{VERSION} : Versioning of the document (Field got just before download the report)

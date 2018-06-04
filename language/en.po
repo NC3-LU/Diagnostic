@@ -36,7 +36,7 @@ msgid "__category8"
 msgstr "Incident and business continuity "
 
 msgid "__question1"
-msgstr "test What security mechanisms already exist (other than technical mechanisms)"
+msgstr "What security mechanisms already exist (other than technical mechanisms)"
 
 msgid "__question1help"
 msgstr "Is there:<br><ul><li>a security policy?</li><li>a user or administrator charter?</li><li>procedures (e.g. back-up)?</li><li>in-house instructions?</li><li>etc</li></ul>"
@@ -513,7 +513,7 @@ msgid "__target"
 msgstr "Target"
 
 msgid "__organization_information"
-msgstr "Information about organisation"
+msgstr "Information about organization"
 
 msgid "__evaluation_synthesis"
 msgstr "Summary of evaluation"

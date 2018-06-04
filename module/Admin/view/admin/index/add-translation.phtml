@@ -1,15 +1,15 @@
 <?php use Zend\Form\Element;
 
-$title = $this->translate('__language');
+$title = $this->translate('__translation');
 $this->headTitle($title);
 
-$this->form->setAttribute('action', $this->url('admin', ['action' => 'add-language']));
+$this->form->setAttribute('action', $this->url('admin', ['action' => 'add-translation']));
 $this->form->prepare(); ?>
 
 <div class="row">
     <div class="col-lg-3 text-center"></div>
     <div class="col-lg-6 text-left">
-        <h2><?= $this->translate('__add_a_language') ?></h2>
+        <h2><?= $this->translate('__add_a_translation') ?></h2>
         <br />
 
         <?= $this->form()->openTag($form) ?>

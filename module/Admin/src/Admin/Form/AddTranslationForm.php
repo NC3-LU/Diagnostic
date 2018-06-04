@@ -4,12 +4,12 @@ namespace Admin\Form;
 use Zend\Form\Form;
 
 /**
- * Add Language Form
+ * Add Translation Form
  *
  * @package Diagnostic\Form
  * @author Romain DESJARDINS
  */
-class AddLanguageForm extends Form
+class AddTranslationForm extends Form
 {
     /**
      * Init

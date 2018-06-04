@@ -5,12 +5,12 @@ use Zend\InputFilter\InputFilter;
 use Zend\Validator\Hostname;
 
 /**
- * Add language Form Filter
+ * Add translation Form Filter
  *
  * @package Admin\Form
  * @author Romain DESJARDINS
  */
-class AddLanguageFormFilter extends InputFilter
+class AddTranslationFormFilter extends InputFilter
 {
     public function __construct($adapter)
     {

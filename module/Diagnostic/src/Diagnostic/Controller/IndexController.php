@@ -453,7 +453,7 @@ class IndexController extends AbstractController
 
         //populate
         $diagnosticEntity = $this->get('diagnosticEntity');
-        $binding = (array_key_exists($id, $result)) ? $result[$id] : ['maturity' => 3, 'maturityTarget' => 3, 'gravity' => 2];
+        $binding = (array_key_exists($id, $result)) ? $result[$id] : ['maturity' => 2, 'maturityTarget' => 2, 'gravity' => 2];
         $diagnosticEntity->exchangeArray($binding);
         $form->bind($diagnosticEntity);
 
@@ -765,7 +765,7 @@ class IndexController extends AbstractController
         $iv = $config['iv_key'];
         $cryptExport = openssl_encrypt($export,'AES-256-CBC', $encryptionKey, OPENSSL_RAW_DATA, $iv);
         //create file
-        $filename = 'Diagnostic_' . date('YmdHis') . '.cases';
+        $filename = 'data_' . date('YmdHis') . '.cases';
         !$handle = fopen($filename, 'w');
         fwrite($handle, $cryptExport);
         fclose($handle);

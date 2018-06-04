@@ -27,7 +27,7 @@ class IndexController extends AbstractController
     protected $adminQuestionForm;
     protected $adminCategoryForm;
     protected $adminLanguageForm;
-    protected $adminAddLanguageForm;
+    protected $adminAddTranslationForm;
 
     /**
      * Index
@@ -621,18 +621,18 @@ class IndexController extends AbstractController
     }
 
     /**
-     * Add language
+     * Add translation
      *
      * @return ViewModel
      */
-    public function addLanguageAction()
+    public function addTranslationAction()
     {
         $location_lang = '/var/www/diagnostic/language/';
 
         // Session value to know if the translation key already exist
         $_SESSION['erreur_exist'] = 0;
 
-        $form = $this->get('adminAddLanguageForm');
+        $form = $this->get('adminAddTranslationForm');
 
         //form is post and valid
         $request = $this->getRequest();

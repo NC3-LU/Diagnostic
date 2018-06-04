@@ -2,17 +2,17 @@
 
 namespace Admin\Form;
 
-use Admin\InputFilter\AddLanguageFormFilter;
+use Admin\InputFilter\AddTranslationFormFilter;
 use Zend\ServiceManager\FactoryInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
 
 /**
- * Add Language Form Factory
+ * Add Translation Form Factory
  *
  * @package Admin\Factory
  * @author Romain DESJARDINS
  */
-class AddLanguageFormFactory implements FactoryInterface
+class AddTranslationFormFactory implements FactoryInterface
 {
     /**
      * Create service
@@ -22,10 +22,10 @@ class AddLanguageFormFactory implements FactoryInterface
      */
     public function createService(ServiceLocatorInterface $serviceLocator)
     {
-        $form = new AddLanguageForm();
+        $form = new AddTranslationForm();
 
-        $addLanguageFormFilter = new AddLanguageFormFilter($serviceLocator->getServiceLocator()->get('Zend\Db\Adapter\Adapter'));
-        $form->setInputFilter($addLanguageFormFilter);
+        $addTranslationFormFilter = new AddTranslationFormFilter($serviceLocator->getServiceLocator()->get('Zend\Db\Adapter\Adapter'));
+        $form->setInputFilter($addTranslationFormFilter);
 
         return $form;
     }
