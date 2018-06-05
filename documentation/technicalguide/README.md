@@ -124,3 +124,11 @@ virtual host accordingly and don’t forget to disable default web
 application by using :
 
     sudo a2dissite 000-default.conf
+    
+Help us
+------------
+
+### Access the test branch
+
+We have a test branch where we are testing new features. If you want,
+you can help us creating these new features by cloning the test branch.
