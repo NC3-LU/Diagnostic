@@ -1,18 +1,18 @@
 #! /usr/bin/env bash
 
-PATH_TO_DIAGNOSTIC='/var/www/diagnostic'				#The path of the diagnostic in your VM
-GITHUB_LINK='https://github.com/CASES-LU/diagnostic.git'		#The Github path where you can find the diagnostic
+PATH_TO_DIAGNOSTIC='/var/www/diagnostic'					#The path of the diagnostic in your VM
+GITHUB_LINK='https://github.com/CASES-LU/diagnostic.git'			#The Github path where you can find the diagnostic
 
-# Variables							
-DB_NAME='diagnostic' 							#The name of the Database
-DB_HOST='localhost'							#The IP Address where is located 
-DBUSER_DIAGNOSTIC='diagnostic'						#The DB user that will be used for the diagnostic
-DBPASSWORD_DIAGNOSTIC="$(openssl rand -hex 12)"				#The password of the user diagnostic of the DB; Random by default
-DBUSER_ADMIN='root'							#The administrator login of the DB
-DBPASSWORD_ADMIN="$(openssl rand -hex 12)"				#The password of the administrator of the DB; Random by default
-DEFAULT_LANGUAGE='en'							#The default and main language of the diagnostic 
-IP_ADDRESS='10.0.0.102'							#The IP address where you will find the diagnostic. 
-DISABLE_MXCHECK=true							#If the VM is connected on internet (which is depreciate), it could check the validity of the mail used. If it set to false, no check are done.
+# Variables
+DB_NAME='diagnostic' 								#The name of the Database
+DB_HOST='localhost'								#The IP Address where is located
+DBUSER_DIAGNOSTIC='diagnostic'							#The DB user that will be used for the diagnostic
+DBPASSWORD_DIAGNOSTIC="$(openssl rand -hex 32)"					#The password of the user diagnostic of the DB; Random by default
+DBUSER_ADMIN='root'								#The administrator login of the DB
+DBPASSWORD_ADMIN="$(openssl rand -hex 32)"					#The password of the administrator of the DB; Random by default
+DEFAULT_LANGUAGE='en'								#The default and main language of the diagnostic
+IP_ADDRESS='10.0.0.102'								#The IP address where you will find the diagnostic
+DISABLE_MXCHECK=true								#If the VM is connected on internet (which is depreciate), it could check the validity of the mail used. If it set to false, no check are done.
 
 echo "\033[93m###############################################################################\\033[0m"
 echo "\033[93m#                             Diagnostic installer                            #\\033[0m"
@@ -29,7 +29,11 @@ echo "\033[32mcurl installation done\\033[0m"
 
 echo "\033[93mgettext installation\\033[0m"
 sudo apt-get -qq install gettext > /dev/null 2>&1
-echo "\033[32mcurl installation done\\033[0m"
+echo "\033[32mgettext installation done\\033[0m"
+
+echo "\033[93mopenssl installation\\033[0m"
+sudo apt-get -qq install openssl > /dev/null 2>&1
+echo "\033[32mopenssl installation done\\033[0m"
 
 echo "\033[93mapache installation\\033[0m"
 sudo apt-get -qq install apache2 > /dev/null 2>&1
@@ -113,6 +117,7 @@ return [
         'password' => '$DBPASSWORD_DIAGNOSTIC',
     ],
     'encryption_key' => '*****',
+    'iv_key' => '****************',
     'mail' => 'info@cases.lu',
     'mail_name' => 'Cases',
     'domain' => 'diagnostic.cases.lu',
@@ -149,15 +154,15 @@ sudo chmod -R 700 $PATH_TO_DIAGNOSTIC
 #network configuration
 echo "\033[93mnetwork configuration\\033[0m"
 sudo apt-get -qq install net-tools > /dev/null 2>&1
-sudo cat > /etc/network/01-netcfg.yaml <<EOF
+sudo cat > /etc/netplan/01-netcfg.yaml <<EOF
 network:
-	version: 2
-	renderer: networkd
-	ethernets:
-	enp0s3:
-		dhcp4: no
-		addresses: [$IP_ADDRESS/24]
-		gateway4: 10.0.0.1
+ version: 2
+ renderer: networkd
+ ethernets:
+  enp0s3:
+   dhcp4: no
+   addresses: [$IP_ADDRESS/24]
+   gateway4: 10.0.0.1
 EOF
 echo "\033[32mnetworkconfiguration done\\033[0m"
 
