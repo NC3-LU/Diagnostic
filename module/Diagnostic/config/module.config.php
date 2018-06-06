@@ -50,6 +50,7 @@ return [
             'Diagnostic\Model\DiagnosticEntity' => 'Diagnostic\Model\DiagnosticEntity',
             'Diagnostic\Model\InformationEntity' => 'Diagnostic\Model\InformationEntity',
             'Diagnostic\Model\QuestionEntity' => 'Diagnostic\Model\QuestionEntity',
+	    'Diagnostic\Model\CategoryEntity' => 'Diagnostic\Model\CategoryEntity',
             'Diagnostic\Model\UserEntity' => 'Diagnostic\Model\UserEntity',
             'Diagnostic\Model\UserTokenEntity' => 'Diagnostic\Model\UserTokenEntity',
             'Diagnostic\Service\Mime\Part' => 'Zend\Mime\Part',
@@ -66,6 +67,8 @@ return [
             'translator' => 'Zend\Mvc\Service\TranslatorServiceFactory',
             'navigation' => 'Zend\Navigation\Service\DefaultNavigationFactory',
             'Diagnostic\Service\QuestionService' => 'Diagnostic\Service\QuestionServiceFactory',
+	    'Diagnostic\Service\CategoryService' => 'Diagnostic\Service\CategoryServiceFactory',
+	    'Diagnostic\Service\LanguageService' => 'Diagnostic\Service\LanguageServiceFactory',
             'Diagnostic\Service\CalculService' => 'Diagnostic\Service\CalculServiceFactory',
             'Diagnostic\Service\MailService' => 'Diagnostic\Service\MailServiceFactory',
             'Diagnostic\Service\UserService' => 'Diagnostic\Service\UserServiceFactory',
@@ -73,6 +76,7 @@ return [
         ],
         'shared' => [
             'Diagnostic\Model\QuestionEntity' => false,
+	    'Diagnostic\Model\CategoryEntity' => false,
         ],
     ],
     'form_elements' => [
@@ -112,7 +116,7 @@ return [
     ],
 
     'translator' => [
-        'locale' => '%%LANG%%',
+        'locale' => 'en',
         'translation_file_patterns' => [
             [
                 'type' => 'gettext',
@@ -134,6 +138,16 @@ return [
                 'route' => 'admin',
                 'action' => 'questions',
             ],
+	    [
+                'label' => '__categories',
+                'route' => 'admin',
+                'action' => 'categories',
+            ],
+	    /*[
+                'label' => '__languages',
+                'route' => 'admin',
+                'action' => 'languages',
+            ],*/
         ],
     ],
 ];

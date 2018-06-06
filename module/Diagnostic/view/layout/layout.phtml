@@ -10,7 +10,7 @@
         ->appendHttpEquiv('X-UA-Compatible', 'IE=edge')
     ?>
 
-    <!-- Le styles -->
+    <!-- CSS -->
     <?php echo $this->headLink(['rel' => 'shortcut icon', 'type' => 'image/vnd.microsoft.icon', 'href' => $this->basePath() . '/img/favicon.png'])
         ->prependStylesheet($this->basePath('css/style.css'))
         ->prependStylesheet($this->basePath('css/bootstrap-theme.min.css'))
@@ -26,28 +26,36 @@
 
 </head>
 <body>
-
 <div id="wrapper">
     <div id="header">
         <div class="top-line">&nbsp;</div>
         <div class="top">
             <div class="row">
-                <div class="col-lg-1"></div>
+                <div class="col-lg-1"></div> <!-- // Diagnostic logo instead of Cases logo -->
                 <div class="col-lg-3"><a href="http://www.cases.lu"><img
-                                src="https://www.cases.lu/templates/frontoffice/casesv3/images/logo-web-cases.lu.png"
-                                border="0"></a></div>
+                                src="/img/logo_diagnostic.jpg"
+                                border="0"
+				width="220"
+				height="80"></a></div>
                 <div class="col-lg-4 text-center"><h1>DIAGNOSTIC CASES</h1></div>
                 <div class="col-lg-3 text-right">
                     <br>
                     <?php
                     $locale = $this->plugin('translate')->getTranslator()->getLocale();
-                    if ($this->plugin('translate')->getTranslator()->getLocale() == 'en_EN') {
-                        $frClass = '';
-                        $enClass = 'btn-info';
-                    } else {
-                        $frClass = 'btn-info';
-                        $enClass = '';
-                    }
+                    $file = fopen("/var/www/diagnostic/language/languages.txt", "r");
+		    $i = 1;
+		    $_SESSION['nb_lang'] = 0;
+		    while (!feof($file)) {
+			$temp = fgets($file, 4096);
+			$lang[$i] = 'test';
+		        if ($locale.PHP_EOL == $temp) {
+			    $lang[$i] = 'btn-info';
+                        }
+		        $i++;
+			$_SESSION['nb_lang']++;
+		    }
+		    fclose($file);
+
                     ?>
                     <table width="100%">
                         <tr>
@@ -74,26 +82,29 @@
                                     <?php
                                 }
                                 ?>
-                            </td>
-                            <td width="75">
-                                <a href="<?php echo $this->url('diagnostic', ['action' => 'language', 'id' => 1]); ?>">
-                                    <button type="submit" name="language" value="fr"
-                                            class="btn-default btn-blue btn-sm <?php echo $frClass ?>"><span
-                                                class="text-uppercase"><span class="flag-icon flag-icon-fr"></span>&nbsp;&nbsp;fr</span>
-                                    </button>
-                                </a>
-                            </td>
-                            <td width="75">
-                                <a href="<?php echo $this->url('diagnostic', ['action' => 'language', 'id' => 2]); ?>">
-                                    <button type="submit" name="language" value="en"
-                                            class="btn-default btn-blue btn-sm <?php echo $enClass ?>"><span
-                                                class="text-uppercase"><span class="flag-icon flag-icon-gb"></span>&nbsp;&nbsp;en</span>
-                                    </button>
-                                </a>
-                            </td>
+			    </td>
+
+			    <?php
+			    $file = fopen("/var/www/diagnostic/language/languages.txt", "r");
+			    for ($i=1; $i<$_SESSION['nb_lang']; $i++) {
+			        $temp = fgets($file, 4096);
+			    ?>
+                                <td width='75'>
+                                    <a href="<?php echo $this->url('diagnostic', ['action' => 'language', 'id' => $i]); ?>">
+                                        <button type='submit' name='language' value=<?= $temp ?>
+                                            class='btn-default btn-blue btn-sm <?php echo $lang[$i] ?>'><span
+                                            class='text-uppercase'><span class='flag-icon flag-icon-<?php echo $temp ?>'></span>&nbsp;&nbsp;<?= $temp ?></span>
+                                        </button>
+                                    </a>
+                                </td>
+			    <?php
+			    }
+			    fclose($file);
+			    ?>
                         </tr>
                     </table>
-                </div>
+
+            </div>
                 <div class="col-lg-1"></div>
             </div>
         </div>
@@ -166,4 +177,5 @@
     </div>
 </div>
 </body>
+
 </html>

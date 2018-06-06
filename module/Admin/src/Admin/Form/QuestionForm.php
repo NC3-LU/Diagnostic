@@ -43,7 +43,7 @@ class QuestionForm extends Form
     {
 
         $threshold = [];
-        for ($i = 0; $i <= 6; $i++) {
+        for ($i = 1; $i <= 6; $i++) {
             $threshold[$i * 5] = $i * 5;
         }
 

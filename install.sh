@@ -53,10 +53,10 @@ function main() {
     # Setting default language
     case "${1}" in
         [fF][rR]|[fF])
-            lang="fr_FR"
+            lang="fr"
             ;;
         *)
-            lang="en_EN"
+            lang="en"
             ;;
     esac
 

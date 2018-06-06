@@ -99,7 +99,7 @@ $currentCategoryId = (array_key_exists($id, $questions)) ? $questions[$id]->getC
                                         }
                                         $titleQuestion = $this->translate($this->escapeHtml($question->getTranslationKey()));
                                         $titleHelp = (is_null($question->getTranslationKeyHelp())) ? '' : $this->translate($this->escapeHtml($question->getTranslationKeyHelp()));
-                                    } else {
+					} else {
                                         $linkColor = 'dimgrey';
                                         if (array_key_exists($question->getId(), $result)) {
                                             if (strlen($result[$question->getId()]['notes'])) {
@@ -199,7 +199,7 @@ $currentCategoryId = (array_key_exists($id, $questions)) ? $questions[$id]->getC
             </tr>
             <tr>
                 <td><label><?= $this->translate($form->get('gravity')->getLabel()) ?></label></td>
-                <td><?= $this->formRadio($form->get('gravity')) ?></td>
+                <td><font color="red" size="4px"><?= $this->formRadio($form->get('gravity')) ?></font></td>
             </tr>
         </table>
 

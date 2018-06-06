@@ -1,0 +1,44 @@
+<?php
+$title = $this->translate('__categories');
+$this->headTitle($title);
+$_SESSION['nb_categories'] = 1; // Count number of category
+?>
+
+<div class="row">
+    <div class="col-lg-2"></div>
+    <div class="col-lg-8 text-left">
+        <h2><?= $this->translate('__categories') ?></h2>
+        <br/>
+        <?php
+        $urlAdd = $this->url('admin', ['action' => 'add-category']);
+        ?>
+        <center>
+            <a href="<?= $urlAdd ?>" style="color: #DF1D31; font-weight: bold;"><span
+                        class="glyphicon glyphicon-plus-sign"></span> <?= $this->translate('__add_a_category') ?></a>
+        </center>
+        <br/>
+        <table class="table">
+            <tr>
+                <th style="text-align: center"><?= $this->translate('__category'); ?></th>
+                <th><?= $this->translate('__translation_key'); ?></th>
+                <th style="text-align: center;"><?= $this->translate('__action'); ?></th>
+            </tr>
+            <?php foreach ($categories as $category) :
+		$_SESSION['nb_categories']++;
+		$urlModify = $this->url('admin', ['action' => 'modify-category', 'id' => $category->getId()]);
+                $urlDelete = $this->url('admin', ['action' => 'delete-category', 'id' => $category->getId()]);
+                ?>
+                <tr>
+                    <td align="center"><?= $this->translate($category->getTranslationKey()); ?></td>
+                    <td><?= $category->getTranslationKey(); ?></td>
+                    <td align="center">
+                        <a href="<?= $urlModify ?>"><span class="glyphicon glyphicon-pencil"></span></a>
+                        &nbsp;&nbsp;
+                        <a href="<?= $urlDelete ?>"><span class="glyphicon glyphicon-remove"></span></a>
+                    </td>
+                </tr>
+		<?php
+            endforeach; ?>
+        </table>
+    </div>
+</div>

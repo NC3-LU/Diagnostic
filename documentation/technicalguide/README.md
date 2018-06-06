@@ -13,15 +13,15 @@ Components
 
 ### PHP
 
-Install **php7.0** and following extensions :
+Install **php7.1** and following extensions :
 
-    sudo apt-get install libapache2-mod-php7.0 php7.0-mcrypt php7.0-mysql php7.0-zip php-xml
+    sudo apt-get install libapache2-mod-php7.1 php7.1-mcrypt php7.1-mysql php7.1-zip php-xml
 
 ### APACHE
 
 Install **apache2** and enable following modules :
 
-    sudo apt-get insall apache2
+    sudo apt-get install apache2
     sudo a2enmod rewrite
 
 ### COMPOSER
@@ -62,7 +62,7 @@ french and english. Find the **%%LANG%%** field in
 
     /ROOT_DIRECTORY/module/Diagnostic/config/module.config.php
 
-and replace by either **"en\_EN"** or **"fr\_FR"**
+and replace by either **"en"** or **"fr"**
 
 *\_*
 
