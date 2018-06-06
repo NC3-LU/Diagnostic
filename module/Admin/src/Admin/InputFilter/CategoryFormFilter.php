@@ -5,7 +5,7 @@ use Zend\InputFilter\InputFilter;
 use Zend\Validator\Hostname;
 
 /**
- * Question Form Filter
+ * Category Form Filter
  *
  * @package Admin\Form
  * @author Romain DESJARDINS

@@ -540,7 +540,7 @@ msgid "__delete_question"
 msgstr "Do you really want to delete this question ?"
 
 msgid "__delete_category"
-msgstr "Do you really want to delete this category ?"
+msgstr "Do you really want to delete this category ? To refresh the category view, you have to reconnect."
 
 msgid "__delete_trans"
 msgstr "Do you really want to delete this translation ?"
