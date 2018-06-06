@@ -453,7 +453,7 @@ class IndexController extends AbstractController
 
         //populate
         $diagnosticEntity = $this->get('diagnosticEntity');
-        $binding = (array_key_exists($id, $result)) ? $result[$id] : ['maturity' => 3, 'maturityTarget' => 3, 'gravity' => 2];
+        $binding = (array_key_exists($id, $result)) ? $result[$id] : ['maturity' => 2, 'maturityTarget' => 2, 'gravity' => 2];
         $diagnosticEntity->exchangeArray($binding);
         $form->bind($diagnosticEntity);
 
