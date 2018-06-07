@@ -15,13 +15,15 @@ class IndexControllerFactory extends AbstractControllerFactory
         'config' => 'Config',
         'translator' => 'translator',
         'questionService' => 'Diagnostic\Service\QuestionService',
+	'categoryService' => 'Diagnostic\Service\CategoryService',
         'userService' => 'Diagnostic\Service\UserService',
         'userTokenService' => 'Diagnostic\Service\UserTokenService',
         'mailService' => 'Diagnostic\Service\MailService',
         'calculService' => 'Diagnostic\Service\CalculService',
         'diagnosticEntity' => 'Diagnostic\Model\DiagnosticEntity',
         'informationEntity' => 'Diagnostic\Model\InformationEntity',
-        'questionEntity' => 'Diagnostic\Model\QuestionEntity'
+        'questionEntity' => 'Diagnostic\Model\QuestionEntity',
+	'categoryEntity' => 'Diagnostic\Model\CategoryEntity'
     ];
 
     protected $forms = [

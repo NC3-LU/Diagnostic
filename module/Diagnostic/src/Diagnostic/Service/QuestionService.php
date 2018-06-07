@@ -4,6 +4,7 @@ namespace Diagnostic\Service;
 use Zend\Crypt\BlockCipher;
 use Zend\Session\Container;
 
+
 /**
  * QuestionService
  *
@@ -96,11 +97,17 @@ class QuestionService extends AbstractService
         //encryption key
         $config = $this->get('config');
         $encryptionKey = $config['encryption_key'];
-
-        //encrypt result
-        $blockCipher = BlockCipher::factory('mcrypt', ['algo' => 'aes']);
-        $blockCipher->setKey($encryptionKey);
-        $json = $blockCipher->decrypt($json);
+		$iv = $config['iv_key'];
+		//encrypt result
+		$temp = openssl_decrypt($json,'AES-256-CBC', $encryptionKey, OPENSSL_RAW_DATA, $iv);
+        if($temp==false){
+			$blockCipher = BlockCipher::factory('mcrypt', ['algo' => 'aes']);
+            $blockCipher->setKey($encryptionKey);
+            $json = $blockCipher->decrypt($json);
+        }
+		else {
+			$json = openssl_decrypt($json,'AES-256-CBC', $encryptionKey, OPENSSL_RAW_DATA, $iv);
+        }
 
         $data = (array)json_decode($json);
 

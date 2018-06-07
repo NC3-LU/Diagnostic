@@ -3,7 +3,7 @@
         "ssh_name": "diagnostic",
         "ssh_pass": "diagnostic",
         "hostname": "diagnostic",
-        "vm_name": "VM_Diagnostic",
+        "vm_name": "Diagnostic_demo",
         "GITHUB_AUTH_TOKEN": "{{env `GITHUB_AUTH_TOKEN`}}",
         "disk_size": "10000"
     },
@@ -15,11 +15,16 @@
         "vm_name": "{{user `vm_name`}}",
 
         "vboxmanage": [
-            ["modifyvm", "{{.Name}}", "--vram", "32"],
-			["modifyvm", "{{.Name}}", "--nic1", "nat"],
-			["modifyvm", "{{.Name}}", "--nic2", "hostonly"],
-			["modifyvm", "{{.Name}}", "--hostonlyadapter2", "YourHostOnlyAdapter"]
+            ["modifyvm", "{{.Name}}", "--vram", "64"],
+		    ["modifyvm", "{{.Name}}", "--memory", "1024"],
+			["modifyvm", "{{.Name}}", "--cpus", "2"],	
+			["modifyvm", "{{.Name}}", "--nic1", "nat"]
         ],
+		
+		"vboxmanage_post": [
+			["modifyvm", "{{.Name}}", "--nic1","hostonly"], 
+			["modifyvm", "{{.Name}}", "--hostonlyadapter1", "[MY_HOST_ONLY_ADAPTER]"]
+		],
 
         "disk_size": "{{user `disk_size`}}",
 
@@ -37,6 +42,7 @@
         "ssh_pty" : "true",
 
         "shutdown_command": "echo {{user `ssh_pass`}} | sudo -S shutdown -P now",
+		"post_shutdown_delay": "2m",
 
         "boot_command" : [
             "<esc><esc><enter><wait>",
@@ -47,7 +53,6 @@
             "fb=false debconf/frontend=noninteractive ",
             "keyboard-configuration/modelcode=SKIP keyboard-configuration/layout=USA ",
             "keyboard-configuration/variant=USA console-setup/ask_detect=false ",
-			"netcfg/choose_interface=enp0s3 ",
             "initrd=/install/initrd.gz -- <enter>"
         ]
     }
@@ -66,5 +71,9 @@
         "execute_command": "echo '{{user `ssh_pass`}}' | {{ .Vars }} sudo -E -S sh '{{ .Path }}'",
         "script": "scripts/diagnostic_installer.sh",
         "pause_before": "10s"
-    }]
+    }],
+	    "post-processors":[{
+        "type": "checksum",
+        "checksum_types": ["sha1", "sha512"]
+	}]
 }

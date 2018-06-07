@@ -131,11 +131,11 @@ div.container a.brand {
 .matmoyen {
 	background-image:url(/img/mat_moyen.png);
 }
-.matplan {
-	background-image:url(/img/mat_plan.png);
-}
 .matnone {
 	background-image:url(/img/mat_none.png);
+}
+.matNA {
+	background-image:url(/img/mat_NA.png);
 }
 .gravity1 {
 	background-image:url(/img/gravity_1.png);

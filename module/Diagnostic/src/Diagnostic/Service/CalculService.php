@@ -123,17 +123,17 @@ class CalculService extends AbstractService
     {
 
         switch ($maturity) {
-            case 3:
+            case 2:
                 $img = '/img/mat_ok.png';
                 break;
-            case 2:
-                $img = '/img/mat_moyen.png';
-                break;
             case 1:
-                $img = '/img/mat_plan.png';
+                $img = '/img/mat_moyen.png';
                 break;
             case 0:
                 $img = '/img/mat_none.png';
+                break;
+			case 3:
+                $img = '/img/mat_NA.png';
                 break;
         }
 

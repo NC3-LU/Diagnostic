@@ -30,6 +30,11 @@ class QuestionEntity
     public $translation_key;
 
     /**
+     * Translation Key fr
+     */
+    public $translation_fr;
+
+    /**
      * Translation Key Help
      */
     public $translation_key_help;
@@ -119,6 +124,24 @@ class QuestionEntity
     /**
      * @return mixed
      */
+    public function getTranslationFr()
+    {
+        return $this->translation_fr;
+    }
+
+    /**
+     * @param mixed $translation_key
+     * @return QuestionEntity
+     */
+    public function setTranslationFr($translation_fr)
+    {
+        $this->translation_fr = $translation_fr;
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
     public function getTranslationKeyHelp()
     {
         return $this->translation_key_help;
@@ -189,6 +212,7 @@ class QuestionEntity
         $this->category_id = (isset($data['category_id'])) ? $data['category_id'] : null;
         $this->category_translation_key = (isset($data['category_translation_key'])) ? $data['category_translation_key'] : null;
         $this->translation_key = (isset($data['translation_key'])) ? $data['translation_key'] : null;
+	$this->translation_fr = (isset($data['translation_fr'])) ? $data['translation_fr'] : null;
         $this->translation_key_help = (isset($data['translation_key_help'])) ? $data['translation_key_help'] : null;
         $this->threshold = (isset($data['threshold'])) ? $data['threshold'] : null;
         $this->new = (isset($data['new'])) ? $data['new'] : false;

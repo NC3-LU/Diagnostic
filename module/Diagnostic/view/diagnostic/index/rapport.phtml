@@ -132,8 +132,14 @@ echo $this->inlineScript()->prependFile($this->basePath('js/Chart.js-master/Char
                         ?>
                         <tr>
                             <td style="text-align: left;"><?= htmlspecialchars($recommandation['recommandation']); ?></td>
-                            <td style="text-align: left;"><?= $this->translate($recommandation['domaine']); ?></td>
-                            <td style="text-align: center;"><img src="<?= $recommandation['gravity-img']; ?>"/></td>
+                            <td style="text-align: left;"><?php for ($i=1; $i<=count($totalCategory); $i++) { // Search the right category and set its colour in the recommandation table
+									if ('__category' . $i == $recommandation['domaine']){
+									    if ($totalCategory['__category' . $i] < 33){
+										?><font color="red"><?= $this->translate($recommandation['domaine']); ?></font>
+							  	    <?php } elseif ($totalCategory['__category' . $i] > 66){ ?><font color="#20DD1A"><?= $this->translate($recommandation['domaine']); ?></font>
+						     	  	    <?php } else { ?><font color="orange"><?= $this->translate($recommandation['domaine']); ?></font><?php }}}?>
+			    </td>
+                            <td style="text-align: center;"><font color="red" size="4"><?= $recommandation['gravity-img']; ?></font></td>
                             <td style="text-align: center;"><img
                                         src="<?= $recommandation['maturity-img'] ?>"/>&nbsp;<span
                                         class="glyphicon glyphicon-arrow-right"></span>&nbsp;<img

@@ -12,8 +12,8 @@ use Zend\Form\Form;
 class DownloadForm extends Form
 {
     public $state = [
-        '__draft' => '__draft',
-        '__final' => '__final'
+	'__final' => '__final',
+        '__draft' => '__draft'
     ];
 
     /**

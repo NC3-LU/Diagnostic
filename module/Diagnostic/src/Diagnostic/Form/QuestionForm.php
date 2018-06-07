@@ -23,20 +23,20 @@ class QuestionForm extends Form
                 'label' => '__maturity',
                 'value_options' => [
                     3 => [
-                        'value' => '3',
+                        'value' => '2',
                         'label_attributes' => ['class' => 'maticon matok', 'title' => '__maturity_ok'],
                     ],
                     2 => [
-                        'value' => '2',
-                        'label_attributes' => ['class' => 'maticon matmoyen', 'title' => '__maturity_medium'],
-                    ],
-                    1 => [
                         'value' => '1',
-                        'label_attributes' => ['class' => 'maticon matplan', 'title' => '__maturity_plan'],
+                        'label_attributes' => ['class' => 'maticon matmoyen', 'title' => '__maturity_medium'],
                     ],
                     0 => [
                         'value' => '0',
                         'label_attributes' => ['class' => 'maticon matnone', 'title' => '__maturity_none'],
+                    ],
+                    1 => [
+                        'value' => '3', // The value is N/A, so it isn't counted in the score
+                        'label_attributes' => ['class' => 'maticon matNA', 'title' => '__maturity_NA'],
                     ]
                 ],
                 'label_attributes' => [
@@ -91,15 +91,18 @@ class QuestionForm extends Form
                 'value_options' => [
                     1 => [
                         'value' => '1',
-                        'label_attributes' => ['class' => 'maticon gravity1', 'title' => '__low'],
+			'label' => '●',
+                        'label_attributes' => ['title' => '__low'],
                     ],
                     2 => [
                         'value' => '2',
-                        'label_attributes' => ['class' => 'maticon gravity2', 'title' => '__medium'],
+			'label' => '●●',
+                        'label_attributes' => ['title' => '__medium'],
                     ],
                     3 => [
                         'value' => '3',
-                        'label_attributes' => ['class' => 'maticon gravity3', 'title' => '__strong'],
+			'label' => '●●●',
+                        'label_attributes' => ['title' => '__strong'],
                     ],
                 ],
                 'label_attributes' => [

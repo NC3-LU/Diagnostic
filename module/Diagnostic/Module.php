@@ -67,6 +67,16 @@ class Module
 
                     return $table;
                 },
+	        'Diagnostic\Gateway\CategoryGateway' => function ($sm) {
+                    $dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
+                    $resultSetPrototype = new ResultSet();
+                    $resultSetPrototype->setArrayObjectPrototype($sm->get('Diagnostic\Model\CategoryEntity'));
+
+                    $tableGateway = new TableGateway('categories', $dbAdapter, null, $resultSetPrototype);
+                    $table = new CategoryGateway($tableGateway);
+
+                    return $table;
+                },
                 'Diagnostic\Gateway\UserGateway' => function ($sm) {
                     $dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
                     $resultSetPrototype = new ResultSet();

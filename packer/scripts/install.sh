@@ -60,10 +60,10 @@ function main() {
     # Setting default language
     case "${1}" in
         [eE][nN]|[eE])
-            lang="en_EN"
+            lang="en"
             ;;
         *)
-            lang="fr_FR"
+            lang="fr"
             ;;
     esac
 
