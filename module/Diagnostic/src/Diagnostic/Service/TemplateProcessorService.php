@@ -1,8 +1,6 @@
 <?php
 namespace Diagnostic\Service;
 
-use PhpOffice\PhpWord\PhpWord;
-use PhpOffice\PhpWord\Writer\Word2007;
 use PhpOffice\PhpWord\TemplateProcessor;
 use Zend\ServiceManager\ServiceLocatorAwareInterface;
 use Zend\ServiceManager\ServiceLocatorAwareTrait;
@@ -67,15 +65,11 @@ class TemplateProcessorService extends TemplateProcessor implements ServiceLocat
      * @param $data
      * @throws \PhpOffice\PhpWord\Exception\Exception
      */
-
-    public function generateWord($data, $questions, $results, $information, $translator)
+   public function generateWord($data, $questions, $results, $information, $translator)
     {
-
         $data['date'] = date('Y/m/d');
-
         $filename = ucfirst($data['document']) . '_' . date('Y-m-d') . '.docx';
         $filepath = 'data/results/' . $filename;
-
         //retrieve categories
         $categories = [];
         $numberByCategories = [];
@@ -87,7 +81,6 @@ class TemplateProcessorService extends TemplateProcessor implements ServiceLocat
                 $numberByCategories[$question->getCategoryTranslationKey()] = 1;
             }
         }
-
         //categories repartition
         $categoriesRepartition = [];
         $i = 0;
@@ -96,7 +89,6 @@ class TemplateProcessorService extends TemplateProcessor implements ServiceLocat
             $categoriesRepartition[$i]['value'] = $categoryNumber;
             $i++;
         }
-
         foreach ($categories as $id => $label) {
             $categories[$id] = [
                 'label' => $label,
@@ -104,9 +96,7 @@ class TemplateProcessorService extends TemplateProcessor implements ServiceLocat
                 'percentTarget' => (array_key_exists($id, $results['totalCategoryTarget'])) ? (int)$results['totalCategoryTarget'][$id] : 0,
             ];
         }
-
         $recommandations = $results['recommandations'];
-
         //create word
         foreach ($data as $key => $value) {
             $this->setValue(strtoupper($key), $translator->translate($value));
@@ -114,14 +104,11 @@ class TemplateProcessorService extends TemplateProcessor implements ServiceLocat
                 $this->setValue('TYPE', $translator->translate($value));
             }
         }
-
         //image
         $container = new Container('diagnostic');
         $this->setImageValue('image9.png', $container->bar);
         $this->setImageValue('image5.png', $container->pie);
         $this->setImageValue('image10.png', $container->radar);
-
-
         //number of recommandations
         $nbRecommandations = 0;
         foreach ($recommandations as $recommandation) {
@@ -129,22 +116,16 @@ class TemplateProcessorService extends TemplateProcessor implements ServiceLocat
                 $nbRecommandations++;
             }
         }
-
         if (isset($information['organization'])) {
             $this->setValue('ORGANIZATION_INFORMATION', $information['organization']);
         } else {
             $this->setValue('ORGANIZATION_INFORMATION', '');
         }
-
         if (isset($information['synthesis'])) {
             $this->setValue('EVALUATION_SYNTHESYS', $information['synthesis']);
         } else {
             $this->setValue('EVALUATION_SYNTHESYS', '');
         }
-
-
-
-
 	 // ContentMat : 0 = 0/1, 1 = 0.5/1, 2 = 1/1, 3 = NA
          //css Tables
          $styleHeaderCell = ['valign' => 'center', 'bgcolor' => 'DFDFDF', 'size' => 10];
@@ -177,15 +158,10 @@ class TemplateProcessorService extends TemplateProcessor implements ServiceLocat
          $cellColSpan9 = ['gridSpan' => 9, 'bgcolor' => 'DFDFDF', 'size' => 10, 'valign' => 'center', 'align' => 'center', 'Alignment' => 'center'];
          $cellColSpan4Black = ['gridSpan' => 4, 'bgcolor' => '444444', 'size' => 10, 'valign' => 'center', 'align' => 'center', 'Alignment' => 'center'];
          $cellColSpan2Black = ['gridSpan' => 2, 'bgcolor' => '444444', 'size' => 10, 'valign' => 'center', 'align' => 'center', 'Alignment' => 'center'];
-
-
-
-
          //create RECOMMENDATION_TABLE section
          $tableWord = new PhpWord();
          $section = $tableWord->addSection();
          $table = $section->addTable(['borderSize' => 1, 'borderColor' => 'ABABAB']);
-
          //header if array is not empty
          if (count($recommandations)) {
              $table->addRow(400, ['tblHeader' => true]);
@@ -195,22 +171,16 @@ class TemplateProcessorService extends TemplateProcessor implements ServiceLocat
              $table->addCell(\PhpOffice\Common\Font::centimeterSizeToTwips(1.50), $styleHeaderCell)->addText($translator->translate('__gravity'), $styleContentFontBold, $alignCenter);
              $table->addCell(\PhpOffice\Common\Font::centimeterSizeToTwips(2.20), $styleHeaderCell)->addText($translator->translate('__current_maturity'), $styleContentFontBold, $alignCenter);
              $table->addCell(\PhpOffice\Common\Font::centimeterSizeToTwips(2.20), $styleHeaderCell)->addText($translator->translate('__maturity_target'), $styleContentFontBold, $alignCenter);
-
          }
-
          $recommandations = $results['recommandations'];
-
          $i = 1;
          foreach ($recommandations as $recommandation => $value) {
           if ($value['recommandation']) {
-
           $category = $translator->translate($categories[$questions[$recommandation]->getCategoryId()]['label']);
-
            $gravity = '';
            for ($k = 0; $k <= ($value['gravity'] - 1); $k++) {
                $gravity .= '●';
             }
-
           $maturity = $translator->translate('__maturity_none');
           $styleContentCellMaturity = ['align' => 'left', 'bgcolor' => 'FD661F', 'valign' => 'center', 'size' => 10];
 	  // 2 = 100%, 1 = 50%, 3 = not applicable for the  maturity
@@ -228,26 +198,22 @@ class TemplateProcessorService extends TemplateProcessor implements ServiceLocat
                   $styleContentCellMaturity = ['align' => 'left', 'bgcolor' => 'D6F107', 'valign' => 'center', 'size' => 10];
                   break;
           }
-
           $maturityTarget = $translator->translate('__maturity_none');
           $styleContentCellMaturityTarget = ['align' => 'left', 'bgcolor' => 'FD661F', 'valign' => 'center', 'size' => 10];
           switch ($value['maturityTarget']) {
               case 3:
                   $maturityTarget = $translator->translate('__maturity_NA');
                   $styleContentCellMaturityTarget = ['align' => 'left', 'bgcolor' => 'E7E6E6', 'valign' => 'center', 'size' => 10];
-
                   break;
               case 1:
                   $maturityTarget = $translator->translate('__maturity_medium');
                   $styleContentCellMaturityTarget = ['align' => 'left', 'bgcolor' => 'FFBC1C', 'valign' => 'center', 'size' => 10];
-
                   break;
               case 2:
                   $maturityTarget = $translator->translate('__maturity_ok');
                   $styleContentCellMaturityTarget = ['align' => 'left', 'bgcolor' => 'D6F107', 'valign' => 'center', 'size' => 10];
                   break;
           }
-
           $table->addRow(400);
           $table->addCell(\PhpOffice\Common\Font::centimeterSizeToTwips(1.00), $styleContentCell)->addText($i, $styleContentFont, $alignCenter);
           $table->addCell(\PhpOffice\Common\Font::centimeterSizeToTwips(10.00), $styleContentCell)->addText($value['recommandation'], $styleContentFont, $alignLeft);
@@ -255,20 +221,15 @@ class TemplateProcessorService extends TemplateProcessor implements ServiceLocat
           $table->addCell(\PhpOffice\Common\Font::centimeterSizeToTwips(1.50), $styleContentCell)->addText($gravity, $styleContentFontGravity, $alignCenter);
           $table->addCell(\PhpOffice\Common\Font::centimeterSizeToTwips(2.20), $styleContentCellMaturity)->addText($maturity, $styleContentFontBold, $alignCenter);
           $table->addCell(\PhpOffice\Common\Font::centimeterSizeToTwips(2.20), $styleContentCellMaturityTarget)->addText($maturityTarget, $styleContentFontBold, $alignCenter);
-
           $i++;
           }
         }
-
         $this->setValue('RECOMMENDATION_TABLE', $this->getWordXmlFromWordObject($tableWord));
         unset($tableWord);
-
-
         //create NOTES_TABLE section
         $tableWord = new PhpWord();
         $section = $tableWord->addSection();
         $table = $section->addTable(['borderSize' => 1, 'borderColor' => 'ABABAB']);
-
         //headers
         $table->addRow(400, ['tblHeader' => true]);
         $table->addCell(\PhpOffice\Common\Font::centimeterSizeToTwips(7.00), $cellRowSpanBlack)->addText($translator->translate('__information_collect'), $styleContentFontBoldWhite, $alignCenter);
@@ -276,7 +237,6 @@ class TemplateProcessorService extends TemplateProcessor implements ServiceLocat
         $table->addCell(\PhpOffice\Common\Font::centimeterSizeToTwips(4.00), $cellColSpan4Black)->addText($translator->translate('__current_maturity'), $styleContentFontBoldWhite, $alignCenter);
         $table->addCell(\PhpOffice\Common\Font::centimeterSizeToTwips(7.00), $cellRowSpanBlack)->addText($translator->translate('__recommandation'), $styleContentFontBoldWhite, $alignCenter);
         $table->addCell(\PhpOffice\Common\Font::centimeterSizeToTwips(2.20), $cellColSpan2Black)->addText($translator->translate('__maturity_target'), $styleContentFontBoldWhite, $alignCenter);
-
         $table->addRow();
         $table->addCell(\PhpOffice\Common\Font::centimeterSizeToTwips(7.00), $cellRowContinueBlack);
         $table->addCell(\PhpOffice\Common\Font::centimeterSizeToTwips(7.00), $cellRowContinueBlack);
@@ -287,33 +247,24 @@ class TemplateProcessorService extends TemplateProcessor implements ServiceLocat
         $table->addCell(\PhpOffice\Common\Font::centimeterSizeToTwips(7.00), $cellRowContinueBlack);
         $table->addCell(\PhpOffice\Common\Font::centimeterSizeToTwips(1.10), $styleHeaderCellBlack)->addText('n', $styleContentFontMat2, $alignCenter);
         $table->addCell(\PhpOffice\Common\Font::centimeterSizeToTwips(1.10), $styleHeaderCellBlack)->addText('n', $styleContentFontMat1, $alignCenter);
-
         $previousCategoryId = null;
-
         foreach ($categories as $categoryId => $category) {
-
           if ($categoryId != $previousCategoryId) {
-
             $categoryTest = $translator->translate($category['label']);
             $table->addRow(400);
             $table->addCell(\PhpOffice\Common\Font::centimeterSizeToTwips(5.00), $cellColSpan9)->addText($categoryTest, $styleContentFontBold, $alignLeft);
-
             foreach ($recommandations as $recommandation => $value) {
                 if ($questions[$recommandation]->getCategoryId() == $categoryId) {
-
                   $questionCollect = $translator->translate($questions[$recommandation]->getTranslationKey());
                   $notes = $value['notes'];
-
                   for ($i = 0; $i <= 3 ; $i++) {
                     if ($value['maturity'] == $i) {
                       ${'styleContentCellMat' . $i} = ['valign' => 'center', 'bgcolor' => ${'bgcolorMat' . $i}, 'size' => 10];
                     }
                     if ($value['maturityTarget'] == $i) {
                       ${'styleContentCellMatTarget' . $i} = ['valign' => 'center', 'bgcolor' => ${'bgcolorMat' . $i}, 'size' => 10];
-
                     }
                   }
-
                   $table->addRow(400);
                   $table->addCell(\PhpOffice\Common\Font::centimeterSizeToTwips(7.00), $styleContentCell)->addText($questionCollect, $styleContentFont, $alignLeft);
                   $table->addCell(\PhpOffice\Common\Font::centimeterSizeToTwips(7.00), $styleContentCell)->addText($notes, $styleContentFont, $alignLeft);
@@ -324,7 +275,6 @@ class TemplateProcessorService extends TemplateProcessor implements ServiceLocat
                   $table->addCell(\PhpOffice\Common\Font::centimeterSizeToTwips(7.00), $styleContentCell)->addText($value['recommandation'], $styleContentFont, $alignLeft);
                   $table->addCell(\PhpOffice\Common\Font::centimeterSizeToTwips(1.00), $styleContentCellMatTarget2)->addText('', $styleContentFontBold, $alignCenter);
                   $table->addCell(\PhpOffice\Common\Font::centimeterSizeToTwips(1.00), $styleContentCellMatTarget1)->addText('', $styleContentFontBold, $alignCenter);
-
                   for ($i = 0; $i <= 3 ; $i++) {
                       ${'styleContentCellMat' . $i} = ['valign' => 'center', 'size' => 10];
                       ${'styleContentCellMatTarget' . $i} = ['valign' => 'center', 'size' => 10];
@@ -333,12 +283,9 @@ class TemplateProcessorService extends TemplateProcessor implements ServiceLocat
             }
           }
           $previousCategoryId = $categoryId;
-
         }
-
         $this->setValue('NOTES_TABLE', $this->getWordXmlFromWordObject($tableWord));
         unset($tableWord);
-
 	// Variables for the radar legend
 	$prise_note_categ = new PhpWord();
 	$categ_percent = new PhpWord();
@@ -346,11 +293,9 @@ class TemplateProcessorService extends TemplateProcessor implements ServiceLocat
 	$section = $prise_note_categ->addSection();
 	$section2 = $categ_percent->addSection();
 	$section3 = $categ_percent_targ->addSection();
-
 	// Variable for the pie legend
 	$legend_pie = new PhpWord();
 	$section4 = $legend_pie->addSection();
-
 	//categories repartition
         $categoriesColor = [
             ['color' => '#F7464A'],
@@ -369,7 +314,6 @@ class TemplateProcessorService extends TemplateProcessor implements ServiceLocat
             ['color' => '#BA7C00'],
             ['color' => '#E500DD'],
         ];
-
 	// Add categories to the legends : set color by level of maturity
 	$i = 0;
         foreach ($categories as $categoryId => $category) {
@@ -391,31 +335,24 @@ class TemplateProcessorService extends TemplateProcessor implements ServiceLocat
 	    $text4->addText($translator->translate($category['label']), ['size' => 10, 'name' => 'Calibri', 'color' => 'black']);
 	    $i++;
 	}
-
 	$this->setValue('PRISE_NOTE_CATEG', $this->getWordXmlFromWordObject($prise_note_categ));
 	$this->setValue('CATEG__PERCENT', $this->getWordXmlFromWordObject($categ_percent));
 	$this->setValue('CATEG__PERCENT_TARG', $this->getWordXmlFromWordObject($categ_percent_targ));
         unset($prise_note_categ);
 	unset($categ_percent);
 	unset($categ_percent_targ);
-
 	$this->setValue('LEGEND_PIE', $this->getWordXmlFromWordObject($legend_pie));
 	unset($legend_pie);
-
         $this->saveAs($filepath);
-
         header("Cache-Control: public");
         header("Content-Description: File Transfer");
         header("Content-Length: " . filesize("$filepath") . ";");
         header("Content-Disposition: attachment; filename=$filename");
         header("Content-Type: application/octet-stream; ");
         header("Content-Transfer-Encoding: binary");
-
         readfile($filepath);
-
         unlink($filepath);
     }
-
     protected function getWordXmlFromWordObject($phpWord, $useBody = true)
     {
         // Portion Copyright © Netlor SAS - 2015
@@ -423,7 +360,6 @@ class TemplateProcessorService extends TemplateProcessor implements ServiceLocat
         $part->setParentWriter(new Word2007($phpWord));
         $docXml = $part->write();
         $matches = [];
-
         if ($useBody === true) {
             $regex = '/<w:body>(.*)<w:sectPr>/is';
         } else if ($useBody === 'graph') {
@@ -431,7 +367,6 @@ class TemplateProcessorService extends TemplateProcessor implements ServiceLocat
         } else {
             $regex = '/<w:r>(.*)<\/w:r>/is';
         }
-
         if (preg_match($regex, $docXml, $matches) === 1) {
             return $matches[1];
         } else {

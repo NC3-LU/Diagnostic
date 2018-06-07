@@ -23,19 +23,19 @@ class QuestionForm extends Form
                 'label' => '__maturity',
                 'value_options' => [
                     3 => [
-                        'value' => '2', // = 100%
+                        'value' => '2',
                         'label_attributes' => ['class' => 'maticon matok', 'title' => '__maturity_ok'],
                     ],
                     2 => [
-                        'value' => '1', // = 50%
+                        'value' => '1',
                         'label_attributes' => ['class' => 'maticon matmoyen', 'title' => '__maturity_medium'],
                     ],
                     0 => [
-                        'value' => '0', // = 0%
+                        'value' => '0',
                         'label_attributes' => ['class' => 'maticon matnone', 'title' => '__maturity_none'],
                     ],
                     1 => [
-                        'value' => 3, // The value is N/A, so it isn't counted in the score
+                        'value' => '3', // The value is N/A, so it isn't counted in the score
                         'label_attributes' => ['class' => 'maticon matNA', 'title' => '__maturity_NA'],
                     ]
                 ],
@@ -55,11 +55,11 @@ class QuestionForm extends Form
                 'label' => '__maturity_target',
                 'value_options' => [
                     3 => [
-                        'value' => '2', // = 100%
+                        'value' => '3',
                         'label_attributes' => ['class' => 'maticon matok', 'title' => '__maturity_ok'],
                     ],
                     2 => [
-                        'value' => '1', // = 50%
+                        'value' => '2',
                         'label_attributes' => ['class' => 'maticon matmoyen', 'title' => '__maturity_medium'],
                     ],
                 ],

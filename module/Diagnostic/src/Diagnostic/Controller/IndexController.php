@@ -1,10 +1,10 @@
 <?php
 /**
- * Zend Framework (http://framework.zend.com/)
+ * Diagnostic (https://github.com/CASES-LU/diagnostic)
  *
- * @link      http://github.com/zendframework/ZendSkeletonApplication for the canonical source repository
- * @copyright Copyright (c) 2005-2015 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   http://framework.zend.com/license/new-bsd New BSD License
+ * @link      https://github.com/CASES-LU/diagnostic for the canonical source repository
+ * @copyright Copyright (c) 2015-2018 Cases is a registered trademark of SECURITYMADEIN.LU
+ * @license   Diagnostic is licensed under the GNU Affero GPL v3
  */
 
 namespace Diagnostic\Controller;
@@ -761,12 +761,14 @@ class IndexController extends AbstractController
         $config = $this->get('config');
         $encryptionKey = $config['encryption_key'];
 
-	//encrypt result
-        //$blockCipher = BlockCipher::factory('mcrypt', ['algo' => 'aes']);
+		//encrypt result (old method)
+        /*$blockCipher = BlockCipher::factory('mcrypt', ['algo' => 'aes']);
         //$blockCipher->setKey($encryptionKey);
-        //$cryptExport = $blockCipher->encrypt($export);
-	$iv = $config['iv_key'];
+        $cryptExport = $blockCipher->encrypt($export);*/
+		//encrypt result (new method)
+		$iv = $config['iv_key'];
         $cryptExport = openssl_encrypt($export,'AES-256-CBC', $encryptionKey, OPENSSL_RAW_DATA, $iv);
+
         //create file
         $filename = 'Diagnostic_' . date('YmdHis') . '.cases';
         !$handle = fopen($filename, 'w');
@@ -984,14 +986,14 @@ class IndexController extends AbstractController
 
         $container = new Container('diagnostic');
 
-	$file_lang = fopen('/var/www/diagnostic/language/languages.txt', 'r');
-	for ($i=1; $i<$_SESSION['nb_lang']; $i++) {
-	    $temp_lang = fgets($file_lang, 4096);
-            if ($id == $i) {
-                $container->language = substr($temp_lang, 0, -1);
-            }
-        }
-	fclose($file_lang);
+		$file_lang = fopen('/var/www/diagnostic/language/languages.txt', 'r');
+		for ($i=1; $i<$_SESSION['nb_lang']; $i++) {
+			$temp_lang = fgets($file_lang, 4096);
+				if ($id == $i) {
+					$container->language = substr($temp_lang, 0, -1);
+				}
+		}
+		fclose($file_lang);
 
         //redirection
         $this->redirect()->toUrl($this->getRequest()->getHeader('Referer')->getUri());

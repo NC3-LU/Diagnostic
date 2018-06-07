@@ -3,13 +3,9 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 2.0.6\n"
+"X-Generator: POEditor.com\n"
 "Project-Id-Version: cases-diagnostic\n"
 "Language: fr\n"
-"POT-Creation-Date: \n"
-"PO-Revision-Date: \n"
-"Last-Translator: \n"
-"Language-Team: \n"
 
 msgid "__category1"
 msgstr "Sensibilité à la sécurité et conformité"
@@ -67,7 +63,6 @@ msgstr "Culture de la formation ?<br>Sensibilité à la sécurité ?"
 
 msgid "__question6"
 msgstr "Gestion de la rotation de personnel ?"
-
 msgid "__question6help"
 msgstr "Rotation importante ?<br>Coordination RH et IT ?"
 
@@ -187,7 +182,6 @@ msgstr "Bonne gestion de l'antivirus ?"
 
 msgid "__question26"
 msgstr "Comment sont gérés les backups ?"
-
 msgid "__question26help"
 msgstr "Bonnes pratiques concernant les backups ?<br><ul><li>Exhaustivité</li><li>Périodicité</li><li>Rétention</li><li>Stockage hors ligne</li><li>Délocalisation</li><li>Test</li><li>Etc.</li></ul>"
 
@@ -288,25 +282,13 @@ msgid "__recommandation"
 msgstr "Recommandation"
 
 msgid "__gravity"
-msgstr "Importance"
+msgstr "Gravité"
 
 msgid "__comment"
 msgstr "Commentaire"
 
 msgid "__record"
 msgstr "Enregistrer"
-
-msgid "__domain"
-msgstr "Domaine"
-
-msgid "__current_maturity"
-msgstr "Maturité actuelle"
-
-msgid "__information_collect"
-msgstr "Information à collecter"
-
-msgid "__collected_information"
-msgstr "Information collectée"
 
 msgid "__notes"
 msgstr "Notes"
@@ -483,19 +465,19 @@ msgid "__maturity_levels"
 msgstr "Niveaux de maturité"
 
 msgid "__gravity_levels"
-msgstr "Niveaux d'importance"
+msgstr "Niveaux de gravité"
 
 msgid "__maturity_none"
-msgstr "Fragile"
+msgstr "Non géré"
 
 msgid "__maturity_NA"
 msgstr "N/A"
 
 msgid "__maturity_medium"
-msgstr "Basique"
+msgstr "+/- géré"
 
 msgid "__maturity_ok"
-msgstr "Optimisé"
+msgstr "Géré"
 
 msgid "__doughnut_legend"
 msgstr "Pondération par catégorie"

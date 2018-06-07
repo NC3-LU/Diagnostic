@@ -1,8 +1,7 @@
 Diagnostic quick start guide
 ============================
 
-Introduction
-------------
+## Introduction
 
 Your organization processes sensitive data every day. As a manager, you
 have an obligation to establish specific security procedures
@@ -25,11 +24,10 @@ Here would you find further Diagnostic related documentation :
 * [**Technical guide**](documentation/technicalguide): Components installation walkthrough and troubleshoot section
 * [**User guide**](documentation/userguide): Complete Diagnostic available functionalities documentation
 
-Quick start
------------
+
+## Quick start
 
 -   Download [**VM\_Diagnostic.ova**](https://github.com/CASES-LU/diagnostic/releases/tag/1.0) ready-to-use virtual machine file which can be imported directly into a virtualization tool
-
 -   Make use of the **installation scripts** provided in the [**Diagnostic repository**](https://github.com/CASES-LU/diagnostic/tree/master/scripts)
 
 ### Using the Virtual Machine
@@ -108,6 +106,7 @@ Open your favorite browser and type in: <http://10.0.0.102>
 
 * Mysql diagnostic user: (diagnostic:GENERATEDPASSWORD)
 
+
 ### Using the installation scripts
 
 In case you want to install the Diagnostic application on a Ubuntu or
@@ -124,13 +123,13 @@ user:password )
 
 You are good to go then !
 
-Diagnostic - Cases
-==================
 
-Copyright (c) 2017, Benjamin Joly, Jerome Lombardi, Fabien Mathey, Juan Rocha - securitymadein.lu - Smile GIE
+## License
+
+Copyright (c) 2017-2018, Benjamin Joly, Jerome Lombardi, Fabien Mathey, Juan Rocha - securitymadein.lu - Smile GIE
 
 Copyright (c) 2017, Yacine Khamis - Université de Lorraine
 
 Copyright (c) 2017, Jérôme De Almeida - Vesperia Group
 
-Licensed under Affero GNU GPL v3 - see license.txt for more information
+Licensed under Affero GNU GPL v3 - see LICENSE for more information.
