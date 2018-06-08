@@ -66,10 +66,10 @@ fi
 echo "\033[32mdiagnostic sources copied\\033[0m"
 
 echo "\033[93mcomposer installation\\033[0m"
-php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
-php composer-setup.php
-php -r "unlink('composer-setup.php');"
-php composer.phar install
+php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" > /dev/null 2>&1
+php composer-setup.php > /dev/null 2>&1
+php -r "unlink('composer-setup.php');" > /dev/null 2>&1
+php composer.phar install > /dev/null 2>&1
 echo "\033[32mcomposer installation done\\033[0m"
 
 echo "\033[93mmysql installation\\033[0m"
