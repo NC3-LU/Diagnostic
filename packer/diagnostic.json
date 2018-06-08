@@ -14,7 +14,7 @@
         "format": "ova",
         "vm_name": "{{user `vm_name`}}",
 
-        "vboxmanage": [
+          "vboxmanage": [
             ["modifyvm", "{{.Name}}", "--vram", "64"],
 		    ["modifyvm", "{{.Name}}", "--memory", "1024"],
 			["modifyvm", "{{.Name}}", "--cpus", "2"],	
@@ -24,12 +24,12 @@
 		"vboxmanage_post": [
 			["modifyvm", "{{.Name}}", "--nic1","hostonly"], 
 			["modifyvm", "{{.Name}}", "--hostonlyadapter1", "[MY_HOST_ONLY_ADAPTER]"]
-		],
+        ],
 
         "disk_size": "{{user `disk_size`}}",
 
-        "iso_url": "http://releases.ubuntu.com/artful/ubuntu-17.10.1-server-amd64.iso",
-        "iso_checksum": "8ff73f1b622276758475c3bd5190b382774626de5a82c50930519381f6c3a3f8",
+        "iso_url": "http://cdimage.ubuntu.com/releases/18.04/release/ubuntu-18.04-server-amd64.iso",
+        "iso_checksum": "a7f5c7b0cdd0e9560d78f1e47660e066353bb8a79eb78d1fc3f4ea62a07e6cbc",
         "iso_checksum_type": "sha256",
 
         "http_directory" : "preseeds",
@@ -53,7 +53,7 @@
             "fb=false debconf/frontend=noninteractive ",
             "keyboard-configuration/modelcode=SKIP keyboard-configuration/layout=USA ",
             "keyboard-configuration/variant=USA console-setup/ask_detect=false ",
-            "initrd=/install/initrd.gz -- <enter>"
+			"initrd=/install/initrd.gz -- <enter>"
         ]
     }
 	],
