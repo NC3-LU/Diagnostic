@@ -20,7 +20,11 @@ echo "\033[93m#                                                                 
 echo "\033[93m###############################################################################\\033[0m"
 
 echo "\033[93mphp installation\\033[0m"
-sudo apt-get -qq install php7.1 libapache2-mod-php7.1 php7.1-mcrypt php7.1-mysql php7.1-zip  php-xml > /dev/null 2>&1
+#Need a third party repo to get php7.1
+sudo apt-get -qq install software-properties-common > /dev/null 2>&1
+sudo add-apt-repository -y ppa:ondrej/php > /dev/null 2>&1
+sudo apt update > /dev/null 2>&1
+sudo apt-get -qq install php7.1 libapache2-mod-php7.1 php7.1-mcrypt php7.1-mysql php7.1-zip php7.1-xml php7.1-mbstring > /dev/null 2>&1
 echo "\033[32mphp installation done\\033[0m"
 
 echo "\033[93mcurl installation\\033[0m"
@@ -62,14 +66,10 @@ fi
 echo "\033[32mdiagnostic sources copied\\033[0m"
 
 echo "\033[93mcomposer installation\\033[0m"
-
-curl -sS https://getcomposer.org/installer | sudo php -- --install-dir=/usr/local/bin --filename=composer > /dev/null 2>&1
-if [ $? -ne 0 ]; then
-    echo "\033[31mERROR: unable to install composer\\033[0m"
-    exit 1;
-fi
-composer self-update
-composer install -o --prefer-dist
+php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" > /dev/null 2>&1
+php composer-setup.php > /dev/null 2>&1
+php -r "unlink('composer-setup.php');" > /dev/null 2>&1
+php composer.phar install > /dev/null 2>&1
 echo "\033[32mcomposer installation done\\033[0m"
 
 echo "\033[93mmysql installation\\033[0m"
