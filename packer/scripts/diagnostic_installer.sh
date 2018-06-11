@@ -50,7 +50,7 @@ cd $PATH_TO_DIAGNOSTIC
 sudo chown www-data:www-data $PATH_TO_DIAGNOSTIC
 #git install
 sudo apt-get install -y git > /dev/null 2>&1
-sudo -u www-data git clone -b dev $GITHUB_LINK . > /dev/null 2>&1
+sudo -u www-data git clone -b test $GITHUB_LINK . > /dev/null 2>&1
 if [ $? -ne 0 ]; then
     echo "ERROR: unable to clone the Diagnostic repository"
     exit 1;
