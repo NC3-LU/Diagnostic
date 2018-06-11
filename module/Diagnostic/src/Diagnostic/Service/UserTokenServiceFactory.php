@@ -1,10 +1,10 @@
 <?php
 /**
- * Diagnostic (https://github.com/CASES-LU/diagnostic)
+ * Zend Framework (http://framework.zend.com/)
  *
- * @link      https://github.com/CASES-LU/diagnostic for the canonical source repository
- * @copyright Copyright (c) 2015-2018 Cases is a registered trademark of SECURITYMADEIN.LU
- * @license   Diagnostic is licensed under the GNU Affero GPL v3
+ * @link      http://github.com/zendframework/ZendSkeletonApplication for the canonical source repository
+ * @copyright Copyright (c) 2005-2015 Zend Technologies USA Inc. (http://www.zend.com)
+ * @license   http://framework.zend.com/license/new-bsd New BSD License
  */
 
 namespace Diagnostic\Service;

@@ -26,16 +26,17 @@
 
 </head>
 <body>
-
 <div id="wrapper">
     <div id="header">
         <div class="top-line">&nbsp;</div>
         <div class="top">
             <div class="row">
-                <div class="col-lg-1"></div>
+                <div class="col-lg-1"></div> <!-- // Diagnostic logo instead of Cases logo -->
                 <div class="col-lg-3"><a href="http://www.cases.lu"><img
-                                src="https://www.cases.lu/templates/frontoffice/casesv3/images/logo-web-cases.lu.png"
-                                border="0"></a></div>
+                                src="/img/logo_diagnostic.jpg"
+                                border="0"
+				width="220"
+				height="80"></a></div>
                 <div class="col-lg-4 text-center"><h1>DIAGNOSTIC CASES</h1></div>
                 <div class="col-lg-3 text-right">
                     <br>
@@ -54,6 +55,7 @@
 			$_SESSION['nb_lang']++;
 		    }
 		    fclose($file);
+
                     ?>
                     <table width="100%">
                         <tr>
@@ -101,7 +103,8 @@
 			    ?>
                         </tr>
                     </table>
-                </div>
+
+            </div>
                 <div class="col-lg-1"></div>
             </div>
         </div>
@@ -160,7 +163,7 @@
         <div class="col-md-1"></div>
         <div class="col-md-4">
             <div class="footer-credits"><!-- Footer credits -->
-                2015-2018 &copy; Cases.lu - Tous droits réservés.
+                2015 &copy; Cases.lu - Tous droits réservés.
             </div>
         </div>
         <div class="col-md-6">
@@ -174,4 +177,5 @@
     </div>
 </div>
 </body>
+
 </html>
