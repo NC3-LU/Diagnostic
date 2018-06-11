@@ -130,5 +130,14 @@ class LanguageForm extends Form
                 'class' => 'btn btn-success',
             ],
         ]);
+
+        $this->add([
+            'name' => 'submit_dll_report',
+            'type' => 'Submit',
+            'attributes' => [
+                'value' => '__dll_report',
+                'class' => 'btn btn-success',
+            ],
+        ]);
     }
 }
