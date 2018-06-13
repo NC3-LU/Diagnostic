@@ -148,6 +148,11 @@ return [
                 'route' => 'admin',
                 'action' => 'languages',
             ],
+            [
+                'label' => '__rapport',
+                'route' => 'admin',
+                'action' => 'templates',
+            ],
         ],
     ],
 ];

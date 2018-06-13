@@ -28,12 +28,11 @@ endforeach;
     <?= $this->formSelect($form->get('add_language')) ?>
     <?= $this->formSubmit($form->get('submit_lang_add')) ?>
     <?= $this->formSubmit($form->get('submit_lang_del')->setAttribute('onClick', 'return confirm(delete_lang)')) ?>
-    &nbsp;&nbsp;&nbsp;&nbsp;
-    <?= $this->formSubmit($form->get('submit_dll_report')) ?>
     <!-- // Display error if you want : to add a language already added, to delete a language which has not been added, to delete english -->
-    <?php if($lang_exist == 1){ echo "<ul class='bg-danger'> <li>" . $this->translate('__error_exist2'). "</li></ul>"; } ?>
-    <?php if($lang_exist2 == 2){ echo "<ul class='bg-danger'> <li>" . $this->translate('__error_exist3'). "</li></ul>"; } ?>
-    <?php if($lang_exist3 == 1){ echo "<ul class='bg-danger'> <li>" . $this->translate('__error_exist4'). "</li></ul>"; } ?></span>
+    <?php if($error_lang_exist == 1){ echo "<ul class='bg-danger'> <li>" . $this->translate('__error_lang_exist'). "</li></ul>"; } ?>
+    <?php if($error_lang_add == 1){ echo "<ul class='bg-danger'> <li>" . $this->translate('__error_lang_add'). "</li></ul>"; } ?>
+    <?php if($error_lang_del == 1){ echo "<ul class='bg-danger'> <li>" . $this->translate('__error_lang_del'). "</li></ul>"; } ?>
+    <?php if($error_lang_del2 == 1){ echo "<ul class='bg-danger'> <li>" . $this->translate('__error_lang_del2'). "</li></ul>"; } ?></span>
 
     <h2><?= $this->translate('__languages') ?></h2>
 

@@ -35,7 +35,7 @@ class QuestionForm extends Form
                         'label_attributes' => ['class' => 'maticon matnone', 'title' => '__maturity_none'],
                     ],
                     1 => [
-                        'value' => 3, // The value is N/A, so it isn't counted in the score
+                        'value' => '3', // The value is N/A, so it isn't counted in the score
                         'label_attributes' => ['class' => 'maticon matNA', 'title' => '__maturity_NA'],
                     ]
                 ],

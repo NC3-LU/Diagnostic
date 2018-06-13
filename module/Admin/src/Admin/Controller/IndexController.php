@@ -27,6 +27,7 @@ class IndexController extends AbstractController
     protected $adminQuestionForm;
     protected $adminCategoryForm;
     protected $adminLanguageForm;
+    protected $adminTemplateForm;
     protected $adminAddTranslationForm;
 
     /**
@@ -175,6 +176,81 @@ class IndexController extends AbstractController
     }
 
     /**
+     * Templates
+     *
+     * @return ViewModel
+     */
+    public function templatesAction()
+    {
+        $error_upload = 0; // File not valid
+        $success_upload = 0; // File valid
+
+        $request = $this->getRequest();
+        $form = $this->get('adminTemplateForm');
+
+        if ($request->isPost()) {
+            $form->setData($request->getPost());
+
+            $location_lang = '/var/www/diagnostic/language/';
+            $file_lang = fopen($location_lang . 'languages.txt', 'r');
+            for ($i=1; $i<$_SESSION['nb_lang']; $i++) {
+                $temp_lang = fgets($file_lang, 4096);
+
+                // Download the template in the current language
+                if (isset($_POST['dl'.$i])){
+                    $file = '/var/www/diagnostic/data/resources/model_' . substr($temp_lang, 0, -1) . '.docx';
+
+                    if (filesize($file) != 0) {
+                        header('Content-Description: File Transfer');
+                        header('Content-Type: application/octet-stream');
+                        header('Content-Disposition: attachment; filename=model_' . substr($temp_lang, 0, -1) . '.docx');
+                        header('Expires: 0');
+                        header('Cache-Control: must-revalidate');
+                        header('Pragma: public');
+                        header('Content-Length: ' . filesize($file));
+                        readfile($file);
+                    }else {
+                        $file = '/var/www/diagnostic/data/resources/model_' . $_SESSION['lang'] . '.docx';
+                        header('Content-Description: File Transfer');
+                        header('Content-Type: application/octet-stream');
+                        header('Content-Disposition: attachment; filename=model_' . substr($temp_lang, 0, -1) . '.docx');
+                        header('Expires: 0');
+                        header('Cache-Control: must-revalidate');
+                        header('Pragma: public');
+                        header('Content-Length: ' . filesize($file));
+                        readfile($file);
+                    }
+                }
+            }
+            fclose($file_lang);
+
+            // Upload the modified template
+            if (isset($_POST['submit_file'])){
+                $file_country = fopen($location_lang . 'code_country.txt', 'r');
+                while(!feof($file_country)){
+                    $temp_country = fgets($file_country, 4096);
+                    if($temp_country == substr($_FILES['file']['name'], 6, -5).PHP_EOL){$valid_file = substr($temp_country, 0, -1); break;}
+                    $valid_file = 'en';
+                }
+                fclose($file_country);
+                if ($_FILES['file']['name'] == 'model_' . $valid_file . '.docx' && file_exists('/var/www/diagnostic/data/resources/' . $_FILES['file']['name'])) {
+                    move_uploaded_file($_FILES['file']['tmp_name'], '/var/www/diagnostic/data/resources/' . $_FILES['file']['name']);
+                    $success_upload = 1;
+                }else {
+                    $error_upload = 1;
+                }
+            }
+        }
+
+        //send to view
+        return new ViewModel([
+            'form' => $form,
+            'error_upload' => $error_upload,
+            'success_upload' => $success_upload
+        ]);
+    }
+
+    /**
      * Languages
      *
      * @return ViewModel
@@ -184,9 +260,10 @@ class IndexController extends AbstractController
 	$location_lang = '/var/www/diagnostic/language/';
 
         // Variable to display error message when adding or deleting an invalid language
-        $lang_exist = 0;
-        $lang_exist2 = 0;
-        $lang_exist3 = 0;
+        $error_lang_exist = 0; // The language already exist and can't be added
+        $error_lang_add = 0; // The language doesn't exist and can't be deleted
+        $error_lang_del = 0; // English language can't be deleted
+        $error_lang_del2 = 0; // You can't delete a current used language
 
         //retrieve questions
         $questionService = $this->get('questionService');
@@ -199,7 +276,7 @@ class IndexController extends AbstractController
             $form->setData($request->getPost());
 
             // Don't reset the reference language when clicking a button
-            if (isset($_POST['submit_lang_add']) || isset($_POST['submit_lang_del']) || isset($_POST['submit_lang_ref']) || isset($_POST['submit_all'])) {
+            if (isset($_POST['submit_lang_add']) || isset($_POST['submit_lang_del']) || isset($_POST['submit_lang_ref']) || isset($_POST['submit_all']) || isset($_POST['submit__dl_report']) || isset($_POST['submit_file'])) {
                 $_SESSION['base_lang'] = 1;
             }
 
@@ -361,10 +438,10 @@ class IndexController extends AbstractController
                         $file_temp = fopen($location_lang . 'languages.txt', 'a+');
                         while (!feof($file_temp)) {
                             $temp_country = fgets($file_temp, 4096);
-                            if ($temp_country == $temp) {$lang_exist=1; break;}
+                            if ($temp_country == $temp) {$error_lang_exist=1; break;}
                         }
 
-                        if ($lang_exist == 0) {
+                        if ($error_lang_exist == 0) {
                             fputs($file_temp, $temp);
 
                             // Creation .po file by copying the beginning of the english file
@@ -388,6 +465,11 @@ class IndexController extends AbstractController
                             fclose($new_file);
 
                             shell_exec('msgfmt ' . $location_lang . substr($temp, 0, -1) . '.po -o ' . $location_lang . substr($temp, 0, -1) . '.mo');
+
+                            // Create the template
+                            $file_template = fopen('/var/www/diagnostic/data/resources/model_' . substr($temp, 0, -1) . '.docx', 'a+');
+                            copy('/var/www/diagnostic/data/resources/model_en.docx', '/var/www/diagnostic/data/resources/model_' . substr($temp, 0, -1) . '.docx');
+                            fclose($file_template);
                         }
                         fclose($file_temp);
                     }
@@ -396,8 +478,8 @@ class IndexController extends AbstractController
             }
 
             // Delete a language
-            if (isset($_POST['submit_lang_del']) && $lang_exist3 == 0) {
-                $lang_exist2 = 2;
+            if (isset($_POST['submit_lang_del'])) {
+                $error_lang_add = 1;
 
                 $file_lang = fopen($location_lang . 'code_country.txt', 'r');
                 $fileCount = 0;
@@ -417,14 +499,18 @@ class IndexController extends AbstractController
                         while (!feof($file_temp)) {
                             $temp_lang = fgets($file_temp, 4096);
                             $num_line++;
-                            if ($temp_lang == $temp) {$lang_exist2=1; break;}
+                            if ($temp_lang == $temp) {
+                                $error_lang_add=2;
+                                if($temp_lang == $_SESSION['lang'].PHP_EOL) {$error_lang_del2 = 1;}
+                                break;
+                            }
                         }
                         fclose($file_temp);
 
                         // Avoid to delete english language, which is used to create other languages
-                        if ($temp_lang == 'en' . PHP_EOL) {$lang_exist3=1;}
+                        if ($temp_lang == 'en' . PHP_EOL) {$error_lang_del=1;}
 
-                        if ($lang_exist2 == 1 && $lang_exist3 == 0) {
+                        if ($error_lang_add == 2 && $error_lang_del == 0 && $error_lang_del2 == 0) {
 
                             $file_temp = fopen($location_lang . 'languages.txt', 'r');
                             $contents = fread($file_temp, filesize($location_lang . 'languages.txt'));
@@ -439,6 +525,11 @@ class IndexController extends AbstractController
 
                             unlink($location_lang . substr($temp_lang, 0, -1) . '.po');
                             unlink($location_lang . substr($temp_lang, 0, -1) . '.mo');
+
+                            // Delete the template if exist
+                            if(file_exists('/var/www/diagnostic/data/resources/model_' . substr($temp_lang, 0, -1) . '.docx')) {
+                                unlink('/var/www/diagnostic/data/resources/model_' . substr($temp_lang, 0, -1) . '.docx' );
+                            }
                         }
                     }
                 }
@@ -455,9 +546,10 @@ class IndexController extends AbstractController
         return new ViewModel([
             'form' => $form,
             'questions' => $questions,
-            'lang_exist' => $lang_exist,
-            'lang_exist2' => $lang_exist2,
-            'lang_exist3' => $lang_exist3
+            'error_lang_exist' => $error_lang_exist,
+            'error_lang_add' => $error_lang_add,
+            'error_lang_del' => $error_lang_del,
+            'error_lang_del2' => $error_lang_del2
         ]);
     }
 

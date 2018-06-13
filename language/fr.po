@@ -359,6 +359,15 @@ msgstr "Résultat"
 msgid "__categories"
 msgstr "Catégories"
 
+msgid "__templates"
+msgstr "Modèles de rapport"
+
+msgid "__template"
+msgstr "Modèle"
+
+msgid "__last_modif"
+msgstr "Dernière modification"
+
 msgid "__recommandations"
 msgstr "Recommandations"
 
@@ -437,6 +446,9 @@ msgstr "Client"
 msgid "__download_delivery"
 msgstr "Télécharger le livrable"
 
+msgid "__download"
+msgstr "Télécharger"
+
 msgid "__draft"
 msgstr "Brouillon"
 
@@ -469,6 +481,9 @@ msgstr "Fichier manquant"
 
 msgid "__error_file"
 msgstr "Fichier non valide"
+
+msgid "__success_file"
+msgstr "Modification effectuée"
 
 msgid "__goal"
 msgstr "Objectif"
@@ -524,14 +539,17 @@ msgstr "Maturités par catégories"
 msgid "__error_exist"
 msgstr "Cette clé existe déjà"
 
-msgid "__error_exist2"
+msgid "__error_lang_exist"
 msgstr "Cette langue existe déjà"
 
-msgid "__error_exist3"
+msgid "__error_lang_add"
 msgstr "Cette langue n'a pas été ajoutée"
 
-msgid "__error_exist4"
+msgid "__error_lang_del"
 msgstr "Vous ne pouvez pas supprimer cette langue"
+
+msgid "__error_lang_del2"
+msgstr "Vous ne pouvez pas supprimer une langue actuellement utilisée"
 
 msgid "__delete_lang"
 msgstr "Voulez-vous vraiment supprimer cette langue ?"

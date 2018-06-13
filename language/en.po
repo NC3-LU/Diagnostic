@@ -359,6 +359,15 @@ msgstr "Results"
 msgid "__categories"
 msgstr "Categories"
 
+msgid "__templates"
+msgstr "Report templates"
+
+msgid "__template"
+msgstr "Template"
+
+msgid "__last_modif"
+msgstr "Last modification"
+
 msgid "__recommandations"
 msgstr "Recommendations"
 
@@ -437,6 +446,9 @@ msgstr "Client"
 msgid "__download_delivery"
 msgstr "Download deliverable"
 
+msgid "__download"
+msgstr "Download"
+
 msgid "__draft"
 msgstr "Draft"
 
@@ -469,6 +481,9 @@ msgstr "File missing"
 
 msgid "__error_file"
 msgstr "File invalid"
+
+msgid "__success_file"
+msgstr "Successful modification"
 
 msgid "__goal"
 msgstr "Goal"
@@ -524,14 +539,17 @@ msgstr "Maturities by category"
 msgid "__error_exist"
 msgstr "This key already exist"
 
-msgid "__error_exist2"
+msgid "__error_lang_exist"
 msgstr "This language already exist"
 
-msgid "__error_exist3"
+msgid "__error_lang_add"
 msgstr "This language has not been added"
 
-msgid "__error_exist4"
+msgid "__error_lang_del"
 msgstr "You could not delete this language"
+
+msgid "__error_lang_del2"
+msgstr "You could not delete a current used language"
 
 msgid "__delete_lang"
 msgstr "Do you really want to delete this language ?"

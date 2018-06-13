@@ -132,10 +132,30 @@ class LanguageForm extends Form
         ]);
 
         $this->add([
-            'name' => 'submit_dll_report',
+            'name' => 'submit_dl_report',
             'type' => 'Submit',
             'attributes' => [
-                'value' => '__dll_report',
+                'value' => '__dl_report',
+                'class' => 'btn btn-success',
+            ],
+        ]);
+
+        $this->add([
+            'name' => 'file',
+            'type' => 'File',
+            'options' => [
+                'label' => ' ',
+            ],
+            'attributes' => [
+                'class' => 'form-control',
+            ],
+        ]);
+
+        $this->add([
+            'name' => 'submit_file',
+            'type' => 'Submit',
+            'attributes' => [
+                'value' => '__upload',
                 'class' => 'btn btn-success',
             ],
         ]);

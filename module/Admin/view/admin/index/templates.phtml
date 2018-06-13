@@ -1,0 +1,81 @@
+<?php use Zend\Form\Element; use Zend\Form\Form;
+
+$title = $this->translate('__rapport');
+$this->headTitle($title);
+
+$this->form->setAttribute('action', $this->url('admin', ['action' => 'templates']));
+$this->form->prepare();
+
+?>
+
+<?= $this->form()->openTag($form) ?>
+
+<div class="row">
+    <div class="col-lg-3"></div>
+    <div class="col-lg-6">
+        <h2><?= $this->translate('__templates') ?></h2>
+
+        <br />
+        <br />
+
+        <table class="table">
+            <tr>
+                <th style="text-align: center"><?= $this->translate('__template'); ?></th>
+                <th style="text-align: center"><?= $this->translate('__last_modif'); ?></th>
+                <th style="text-align: center"><?= $this->translate('__action'); ?></th>
+            </tr>
+
+            <?php
+            $location_lang = '/var/www/diagnostic/language/';
+            $file_lang = fopen($location_lang . 'languages.txt', 'r');
+            for ($i=1; $i<$_SESSION['nb_lang']; $i++) {
+                $temp_lang = fgets($file_lang, 4096);
+
+                // Creation download form
+                $submit = new Element('dl' . $i);
+                $submit->setAttributes([
+                    'type'  => 'submit',
+                    'class' => 'btn btn-success'
+                ]);
+                $form->add($submit);
+
+                // Creation delete form
+                $submit = new Element('del' . $i);
+                $submit->setAttributes([
+                    'type'  => 'submit',
+                    'class' => 'btn btn-success'
+                ]);
+                $form->add($submit);
+
+                echo '<tr>';
+                    echo '<td style="text-align: center">';
+                    echo basename('/var/www/diagnostic/data/resources/model_' . substr($temp_lang, 0, -1), '.docx');
+                    echo '</td><td style="text-align: center">';
+                    echo date('F d Y H:i:s', filemtime('/var/www/diagnostic/data/resources/model_' . substr($temp_lang, 0, -1) . '.docx'));
+                    echo '</td><td style="text-align: center">';
+                    echo $this->formSubmit($form->get('dl' . $i)->setValue($this->translate('__download')));
+                    echo '</td>';
+                echo '</tr>';
+            }
+            fclose($file_lang);
+            ?>
+
+        </table>
+
+        <table class="table table-responsive table-borderless">
+            <tr>
+                <td><?= $this->formFile($form->get('file')) ?></td>
+                <td><?= $this->formSubmit($form->get('submit_file')) ?></td>
+            </tr>
+            <tr>
+                <td>
+                    <?php if($error_upload == 1){ echo "<ul class='bg-danger'> <li>" . $this->translate('__error_file'). "</li></ul>"; } ?>
+                    <?php if($success_upload == 1){ echo "<ul class='bg-success'> <li>" . $this->translate('__success_file'). "</li></ul>"; } ?>
+                </td>
+            </tr>
+        </table>
+
+     </div>
+</div>
+
+<?= $this->form()->closeTag() ?>
