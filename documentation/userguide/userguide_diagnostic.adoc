@@ -95,7 +95,7 @@ ifdef::backend-pdf[<<<]
 
 === Users Tab
 
-You have four tabs (On the blue header), the first one is for Users, and then the other are questions, categories and languages.
+You have five tabs (On the blue header), the first one is for Users, and then the other are questions, categories, languages and reports.
 
 image::UG_Diagnostic_011.PNG[Administration Panel – User]
 
@@ -159,7 +159,7 @@ Just click on the blue cross (image:UG_Diagnostic_013.PNG[Cross]) to definitely 
 
 ==== Categories Screen
 
-The second tab list all the default categories that will appear when you open a new Diagnosis.
+The third tab list all the default categories that will appear when you open a new Diagnosis.
 
 image::UG_Diagnostic_036.PNG[Administration Panel – Categories]
 
@@ -195,13 +195,13 @@ Just click on the blue cross (image:UG_Diagnostic_013.PNG[Cross]) to definitely 
 
 ==== Languages Screen
 
-The first tab list all the default translations that exist when you open a new Diagnosis.
+The fourth tab list all the default translations that exist when you open a new Diagnosis.
 
 image::UG_Diagnostic_041.PNG[Administration Panel – Languages]
 
 In the ‘Translation’ column, there is the name of the translation keys, translated in the current language. You can modify it directly by changing its text and then click the green button ‘Change’ on the same line. You can also delete a translation by clicking the green button ‘Delete’.
 
-The third tab is the Reference translation and will be useful when you translate another language.
+The third column is the Reference translation and will be useful when you translate another language.
 
 ==== Add a Language
 
@@ -213,7 +213,7 @@ When the new language is added, a new button is created at the top right corner 
 
 image::UG_Diagnostic_044.PNG[Administration Panel – Language added]
 
-As you can see, the translation tab is empty, and you can then fill in translations as you want to. The Reference translation may help you filling translations, as you can choose a language to support you.
+As you can see, the translation column is empty, and you can then fill in translations as you want to. The Reference translation may help you filling translations, as you can choose a language to support you.
 
 At the end of the page, you have two buttons which are ‘Add a translation’ and ‘Change all translations’.
 
@@ -232,6 +232,22 @@ The first field is for the translation key used by the PO file. You can put the 
 Then you have some fields in which you can translate your translation.
 
 TIP: If you do not put translations, the name of the translation will be empty.
+
+=== Templates Tab
+
+==== Templates Screen
+
+The fifth tab list all the default report templates that exist when you open a new Diagnosis.
+
+image::UG_Diagnostic_046.PNG[Administration Panel – Templates]
+
+In this tab you can download all the actual templates in order to modify them.
+
+After modifying them, it is possible to upload them if you want to apply changes in the diagnosis.
+
+image::UG_Diagnostic_047.PNG[Administration Panel – Upload templates]
+
+WARNING: The uploaded template must have the same name that in the diagnosis.
 
 ifdef::backend-pdf[<<<]
 
@@ -292,7 +308,7 @@ If everything seems okay, you just need to get it on a .docx, and for that, clic
 
 image::UG_Diagnostic_030.PNG[Download deliverable]
 
-You will need to put a Document Name, the company which concerned by the Diagnosis, the version of the document (If there are multiple Diagnoses, or if you want to correct it…), a choice if it’s a draft or a final version of the Diagnosis, the classification of the document (who can read it or have it, it’s a free text, so it can be chosen with TLP, or a classification on your own), and finally the name of the consultant and the name of the client. Most of that data will be found on the document.
+You will need to put a Document Name, the company which is concerned by the Diagnosis, the version of the document (If there are multiple Diagnoses, or if you want to correct it…), a choice if it’s a draft or a final version of the Diagnosis, the classification of the document (who can read it or have it, it’s a free text, so it can be chosen with TLP, or a classification on your own), and finally the name of the consultant and the name of the client. Most of that data will be found on the document.
 The document will be named [__Document Name__]_Date.docx.
 
 image::UG_Diagnostic_031.PNG[Report Downloaded]
@@ -309,9 +325,9 @@ There is also a tab which contains the questions, the note taken, the recommenda
 
 ifdef::backend-pdf[<<<]
 
-=== Modify the template report
+=== Contents in the template report
 
-The template report is quite simple to understand. It can be found in : [__PATH_TO_DIAGNOSTIC__]/data/resources. There is some tags which corresponding to some fields in the diagnosis. You can find a complete list just below. Concerning the charts, some dummy pictures are in the document. Their name are "__image9.png__", "__image5.png__" and "__image10.png__".
+There are some tags which corresponding to some fields in the diagnosis. You can find a complete list just below. Concerning the charts, some dummy pictures are in the document. Their name are "__image9.png__", "__image5.png__" and "__image10.png__".
 
 image::UG_Diagnostic_034.PNG[Name of the dummy chart for the template]
 
@@ -319,7 +335,7 @@ And here is the dummy for the pie chart :
 
 image::UG_Diagnostic_035.PNG[Dummy in the report]
 
-As you can also see, tags which can be modified in their order, or that could be just delete are under the form "__${TAGS}__". A complete list of the different existing tags can be found just below.
+As you can also see, tags which can be modified in their order, or that could be just deleted are under the form "__${TAGS}__". A complete list of the different existing tags can be found just below.
 
 * **${CATEGpass:[__]PERCENT}** : The current percentage got in the categories (Got automatically)
 * **${CATEGpass:[__]PERCENT_TARG}** : The aimed percentage got in the categories (Got automatically)

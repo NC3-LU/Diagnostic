@@ -233,8 +233,32 @@ class IndexController extends AbstractController
                     $valid_file = 'en';
                 }
                 fclose($file_country);
+
                 if ($_FILES['file']['name'] == 'model_' . $valid_file . '.docx' && file_exists('/var/www/diagnostic/data/resources/' . $_FILES['file']['name'])) {
+
                     move_uploaded_file($_FILES['file']['tmp_name'], '/var/www/diagnostic/data/resources/' . $_FILES['file']['name']);
+
+                    // Search the modified template
+                    $file_lang = fopen($location_lang . 'languages.txt', 'r');
+                    $num_line = -1;
+                    while(!feof($file_lang)) {
+                        $temp_lang = fgets($file_lang, 4096);
+                        $num_line+=1;
+                        if($temp_lang == substr($_FILES['file']['name'], 6, -5).PHP_EOL) {break;}
+                    }
+                    fclose($file_lang);
+
+                    // Change the user mail for the modified template
+                    $file_user = fopen('/var/www/diagnostic/module/Admin/config/users.txt', 'r');
+                    $contents = fread($file_user, filesize('/var/www/diagnostic/module/Admin/config/users.txt'));
+                    fclose($file_user);
+                    $contents = explode(PHP_EOL, $contents); // PHP_EOL equals to /n in Linux
+                    $contents[$num_line] = $_SESSION['email']; // Change the user mail with the new one
+                    $contents = array_values($contents);
+                    $contents = implode(PHP_EOL, $contents);
+                    $file_user = fopen('/var/www/diagnostic/module/Admin/config/users.txt', 'w');
+                    fwrite($file_user, $contents); // Write the file with the new user mail
+                    fclose($file_user);
                     $success_upload = 1;
                 }else {
                     $error_upload = 1;
@@ -470,6 +494,12 @@ class IndexController extends AbstractController
                             $file_template = fopen('/var/www/diagnostic/data/resources/model_' . substr($temp, 0, -1) . '.docx', 'a+');
                             copy('/var/www/diagnostic/data/resources/model_en.docx', '/var/www/diagnostic/data/resources/model_' . substr($temp, 0, -1) . '.docx');
                             fclose($file_template);
+
+                            // Create the user mail for the template
+                            $file_user = fopen('/var/www/diagnostic/module/Admin/config/users.txt', 'a+');
+                            fputs($file_user, $_SESSION['email']);
+                            fputs($file_user, PHP_EOL);
+                            fclose($file_user);
                         }
                         fclose($file_temp);
                     }
@@ -516,7 +546,7 @@ class IndexController extends AbstractController
                             $contents = fread($file_temp, filesize($location_lang . 'languages.txt'));
                             fclose($file_temp);
                             $contents = explode(PHP_EOL, $contents); // PHP_EOL equals to /n in Linux
-                            unset($contents[$num_line]); // Delete the language
+                            unset($contents[$num_line]); // Delete the user
                             $contents = array_values($contents);
                             $contents = implode(PHP_EOL, $contents);
                             $file_temp = fopen($location_lang . 'languages.txt', 'w');
@@ -530,6 +560,17 @@ class IndexController extends AbstractController
                             if(file_exists('/var/www/diagnostic/data/resources/model_' . substr($temp_lang, 0, -1) . '.docx')) {
                                 unlink('/var/www/diagnostic/data/resources/model_' . substr($temp_lang, 0, -1) . '.docx' );
                             }
+
+                            $file_user = fopen('/var/www/diagnostic/module/Admin/config/users.txt', 'r');
+                            $contents = fread($file_user, filesize('/var/www/diagnostic/module/Admin/config/users.txt'));
+                            fclose($file_user);
+                            $contents = explode(PHP_EOL, $contents); // PHP_EOL equals to /n in Linux
+                            unset($contents[$num_line]); // Delete the language
+                            $contents = array_values($contents);
+                            $contents = implode(PHP_EOL, $contents);
+                            $file_user = fopen('/var/www/diagnostic/module/Admin/config/users.txt', 'w');
+                            fwrite($file_user, $contents); // Write the file without the deleted files
+                            fclose($file_user);
                         }
                     }
                 }

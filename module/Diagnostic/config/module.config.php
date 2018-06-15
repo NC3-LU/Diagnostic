@@ -149,7 +149,7 @@ return [
                 'action' => 'languages',
             ],
             [
-                'label' => '__rapport',
+                'label' => '__rapports',
                 'route' => 'admin',
                 'action' => 'templates',
             ],

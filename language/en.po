@@ -353,6 +353,9 @@ msgstr "Upper threshold"
 msgid "__rapport"
 msgstr "Report"
 
+msgid "__rapports"
+msgstr "Reports"
+
 msgid "__results"
 msgstr "Results"
 

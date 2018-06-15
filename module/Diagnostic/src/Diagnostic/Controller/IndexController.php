@@ -117,6 +117,8 @@ class IndexController extends AbstractController
                             $container->email = $user->current()->email;
                             $container->admin = $user->current()->admin;
 
+                            $_SESSION['email'] = $user->current()->email;
+
                             return $this->redirect()->toRoute('diagnostic', ['controller' => 'index', 'action' => 'diagnostic']);
                         } else {
                             $message = '__login_error';

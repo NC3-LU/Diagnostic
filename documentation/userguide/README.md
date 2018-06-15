@@ -375,6 +375,25 @@ Then you have some fields in which you can translate your translation.
 >
 > If you do not put translations, the name of the translation will be empty.
 
+Templates Tab
+-------------
+
+### Templates Screen
+
+The fifth tab list all the default report templates that exist when you open a new Diagnosis.
+
+![Administration Panel – Templates](img/UG_Diagnostic_046.PNG)
+
+In this tab you can download all the actual templates in order to modify them.
+
+After modifying them, it is possible to upload them if you want to apply changes in the diagnosis.
+
+i![Administration Panel – Upload templates](img/UG_Diagnostic_047.PNG)
+
+> **Warning**
+>
+> The uploaded template must have the same name that in the diagnosis.
+
 Resume or finish a Diagnosis
 =============================
 
@@ -455,7 +474,7 @@ that, click on the yellow button ‘Download deliverable.’
 
 ![Download deliverable](img/UG_Diagnostic_030.PNG)
 
-You will need to put a Document Name, the company which concerned by the
+You will need to put a Document Name, the company which is concerned by the
 Diagnosis, the version of the document (If there are multiple
 Diagnoses, or if you want to correct it…), a choice if it’s a draft or
 a final version of the Diagnosis, the classification of the document
@@ -481,15 +500,13 @@ on in the document. a .docx
 There is also a tab which contains the questions, the note taken, the
 recommendation and the current and target maturity.
 
-Modify the template report
+Contents in the template report
 --------------------------
 
-The template report is quite simple to understand. It can be found in :
-\[*PATH\_TO\_DIAGNOSTIC*\]/data/resources. There is some tags which
-corresponding to some fields in the diagnosis. You can find a complete
-list just below. Concerning the charts, some dummy pictures are in the
-document. Their name are "*image9.png*", "*image5.png*" and
-"*image10.png*".
+There is some tags which corresponding to some fields in the diagnosis.
+You can find a complete list just below. Concerning the charts,
+some dummy pictures are in the document.
+Their name are "*image9.png*", "*image5.png*" and "*image10.png*".
 
 ![Name of the dummy chart for the template](img/UG_Diagnostic_034.PNG)
 
@@ -497,7 +514,7 @@ And here is the dummy for the pie chart :
 
 ![Dummy in the report](img/UG_Diagnostic_035.PNG)
 
-As you can also see, tags which can be modified in their order, or that could be just delete are under the form "${TAGS}". A complete list of the different existing tags can be found just below.
+As you can also see, tags which can be modified in their order, or that could be just deleted are under the form "${TAGS}". A complete list of the different existing tags can be found just below.
 
 * \$\{CATEG\_\_PERCENT} : The current percentage got in the categories (Got automatically)
 * \$\{CATEG\_\_PERCENT\_TARG} : The aimed percentage got in the categories (Got automatically)

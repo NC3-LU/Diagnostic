@@ -353,6 +353,9 @@ msgstr "Seuil max"
 msgid "__rapport"
 msgstr "Rapport"
 
+msgid "__rapports"
+msgstr "Rapports"
+
 msgid "__results"
 msgstr "Résultat"
 

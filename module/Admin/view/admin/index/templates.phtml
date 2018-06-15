@@ -28,8 +28,10 @@ $this->form->prepare();
             <?php
             $location_lang = '/var/www/diagnostic/language/';
             $file_lang = fopen($location_lang . 'languages.txt', 'r');
+            $file_user = fopen('/var/www/diagnostic/module/Admin/config/users.txt', 'r+');
             for ($i=1; $i<$_SESSION['nb_lang']; $i++) {
                 $temp_lang = fgets($file_lang, 4096);
+                $temp_user = fgets($file_user, 4096);
 
                 // Creation download form
                 $submit = new Element('dl' . $i);
@@ -51,12 +53,13 @@ $this->form->prepare();
                     echo '<td style="text-align: center">';
                     echo basename('/var/www/diagnostic/data/resources/model_' . substr($temp_lang, 0, -1), '.docx');
                     echo '</td><td style="text-align: center">';
-                    echo date('F d Y H:i:s', filemtime('/var/www/diagnostic/data/resources/model_' . substr($temp_lang, 0, -1) . '.docx'));
+                    echo date('F d Y H:i:s', filemtime('/var/www/diagnostic/data/resources/model_' . substr($temp_lang, 0, -1) . '.docx')) . ' by ' . substr($temp_user, 0, -1);
                     echo '</td><td style="text-align: center">';
                     echo $this->formSubmit($form->get('dl' . $i)->setValue($this->translate('__download')));
                     echo '</td>';
                 echo '</tr>';
             }
+            fclose($file_user);
             fclose($file_lang);
             ?>
 
