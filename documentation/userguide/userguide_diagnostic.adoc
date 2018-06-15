@@ -95,7 +95,7 @@ ifdef::backend-pdf[<<<]
 
 === Users Tab
 
-You have five tabs (On the blue header), the first one is for Users, and then the other are Questions, Categories, Languages, Reports and Settings.
+You have six tabs (On the blue header), the first one is for Users, and then the other are Questions, Categories, Languages, Reports and Settings.
 
 image::UG_Diagnostic_011.PNG[Administration Panel – User]
 

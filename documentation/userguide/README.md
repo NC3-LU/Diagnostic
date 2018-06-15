@@ -169,8 +169,8 @@ Administration Panel
 User Tab
 --------
 
-You have five tabs (On the blue header), the first one is for Users,
-the other are for Questions, Categories, Languages and Reports.
+You have six tabs (On the blue header), the first one is for Users, and the other are for
+Questions, Categories, Languages, Reports and Settings.
 
 ![Administration Panel – User](img/UG_Diagnostic_011.PNG)
 
@@ -388,11 +388,28 @@ In this tab you can download all the actual templates in order to modify them.
 
 After modifying them, it is possible to upload them if you want to apply changes in the diagnosis.
 
-i![Administration Panel – Upload templates](img/UG_Diagnostic_047.PNG)
+![Administration Panel – Upload templates](img/UG_Diagnostic_047.PNG)
 
 > **Warning**
 >
 > The uploaded template must have the same name that in the diagnosis.
+
+Settings Tab
+-------------
+
+### Settings Screen
+
+The sixth tab list all the settings you can modify in the diagnosis.
+
+![Administration Panel – Settings](img/UG_Diagnostic_048.PNG)
+
+In this tab you can modify the default language (The one which is used when you open a diagnosis),
+the MxCheck (When this option is activated, it forces you to verify your mail address to enter a diagnosis)
+and the encryption key (Its strength).
+
+> **TIP** 
+>
+> After getting again in the settings tab, all the settings will be set by default but all the modifications will be updated.
 
 Resume or finish a Diagnosis
 =============================
