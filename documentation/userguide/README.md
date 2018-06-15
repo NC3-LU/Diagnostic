@@ -169,8 +169,8 @@ Administration Panel
 User Tab
 --------
 
-You have two tabs (On the blue header), the first one is for Users, and
-the second one is about the Questions.
+You have five tabs (On the blue header), the first one is for Users,
+the other are for Questions, Categories, Languages and Reports.
 
 ![Administration Panel – User](img/UG_Diagnostic_011.PNG)
 
