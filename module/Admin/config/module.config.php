@@ -51,6 +51,7 @@ return [
             'AdminCategoryForm' => 'Admin\Form\CategoryFormFactory',
             'AdminLanguageForm' => 'Admin\Form\LanguageFormFactory',
             'AdminTemplateForm' => 'Admin\Form\TemplateFormFactory',
+            'AdminSettingForm' => 'Admin\Form\SettingFormFactory',
             'AdminAddTranslationForm' => 'Admin\Form\AddTranslationFormFactory',
         ],
         'invokables' => [
@@ -59,6 +60,7 @@ return [
             'NewCategoryForm' => 'Admin\Form\CategoryForm',
             'NewLanguageForm' => 'Admin\Form\LanguageForm',
             'NewTemplateForm' => 'Admin\Form\TemplateForm',
+            'NewSettingForm' => 'Admin\Form\SettingForm',
             'NewAddTranslationForm' => 'Admin\Form\AddTranslationForm',
         ],
     ],

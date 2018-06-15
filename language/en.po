@@ -33,13 +33,13 @@ msgid "__category7"
 msgstr "Information system"
 
 msgid "__category8"
-msgstr "Incident and business continuity "
+msgstr "Incident and business continuity"
 
 msgid "__question1"
-msgstr "What security mechanisms already exist (other than technical mechanisms)"
+msgstr "What security mechanisms already exist (other than technical mechanisms)?"
 
 msgid "__question1help"
-msgstr "Is there:<br><ul><li>a security policy?</li><li>a user or administrator charter?</li><li>procedures (e.g. back-up)?</li><li>in-house instructions?</li><li>etc</li></ul>"
+msgstr "Is there?<br><ul><li>a security policy</li><li>a user or administrator charter</li><li>procedures (e.g. back-up)</li><li>in-house instructions</li><li>etc</li></ul>"
 
 msgid "__question2"
 msgstr "What is the core business? The most sensitive processes/items of information?"
@@ -299,6 +299,9 @@ msgstr "Record"
 msgid "__domain"
 msgstr "Domain"
 
+msgid "__settings"
+msgstr "Settings"
+
 msgid "__current_maturity"
 msgstr "Current maturity"
 
@@ -394,6 +397,9 @@ msgstr "Change"
 
 msgid "__modify_all"
 msgstr "Change all translations"
+
+msgid "__change_default_language"
+msgstr "Change the default language"
 
 msgid "__questions"
 msgstr "Questions"
@@ -529,6 +535,9 @@ msgstr "Current"
 
 msgid "__target"
 msgstr "Target"
+
+msgid "__encryption_key"
+msgstr "Encryption key"
 
 msgid "__organization_information"
 msgstr "Information about organization"

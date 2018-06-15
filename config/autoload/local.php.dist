@@ -22,7 +22,7 @@ return [
     'mail_name' => 'Cases',
     'domain' => 'diagnostic.cases.lu',
     'translator' => [
-        'locale' => '%%LANG%%',
+        'locale' => %%LANG%%,
         'translation_file_patterns' => [
             [
                'type' => 'gettext',

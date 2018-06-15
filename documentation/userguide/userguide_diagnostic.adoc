@@ -95,7 +95,7 @@ ifdef::backend-pdf[<<<]
 
 === Users Tab
 
-You have five tabs (On the blue header), the first one is for Users, and then the other are questions, categories, languages and reports.
+You have five tabs (On the blue header), the first one is for Users, and then the other are Questions, Categories, Languages, Reports and Settings.
 
 image::UG_Diagnostic_011.PNG[Administration Panel – User]
 
@@ -248,6 +248,18 @@ After modifying them, it is possible to upload them if you want to apply changes
 image::UG_Diagnostic_047.PNG[Administration Panel – Upload templates]
 
 WARNING: The uploaded template must have the same name that in the diagnosis.
+
+=== Settings Tab
+
+==== Settings Screen
+
+The sixth tab list all the settings you can modify in the diagnosis.
+
+image::UG_Diagnostic_048.PNG[Administration Panel – Settings]
+
+In this tab you can modify the default language (The one which is used when you open a diagnosis), the MxCheck (When this option is activated, it forces you to verify your mail address to enter a diagnosis) and the encryption key (Its strength).
+
+TIP: After getting again in the settings tab, all the settings will be set by default but all the modifications will be updated.
 
 ifdef::backend-pdf[<<<]
 

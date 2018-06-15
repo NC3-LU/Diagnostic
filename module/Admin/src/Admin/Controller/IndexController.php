@@ -28,6 +28,7 @@ class IndexController extends AbstractController
     protected $adminCategoryForm;
     protected $adminLanguageForm;
     protected $adminTemplateForm;
+    protected $adminSettingForm;
     protected $adminAddTranslationForm;
 
     /**
@@ -172,6 +173,165 @@ class IndexController extends AbstractController
         //send to view
         return new ViewModel([
             'categories' => $categories
+        ]);
+    }
+
+    /**
+     * Settings
+     *
+     * @return ViewModel
+     */
+    public function settingsAction()
+    {
+        $request = $this->getRequest();
+        $form = $this->get('adminSettingForm');
+
+        $form->get('encryption_key')->setValue('*****');
+
+        if ($request->isPost()) {
+            $form->setData($request->getPost());
+
+            if($_POST['submit']) {
+
+                // Count the number of languages
+                $file_lang = fopen('/var/www/diagnostic/language/languages.txt', 'r');
+                $fileCount = 0;
+                while (!feof($file_lang)) {
+                    $temp_lang = fgets($file_lang, 4096);
+                    $fileCount++;
+                }
+                fclose($file_lang);
+
+                // See if the language chosen in the select form is in the languages.txt file
+                $file_lang = fopen('/var/www/diagnostic/language/languages.txt', 'r');
+                for ($i=0; $i<$fileCount; $i++) {
+                    $temp_lang = fgets($file_lang, 4096);
+                    if ($request->getPost('select_language') == $i) {
+                        $temp = $temp_lang;
+                    }
+                }
+                fclose($file_lang);
+
+                // Search the default translation line
+                $file_config = fopen('/var/www/diagnostic/module/Diagnostic/config/module.config.php', 'r');
+                $fileCount = -1;
+                while(!feof($file_config)) {
+                    $temp_config = fgets($file_config, 4096);
+                    $fileCount+=1;
+                    if($temp_config == "    'translator' => [" . PHP_EOL){$num_line = $fileCount; break;}
+                }
+                fclose($file_config);
+
+                // Change the default translation
+                $file_config = fopen('/var/www/diagnostic/module/Diagnostic/config/module.config.php', 'r');
+                $contents = fread($file_config, filesize('/var/www/diagnostic/module/Diagnostic/config/module.config.php'));
+                fclose($file_config);
+                $contents = explode(PHP_EOL, $contents); // PHP_EOL equals to /n in Linux
+                $contents[$num_line+1] = "        'locale' => '" . substr($temp, 0, -1) . "',"; // Change the default translation with the new one
+                $contents = array_values($contents);
+                $contents = implode(PHP_EOL, $contents);
+                $file_config = fopen('/var/www/diagnostic/module/Diagnostic/config/module.config.php', 'w');
+                fwrite($file_config, $contents); // Write the file with the new default translation
+                fclose($file_config);
+
+                $file_login = fopen('/var/www/diagnostic/module/Diagnostic/src/Diagnostic/InputFilter/LoginFormFilter.php', 'r');
+                $fileCount = -1;
+                while(!feof($file_login)) {
+                    $temp_login = fgets($file_login, 4096);
+                    $fileCount+=1;
+                    if($temp_login == "                        'allow' => Hostname::ALLOW_DNS," . PHP_EOL){$num_line_login = $fileCount; break;}
+                }
+                fclose($file_login);
+
+                $file_email = fopen('/var/www/diagnostic/module/Admin/src/Admin/InputFilter/EmailNotExistFilter.php', 'r');
+                $fileCount = -1;
+                while(!feof($file_email)) {
+                    $temp_email = fgets($file_email, 4096);
+                    $fileCount+=1;
+                    if($temp_email == "                        'allow' => Hostname::ALLOW_DNS," . PHP_EOL){$num_line_email = $fileCount; break;}
+                }
+                fclose($file_email);
+
+                $file_user = fopen('/var/www/diagnostic/module/Admin/src/Admin/InputFilter/UserFormFilter.php', 'r');
+                $fileCount = -1;
+                while(!feof($file_user)) {
+                    $temp_user = fgets($file_user, 4096);
+                    $fileCount+=1;
+                    if($temp_user == "                        'allow' => Hostname::ALLOW_DNS," . PHP_EOL){$num_line_user = $fileCount; break;}
+                }
+                fclose($file_user);
+
+                if($request->getPost('checkbox_mxCheck')) {
+                    $mxCheck = 'true';
+		}else {
+                    $mxCheck = 'false';
+                }
+
+                // Change the default translation
+                $file_login = fopen('/var/www/diagnostic/module/Diagnostic/src/Diagnostic/InputFilter/LoginFormFilter.php', 'r');
+                $contents = fread($file_login, filesize('/var/www/diagnostic/module/Diagnostic/src/Diagnostic/InputFilter/LoginFormFilter.php'));
+                fclose($file_login);
+                $contents = explode(PHP_EOL, $contents); // PHP_EOL equals to /n in Linux
+                $contents[$num_line_login+1] = "                        'useMxCheck' => " . $mxCheck . ","; // Change the default translation with the new one
+                $contents = array_values($contents);
+                $contents = implode(PHP_EOL, $contents);
+                $file_login = fopen('/var/www/diagnostic/module/Diagnostic/src/Diagnostic/InputFilter/LoginFormFilter.php', 'w');
+                fwrite($file_login, $contents); // Write the file with the new default translation
+                fclose($file_login);
+
+                // Change the default translation
+                $file_email = fopen('/var/www/diagnostic/module/Admin/src/Admin/InputFilter/EmailNotExistFilter.php', 'r');
+                $contents = fread($file_email, filesize('/var/www/diagnostic/module/Admin/src/Admin/InputFilter/EmailNotExistFilter.php'));
+                fclose($file_email);
+                $contents = explode(PHP_EOL, $contents); // PHP_EOL equals to /n in Linux
+                $contents[$num_line_email+1] = "                        'useMxCheck' => " . $mxCheck . ","; // Change the default translation with the new one
+                $contents = array_values($contents);
+                $contents = implode(PHP_EOL, $contents);
+                $file_email = fopen('/var/www/diagnostic/module/Admin/src/Admin/InputFilter/EmailNotExistFilter.php', 'w');
+                fwrite($file_email, $contents); // Write the file with the new default translation
+                fclose($file_email);
+
+                // Change the default translation
+                $file_user = fopen('/var/www/diagnostic/module/Admin/src/Admin/InputFilter/UserFormFilter.php', 'r');
+                $contents = fread($file_user, filesize('/var/www/diagnostic/module/Admin/src/Admin/InputFilter/UserFormFilter.php'));
+                fclose($file_user);
+                $contents = explode(PHP_EOL, $contents); // PHP_EOL equals to /n in Linux
+                $contents[$num_line_user+1] = "                        'useMxCheck' => " . $mxCheck . ","; // Change the default translation with the new one
+                $contents = array_values($contents);
+                $contents = implode(PHP_EOL, $contents);
+                $file_user = fopen('/var/www/diagnostic/module/Admin/src/Admin/InputFilter/UserFormFilter.php', 'w');
+                fwrite($file_user, $contents); // Write the file with the new default translation
+                fclose($file_user);
+
+                if($request->getPost('encryption_key')) {
+
+                }
+                $file_encrypt = fopen('/var/www/diagnostic/config/autoload/local.php', 'r');
+                $fileCount = -1;
+                while(!feof($file_encrypt)) {
+                    $temp_encrypt = fgets($file_encrypt, 4096);
+                    $fileCount+=1;
+                    if($temp_encrypt == "    ]," . PHP_EOL){$num_line_encrypt = $fileCount; break;}
+                }
+                fclose($file_encrypt);
+
+                // Change the default translation
+                $file_encrypt = fopen('/var/www/diagnostic/config/autoload/local.php', 'r');
+                $contents = fread($file_encrypt, filesize('/var/www/diagnostic/config/autoload/local.php'));
+                fclose($file_encrypt);
+                $contents = explode(PHP_EOL, $contents); // PHP_EOL equals to /n in Linux
+                $contents[$num_line_encrypt+1] = "    'encryption_key' => '" . $request->getPost('encryption_key') . "',"; // Change the default translation with the new one
+                $contents = array_values($contents);
+                $contents = implode(PHP_EOL, $contents);
+                $file_encrypt = fopen('/var/www/diagnostic/config/autoload/local.php', 'w');
+                fwrite($file_encrypt, $contents); // Write the file with the new default translation
+                fclose($file_encrypt);
+
+            }
+        }
+        //send to view
+        return new ViewModel([
+            'form' => $form
         ]);
     }
 
@@ -454,6 +614,7 @@ class IndexController extends AbstractController
                 }
                 fclose($file_country);
 
+                // See if the language chosen in the select form is in the code_country file
                 $file_country = fopen($location_lang . 'code_country.txt', 'r');
                 for ($i=0; $i<$fileCount; $i++) {
                     $temp_country = fgets($file_country, 4096);
@@ -561,16 +722,39 @@ class IndexController extends AbstractController
                                 unlink('/var/www/diagnostic/data/resources/model_' . substr($temp_lang, 0, -1) . '.docx' );
                             }
 
+                            // Delete the user email of the template deleted
                             $file_user = fopen('/var/www/diagnostic/module/Admin/config/users.txt', 'r');
                             $contents = fread($file_user, filesize('/var/www/diagnostic/module/Admin/config/users.txt'));
                             fclose($file_user);
                             $contents = explode(PHP_EOL, $contents); // PHP_EOL equals to /n in Linux
-                            unset($contents[$num_line]); // Delete the language
+                            unset($contents[$num_line]); // Delete the user email
                             $contents = array_values($contents);
                             $contents = implode(PHP_EOL, $contents);
                             $file_user = fopen('/var/www/diagnostic/module/Admin/config/users.txt', 'w');
                             fwrite($file_user, $contents); // Write the file without the deleted files
                             fclose($file_user);
+
+                            // Put the default language to english
+                            $file_config = fopen('/var/www/diagnostic/module/Diagnostic/config/module.config.php', 'r');
+                            $fileCount = -1;
+                            while(!feof($file_config)) {
+                                $temp_config = fgets($file_config, 4096);
+                                $fileCount+=1;
+                                if($temp_config == "    'translator' => [" . PHP_EOL){$num_line = $fileCount; break;}
+                            }
+                            fclose($file_config);
+
+                            // Change the default translation
+                            $file_config = fopen('/var/www/diagnostic/module/Diagnostic/config/module.config.php', 'r');
+                            $contents = fread($file_config, filesize('/var/www/diagnostic/module/Diagnostic/config/module.config.php'));
+                            fclose($file_config);
+                            $contents = explode(PHP_EOL, $contents); // PHP_EOL equals to /n in Linux
+                            $contents[$num_line+1] = "        'locale' => 'en',"; // Change the default translation with the new one
+                            $contents = array_values($contents);
+                            $contents = implode(PHP_EOL, $contents);
+                            $file_config = fopen('/var/www/diagnostic/module/Diagnostic/config/module.config.php', 'w');
+                            fwrite($file_config, $contents); // Write the file with the new default translation
+                            fclose($file_config);
                         }
                     }
                 }
@@ -837,6 +1021,7 @@ class IndexController extends AbstractController
         foreach ($currentQuestion as $question) {
             if ($question->getId() == $id) {
                 $form->get('translation_key')->setValue($question->getTranslationKey());
+                $form->bind($question);
                 $cat = $question; // $cat equal to the question to modify
             }
         }

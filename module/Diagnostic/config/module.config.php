@@ -153,6 +153,11 @@ return [
                 'route' => 'admin',
                 'action' => 'templates',
             ],
+            [
+                'label' => '__settings',
+                'route' => 'admin',
+                'action' => 'settings',
+            ],
         ],
     ],
 ];

@@ -299,6 +299,9 @@ msgstr "Enregistrer"
 msgid "__domain"
 msgstr "Domaine"
 
+msgid "__settings"
+msgstr "Options"
+
 msgid "__current_maturity"
 msgstr "Maturité actuelle"
 
@@ -394,6 +397,9 @@ msgstr "Modifier"
 
 msgid "__modify_all"
 msgstr "Modifier toutes les traductions"
+
+msgid "__change_default_language"
+msgstr "Changer la langue par défaut"
 
 msgid "__questions"
 msgstr "Questions"
@@ -529,6 +535,9 @@ msgstr "Actuelle"
 
 msgid "__target"
 msgstr "Visée"
+
+msgid "__encryption_key"
+msgstr "Clé de chiffrement"
 
 msgid "__organization_information"
 msgstr "Informations sur l'organisme"

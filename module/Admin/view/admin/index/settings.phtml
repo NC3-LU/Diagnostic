@@ -1,0 +1,46 @@
+<?php use Zend\Form\Element; use Zend\Form\Form;
+
+$title = $this->translate('__settings');
+$this->headTitle($title);
+
+$this->form->setAttribute('action', $this->url('admin', ['action' => 'settings']));
+$this->form->prepare();
+
+?>
+
+<?= $this->form()->openTag($form) ?>
+
+<div class="row">
+    <div class="col-lg-3"></div>
+    <div class="col-lg-4">
+        <h2><?= $this->translate('__settings') ?></h2>
+
+        <br />
+        <br />
+
+        <table class="table">
+            <tr>
+                <th style="text-align: center"><?= $this->translate('__settings'); ?></th>
+                <th style="text-align: center"><?= $this->translate('__action'); ?></th>
+            </tr>
+
+            <tr>
+                <td style="text-align: center;"><?= $this->translate($form->get('select_language')->getLabel()); ?></td>
+                <td><?= $this->formSelect($form->get('select_language')) ?></td>
+            </tr>
+
+            <tr>
+                <td style="text-align: center;"><?= $this->translate($form->get('checkbox_mxCheck')->getLabel()); ?></td>
+                <td style="text-align: center;"><?= $this->formCheckbox($form->get('checkbox_mxCheck')) ?></td>
+            </tr>
+
+            <tr>
+                <td style="text-align: center;"><?= $this->translate($form->get('encryption_key')->getLabel()); ?></td>
+                <td><?= $this->formText($form->get('encryption_key')) ?></td>
+            </tr>
+        </table>
+        <span style='float:right'><?= $this->formSubmit($form->get('submit')) ?></span>
+     </div>
+</div>
+
+<?= $this->form()->closeTag() ?>
