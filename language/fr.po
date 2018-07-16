@@ -299,6 +299,9 @@ msgstr "Enregistrer"
 msgid "__domain"
 msgstr "Domaine"
 
+msgid "__settings"
+msgstr "Options"
+
 msgid "__current_maturity"
 msgstr "Maturité actuelle"
 
@@ -322,6 +325,9 @@ msgstr "Ajouter une catégorie"
 
 msgid "__add_a_language"
 msgstr "Ajouter une langue"
+
+msgid "__add_a_translation"
+msgstr "Ajouter une traduction"
 
 msgid "__add"
 msgstr "Ajouter"
@@ -350,26 +356,23 @@ msgstr "Seuil max"
 msgid "__rapport"
 msgstr "Rapport"
 
-msgid "__mail_password_forgotten_subject"
-msgstr "Diagnostic Cases - Mot de passe oublié"
-
-msgid "__mail_password_forgotten_content1"
-msgstr "Vous avez oublié votre mot de passe pour le <strong>diagnostic Cases</strong>"
-
-msgid "__mail_password_forgotten_content2"
-msgstr "Pour créer un nouveau mot de passe, merci de cliquer sur le bouton suivant :"
-
-msgid "__mail_password_forgotten_content3"
-msgstr "Si vous n'êtes pas concerné par ce mail, merci d'ignorer ce message"
-
-msgid "__mail_password_forgotten_link"
-msgstr "NOUVEAU MOT DE PASSE"
+msgid "__rapports"
+msgstr "Rapports"
 
 msgid "__results"
 msgstr "Résultat"
 
 msgid "__categories"
 msgstr "Catégories"
+
+msgid "__templates"
+msgstr "Modèles de rapport"
+
+msgid "__template"
+msgstr "Modèle"
+
+msgid "__last_modif"
+msgstr "Dernière modification"
 
 msgid "__recommandations"
 msgstr "Recommandations"
@@ -392,11 +395,20 @@ msgstr "Détails de l'utilisateur"
 msgid "__modify"
 msgstr "Modifier"
 
+msgid "__modify_all"
+msgstr "Modifier toutes les traductions"
+
+msgid "__change_default_language"
+msgstr "Changer la langue par défaut"
+
 msgid "__questions"
 msgstr "Questions"
 
 msgid "__translation_key"
 msgstr "Clef de traduction"
+
+msgid "__translation_ref"
+msgstr "Traduction de référence"
 
 msgid "__translation"
 msgstr "Traduction"
@@ -443,6 +455,9 @@ msgstr "Client"
 msgid "__download_delivery"
 msgstr "Télécharger le livrable"
 
+msgid "__download"
+msgstr "Télécharger"
+
 msgid "__draft"
 msgstr "Brouillon"
 
@@ -475,6 +490,9 @@ msgstr "Fichier manquant"
 
 msgid "__error_file"
 msgstr "Fichier non valide"
+
+msgid "__success_file"
+msgstr "Modification effectuée"
 
 msgid "__goal"
 msgstr "Objectif"
@@ -518,6 +536,9 @@ msgstr "Actuelle"
 msgid "__target"
 msgstr "Visée"
 
+msgid "__encryption_key"
+msgstr "Clé de chiffrement"
+
 msgid "__organization_information"
 msgstr "Informations sur l'organisme"
 
@@ -526,6 +547,48 @@ msgstr "Synthèse sur l'évaluation"
 
 msgid "__categories_maturities"
 msgstr "Maturités par catégories"
+
+msgid "__error_exist"
+msgstr "Cette clé existe déjà"
+
+msgid "__error_lang_exist"
+msgstr "Cette langue existe déjà"
+
+msgid "__error_lang_add"
+msgstr "Cette langue n'a pas été ajoutée"
+
+msgid "__error_lang_del"
+msgstr "Vous ne pouvez pas supprimer cette langue"
+
+msgid "__error_lang_del2"
+msgstr "Vous ne pouvez pas supprimer une langue actuellement utilisée"
+
+msgid "__delete_lang"
+msgstr "Voulez-vous vraiment supprimer cette langue ?"
+
+msgid "__delete_question"
+msgstr "Voulez-vous vraiment supprimer cette question ?"
+
+msgid "__delete_category"
+msgstr "Voulez-vous vraiment supprimer cette catégorie ? Pour actualiser l'affichage des catégories, il faut vous reconnecter."
+
+msgid "__delete_trans"
+msgstr "Voulez-vous vraiment supprimer cette traduction ?"
+
+msgid "__mail_password_forgotten_subject"
+msgstr "Diagnostic Cases - Mot de passe oublié"
+
+msgid "__mail_password_forgotten_content1"
+msgstr "Vous avez oublié votre mot de passe pour le <strong>diagnostic Cases</strong>"
+
+msgid "__mail_password_forgotten_content2"
+msgstr "Pour créer un nouveau mot de passe, merci de cliquer sur le bouton suivant :"
+
+msgid "__mail_password_forgotten_content3"
+msgstr "Si vous n'êtes pas concerné par ce mail, merci d'ignorer ce message"
+
+msgid "__mail_password_forgotten_link"
+msgstr "NOUVEAU MOT DE PASSE"
 
 msgid "Value is required and can't be empty"
 msgstr "La valeur est requise et ne peut pas être vide"
@@ -547,6 +610,3 @@ msgstr "Le mot de passe doit contenir au moins 8 caractères"
 
 msgid "The two given tokens do not match"
 msgstr "Le mot de passe et la confirmation doivent être identiques"
-
-msgid "__error_exist"
-msgstr "Cette clé existe déjà"

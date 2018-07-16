@@ -5,15 +5,15 @@ use Zend\Db\Sql\Platform\Mysql\Mysql;
 use Zend\Db\Sql\Predicate\Expression;
 
 /**
- * Question Gateway
+ * Category Gateway
  *
  * @package Diagnostic\Gateway
- * @author Jerome De Almeida <jerome.dealmeida@vesperiagroup.com>
+ * @author Romain DESJARDINS
  */
 class CategoryGateway extends AbstractGateway
 {
     /**
-     * Fetch all with questions
+     * Fetch all with categories
      *
      * @return null|\Zend\Db\ResultSet\ResultSetInterface
      */
@@ -31,7 +31,7 @@ class CategoryGateway extends AbstractGateway
     }
 
     /**
-     * Get question by id
+     * Get category by id
      *
      * @param $id
      * @return null|\Zend\Db\ResultSet\ResultSetInterface

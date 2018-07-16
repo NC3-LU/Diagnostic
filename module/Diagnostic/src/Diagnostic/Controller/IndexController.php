@@ -117,6 +117,8 @@ class IndexController extends AbstractController
                             $container->email = $user->current()->email;
                             $container->admin = $user->current()->admin;
 
+                            $_SESSION['email'] = $user->current()->email;
+
                             return $this->redirect()->toRoute('diagnostic', ['controller' => 'index', 'action' => 'diagnostic']);
                         } else {
                             $message = '__login_error';
@@ -508,7 +510,7 @@ class IndexController extends AbstractController
         $errorMessage = '';
         $request = $this->getRequest();
 
-	if ($request->isPost()) {
+        if ($request->isPost()) {
 
             if (count($request->getFiles())) {
                 $formUpload->setData(array_merge_recursive(
@@ -762,13 +764,10 @@ class IndexController extends AbstractController
         $encryptionKey = $config['encryption_key'];
 
 	//encrypt result
-        //$blockCipher = BlockCipher::factory('mcrypt', ['algo' => 'aes']);
-        //$blockCipher->setKey($encryptionKey);
-        //$cryptExport = $blockCipher->encrypt($export);
-	$iv = $config['iv_key'];
+        $iv = $config['iv_key'];
         $cryptExport = openssl_encrypt($export,'AES-256-CBC', $encryptionKey, OPENSSL_RAW_DATA, $iv);
         //create file
-        $filename = 'Diagnostic_' . date('YmdHis') . '.cases';
+        $filename = 'data_' . date('YmdHis') . '.cases';
         !$handle = fopen($filename, 'w');
         fwrite($handle, $cryptExport);
         fclose($handle);
@@ -839,13 +838,13 @@ class IndexController extends AbstractController
             ['color' => '#555555', 'highlight' => '#666666'],
             ['color' => '#B266FF', 'highlight' => '#CC99FF'],
             ['color' => '#FF66FF', 'highlight' => '#FF99FF'],
-	    ['color' => '#498BFD', 'highlight' => '#74A7FE'],
-	    ['color' => '#37DE96', 'highlight' => '#44FEAD'],
-	    ['color' => '#E0F000', 'highlight' => '#EDFE00'],
-	    ['color' => '#75CE00', 'highlight' => '#91FE03'],
-	    ['color' => '#00ECE4', 'highlight' => '#00FEF6'],
-	    ['color' => '#BA7C00', 'highlight' => '#DC9300'],
-	    ['color' => '#E500DD', 'highlight' => '#FE00F6'],
+            ['color' => '#498BFD', 'highlight' => '#74A7FE'],
+            ['color' => '#37DE96', 'highlight' => '#44FEAD'],
+            ['color' => '#E0F000', 'highlight' => '#EDFE00'],
+            ['color' => '#75CE00', 'highlight' => '#91FE03'],
+            ['color' => '#00ECE4', 'highlight' => '#00FEF6'],
+            ['color' => '#BA7C00', 'highlight' => '#DC9300'],
+            ['color' => '#E500DD', 'highlight' => '#FE00F6'],
         ];
         $categoriesRepartition = [];
         $i = 0;
@@ -984,14 +983,15 @@ class IndexController extends AbstractController
 
         $container = new Container('diagnostic');
 
-	$file_lang = fopen('/var/www/diagnostic/language/languages.txt', 'r');
-	for ($i=1; $i<$_SESSION['nb_lang']; $i++) {
-	    $temp_lang = fgets($file_lang, 4096);
+	$location_lang = '/var/www/diagnostic/language/languages.txt';
+        $file_lang = fopen($location_lang, 'r');
+        for ($i=1; $i<$_SESSION['nb_lang']; $i++) {
+            $temp_lang = fgets($file_lang, 4096);
             if ($id == $i) {
                 $container->language = substr($temp_lang, 0, -1);
             }
         }
-	fclose($file_lang);
+        fclose($file_lang);
 
         //redirection
         $this->redirect()->toUrl($this->getRequest()->getHeader('Referer')->getUri());

@@ -1,0 +1,68 @@
+<?php use Zend\Form\Element;
+
+$title = $this->translate('__translation');
+$this->headTitle($title);
+
+$this->form->setAttribute('action', $this->url('admin', ['action' => 'add-translation']));
+$this->form->prepare(); ?>
+
+<div class="row">
+    <div class="col-lg-3 text-center"></div>
+    <div class="col-lg-6 text-left">
+        <h2><?= $this->translate('__add_a_translation') ?></h2>
+        <br />
+
+        <?= $this->form()->openTag($form) ?>
+
+        <table class="table table-responsive table-borderless">
+            <tr>
+                <td><label><?= $this->translate($form->get('translation_key')->getLabel()) ?></label></td>
+                <td>
+                    <?= $this->formText($form->get('translation_key')->setValue('__')) ?>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <?= $this->formElementErrors($form->get('translation_key'), ['class' => 'bg-danger']) ?>
+                    <!-- // Display error if the translation key already exist -->
+                    <?php if($_SESSION['erreur_exist'] == 1){ echo "<ul class='bg-danger'> <li>" . $this->translate('__error_exist'). "</li></ul>"; } ?>
+                </td>
+            </tr>
+
+            <!-- // Translations label and form-text -->
+            <?php
+            $location_lang = '/var/www/diagnostic/language/languages.txt';
+            $file_lang = fopen($location_lang, 'r');
+            for($i=1; $i<$_SESSION['nb_lang']; $i++) {
+                $temp_lang = fgets($file_lang, 4096);
+
+                // Creation translation form
+                $translation = new Element('translation_' . substr($temp_lang, 0, -1)); // substr is for deleting the /n
+                $translation->setLabel('__translation');
+                $translation->setAttributes([
+                    'type'  => 'text',
+                    'class' => 'form-control'
+                ]);
+                $form->add($translation);
+                ?>
+                <tr>
+                    <td><label><?= $this->translate($form->get('translation_' . substr($temp_lang, 0, -1))->getLabel()) ?></label>&nbsp;<span class="flag-icon flag-icon-<?= $temp_lang ?>"></span></td>
+                    <td>
+                        <?= $this->formText($form->get('translation_' . substr($temp_lang, 0, -1))) ?>
+                    </td>
+                </tr>
+            <?php
+            }
+            fclose($file_lang);
+            ?>
+            <tr>
+                <td colspan="2">
+                    <?= $this->formSubmit($form->get('submit')) ?>
+                </td>
+            </tr>
+        </table>
+        <?= $this->formHidden($form->get('csrf')) ?>
+        <?= $this->form()->closeTag() ?>
+    </div>
+    <div class="col-lg-3 text-center"></div>
+</div>

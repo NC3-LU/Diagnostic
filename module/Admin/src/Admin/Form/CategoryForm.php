@@ -4,10 +4,10 @@ namespace Admin\Form;
 use Zend\Form\Form;
 
 /**
- * Question Form
+ * Category Form
  *
  * @package Diagnostic\Form
- * @author Jerome De Almeida <jerome.dealmeida@vesperiagroup.com>
+ * @author Romain DESJARDINS
  */
 class CategoryForm extends Form
 {
@@ -28,7 +28,7 @@ class CategoryForm extends Form
 
     /**
      * @param array $categories
-     * @return QuestionForm
+     * @return CategoryForm
      */
     public function setCategories($categories)
     {

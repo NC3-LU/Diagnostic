@@ -17,11 +17,12 @@ return [
         'password' => '%%DB_PASSWORD%%',
     ],
     'encryption_key' => '*****',
+    'iv_key' => '****************',
     'mail' => 'info@cases.lu',
     'mail_name' => 'Cases',
     'domain' => 'diagnostic.cases.lu',
     'translator' => [
-        'locale' => '%%LANG%%',
+        'locale' => %%LANG%%,
         'translation_file_patterns' => [
             [
                'type' => 'gettext',

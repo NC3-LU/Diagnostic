@@ -169,8 +169,8 @@ Administration Panel
 User Tab
 --------
 
-You have two tabs (On the blue header), the first one is for Users, and
-the second one is about the Questions.
+You have six tabs (On the blue header), the first one is for Users, and the other are for
+Questions, Categories, Languages, Reports and Settings.
 
 ![Administration Panel – User](img/UG_Diagnostic_011.PNG)
 
@@ -313,6 +313,133 @@ a category. You can change details on the same ways.
 Just click on the blue cross (![Cross](img/UG_Diagnostic_013.PNG))
 to definitely delete the category, with a confirmation message.
 
+Languages Tab
+-------------
+
+### Languages Screen
+
+The first tab list all the default translations that exist when you
+open a new Diagnosis.
+
+![Administration Panel – Languages](img/UG_Diagnostic_041.PNG)
+
+In the ‘Translation’ column, there is the name of the translation keys,
+translated in the current language. You can modify it directly by changing
+its text and then click the green button ‘Change’ on the same line.
+You can also delete a translation by clicking the green button ‘Delete’.
+
+The third tab is the Reference translation and will be useful when
+you translate another language.
+
+### Add a Language
+
+Indeed, at the top right of the page, you can add another language
+by selecting its code country and clicking the green button ‘Add’.
+You can also delete a language selected by clicking the button ‘Delete’.
+
+![Administration Panel – Add Languages](img/UG_Diagnostic_043.PNG)
+
+When the new language is added, a new button is created at the top
+right corner of the page, with the flag of the language chosen.
+You can click on the button.
+
+![Administration Panel – Language added](img/UG_Diagnostic_044.PNG)
+
+As you can see, the translation tab is empty, and you can then fill in
+translations as you want to. The Reference translation may help you
+filling translations, as you can choose a language to support you.
+
+At the end of the page, you have two buttons which are ‘Add a translation’
+and ‘Change all translations’.
+
+![Administration Panel – Add-Delete translation](img/UG_Diagnostic_042.PNG)
+
+‘Change all translations’ allows you to change multiple translations so
+that you do not have to change one by one all the translations.
+‘Add a translation’ is for adding a translation.
+
+> **Tip**
+>
+> Normally you won't use this last feature, unless you want to change
+> the code of the application and you need another translation.
+
+### Add a Translation
+
+![Administration Panel – Add Translations](img/UG_Diagnostic_045.PNG)
+
+The first field is for the translation key used by the PO file. You can put the key you need to translate.
+
+Then you have some fields in which you can translate your translation.
+
+> **Tip**
+>
+> If you do not put translations, the name of the translation will be empty.
+
+Templates Tab
+-------------
+
+### Templates Screen
+
+The fifth tab list all the default report templates that exist when you open a new Diagnosis.
+
+![Administration Panel – Templates](img/UG_Diagnostic_046.PNG)
+
+In this tab you can download all the actual templates in order to modify them.
+
+After modifying them, it is possible to upload them if you want to apply changes in the diagnosis.
+
+![Administration Panel – Upload templates](img/UG_Diagnostic_047.PNG)
+
+Categories Tab
+-------------
+
+### Categories Screen
+
+The second tab list all the default categories that will appear when you
+open a new Diagnosis.
+
+![Administration Panel – Categories](img/UG_Diagnostic_036.PNG)
+
+In the ‘Category’ column, you have all the categories that will appear.
+The translation key is mainly used to link categories through all languages.
+To finish, the ‘action’ column represents the possibility to edit
+the category (by clicking the pen (![Pen](img/UG_Diagnostic_012.PNG)))
+or delete it (by clicking the cross (![Cross](img/UG_Diagnostic_013.PNG))).
+
+### Add a category
+
+You can also add categories by clicking the red ![+ Add a
+category](img/UG_Diagnostic_038.PNG) button.
+
+![Administration Panel – Add Categories](img/UG_Diagnostic_037.PNG)
+
+The first field is for the translation key used by the PO file.
+The built-in category is done by giving two underscores, the tag "category"
+and the number of the category (For example, "\_\_category9").
+
+Then you have some fields in which you can translate your category.
+
+> **Tip**
+>
+> The uploaded template must have the same name that in the diagnosis.
+
+Settings Tab
+-------------
+
+### Settings Screen
+
+The sixth tab list all the settings you can modify in the diagnosis.
+
+![Administration Panel – Settings](img/UG_Diagnostic_048.PNG)
+
+In this tab you can modify the default language (The one which is used when you open a diagnosis),
+the MxCheck (When this option is activated, it forces you to verify your mail address to enter a diagnosis)
+and the encryption key (Its strength).
+
+> **TIP** 
+>
+> After getting again in the settings tab, all the settings will be set by default but all the modifications will be updated.
+
 Resume or finish a Diagnosis
 =============================
 
@@ -393,7 +520,7 @@ that, click on the yellow button ‘Download deliverable.’
 
 ![Download deliverable](img/UG_Diagnostic_030.PNG)
 
-You will need to put a Document Name, the company which concerned by the
+You will need to put a Document Name, the company which is concerned by the
 Diagnosis, the version of the document (If there are multiple
 Diagnoses, or if you want to correct it…), a choice if it’s a draft or
 a final version of the Diagnosis, the classification of the document
@@ -419,15 +546,13 @@ on in the document. a .docx
 There is also a tab which contains the questions, the note taken, the
 recommendation and the current and target maturity.
 
-Modify the template report
+Contents in the template report
 --------------------------
 
-The template report is quite simple to understand. It can be found in :
-\[*PATH\_TO\_DIAGNOSTIC*\]/data/resources. There is some tags which
-corresponding to some fields in the diagnosis. You can find a complete
-list just below. Concerning the charts, some dummy pictures are in the
-document. Their name are "*image9.png*", "*image5.png*" and
-"*image10.png*".
+There is some tags which corresponding to some fields in the diagnosis.
+You can find a complete list just below. Concerning the charts,
+some dummy pictures are in the document.
+Their name are "*image9.png*", "*image5.png*" and "*image10.png*".
 
 ![Name of the dummy chart for the template](img/UG_Diagnostic_034.PNG)
 
@@ -435,7 +560,7 @@ And here is the dummy for the pie chart :
 
 ![Dummy in the report](img/UG_Diagnostic_035.PNG)
 
-As you can also see, tags which can be modified in their order, or that could be just delete are under the form "${TAGS}". A complete list of the different existing tags can be found just below.
+As you can also see, tags which can be modified in their order, or that could be just deleted are under the form "${TAGS}". A complete list of the different existing tags can be found just below.
 
 * \$\{CATEG\_\_PERCENT} : The current percentage got in the categories (Got automatically)
 * \$\{CATEG\_\_PERCENT\_TARG} : The aimed percentage got in the categories (Got automatically)

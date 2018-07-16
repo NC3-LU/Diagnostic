@@ -1,4 +1,4 @@
-<?php echo $this->doctype(); ?>
+<?php echo $this->doctype(); $_SESSION['base_lang'] = 0?> <!-- // Reset language when refreshing a page (0 = English) -->
 
 <html lang="en">
 <head>
@@ -37,25 +37,27 @@
                                 border="0"
 				width="220"
 				height="80"></a></div>
-                <div class="col-lg-4 text-center"><h1>DIAGNOSTIC CASES</h1></div>
+                <div class="col-lg-4 text-center text-uppercase"><h1><?= $this->translate('__diagnostic') ?> CASES</h1></div>
                 <div class="col-lg-3 text-right">
-                    <br>
+                    <br />
                     <?php
+		    // Determine which button is active related to the active language //
                     $locale = $this->plugin('translate')->getTranslator()->getLocale();
-                    $file = fopen("/var/www/diagnostic/language/languages.txt", "r");
-		    $i = 1;
-		    $_SESSION['nb_lang'] = 0;
-		    while (!feof($file)) {
-			$temp = fgets($file, 4096);
-			$lang[$i] = 'test';
-		        if ($locale.PHP_EOL == $temp) {
-			    $lang[$i] = 'btn-info';
+		    $location_lang = "/var/www/diagnostic/language/languages.txt";
+                    $file_lang = fopen($location_lang, "r");
+                    $i = 1;
+                    $_SESSION['nb_lang'] = 0;
+                    while (!feof($file_lang)) {
+       	                $temp_lang = fgets($file_lang, 4096);
+                        $_SESSION['class_lang'][$i] = '';
+                        if ($locale.PHP_EOL == $temp_lang) {
+                            $_SESSION['class_lang'][$i] = 'btn-info';
                         }
-		        $i++;
-			$_SESSION['nb_lang']++;
-		    }
-		    fclose($file);
-
+                        $i++;
+                        $_SESSION['nb_lang']++;
+                    }
+                    fclose($file_lang);
+                    // *************************************************************** //
                     ?>
                     <table width="100%">
                         <tr>
@@ -85,25 +87,26 @@
 			    </td>
 
 			    <?php
-			    $file = fopen("/var/www/diagnostic/language/languages.txt", "r");
-			    for ($i=1; $i<$_SESSION['nb_lang']; $i++) {
-			        $temp = fgets($file, 4096);
-			    ?>
+                            // Creation language button //
+                            $file_lang = fopen($location_lang, "r");
+                            for ($i=1; $i<$_SESSION['nb_lang']; $i++) {
+                                $temp_lang = fgets($file_lang, 4096);
+                            ?>
                                 <td width='75'>
                                     <a href="<?php echo $this->url('diagnostic', ['action' => 'language', 'id' => $i]); ?>">
-                                        <button type='submit' name='language' value=<?= $temp ?>
-                                            class='btn-default btn-blue btn-sm <?php echo $lang[$i] ?>'><span
-                                            class='text-uppercase'><span class='flag-icon flag-icon-<?php echo $temp ?>'></span>&nbsp;&nbsp;<?= $temp ?></span>
+                                        <button type='submit' name='language' value=<?= $temp_lang ?>
+                                            class="btn-default btn-blue btn-sm <?php echo $_SESSION['class_lang'][$i] ?>"><span
+                                            class='text-uppercase'><span class='flag-icon flag-icon-<?php echo $temp_lang ?>'></span>&nbsp;&nbsp;<?= $temp_lang ?></span>
                                         </button>
                                     </a>
                                 </td>
-			    <?php
-			    }
-			    fclose($file);
-			    ?>
+                            <?php
+                            }
+                            fclose($file_lang);
+                            // ************************ //
+                            ?>
                         </tr>
                     </table>
-
             </div>
                 <div class="col-lg-1"></div>
             </div>
@@ -163,7 +166,7 @@
         <div class="col-md-1"></div>
         <div class="col-md-4">
             <div class="footer-credits"><!-- Footer credits -->
-                2015 &copy; Cases.lu - Tous droits réservés.
+                Diagnostic v1.2 - 2015-2018 &copy; Cases.lu - Tous droits réservés.
             </div>
         </div>
         <div class="col-md-6">

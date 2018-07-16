@@ -2,10 +2,10 @@
 namespace Diagnostic\Model;
 
 /**
- * Question Entity
+ * Category Entity
  *
  * @package Diagnostic\Model
- * @author Jerome De Almeida <jerome.dealmeida@vesperiagroup.com>
+ * @author Romain DESJARDINS
  */
 class CategoryEntity
 {
@@ -34,7 +34,7 @@ class CategoryEntity
 
     /**
      * @param mixed $id
-     * @return QuestionEntity
+     * @return CategoryEntity
      */
     public function setId($id)
     {
@@ -52,7 +52,7 @@ class CategoryEntity
 
     /**
      * @param mixed $translation_key
-     * @return QuestionEntity
+     * @return CategoryEntity
      */
     public function setTranslationKey($translation_key)
     {
@@ -70,7 +70,7 @@ class CategoryEntity
 
     /**
      * @param mixed $new
-     * @return QuestionEntity
+     * @return CategoryEntity
      */
     public function setNew($new)
     {

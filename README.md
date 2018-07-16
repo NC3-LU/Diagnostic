@@ -133,4 +133,6 @@ Copyright (c) 2017, Yacine Khamis - Université de Lorraine
 
 Copyright (c) 2017, Jérôme De Almeida - Vesperia Group
 
+Copyright (c) 2018, Romain Desjardins - Université de Lorraine
+
 Licensed under Affero GNU GPL v3 - see license.txt for more information

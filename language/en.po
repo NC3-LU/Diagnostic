@@ -33,13 +33,13 @@ msgid "__category7"
 msgstr "Information system"
 
 msgid "__category8"
-msgstr "Incident and business continuity "
+msgstr "Incident and business continuity"
 
 msgid "__question1"
 msgstr "What security mechanisms already exist (other than technical mechanisms)?"
 
 msgid "__question1help"
-msgstr "Is there:<br><ul><li>a security policy?</li><li>a user or administrator charter?</li><li>procedures (e.g. back-up)?</li><li>in-house instructions?</li><li>etc</li></ul>"
+msgstr "Is there?<br><ul><li>a security policy</li><li>a user or administrator charter</li><li>procedures (e.g. back-up)</li><li>in-house instructions</li><li>etc</li></ul>"
 
 msgid "__question2"
 msgstr "What is the core business? The most sensitive processes/items of information?"
@@ -299,6 +299,9 @@ msgstr "Record"
 msgid "__domain"
 msgstr "Domain"
 
+msgid "__settings"
+msgstr "Settings"
+
 msgid "__current_maturity"
 msgstr "Current maturity"
 
@@ -322,6 +325,9 @@ msgstr "Add a category"
 
 msgid "__add_a_language"
 msgstr "Add a language"
+
+msgid "__add_a_translation"
+msgstr "Add a translation"
 
 msgid "__add"
 msgstr "Add"
@@ -350,11 +356,23 @@ msgstr "Upper threshold"
 msgid "__rapport"
 msgstr "Report"
 
+msgid "__rapports"
+msgstr "Reports"
+
 msgid "__results"
 msgstr "Results"
 
 msgid "__categories"
 msgstr "Categories"
+
+msgid "__templates"
+msgstr "Report templates"
+
+msgid "__template"
+msgstr "Template"
+
+msgid "__last_modif"
+msgstr "Last modification"
 
 msgid "__recommandations"
 msgstr "Recommendations"
@@ -377,11 +395,20 @@ msgstr "User details"
 msgid "__modify"
 msgstr "Change"
 
+msgid "__modify_all"
+msgstr "Change all translations"
+
+msgid "__change_default_language"
+msgstr "Change the default language"
+
 msgid "__questions"
 msgstr "Questions"
 
 msgid "__translation_key"
 msgstr "Translation key"
+
+msgid "__translation_ref"
+msgstr "Reference translation"
 
 msgid "__translation"
 msgstr "Translation"
@@ -428,6 +455,9 @@ msgstr "Client"
 msgid "__download_delivery"
 msgstr "Download deliverable"
 
+msgid "__download"
+msgstr "Download"
+
 msgid "__draft"
 msgstr "Draft"
 
@@ -460,6 +490,9 @@ msgstr "File missing"
 
 msgid "__error_file"
 msgstr "File invalid"
+
+msgid "__success_file"
+msgstr "Successful modification"
 
 msgid "__goal"
 msgstr "Goal"
@@ -503,8 +536,11 @@ msgstr "Current"
 msgid "__target"
 msgstr "Target"
 
+msgid "__encryption_key"
+msgstr "Encryption key"
+
 msgid "__organization_information"
-msgstr "Information about organisation"
+msgstr "Information about organization"
 
 msgid "__evaluation_synthesis"
 msgstr "Summary of evaluation"
@@ -514,6 +550,30 @@ msgstr "Maturities by category"
 
 msgid "__error_exist"
 msgstr "This key already exist"
+
+msgid "__error_lang_exist"
+msgstr "This language already exist"
+
+msgid "__error_lang_add"
+msgstr "This language has not been added"
+
+msgid "__error_lang_del"
+msgstr "You could not delete this language"
+
+msgid "__error_lang_del2"
+msgstr "You could not delete a current used language"
+
+msgid "__delete_lang"
+msgstr "Do you really want to delete this language ?"
+
+msgid "__delete_question"
+msgstr "Do you really want to delete this question ?"
+
+msgid "__delete_category"
+msgstr "Do you really want to delete this category ? To refresh the category view, you have to reconnect."
+
+msgid "__delete_trans"
+msgstr "Do you really want to delete this translation ?"
 
 msgid "__mail_password_forgotten_subject"
 msgstr "CASES diagnosis - password forgotten"
@@ -529,3 +589,24 @@ msgstr "If this e-mail does not concern you, please ignore this message"
 
 msgid "__mail_password_forgotten_link"
 msgstr "NEW PASSWORD"
+
+msgid "Value is required and can't be empty"
+msgstr "Value is required and can't be empty"
+
+msgid "The input is not a valid email address. Use the basic format local-part@hostname"
+msgstr "The input is not a valid email address. Use the basic format local-part@hostname"
+
+msgid "password must contain at least one uppercase letter"
+msgstr "password must contain at least one uppercase letter"
+
+msgid "password must contain at least one digit character"
+msgstr "password must contain at least one digit character"
+
+msgid "password must contain at least one special character"
+msgstr "password must contain at least one special character"
+
+msgid "password must be at least 8 characters in length"
+msgstr "password must be at least 8 characters in length"
+
+msgid "The two given tokens do not match"
+msgstr "The two given tokens do not match"

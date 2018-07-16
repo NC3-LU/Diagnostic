@@ -5,10 +5,10 @@ use Zend\Crypt\BlockCipher;
 use Zend\Session\Container;
 
 /**
- * QuestionService
+ * CategoryService
  *
  * @package Diagnostic\Service
- * @author Jerome De Almeida <jerome.dealmeida@vesperiagroup.com>
+ * @author Romain DESJARDINS
  */
 class CategoryService extends AbstractService
 {
@@ -28,7 +28,7 @@ class CategoryService extends AbstractService
     }
 
     /**
-     * Get question
+     * Get category
      *
      * @return array
      * @throws \Exception
@@ -56,7 +56,7 @@ class CategoryService extends AbstractService
 
 
 	 /**
-     * Get Bdd Questions
+     * Get Bdd Categories
      *
      * @return array
      * @throws \Exception
