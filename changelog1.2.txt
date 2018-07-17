@@ -3,3 +3,5 @@ CHANGE LOG VERSION 1.2 JUNE 2018
 - Add language tab in the administration mode. It is now possible to add/modify/delete new languages and new translations.
 - Add confirmation before deleting something(questions, categories, languages, translations).
 - Update documentation to match with new features.
+- Add Reports tab in the administration mode.
+- Add Settings tab in the administration mode. 
