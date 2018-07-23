@@ -23,7 +23,7 @@ function main(){
     echo -e "\033[32mInstallation of libapache2-mod-php7.1 done"
     echo -e "\033[32m###############################################################################"
 
-    echo -e "\033[93mInstallation of php7.0-mcrypt\033[0m"
+    echo -e "\033[93mInstallation of php7.1-mcrypt\033[0m"
     sudo apt-get -qq install php7.1-mcrypt
     echo -e "\033[32m###############################################################################"
     echo -e "\033[32mInstallation of php7.1-mcrypt done"
