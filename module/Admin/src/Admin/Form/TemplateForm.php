@@ -16,7 +16,7 @@ class TemplateForm extends Form
      */
     public function init()
     {
-	    $this->add([
+        $this->add([
             'name' => 'file',
             'type' => 'File',
             'options' => [
@@ -26,7 +26,7 @@ class TemplateForm extends Form
                 'class' => 'form-control',
             ],
         ]);
-		
+
         $this->add([
             'type' => 'Csrf',
             'name' => 'csrf',
@@ -45,5 +45,5 @@ class TemplateForm extends Form
                 'class' => 'btn btn-success',
             ],
         ]);
-	}
+    }
 }

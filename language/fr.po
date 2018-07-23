@@ -610,3 +610,15 @@ msgstr "Le mot de passe doit contenir au moins 8 caractères"
 
 msgid "The two given tokens do not match"
 msgstr "Le mot de passe et la confirmation doivent être identiques"
+
+msgid "__error_categ"
+msgstr "Le fichier contient un ID de catégorie inconnu"
+
+msgid "__error_id"
+msgstr "Les ID de questions doivent être uniques et rangés par ordre croissant"
+
+msgid "__error_id2"
+msgstr "Les ID de catégories doivent être uniques et rangés par ordre croissant"
+
+msgid "__error_key"
+msgstr "Les clés de traduction doivent être uniques et suivre un ordre croissant"

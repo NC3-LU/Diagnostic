@@ -1,8 +1,15 @@
 <?php
+
 $title = $this->translate('__questions');
 $this->headTitle($title);
 $_SESSION['nb_questions'] = 1; // Count number of question
+
+$this->form->setAttribute('action', $this->url('admin', ['action' => 'questions']));
+$this->form->prepare();
+
 ?>
+
+<?= $this->form()->openTag($form) ?>
 
 <!-- // Display confirmation when you want to delete a question -->
 <script>var delete_question = <?php echo json_encode($this->translate('__delete_question')) ?></script>
@@ -11,6 +18,19 @@ $_SESSION['nb_questions'] = 1; // Count number of question
     <div class="col-lg-12 text-left">
         <h2><?= $this->translate('__questions') ?></h2>
         <br/>
+
+        <div class="col-lg-3 text-left"><?= $this->formFile($form->get('file')); ?></div>
+        <?= $this->formSubmit($form->get('submit_file')); ?>
+        <?= $this->formSubmit($form->get('submit')); ?>
+        <br />
+        <div class="col-lg-3 text-left">
+            <?php if($error_upload == 1){ echo "<ul class='bg-danger'> <li>" . $this->translate('__error_file'). "</li></ul>"; }
+            if($error_categ == 1){ echo "<ul class='bg-danger'> <li>" . $this->translate('__error_categ'). "</li></ul>"; }
+            if($error_key == 1){ echo "<ul class='bg-danger'> <li>" . $this->translate('__error_key'). "</li></ul>"; }
+            if($error_id == 1){ echo "<ul class='bg-danger'> <li>" . $this->translate('__error_id'). "</li></ul>"; } ?>
+        </div>
+
+
         <?php
         $urlAdd = $this->url('admin', ['action' => 'add-question']);
         ?>
@@ -50,3 +70,5 @@ $_SESSION['nb_questions'] = 1; // Count number of question
         </table>
     </div>
 </div>
+
+<?= $this->form()->closeTag() ?>

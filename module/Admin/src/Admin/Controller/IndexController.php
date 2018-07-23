@@ -149,13 +149,212 @@ class IndexController extends AbstractController
      */
     public function questionsAction()
     {
+        $location_lang = '/var/www/diagnostic/language/';
+
+        $error_upload = 0; // File not valid
+        $error_categ = 0; // Categ exist
+        $error_id = 0; // ID exist
+        $error_key = 0; // translation key exist
+
         //retrieve questions
         $questionService = $this->get('questionService');
         $questions = $questionService->getBddQuestions();
 
+        $request = $this->getRequest();
+        $form = $this->get('adminQuestionForm');
+
+        $form->get('submit')->setValue('__export');
+
+        //form is post and valid
+        if ($request->isPost()) {
+            $form->setData($request->getPost());
+
+            // Upload
+            if (isset($_POST['submit_file'])) {
+
+                if (!empty($_FILES['file']['tmp_name'])) {
+
+                    $content = file_get_contents($_FILES['file']['tmp_name']);
+                    $tab = json_decode($content, true);
+
+                    // If the file is 'categories.json'
+                    if (!isset($tab[1]['category_id'])) {$tab = '';}
+
+                    //retrieve categories
+                    $categoryService = $this->get('categoryService');
+                    $categories = $categoryService->getBddCategories();
+
+                    $i = 1;
+                    while (isset($tab[$i])) {
+                        // Avoid to put a wrong id
+                        if (isset($questions[$i])) {
+                            if ($tab[$i]['id'] != $questions[$i]->getId()) {$error_id = 1;}
+                        }
+                        else {
+                            if ($tab[$i]['id'] != $tab[$i-1]['id'] + 1) {$error_id = 1;}
+                        }
+
+                        // Avoid to put a wrong translation key
+                        if (isset($questions[$i])) {
+                            if ($tab[$i]['translation_key'] != $questions[$i]->getTranslationKey()) {$error_key = 1;}
+                        }
+                        else {
+                            if ($tab[$i]['translation_key'] != '__question' . $i) {$error_key = 1;}
+                        }
+
+                        // Avoid to put a wrong category
+                        $j = 1;
+                        $k = 1;
+                        foreach ($categories as $category) {
+                            if ($tab[$i]['category_id'] != $category->getId()) {$k++;}
+                            $j++;
+                        }
+                        if ($j == $k) {$error_categ = 1;}
+
+                        $i++;
+                    }
+
+                    if ($tab != '' && $error_categ == 0 && $error_id == 0 && $error_key == 0) {
+
+                        // Delete the previous database
+                        $i=1;
+                        while (isset($questions[$i])) {$questionService->delete($i); $i++;}
+
+                        $file_lang = fopen($location_lang . 'languages.txt', 'r');
+                        for ($j=1; $j<$_SESSION['nb_lang']; $j++) {
+                            $temp_lang = fgets($file_lang, 4096);
+
+                            rename($location_lang . substr($temp_lang, 0, -1) . '.po', $location_lang . substr($temp_lang, 0, -1) . '_temp.po');
+                            $file_temp = fopen($location_lang . substr($temp_lang, 0, -1) . '_temp.po', 'r');
+                            $file = fopen($location_lang . substr($temp_lang, 0, -1) . '.po', 'w');
+                            while (!feof($file_temp)) {
+                                $temp = fgets($file_temp, 4096);
+                                if (substr($temp, 7, -2) == '__question1') {break;}
+                                fputs($file, $temp);
+                            }
+
+                            $i = 1;
+                            while (isset($tab[$i])) {
+                                fputs($file, 'msgid "__question' . $i . '"');
+                                fputs($file, PHP_EOL);
+                                fputs($file, 'msgstr "' . $tab[$i]['translation_' . substr($temp_lang, 0, -1)] . '"');
+                                fputs($file, PHP_EOL);
+                                fputs($file, PHP_EOL);
+                                fputs($file, 'msgid "__question' . $i . 'help"');
+                                fputs($file, PHP_EOL);
+                                fputs($file, 'msgstr "' . $tab[$i]['translation_help_' . substr($temp_lang, 0, -1)] . '"');
+                                fputs($file, PHP_EOL);
+                                fputs($file, PHP_EOL);
+                                $i++;
+                            }
+
+                            while (!feof($file_temp)) {
+                                $temp = fgets($file_temp, 4096);
+                                if (substr($temp, 7, -2) == '__question' . ($_SESSION['nb_questions']-1) . 'help') {$temp = fgets($file_temp, 4096); $temp = fgets($file_temp, 4096); break;}
+                            }
+
+                            while (!feof($file_temp)) {
+                                $temp = fgets($file_temp, 4096);
+                                fputs($file, $temp);
+                            }
+                            fclose($file_temp);
+                            fclose($file);
+                            unlink($location_lang . substr($temp_lang, 0, -1) . '_temp.po');
+
+                            // compile from po to mo
+                            shell_exec('msgfmt ' . $location_lang . substr($temp_lang, 0, -1) . '.po -o ' . $location_lang . substr($temp_lang, 0, -1) . '.mo');
+
+                            // Delete things that are not in the database
+                            $i = 1;
+                            while (isset($tab[$i])) {
+                                unset($tab[$i]['translation_' . substr($temp_lang, 0, -1)]);
+                                unset($tab[$i]['translation_help_' . substr($temp_lang, 0, -1)]);
+                                $i++;
+                            }
+                        }
+                        fclose($file_lang);
+
+                        // Import the new database
+                        $i=1;
+                        while (isset($tab[$i])) {
+                            $questionService->create($tab[$i]);
+                            $i++;
+                        }
+                        $questionService->resetCache();
+
+                        return $this->redirect()->toRoute('admin', ['controller' => 'index', 'action' => 'questions']);
+                    }elseif ($tab == '') {$error_upload = 1;}
+                }else {$error_upload = 1;}
+            }
+
+            // Export
+            if (isset($_POST['submit'])) {
+                // Delete things we don't need in the database
+                $i=1;
+                while (isset($questions[$i])) {
+                    unset($questions[$i]->category_translation_key);
+                    unset($questions[$i]->translation_key_help);
+                    unset($questions[$i]->new);
+                    $i++;
+                }
+
+                $file_lang = fopen($location_lang . 'languages.txt', 'r');
+                for ($j=1; $j<$_SESSION['nb_lang']; $j++) {
+                    $temp_lang = fgets($file_lang, 4096);
+
+                    $file = fopen($location_lang . substr($temp_lang, 0, -1) . '.po', 'r');
+                    // Skip categories
+                    while (!feof($file)) {
+                        $temp = fgets($file, 4096);
+                        if (substr($temp, 7, -2) == '__question1') {break;}
+                    }
+
+                    $i = 1;
+                    while (isset($questions[$i])) {
+                        $temp = fgets($file, 4096);
+                        $questions[$i] = (array)$questions[$i];
+                        $questions[$i]['translation_' . substr($temp_lang, 0, -1)] = substr($temp, 8, -2);
+                        $temp = fgets($file, 4096);
+                        $temp = fgets($file, 4096);
+                        $temp = fgets($file, 4096);
+                        $questions[$i]['translation_help_' . substr($temp_lang, 0, -1)] = substr($temp, 8, -2);
+                        $temp = fgets($file, 4096);
+                        $temp = fgets($file, 4096);
+                        $questions[$i] = (object)$questions[$i];
+                        $i++;
+                    }
+                    fclose($file);
+                }
+                fclose($file_lang);
+
+                // Encode in a file
+                $fichier = fopen('/var/www/diagnostic/questions.json', 'w+');
+                fwrite($fichier, json_encode($questions, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES));
+                fclose($fichier);
+
+                // Ddl the file and delete it in the VM
+                header('Content-Description: File Transfer');
+                header('Content-Type: application/octet-stream');
+                header('Content-Disposition: attachment; filename=questions.json');
+                header('Expires: 0');
+                header('Cache-Control: must-revalidate');
+                header('Pragma: public');
+                header('Content-Length: ' . filesize('/var/www/diagnostic/questions.json'));
+                readfile('/var/www/diagnostic/questions.json');
+                unlink('/var/www/diagnostic/questions.json');
+
+                $questions = $questionService->getBddQuestions();
+            }
+        }
+
         //send to view
         return new ViewModel([
-            'questions' => $questions
+            'questions' => $questions,
+            'form' => $form,
+            'error_upload' => $error_upload,
+            'error_categ' => $error_categ,
+            'error_id' => $error_id,
+            'error_key' => $error_key
         ]);
     }
 
@@ -166,13 +365,217 @@ class IndexController extends AbstractController
      */
     public function categoriesAction()
     {
+        $location_lang = '/var/www/diagnostic/language/';
+
+        $error_upload = 0; // File not valid
+        $error_id2 = 0; // ID exist
+        $error_key = 0; // translation key exist
+
         //retrieve categories
         $categoryService = $this->get('categoryService');
         $categories = $categoryService->getBddCategories();
 
+        //retrieve questions
+        $questionService = $this->get('questionService');
+        $questions = $questionService->getBddQuestions();
+
+        $request = $this->getRequest();
+        $form = $this->get('adminQuestionForm');
+
+        $form->get('submit')->setValue('__export');
+
+        //form is post and valid
+        if ($request->isPost()) {
+            $form->setData($request->getPost());
+
+            // Upload
+            if (isset($_POST['submit_file'])) {
+
+                if (!empty($_FILES['file']['tmp_name'])) {
+
+                    $content = file_get_contents($_FILES['file']['tmp_name']);
+                    $tab = json_decode($content, true);
+
+                    // If the file is 'questions.json'
+                    if (isset($tab[1]['category_id'])) {$tab = '';}
+
+                    $i = 1;
+                    while (isset($tab[$i])) {
+                        // Avoid to put a wrong id
+                        if (isset($categories[$i])) {
+                            if ($tab[$i]['id'] != $categories[$i]->getId()) {$error_id2 = 1;}
+                        }
+                        else {
+                            if ($tab[$i]['id'] != $tab[$i-1]['id'] + 1) {$error_id2 = 1;}
+                        }
+
+                        // Avoid to put a wrong translation key
+                        if (isset($categories[$i])) {
+                            if ($tab[$i]['translation_key'] != $categories[$i]->getTranslationKey()) {$error_key = 1;}
+                        }
+                        else {
+                            if ($tab[$i]['translation_key'] != '__category' . $i) {$error_key = 1;}
+                        }
+
+                        $i++;
+                    }
+
+                    if ($tab != '' && $error_id2 == 0 && $error_key == 0) {
+
+                        // Delete the previous database
+                        $i=1;
+                        while (isset($categories[$i])) {$categoryService->delete($i); $i++;}
+
+                        $file_lang = fopen($location_lang . 'languages.txt', 'r');
+                        for ($j=1; $j<$_SESSION['nb_lang']; $j++) {
+                            $temp_lang = fgets($file_lang, 4096);
+
+                            rename($location_lang . substr($temp_lang, 0, -1) . '.po', $location_lang . substr($temp_lang, 0, -1) . '_temp.po');
+                            $file_temp = fopen($location_lang . substr($temp_lang, 0, -1) . '_temp.po', 'r');
+                            $file = fopen($location_lang . substr($temp_lang, 0, -1) . '.po', 'w');
+                            while (!feof($file_temp)) {
+                                $temp = fgets($file_temp, 4096);
+                                if (substr($temp, 7, -2) == '__category1') {break;}
+                                fputs($file, $temp);
+                            }
+
+                            $i = 1;
+                            while (isset($tab[$i])) {
+                                fputs($file, 'msgid "__category' . $i . '"');
+                                fputs($file, PHP_EOL);
+                                fputs($file, 'msgstr "' . $tab[$i]['translation_' . substr($temp_lang, 0, -1)] . '"');
+                                fputs($file, PHP_EOL);
+                                fputs($file, PHP_EOL);
+                                $i++;
+                            }
+
+                            while (!feof($file_temp)) {
+                                $temp = fgets($file_temp, 4096);
+                                if (substr($temp, 7, -2) == '__category' . ($_SESSION['nb_categories']-1)) {$temp = fgets($file_temp, 4096); $temp = fgets($file_temp, 4096); break;}
+                            }
+
+                            while (!feof($file_temp)) {
+                                $temp = fgets($file_temp, 4096);
+                                fputs($file, $temp);
+                            }
+                            fclose($file_temp);
+                            fclose($file);
+                            unlink($location_lang . substr($temp_lang, 0, -1) . '_temp.po');
+
+                            // compile from po to mo
+                            shell_exec('msgfmt ' . $location_lang . substr($temp_lang, 0, -1) . '.po -o ' . $location_lang . substr($temp_lang, 0, -1) . '.mo');
+
+                            // Delete things that are not in the database
+                            $i = 1;
+                            while (isset($tab[$i])) {
+                                unset($tab[$i]['translation_' . substr($temp_lang, 0, -1)]);
+                                $i++;
+                            }
+                        }
+                        fclose($file_lang);
+
+                        // Import the new database
+                        $i=1;
+                        while (isset($tab[$i])) {
+                            $categoryService->create($tab[$i]);
+                            $i++;
+                        }
+                        $categoryService->resetCache();
+
+                        //retrieve categories
+                        $categoryService = $this->get('categoryService');
+                        $categories = $categoryService->getBddCategories();
+
+                        // Recreate questions database which was deleted when categories are deleted
+                        $i = 1;
+                        while (isset($questions[$i])) {
+                            // Avoid to put a wrong category
+                            $j = 1;
+                            $k = 1;
+                            $categ_exist = 1;
+                            foreach ($categories as $category) {
+                                if ($questions[$i]->getCategoryId() != $category->getId()) {$k++;}
+                                $j++;
+                            }
+                            if ($j == $k) {$categ_exist = 0;exit();}
+
+                            if ($categ_exist == 1) {
+                                unset($questions[$i]->category_translation_key);
+                                unset($questions[$i]->translation_key_help);
+                                unset($questions[$i]->new);
+                                $questionService->create($questions[$i]);
+                            }
+                            $i++;
+                        }
+
+                        return $this->redirect()->toRoute('admin', ['controller' => 'index', 'action' => 'categories']);
+
+                    }elseif ($tab == '') {$error_upload = 1;}
+                }else {$error_upload = 1;}
+            }
+
+            // Export
+            if (isset($_POST['submit'])) {
+                // Delete things we don't need in the database
+                $i=1;
+                while (isset($categories[$i])) {
+                    unset($categories[$i]->new);
+                    $i++;
+                }
+
+                $file_lang = fopen($location_lang . 'languages.txt', 'r');
+                for ($j=1; $j<$_SESSION['nb_lang']; $j++) {
+                    $temp_lang = fgets($file_lang, 4096);
+
+                    $file = fopen($location_lang . substr($temp_lang, 0, -1) . '.po', 'r');
+                    // Go to categories
+                    while (!feof($file)) {
+                        $temp = fgets($file, 4096);
+                        if (substr($temp, 7, -2) == '__category1') {break;}
+                    }
+
+                    $i = 1;
+                    while (isset($categories[$i])) {
+                        $temp = fgets($file, 4096);
+                        $categories[$i] = (array)$categories[$i];
+                        $categories[$i]['translation_' . substr($temp_lang, 0, -1)] = substr($temp, 8, -2);
+                        $temp = fgets($file, 4096);
+                        $temp = fgets($file, 4096);
+                        $categories[$i] = (object)$categories[$i];
+                        $i++;
+                    }
+                    fclose($file);
+                }
+                fclose($file_lang);
+
+                // Encode in a file
+                $fichier = fopen('/var/www/diagnostic/categories.json', 'w+');
+                fwrite($fichier, json_encode($categories, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES));
+                fclose($fichier);
+
+                // Ddl the file and delete it in the VM
+                header('Content-Description: File Transfer');
+                header('Content-Type: application/octet-stream');
+                header('Content-Disposition: attachment; filename=categories.json');
+                header('Expires: 0');
+                header('Cache-Control: must-revalidate');
+                header('Pragma: public');
+                header('Content-Length: ' . filesize('/var/www/diagnostic/categories.json'));
+                readfile('/var/www/diagnostic/categories.json');
+                unlink('/var/www/diagnostic/categories.json');
+
+                $categories = $categoryService->getBddCategories();
+            }
+        }
+
+
         //send to view
         return new ViewModel([
-            'categories' => $categories
+            'categories' => $categories,
+            'form' => $form,
+            'error_upload' => $error_upload,
+            'error_id2' => $error_id2,
+            'error_key' => $error_key
         ]);
     }
 
@@ -791,7 +1194,7 @@ class IndexController extends AbstractController
         $_SESSION['erreur_exist'] = 0;
 
         // Things we need for the db
-        $tabToGet = ['translation_key', 'category_id', 'threshold', 'csrf', 'submit'];
+        $tabToGet = ['category_id', 'translation_key', 'threshold', 'csrf', 'submit'];
 
         $form = $this->get('adminQuestionForm');
 
@@ -810,6 +1213,11 @@ class IndexController extends AbstractController
                     $formData[$key] = $form->getData()[$key];
                 }
                 $questionService = $this->get('questionService');
+                $questions = $questionService->getBddQuestions();
+                $i = 1;
+                foreach ($questions as $question) {$i++;}
+                $formData['id'] = $i;
+
                 $questionService->create((array)$formData);
                 $questionService->resetCache();
 
@@ -894,6 +1302,11 @@ class IndexController extends AbstractController
                     $formData[$key] = $form->getData()[$key];
                 }
                 $categoryService = $this->get('categoryService');
+                $categories = $categoryService->getBddCategories();
+                $i = 1;
+                foreach ($categories as $category) {$i++;}
+                $formData['id'] = $i;
+
                 $categoryService->create((array)$formData);
                 $categoryService->resetCache();
 
@@ -1003,7 +1416,7 @@ class IndexController extends AbstractController
         // Session value to know if the translation key already exist
         $_SESSION['erreur_exist'] = 0;
 
-        $tabToGet = ['translation_key', 'category_id', 'threshold', 'csrf', 'submit'];
+        $tabToGet = ['category_id', 'translation_key', 'threshold', 'csrf', 'submit'];
 
         $id = $this->getEvent()->getRouteMatch()->getParam('id');
 
@@ -1061,6 +1474,7 @@ class IndexController extends AbstractController
                 foreach ($tabToGet as $key) {
                     $formData[$key] = $form->getData()[$key];
                 }
+
                 $questionService->update($id, (array)$formData);
                 $questionService->resetCache();
 
@@ -1372,6 +1786,7 @@ class IndexController extends AbstractController
         fclose($file_lang);
 
         $questionService->delete($id);
+        $questionService->resetCache();
 
         //redirect
         return $this->redirect()->toRoute('admin', ['controller' => 'index', 'action' => 'questions']);
