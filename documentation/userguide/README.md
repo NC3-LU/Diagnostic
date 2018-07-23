@@ -390,36 +390,7 @@ After modifying them, it is possible to upload them if you want to apply changes
 
 ![Administration Panel – Upload templates](img/UG_Diagnostic_047.PNG)
 
-Categories Tab
--------------
-
-### Categories Screen
-
-The second tab list all the default categories that will appear when you
-open a new Diagnosis.
-
-![Administration Panel – Categories](img/UG_Diagnostic_036.PNG)
-
-In the ‘Category’ column, you have all the categories that will appear.
-The translation key is mainly used to link categories through all languages.
-To finish, the ‘action’ column represents the possibility to edit
-the category (by clicking the pen (![Pen](img/UG_Diagnostic_012.PNG)))
-or delete it (by clicking the cross (![Cross](img/UG_Diagnostic_013.PNG))).
-
-### Add a category
-
-You can also add categories by clicking the red ![+ Add a
-category](img/UG_Diagnostic_038.PNG) button.
-
-![Administration Panel – Add Categories](img/UG_Diagnostic_037.PNG)
-
-The first field is for the translation key used by the PO file.
-The built-in category is done by giving two underscores, the tag "category"
-and the number of the category (For example, "\_\_category9").
-
-Then you have some fields in which you can translate your category.
-
-> **Tip**
+> **Warning**
 >
 > The uploaded template must have the same name that in the diagnosis.
 

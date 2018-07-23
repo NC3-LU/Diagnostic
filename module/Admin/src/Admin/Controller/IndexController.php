@@ -1020,9 +1020,10 @@ class IndexController extends AbstractController
 
         foreach ($currentQuestion as $question) {
             if ($question->getId() == $id) {
-                $form->get('translation_key')->setValue($question->getTranslationKey());
-                $form->bind($question);
                 $cat = $question; // $cat equal to the question to modify
+                if (!isset($_POST['translation_key'])) { // Only bind one at the beginning
+                    $form->bind($question);
+                }
             }
         }
 
@@ -1045,9 +1046,10 @@ class IndexController extends AbstractController
 
         //form is post and valid
         $request = $this->getRequest();
-        if ($request->isPost()) {
-            $form->setData($request->getPost());
 
+        if ($request->isPost()) {
+
+            $form->setData($request->getPost());
             // Determine if the translation key already exist
             $cmd='grep -c -w ' . $request->getPost('translation_key') . ' ' . $location_lang . 'en.po';
             if(exec($cmd) != 0){ $_SESSION['erreur_exist'] = 1;}
@@ -1059,7 +1061,6 @@ class IndexController extends AbstractController
                 foreach ($tabToGet as $key) {
                     $formData[$key] = $form->getData()[$key];
                 }
-
                 $questionService->update($id, (array)$formData);
                 $questionService->resetCache();
 
