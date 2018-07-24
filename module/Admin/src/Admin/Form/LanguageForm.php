@@ -159,5 +159,14 @@ class LanguageForm extends Form
                 'class' => 'btn btn-success',
             ],
         ]);
+
+        $this->add([
+            'name' => 'submit_export',
+            'type' => 'Submit',
+            'attributes' => [
+                'value' => '__export',
+                'class' => 'btn btn-success',
+            ],
+        ]);
     }
 }

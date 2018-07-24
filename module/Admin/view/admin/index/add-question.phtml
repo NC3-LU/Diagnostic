@@ -22,7 +22,7 @@ $this->form->prepare(); ?>
             <tr>
                 <td><label><?= $this->translate($form->get('translation_key')->getLabel()) ?></label></td>
                 <td>
-                    <?= $this->formText($form->get('translation_key')->setValue('__question' . $_SESSION['nb_questions'])) ?>
+                    <?= $this->formText($form->get('translation_key')->setValue('__question' . $_SESSION['nb_questions'])->setAttributes(['readonly' => 'true', 'style' => 'pointer-events: none'])) ?>
                 </td>
             </tr>
             <tr>

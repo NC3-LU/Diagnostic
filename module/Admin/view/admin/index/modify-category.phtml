@@ -18,7 +18,7 @@ $form->prepare();
             <tr>
                 <td><label><?= $this->translate($form->get('translation_key')->getLabel()) ?></label></td>
                 <td>
-                    <?= $this->formText($form->get('translation_key')) ?>
+                    <?= $this->formText($form->get('translation_key')->setAttributes(['readonly' => 'true', 'style' => 'pointer-events: none'])) ?>
                 </td>
             </tr>
             <tr>

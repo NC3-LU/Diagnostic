@@ -12,6 +12,8 @@ foreach ($questions as $question) :
     $_SESSION['nb_questions']++;
 endforeach;
 
+$_SESSION['nb_translations'] = 0;
+
 ?>
 
 <!-- // Display confirmation when you want to delete a language or a translation -->
@@ -35,6 +37,17 @@ endforeach;
     <?php if($error_lang_del2 == 1){ echo "<ul class='bg-danger'> <li>" . $this->translate('__error_lang_del2'). "</li></ul>"; } ?></span>
 
     <h2><?= $this->translate('__languages') ?></h2>
+
+    <br />
+
+    <div class="col-lg-3 text-left"><?= $this->formFile($form->get('file')); ?></div>
+    <?= $this->formSubmit($form->get('submit_file')); ?>
+    <?= $this->formSubmit($form->get('submit_export')); ?>
+    <br />
+    <div class="col-lg-3 text-left">
+        <?php if($error_upload == 1){ echo "<ul class='bg-danger'> <li>" . $this->translate('__error_file'). "</li></ul>"; }
+        if($error_key2 == 1){ echo "<ul class='bg-danger'> <li>" . $this->translate('__error_key2'). "</li></ul>"; } ?>
+    </div>
 
     <br />
     <br />
@@ -98,6 +111,7 @@ endforeach;
                         echo $_SESSION['key_' . substr($temp_lang, 0, -1)][$num_button]=substr($temp, 7, -2);
                         echo "</td>";
                         $trans_key=0;
+                        $_SESSION['nb_translations']++;
                     }
                     if($trans==3){
                         echo "<td class=col-lg-5>";

@@ -24,9 +24,7 @@ $this->form->prepare();
         <?= $this->formSubmit($form->get('submit')); ?>
         <br />
         <div class="col-lg-4 text-left">
-            <?php if($error_upload == 1){ echo "<ul class='bg-danger'> <li>" . $this->translate('__error_file'). "</li></ul>"; }
-            if($error_id2 == 1){ echo "<ul class='bg-danger'> <li>" . $this->translate('__error_id2'). "</li></ul>"; }
-            if($error_key == 1){ echo "<ul class='bg-danger'> <li>" . $this->translate('__error_key'). "</li></ul>"; } ?>
+            <?php if($error_upload == 1){ echo "<ul class='bg-danger'> <li>" . $this->translate('__error_file'). "</li></ul>"; } ?>
         </div>
 
         <br />

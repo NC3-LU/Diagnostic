@@ -229,7 +229,7 @@ msgstr "Ébauche ou complet ?"
 
 msgid "__diagnostic"
 msgstr "Diagnostic"
- 
+
 msgid "__welcome"
 msgstr "Bienvenue au diagnostic de Cases"
 
@@ -622,3 +622,6 @@ msgstr "Les ID de catégories doivent être uniques et rangés par ordre croissa
 
 msgid "__error_key"
 msgstr "Les clés de traduction doivent être uniques et suivre un ordre croissant"
+
+msgid "__error_key2"
+msgstr "Les clés de traduction doivent être uniques"
