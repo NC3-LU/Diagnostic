@@ -613,15 +613,3 @@ msgstr "The two given tokens do not match"
 
 msgid "__error_categ"
 msgstr "The file contain an unknown category ID"
-
-msgid "__error_id"
-msgstr "The questions IDs must be unique and ranked in ascending order"
-
-msgid "__error_id2"
-msgstr "The categories IDs must be unique and ranked in ascending order"
-
-msgid "__error_key"
-msgstr "The translation keys must be unique and follow an ascending order"
-
-msgid "__error_key2"
-msgstr "The translations key must be unique"
