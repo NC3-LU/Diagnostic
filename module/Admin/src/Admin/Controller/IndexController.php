@@ -557,21 +557,67 @@ class IndexController extends AbstractController
         $request = $this->getRequest();
         $form = $this->get('adminSettingForm');
 
-        $form->get('encryption_key')->setValue('*****');
+        //////////////////////// Bind select \\\\\\\\\\\\\\\\\\\\\\\\\\
+        $file_config = fopen('/var/www/diagnostic/module/Diagnostic/config/module.config.php', 'r');
+        while(!feof($file_config)) {
+            $temp_config = fgets($file_config, 4096);
+            if($temp_config == "    'translator' => [" . PHP_EOL){$temp_config = fgets($file_config, 4096); $value_select = substr($temp_config, 21, -3); break;}
+        }
+        fclose($file_config);
+
+
+        // Count the number of languages
+        $file_lang = fopen('/var/www/diagnostic/language/languages.txt', 'r');
+        $fileCount = 0;
+        while (!feof($file_lang)) {
+            $temp_lang = fgets($file_lang, 4096);
+            $fileCount++;
+        }
+        fclose($file_lang);
+
+        // See if the language chosen in the select form is in the languages.txt file
+        $file_lang = fopen('/var/www/diagnostic/language/languages.txt', 'r');
+        for ($i=0; $i<$fileCount; $i++) {
+            $temp_lang = fgets($file_lang, 4096);
+            if ($value_select == substr($temp_lang, 0, -1)) {
+                $value_select = $i;
+                break;
+            }
+        }
+        fclose($file_lang);
+
+        $form->get('select_language')->setValue($value_select);
+        //////////////////////// End bind \\\\\\\\\\\\\\\\\\\\\\\\\\
+
+        ////////////////////// Bind checkbox \\\\\\\\\\\\\\\\\\\\\\\
+        $file_login = fopen('/var/www/diagnostic/module/Diagnostic/src/Diagnostic/InputFilter/LoginFormFilter.php', 'r');
+        while(!feof($file_login)) {
+            $temp_login = fgets($file_login, 4096);
+            if($temp_login == "                        'allow' => Hostname::ALLOW_DNS," . PHP_EOL){$temp_login = fgets($file_login, 4096); $value_checkbox = substr($temp_login, 40, -2); break;}
+        }
+        fclose($file_login);
+
+        if ($value_checkbox == 'true') {$value_checkbox = 1;}
+        else {$value_checkbox = 0;}
+
+        $form->get('checkbox_mxCheck')->setValue($value_checkbox);
+        //////////////////////// End bind \\\\\\\\\\\\\\\\\\\\\\\\\\
+
+        //////////////////////// Bind text \\\\\\\\\\\\\\\\\\\\\\\\\\
+        $file_encrypt = fopen('/var/www/diagnostic/config/autoload/local.php', 'r');
+        while(!feof($file_encrypt)) {
+            $temp_encrypt = fgets($file_encrypt, 4096);
+            if($temp_encrypt == "    ]," . PHP_EOL){$temp_encrypt = fgets($file_encrypt, 4096); $value_text = substr($temp_encrypt, 25, -3); break;}
+        }
+        fclose($file_encrypt);
+
+        $form->get('encryption_key')->setValue($value_text);
+        //////////////////////// End bind \\\\\\\\\\\\\\\\\\\\\\\\\\
 
         if ($request->isPost()) {
             $form->setData($request->getPost());
 
             if($_POST['submit']) {
-
-                // Count the number of languages
-                $file_lang = fopen('/var/www/diagnostic/language/languages.txt', 'r');
-                $fileCount = 0;
-                while (!feof($file_lang)) {
-                    $temp_lang = fgets($file_lang, 4096);
-                    $fileCount++;
-                }
-                fclose($file_lang);
 
                 // See if the language chosen in the select form is in the languages.txt file
                 $file_lang = fopen('/var/www/diagnostic/language/languages.txt', 'r');
@@ -638,7 +684,7 @@ class IndexController extends AbstractController
                     $mxCheck = 'false';
                 }
 
-                // Change the default translation
+                // Change mxcheck
                 $file_login = fopen('/var/www/diagnostic/module/Diagnostic/src/Diagnostic/InputFilter/LoginFormFilter.php', 'r');
                 $contents = fread($file_login, filesize('/var/www/diagnostic/module/Diagnostic/src/Diagnostic/InputFilter/LoginFormFilter.php'));
                 fclose($file_login);
@@ -650,33 +696,30 @@ class IndexController extends AbstractController
                 fwrite($file_login, $contents); // Write the file with the new default translation
                 fclose($file_login);
 
-                // Change the default translation
+                // Change mxcheck
                 $file_email = fopen('/var/www/diagnostic/module/Admin/src/Admin/InputFilter/EmailNotExistFilter.php', 'r');
                 $contents = fread($file_email, filesize('/var/www/diagnostic/module/Admin/src/Admin/InputFilter/EmailNotExistFilter.php'));
                 fclose($file_email);
                 $contents = explode(PHP_EOL, $contents); // PHP_EOL equals to /n in Linux
-                $contents[$num_line_email+1] = "                        'useMxCheck' => " . $mxCheck . ","; // Change the default translation with the new one
+                $contents[$num_line_email+1] = "                        'useMxCheck' => " . $mxCheck . ","; // Change the mxcheck with the new one
                 $contents = array_values($contents);
                 $contents = implode(PHP_EOL, $contents);
                 $file_email = fopen('/var/www/diagnostic/module/Admin/src/Admin/InputFilter/EmailNotExistFilter.php', 'w');
                 fwrite($file_email, $contents); // Write the file with the new default translation
                 fclose($file_email);
 
-                // Change the default translation
+                // Change mxcheck
                 $file_user = fopen('/var/www/diagnostic/module/Admin/src/Admin/InputFilter/UserFormFilter.php', 'r');
                 $contents = fread($file_user, filesize('/var/www/diagnostic/module/Admin/src/Admin/InputFilter/UserFormFilter.php'));
                 fclose($file_user);
                 $contents = explode(PHP_EOL, $contents); // PHP_EOL equals to /n in Linux
-                $contents[$num_line_user+1] = "                        'useMxCheck' => " . $mxCheck . ","; // Change the default translation with the new one
+                $contents[$num_line_user+1] = "                        'useMxCheck' => " . $mxCheck . ","; // Change the mxcheck with the new one
                 $contents = array_values($contents);
                 $contents = implode(PHP_EOL, $contents);
                 $file_user = fopen('/var/www/diagnostic/module/Admin/src/Admin/InputFilter/UserFormFilter.php', 'w');
-                fwrite($file_user, $contents); // Write the file with the new default translation
+                fwrite($file_user, $contents); // Write the file with the new default mxcheck
                 fclose($file_user);
 
-                if($request->getPost('encryption_key')) {
-
-                }
                 $file_encrypt = fopen('/var/www/diagnostic/config/autoload/local.php', 'r');
                 $fileCount = -1;
                 while(!feof($file_encrypt)) {
@@ -686,16 +729,16 @@ class IndexController extends AbstractController
                 }
                 fclose($file_encrypt);
 
-                // Change the default translation
+                // Change the encryption8key
                 $file_encrypt = fopen('/var/www/diagnostic/config/autoload/local.php', 'r');
                 $contents = fread($file_encrypt, filesize('/var/www/diagnostic/config/autoload/local.php'));
                 fclose($file_encrypt);
                 $contents = explode(PHP_EOL, $contents); // PHP_EOL equals to /n in Linux
-                $contents[$num_line_encrypt+1] = "    'encryption_key' => '" . $request->getPost('encryption_key') . "',"; // Change the default translation with the new one
+                $contents[$num_line_encrypt+1] = "    'encryption_key' => '" . $request->getPost('encryption_key') . "',"; // Change the encryption_key with the new one
                 $contents = array_values($contents);
                 $contents = implode(PHP_EOL, $contents);
                 $file_encrypt = fopen('/var/www/diagnostic/config/autoload/local.php', 'w');
-                fwrite($file_encrypt, $contents); // Write the file with the new default translation
+                fwrite($file_encrypt, $contents); // Write the file with the new encryption_key
                 fclose($file_encrypt);
 
             }
