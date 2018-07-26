@@ -169,9 +169,28 @@ $id = 0;
         ?>
         <h4 style="color: #DF1D31; font-weight: bold;"><?= $title ?></h4>
         <br/><br/>
-        <?= $this->form()->openTag($form) ?>
+        <?= $this->form()->openTag($form); ?>
         <?= $this->formTextarea($form->get('information')) ?>
         <br/>
+        <span style="color: grey;"><?php if ($this->type == 1) {echo $this->translate('__information_help');}else {echo $this->translate('__information_help2');;} ?></span> <br /><br />
+
+        <div class="col-lg-5 text-left">
+        <label><?= $this->translate($form->get('activity')->getLabel()) ?></label>
+        <?= $this->formSelect($form->get('activity')) ?>
+        </div>
+
+        <div class="col-lg-2 text-center"></div>
+
+        <div class="col-lg-3 text-left">
+        <label><?= $this->translate($form->get('nb_employees')->getLabel()) ?></label>
+        <?= $this->formSelect($form->get('nb_employees')) ?>
+        </div>
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+
         <center>
             <?= $this->formHidden($form->get('csrf')) ?>
             <?= $this->formSubmit($form->get('submit')); ?>

@@ -52,7 +52,7 @@ class SettingForm extends Form
             'name' => 'checkbox_mxCheck',
             'type' => 'checkbox',
             'options' => [
-                'label' => 'MxCheck',
+                'label' => '__mail_verif',
             ],
         ]);
 

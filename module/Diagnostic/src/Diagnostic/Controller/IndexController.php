@@ -119,6 +119,8 @@ class IndexController extends AbstractController
 
                             $_SESSION['email'] = $user->current()->email;
 
+                            $_SESSION['id_diagnostic'] = bin2hex(random_bytes('10'));
+
                             return $this->redirect()->toRoute('diagnostic', ['controller' => 'index', 'action' => 'diagnostic']);
                         } else {
                             $message = '__login_error';
@@ -497,7 +499,7 @@ class IndexController extends AbstractController
         //retrieve result
         $container = new Container('diagnostic');
         $result = ($container->offsetExists('result')) ? $container->result : [];
-        $information = ($container->offsetExists('information')) ? $container->information : ['organization' => '', 'synthesis' => ''];
+        $information = ($container->offsetExists('information')) ? $container->information : ['organization' => '', 'synthesis' => '', 'activity' => '', 'nb_employees' => ''];
 
 	//form
         $form = $this->get('informationForm');
@@ -556,8 +558,9 @@ class IndexController extends AbstractController
 
                     //record information
                     $information[$informationKey] = $formData['information'];
+                    $information['activity'] = $formData['activity'];
+                    $information['nb_employees'] = $formData['nb_employees'];
                     $container->information = $information;
-
 
                     //retrieve first question
                     $firstId = false;
@@ -577,7 +580,7 @@ class IndexController extends AbstractController
 
         //populate
         $informationEntity = $this->get('informationEntity');
-        $binding = (array_key_exists($informationKey, $information)) ? ['information' => $information[$informationKey]] : [];
+        $binding = (array_key_exists($informationKey, $information)) ? ['information' => $information[$informationKey], 'activity' => $information['activity'], 'nb_employees' => $information['nb_employees']] : [];
         $informationEntity->exchangeArray($binding);
         $form->bind($informationEntity);
 
@@ -755,7 +758,8 @@ class IndexController extends AbstractController
         $export = [
             'result' => $result,
             'information' => $information,
-            'questions' => $questions
+            'questions' => $questions,
+            'id_diagnostic' => $_SESSION['id_diagnostic']
         ];
         $export = json_encode($export);
 
@@ -798,6 +802,7 @@ class IndexController extends AbstractController
     {
         //form
         $form = $this->get('linkDownloadForm');
+        $request = $this->getRequest();
 
         //retrieve results and questions
         $container = new Container('diagnostic');
@@ -862,6 +867,70 @@ class IndexController extends AbstractController
             $categories[$key] = (array_key_exists($category, $calculResults['totalCategory'])) ? (int)$calculResults['totalCategory'][$category] : 0;
             $categoriesTarget[$key] = (array_key_exists($category, $calculResults['totalCategoryTarget'])) ? (int)$calculResults['totalCategoryTarget'][$category] : 0;
         }
+
+        if ($request->isPost()) {
+            $form->setData($request->getPost());
+            if (isset($_POST['submit_stat'])) {
+                $i = 1;
+                $statistics = [];
+                $statistics[0]['id_diagnostic'] = $_SESSION['id_diagnostic'];
+                $statistics[0]['activity'] = $translator->translate($container->information['activity']);
+                $statistics[0]['nb_employees'] = $translator->translate($container->information['nb_employees']);
+                $statistics[0]['final_result'] = $calculResults['total'];
+                while (isset($questions[$i])) {
+                    $statistics[$i]['question'] = $questions[$i]->getTranslationKey();
+
+                    if ($results[$i]['maturity'] == 0) {
+                        $maturity = $translator->translate('__maturity_none');
+                    }elseif ($results[$i]['maturity'] == 1) {
+                        $maturity = $translator->translate('__maturity_medium');
+                    }elseif ($results[$i]['maturity'] == 2) {
+                        $maturity = $translator->translate('__maturity_ok');
+                    }else {
+                        $maturity = $translator->translate('__maturity_NA');
+                    }
+                    $statistics[$i]['maturity'] = $maturity;
+
+                    if ($results[$i]['gravity'] == 1) {
+                        $gravity = $translator->translate('__low');
+                    }elseif ($results[$i]['gravity'] == 2) {
+                        $gravity = $translator->translate('__medium');
+                    }else {
+                        $gravity = $translator->translate('__strong');
+                    }
+                    $statistics[$i]['gravity'] = $gravity;
+
+                    $statistics[$i]['category'] = $questions[$i]->getCategoryTranslationKey();
+
+                    $i++;
+                }
+
+                $j = 1;
+                while (isset($categories['__category' . $j])) {
+                    $statistics[$i]['category'] = '__category' . $j;
+                    $statistics[$i]['category_maturity'] = $categories['__category' . $j];
+                    $i++;
+                    $j++;
+                }
+
+                // Encode in a file
+                $fichier = fopen('/var/www/diagnostic/statistics.json', 'w+');
+                fwrite($fichier, json_encode(array_values($statistics), JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES));
+                fclose($fichier);
+
+                // Ddl the file and delete it in the VM
+                header('Content-Description: File Transfer');
+                header('Content-Type: application/octet-stream');
+                header('Content-Disposition: attachment; filename=statistics.json');
+                header('Expires: 0');
+                header('Cache-Control: must-revalidate');
+                header('Pragma: public');
+                header('Content-Length: ' . filesize('/var/www/diagnostic/statistics.json'));
+                readfile('/var/www/diagnostic/statistics.json');
+                unlink('/var/www/diagnostic/statistics.json');
+            }
+        }
+
 
         //send to view
         return new ViewModel([

@@ -136,14 +136,23 @@ class TemplateProcessorService extends TemplateProcessor implements ServiceLocat
             $this->setValue('ORGANIZATION_INFORMATION', '');
         }
 
+        if (isset($information['activity'])) {
+            $this->setValue('ACTIVITY', $translator->translate($information['activity']));
+        } else {
+            $this->setValue('ACTIVITY', '');
+        }
+
+        if (isset($information['nb_employees'])) {
+            $this->setValue('NB_EMPLOYEES', $information['nb_employees']);
+        } else {
+            $this->setValue('NB_EMPLOYEES', '');
+        }
+
         if (isset($information['synthesis'])) {
             $this->setValue('EVALUATION_SYNTHESYS', $information['synthesis']);
         } else {
             $this->setValue('EVALUATION_SYNTHESYS', '');
         }
-
-
-
 
 	 // ContentMat : 0 = 0/1, 1 = 0.5/1, 2 = 1/1, 3 = NA
          //css Tables

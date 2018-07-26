@@ -10,6 +10,7 @@ use Zend\Session\Container;
  *
  * @package Diagnostic\Service
  * @author Jerome De Almeida <jerome.dealmeida@vesperiagroup.com>
+ * @author Romain Desjardins
  */
 class QuestionService extends AbstractService
 {
@@ -127,13 +128,16 @@ class QuestionService extends AbstractService
 
         //questions
         $questions = [];
-		$questionEntity = $this->get('entity');
+        $questionEntity = $this->get('entity');
         if (array_key_exists('questions', $data)) {
             foreach ($data['questions'] as $key => $value) {
                 $questions[$key] = new $questionEntity;
-				$questions[$key]->exchangeArray($value);
+                $questions[$key]->exchangeArray($value);
             }
         }
+
+        // UID diagnostic
+        $_SESSION['id_diagnostic'] = $data['id_diagnostic'];
 
         if (count($questions)) {
             $container = new Container('diagnostic');

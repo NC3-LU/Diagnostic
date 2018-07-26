@@ -613,3 +613,135 @@ msgstr "The two given tokens do not match"
 
 msgid "__error_categ"
 msgstr "The file contain an unknown category ID"
+
+msgid "__statistics"
+msgstr "Statistics"
+
+msgid "__mail_verif"
+msgstr "Mail verification"
+
+msgid "__information_help"
+msgstr "Aide à la partie information"
+
+msgid "__activity"
+msgstr "Activity"
+
+msgid "__employees"
+msgstr "Number of employees"
+
+msgid "__information_help2"
+msgstr "Aide résumé"
+
+msgid "__activity1"
+msgstr "Craft"
+
+msgid "__activity2"
+msgstr "Wellness"
+
+msgid "__activity3"
+msgstr "Boilermaking factory"
+
+msgid "__activity4"
+msgstr "Interior design"
+
+msgid "__activity5"
+msgstr "Industrial design"
+
+msgid "__activity6"
+msgstr "Sustainable development"
+
+msgid "__activity7"
+msgstr "E-commerce"
+
+msgid "__activity8"
+msgstr "Government"
+
+msgid "__activity9"
+msgstr "Mass-market retail"
+
+msgid "__activity10"
+msgstr "Hospitality"
+
+msgid "__activity11"
+msgstr "Humanitarian"
+
+msgid "__activity12"
+msgstr "Real estate"
+
+msgid "__activity13"
+msgstr "IT"
+
+msgid "__activity14"
+msgstr "International"
+
+msgid "__activity15"
+msgstr "Food industry"
+
+msgid "__activity16"
+msgstr "Railway infrastructure"
+
+msgid "__activity17"
+msgstr "Logistic and e-commerce"
+
+msgid "__activity18"
+msgstr "Metallurgy"
+
+msgid "__activity19"
+msgstr "Medicinal industry"
+
+msgid "__activity20"
+msgstr "Boating"
+
+msgid "__activity21"
+msgstr "Industrial cleaning"
+
+msgid "__activity22"
+msgstr "Paramedic"
+
+msgid "__activity23"
+msgstr "Catering"
+
+msgid "__activity24"
+msgstr "Security"
+
+msgid "__activity25"
+msgstr "Industry and work related to the food chain"
+
+msgid "__activity26"
+msgstr "The industry of pets"
+
+msgid "__activity27"
+msgstr "The catering sector"
+
+msgid "__activity28"
+msgstr "The industry of toys and games"
+
+msgid "__activity29"
+msgstr "Personal services"
+
+msgid "__activity30"
+msgstr "Fashion"
+
+msgid "__activity31"
+msgstr "Tourism"
+
+msgid "__activity32"
+msgstr "Transport"
+
+msgid "__activity33"
+msgstr "Rail transport"
+
+msgid "__activity34"
+msgstr "Children universe"
+
+msgid "__activity35"
+msgstr "Town planning"
+
+msgid "__activity36"
+msgstr "Web"
+
+msgid "__activity37"
+msgstr "Textile, fashion and luxury"
+
+msgid "__activity38"
+msgstr "Third age sector"

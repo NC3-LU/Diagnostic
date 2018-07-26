@@ -15,6 +15,16 @@ class InformationEntity
     public $information;
 
     /**
+     * Information
+     */
+    public $activity;
+
+    /**
+     * Information
+     */
+    public $nb_employees;
+
+    /**
      * @return mixed
      */
     public function getInformation()
@@ -33,6 +43,42 @@ class InformationEntity
     }
 
     /**
+     * @return mixed
+     */
+    public function getActivity()
+    {
+        return $this->activity;
+    }
+
+    /**
+     * @param mixed $information
+     * @return InformationEntity
+     */
+    public function setActivity($information)
+    {
+        $this->activity = $information;
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getNb_employees()
+    {
+        return $this->nb_employees;
+    }
+
+    /**
+     * @param mixed $information
+     * @return InformationEntity
+     */
+    public function setNb_employees($information)
+    {
+        $this->nb_employees = $information;
+        return $this;
+    }
+
+    /**
      * @param array $data
      */
     public function exchangeArray($data)
@@ -42,6 +88,8 @@ class InformationEntity
         }
 
         $this->information = (isset($data['information'])) ? $data['information'] : null;
+        $this->activity = (isset($data['activity'])) ? $data['activity'] : null;
+        $this->nb_employees = (isset($data['nb_employees'])) ? $data['nb_employees'] : null;
     }
 
     /**

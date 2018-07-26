@@ -32,7 +32,7 @@ echo $this->inlineScript()->prependFile($this->basePath('js/Chart.js-master/Char
     }
 </style>
 <div class="row">
-    <div class="col-lg-3 text-left">
+    <div class="col-lg-4 text-center">
         <?php
         $container = new \Zend\Session\Container('user');
         if (($container->offsetExists('email')) || (!is_null($container->email))) {
@@ -44,17 +44,31 @@ echo $this->inlineScript()->prependFile($this->basePath('js/Chart.js-master/Char
                 echo $this->formHidden($form->get('pie'));
                 echo $this->formHidden($form->get('bar'));
                 ?>
-                <button type="submit" class="btn btn-warning" style="padding: 7px 70px 7px 70px; margin-top: 15px;">
-                    <span
-                            class="glyphicon glyphicon-download-alt"></span>&nbsp;<?= $this->translate('__download_delivery') ?>
-                </button>
-                <?php
-                echo $this->form()->closeTag();
+                <table style="width: 100%; margin-top: 15px;">
+                    <tr>
+                        <td align="center">
+                            <button type="submit" class="btn btn-warning" style="padding: 7px 50px 7px 50px;">
+                                <span class="glyphicon glyphicon-download-alt"></span>&nbsp;<?= $this->translate('__download_delivery') ?>
+                            </button>
+                            <?php echo $this->form()->closeTag();
+                            $form->setAttribute('action', $this->url('diagnostic', ['action' => 'rapport']));
+                            $form->prepare();
+                            echo $this->form()->openTag($form);
+                            ?>
+                        </td>
+                        <td align="center">
+                            <button type="submit" name="submit_stat" class="btn btn-warning" style="padding: 7px 50px 7px 50px;">
+                                <span class="glyphicon glyphicon-download-alt"></span>&nbsp;<?= $this->translate('__statistics') ?>
+                            </button>
+                        </td>
+                    </tr>
+                </table>
+                <?php echo $this->form()->closeTag();
             }
         }
         ?>
     </div>
-    <div class="col-lg-5 text-center bg-info">
+    <div class="col-lg-4 text-center bg-info">
     <h2><?= ucfirst($this->translate('__results')) ?> : <?= $this->escapeHtml($total); ?>/100</h2>
 </div>
 <div class="col-lg-4 text-left">
