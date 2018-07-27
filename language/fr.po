@@ -5,7 +5,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Poedit 2.0.6\n"
 "Project-Id-Version: cases-diagnostic\n"
-"Language: fr\n"
+"Language: en\n"
 "POT-Creation-Date: \n"
 "PO-Revision-Date: \n"
 "Last-Translator: \n"
@@ -570,7 +570,7 @@ msgid "__delete_question"
 msgstr "Voulez-vous vraiment supprimer cette question ?"
 
 msgid "__delete_category"
-msgstr "Voulez-vous vraiment supprimer cette catégorie ? Pour actualiser l'affichage des catégories, il faut vous reconnecter."
+msgstr "Voulez-vous vraiment supprimer cette catégorie ?"
 
 msgid "__delete_trans"
 msgstr "Voulez-vous vraiment supprimer cette traduction ?"
@@ -620,17 +620,11 @@ msgstr "Statistiques"
 msgid "__mail_verif"
 msgstr "Vérification mail"
 
-msgid "__information_help"
-msgstr "C'est ici que l'on écrit l'aide relative à la partie information"
-
 msgid "__activity"
 msgstr "Activité"
 
 msgid "__employees"
 msgstr "Nombre d'employés"
-
-msgid "__information_help2"
-msgstr "Aide résumé"
 
 msgid "__activity1"
 msgstr "Artisanat"
@@ -745,3 +739,12 @@ msgstr "Textile, mode et luxe"
 
 msgid "__activity38"
 msgstr "Secteur du grand âge"
+
+msgid "__organization_help"
+msgstr "Aide pour l'organisation"
+
+msgid "__synthesis_help"
+msgstr "Aide pour la synthèse"
+
+msgid "__error_key"
+msgstr "Les clés de traduction doivent être uniques"

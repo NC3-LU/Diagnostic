@@ -570,7 +570,7 @@ msgid "__delete_question"
 msgstr "Do you really want to delete this question ?"
 
 msgid "__delete_category"
-msgstr "Do you really want to delete this category ? To refresh the category view, you have to reconnect."
+msgstr "Do you really want to delete this category ?"
 
 msgid "__delete_trans"
 msgstr "Do you really want to delete this translation ?"
@@ -620,17 +620,11 @@ msgstr "Statistics"
 msgid "__mail_verif"
 msgstr "Mail verification"
 
-msgid "__information_help"
-msgstr "Aide à la partie information"
-
 msgid "__activity"
 msgstr "Activity"
 
 msgid "__employees"
 msgstr "Number of employees"
-
-msgid "__information_help2"
-msgstr "Aide résumé"
 
 msgid "__activity1"
 msgstr "Craft"
@@ -745,3 +739,12 @@ msgstr "Textile, fashion and luxury"
 
 msgid "__activity38"
 msgstr "Third age sector"
+
+msgid "__organization_help"
+msgstr "Organization help"
+
+msgid "__synthesis_help"
+msgstr "Synthesis help"
+
+msgid "__error_key"
+msgstr "The translations key must be unique"

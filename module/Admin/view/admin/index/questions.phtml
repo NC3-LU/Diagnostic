@@ -2,7 +2,7 @@
 
 $title = $this->translate('__questions');
 $this->headTitle($title);
-$_SESSION['nb_questions'] = 1; // Count number of question
+$_SESSION['question_max'] = 1; // Count number of question
 
 $this->form->setAttribute('action', $this->url('admin', ['action' => 'questions']));
 $this->form->prepare();
@@ -47,7 +47,7 @@ $this->form->prepare();
             </tr>
             <?php
             foreach ($questions as $question) :
-                $_SESSION['nb_questions']++;
+                if (substr($question->getTranslationKey(), 10) > $_SESSION['question_max']) {$_SESSION['question_max'] = substr($question->getTranslationKey(), 10);}
                 $urlModify = $this->url('admin', ['action' => 'modify-question', 'id' => $question->getId()]);
                 $urlDelete = $this->url('admin', ['action' => 'delete-question', 'id' => $question->getId()]);
             ?>

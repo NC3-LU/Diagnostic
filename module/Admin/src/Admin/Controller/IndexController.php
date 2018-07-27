@@ -176,19 +176,18 @@ class IndexController extends AbstractController
                     $tab = json_decode($content, true);
 
                     // If the file is 'categories.json'
-                    if (!isset($tab[1]['category_id'])) {$tab = '';}
+                    if (!isset($tab[0]['category_id'])) {$tab = '';}
                     else {
                         //retrieve categories
                         $categoryService = $this->get('categoryService');
                         $categories = $categoryService->getBddCategories();
-
                         $i = 1;
-                        while (isset($tab[$i])) {
+                        while (isset($tab[$i-1])) {
                             // Avoid to put a wrong category
                             $j = 1;
                             $k = 1;
                             foreach ($categories as $category) {
-                                if ($tab[$i]['category_id'] != $category->getId()) {$k++;}
+                                if ($tab[$i-1]['category_id'] != $category->getId()) {$k++;}
                                 $j++;
                             }
                             if ($j == $k) {$error_categ = 1;}
@@ -201,13 +200,18 @@ class IndexController extends AbstractController
 
                         // Delete the previous database
                         $i=1;
-                        while (isset($questions[$i])) {$questionService->delete($i); $i++;}
+                        while ($_SESSION['question_max'] >= $i) {
+                            if (isset($questions[$i])) {
+                                $questionService->delete($i);
+                            }
+                            $i++;
+                        }
 
                         $file_lang = fopen($location_lang . 'languages.txt', 'r');
-                        for ($j=1; $j<$_SESSION['nb_lang']; $j++) {
+                        for ($k=1; $k<$_SESSION['nb_lang']; $k++) {
                             $temp_lang = fgets($file_lang, 4096);
 
-                            if (isset($tab[1]['translation_' . substr($temp_lang, 0, -1)])) {
+                            if (isset($tab[0]['translation_' . substr($temp_lang, 0, -1)])) {
                                 rename($location_lang . substr($temp_lang, 0, -1) . '.po', $location_lang . substr($temp_lang, 0, -1) . '_temp.po');
                                 $file_temp = fopen($location_lang . substr($temp_lang, 0, -1) . '_temp.po', 'r');
                                 $file = fopen($location_lang . substr($temp_lang, 0, -1) . '.po', 'w');
@@ -218,23 +222,26 @@ class IndexController extends AbstractController
                                 }
 
                                 $i = 1;
-                                while (isset($tab[$i])) {
-                                    fputs($file, 'msgid "__question' . $i . '"');
+                                $j = 1;
+                                while (isset($tab[$i-1])) {
+                                    if ($tab[$i-1]['id'] != $j) {$j = $tab[$i-1]['id'];}
+                                    fputs($file, 'msgid "__question' . $j . '"');
                                     fputs($file, PHP_EOL);
-                                    fputs($file, 'msgstr "' . $tab[$i]['translation_' . substr($temp_lang, 0, -1)] . '"');
+                                    fputs($file, 'msgstr "' . $tab[$i-1]['translation_' . substr($temp_lang, 0, -1)] . '"');
                                     fputs($file, PHP_EOL);
                                     fputs($file, PHP_EOL);
-                                    fputs($file, 'msgid "__question' . $i . 'help"');
+                                    fputs($file, 'msgid "__question' . $j . 'help"');
                                     fputs($file, PHP_EOL);
-                                    fputs($file, 'msgstr "' . $tab[$i]['translation_help_' . substr($temp_lang, 0, -1)] . '"');
+                                    fputs($file, 'msgstr "' . $tab[$i-1]['translation_help_' . substr($temp_lang, 0, -1)] . '"');
                                     fputs($file, PHP_EOL);
                                     fputs($file, PHP_EOL);
                                     $i++;
+                                    $j++;
                                 }
 
                                 while (!feof($file_temp)) {
                                     $temp = fgets($file_temp, 4096);
-                                    if (substr($temp, 7, -2) == '__question' . ($_SESSION['nb_questions']-1) . 'help') {$temp = fgets($file_temp, 4096); $temp = fgets($file_temp, 4096); break;}
+                                    if (substr($temp, 7, -2) == '__question' . ($_SESSION['question_max']) . 'help') {$temp = fgets($file_temp, 4096); $temp = fgets($file_temp, 4096); break;}
                                 }
 
                                 while (!feof($file_temp)) {
@@ -247,25 +254,34 @@ class IndexController extends AbstractController
 
                                 // compile from po to mo
                                 shell_exec('msgfmt ' . $location_lang . substr($temp_lang, 0, -1) . '.po -o ' . $location_lang . substr($temp_lang, 0, -1) . '.mo');
-
-                                // Delete things that are not in the database
-                                $i = 1;
-                                while (isset($tab[$i])) {
-                                    unset($tab[$i]['translation_' . substr($temp_lang, 0, -1)]);
-                                    unset($tab[$i]['translation_help_' . substr($temp_lang, 0, -1)]);
-                                    $i++;
-                                }
                             }
                         }
                         fclose($file_lang);
 
+                        // Delete things that are not in the database
+                        $file_country = fopen($location_lang . 'code_country.txt', 'r');
+                        while (!feof($file_country)) {
+                            $temp_country = fgets($file_country, 4096);
+                            $i = 1;
+                            if (isset($tab[0]['translation_' . substr($temp_country, 0, -1)])) {
+                                while (isset($tab[$i-1])) {
+                                    unset($tab[$i-1]['translation_' . substr($temp_country, 0, -1)]);
+                                    unset($tab[$i-1]['translation_help_' . substr($temp_country, 0, -1)]);
+                                    $i++;
+                                }
+                            }
+                        }
+                        fclose($file_country);
+
                         // Import the new database
-                        $i=1;
-                        while (isset($tab[$i])) {
-                            $tab[$i]['id'] = $i;
-                            $tab[$i]['translation_key'] = '__question' . $i;
-                            $questionService->create($tab[$i]);
+                        $i = 1;
+                        $j = 1;
+                        while (isset($tab[$i-1])) {
+                            if ($tab[$i-1]['id'] != $j) {$j = $tab[$i-1]['id'];}
+                            $tab[$i-1]['translation_key'] = '__question' . $j;
+                            $questionService->create($tab[$i-1]);
                             $i++;
+                            $j++;
                         }
                         $questionService->resetCache();
 
@@ -277,13 +293,14 @@ class IndexController extends AbstractController
             // Export
             if (isset($_POST['submit'])) {
                 // Delete things we don't need in the json file
-                $i=1;
-                while (isset($questions[$i])) {
-                    unset($questions[$i]->id);
-                    unset($questions[$i]->translation_key);
-                    unset($questions[$i]->category_translation_key);
-                    unset($questions[$i]->translation_key_help);
-                    unset($questions[$i]->new);
+                $i = 1;
+                while ($_SESSION['question_max'] >= $i) {
+                    if (isset($questions[$i])) {
+                        unset($questions[$i]->translation_key);
+                        unset($questions[$i]->category_translation_key);
+                        unset($questions[$i]->translation_key_help);
+                        unset($questions[$i]->new);
+                    }
                     $i++;
                 }
 
@@ -299,17 +316,19 @@ class IndexController extends AbstractController
                     }
 
                     $i = 1;
-                    while (isset($questions[$i])) {
-                        $temp = fgets($file, 4096);
-                        $questions[$i] = (array)$questions[$i];
-                        $questions[$i]['translation_' . substr($temp_lang, 0, -1)] = substr($temp, 8, -2);
-                        $temp = fgets($file, 4096);
-                        $temp = fgets($file, 4096);
-                        $temp = fgets($file, 4096);
-                        $questions[$i]['translation_help_' . substr($temp_lang, 0, -1)] = substr($temp, 8, -2);
-                        $temp = fgets($file, 4096);
-                        $temp = fgets($file, 4096);
-                        $questions[$i] = (object)$questions[$i];
+                    while ($_SESSION['question_max'] >= $i) {
+                        if (isset($questions[$i])) {
+                            $temp = fgets($file, 4096);
+                            $questions[$i] = (array)$questions[$i];
+                            $questions[$i]['translation_' . substr($temp_lang, 0, -1)] = substr($temp, 8, -2);
+                            $temp = fgets($file, 4096);
+                            $temp = fgets($file, 4096);
+                            $temp = fgets($file, 4096);
+                            $questions[$i]['translation_help_' . substr($temp_lang, 0, -1)] = substr($temp, 8, -2);
+                            $temp = fgets($file, 4096);
+                            $temp = fgets($file, 4096);
+                            $questions[$i] = (object)$questions[$i];
+                        }
                         $i++;
                     }
                     fclose($file);
@@ -318,7 +337,7 @@ class IndexController extends AbstractController
 
                 // Encode in a file
                 $fichier = fopen('/var/www/diagnostic/questions.json', 'w+');
-                fwrite($fichier, json_encode($questions, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES));
+                fwrite($fichier, json_encode(array_values($questions), JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES));
                 fclose($fichier);
 
                 // Ddl the file and delete it in the VM
@@ -382,19 +401,24 @@ class IndexController extends AbstractController
                     $tab = json_decode($content, true);
 
                     // If the file is not categories.json
-                    if (isset($tab[1]['category_id']) || isset($tab[1]['translation'])) {$tab = '';}
+                    if (isset($tab[0]['category_id']) || isset($tab[0]['translation'])) {$tab = '';}
 
                     if ($tab != '') {
 
                         // Delete the previous database
                         $i=1;
-                        while (isset($categories[$i])) {$categoryService->delete($i); $i++;}
+                        while ($_SESSION['category_max'] >= $i) {
+                            if (isset($categories[$i])) {
+                                $categoryService->delete($i);
+                            }
+                            $i++;
+                        }
 
                         $file_lang = fopen($location_lang . 'languages.txt', 'r');
-                        for ($j=1; $j<$_SESSION['nb_lang']; $j++) {
+                        for ($k=1; $k<$_SESSION['nb_lang']; $k++) {
                             $temp_lang = fgets($file_lang, 4096);
 
-                            if (isset($tab[1]['translation_' . substr($temp_lang, 0, -1)])) {
+                            if (isset($tab[0]['translation_' . substr($temp_lang, 0, -1)])) {
                                 rename($location_lang . substr($temp_lang, 0, -1) . '.po', $location_lang . substr($temp_lang, 0, -1) . '_temp.po');
                                 $file_temp = fopen($location_lang . substr($temp_lang, 0, -1) . '_temp.po', 'r');
                                 $file = fopen($location_lang . substr($temp_lang, 0, -1) . '.po', 'w');
@@ -405,18 +429,21 @@ class IndexController extends AbstractController
                                 }
 
                                 $i = 1;
-                                while (isset($tab[$i])) {
-                                    fputs($file, 'msgid "__category' . $i . '"');
+                                $j = 1;
+                                while (isset($tab[$i-1])) {
+                                    if ($tab[$i-1]['id'] != $j) {$j = $tab[$i-1]['id'];}
+                                    fputs($file, 'msgid "__category' . $j . '"');
                                     fputs($file, PHP_EOL);
-                                    fputs($file, 'msgstr "' . $tab[$i]['translation_' . substr($temp_lang, 0, -1)] . '"');
+                                    fputs($file, 'msgstr "' . $tab[$i-1]['translation_' . substr($temp_lang, 0, -1)] . '"');
                                     fputs($file, PHP_EOL);
                                     fputs($file, PHP_EOL);
                                     $i++;
+                                    $j++;
                                 }
 
                                 while (!feof($file_temp)) {
                                     $temp = fgets($file_temp, 4096);
-                                    if (substr($temp, 7, -2) == '__category' . ($_SESSION['nb_categories']-1)) {$temp = fgets($file_temp, 4096); $temp = fgets($file_temp, 4096); break;}
+                                    if (substr($temp, 7, -2) == '__category' . ($_SESSION['category_max'])) {$temp = fgets($file_temp, 4096); $temp = fgets($file_temp, 4096); break;}
                                 }
 
                                 while (!feof($file_temp)) {
@@ -429,34 +456,40 @@ class IndexController extends AbstractController
 
                                 // compile from po to mo
                                 shell_exec('msgfmt ' . $location_lang . substr($temp_lang, 0, -1) . '.po -o ' . $location_lang . substr($temp_lang, 0, -1) . '.mo');
-
-                                // Delete things that are not in the database
-                                $i = 1;
-                                while (isset($tab[$i])) {
-                                    unset($tab[$i]['translation_' . substr($temp_lang, 0, -1)]);
-                                    $i++;
-                                }
                             }
                         }
                         fclose($file_lang);
 
+                        // Delete things that are not in the database
+                        $file_country = fopen($location_lang . 'code_country.txt', 'r');
+                        while (!feof($file_country)) {
+                            $temp_country = fgets($file_country, 4096);
+                            $i = 1;
+                            if (isset($tab[0]['translation_' . substr($temp_country, 0, -1)])) {
+                                while (isset($tab[$i-1])) {
+                                    unset($tab[$i-1]['translation_' . substr($temp_country, 0, -1)]);
+                                    $i++;
+                                }
+                            }
+                        }
+                        fclose($file_country);
+
                         // Import the new database
-                        $i=1;
-                        while (isset($tab[$i])) {
-                            $tab[$i]['id'] = $i;
-                            $tab[$i]['translation_key'] = '__category' . $i;
-                            $categoryService->create($tab[$i]);
+                        $i = 1;
+                        $j = 1;
+                        while (isset($tab[$i-1])) {
+                            if ($tab[$i-1]['id'] != $j) {$j = $tab[$i-1]['id'];}
+                            $tab[$i-1]['translation_key'] = '__category' . $j;
+                            $categoryService->create($tab[$i-1]);
                             $i++;
+                            $j++;
                         }
                         $categoryService->resetCache();
 
-                        //retrieve categories
-                        $categoryService = $this->get('categoryService');
-                        $categories = $categoryService->getBddCategories();
-
                         // Recreate questions database which was deleted when categories are deleted
                         $i = 1;
-                        while (isset($questions[$i])) {
+                        while ($_SESSION['question_max'] >= $i) {
+                            if (isset($questions[$i])) {
                             // Avoid to put a wrong category
                             $j = 1;
                             $k = 1;
@@ -473,6 +506,7 @@ class IndexController extends AbstractController
                                 unset($questions[$i]->new);
                                 $questionService->create($questions[$i]);
                             }
+                            }
                             $i++;
                         }
 
@@ -485,11 +519,12 @@ class IndexController extends AbstractController
             // Export
             if (isset($_POST['submit'])) {
                 // Delete things we don't need in the json file
-                $i=1;
-                while (isset($categories[$i])) {
-                    unset($categories[$i]->id);
-                    unset($categories[$i]->translation_key);
-                    unset($categories[$i]->new);
+                $i = 1;
+                while ($_SESSION['category_max'] >= $i) {
+                    if (isset($categories[$i])) {
+                        unset($categories[$i]->translation_key);
+                        unset($categories[$i]->new);
+                    }
                     $i++;
                 }
 
@@ -505,13 +540,15 @@ class IndexController extends AbstractController
                     }
 
                     $i = 1;
-                    while (isset($categories[$i])) {
-                        $temp = fgets($file, 4096);
-                        $categories[$i] = (array)$categories[$i];
-                        $categories[$i]['translation_' . substr($temp_lang, 0, -1)] = substr($temp, 8, -2);
-                        $temp = fgets($file, 4096);
-                        $temp = fgets($file, 4096);
-                        $categories[$i] = (object)$categories[$i];
+                    while ($_SESSION['category_max'] >= $i) {
+                        if (isset($categories[$i])) {
+                            $temp = fgets($file, 4096);
+                            $categories[$i] = (array)$categories[$i];
+                            $categories[$i]['translation_' . substr($temp_lang, 0, -1)] = substr($temp, 8, -2);
+                            $temp = fgets($file, 4096);
+                            $temp = fgets($file, 4096);
+                            $categories[$i] = (object)$categories[$i];
+                        }
                         $i++;
                     }
                     fclose($file);
@@ -520,7 +557,7 @@ class IndexController extends AbstractController
 
                 // Encode in a file
                 $fichier = fopen('/var/www/diagnostic/categories.json', 'w+');
-                fwrite($fichier, json_encode($categories, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES));
+                fwrite($fichier, json_encode(array_values($categories), JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES));
                 fclose($fichier);
 
                 // Ddl the file and delete it in the VM
@@ -863,7 +900,7 @@ class IndexController extends AbstractController
         $error_lang_del = 0; // English language can't be deleted
         $error_lang_del2 = 0; // You can't delete a current used language
         $error_upload = 0; // File not valid
-        $error_key2 = 0; // Avoid to have the same translation key in a file
+        $error_key = 0; // Avoid to have the same translation key in a file
 
         //retrieve questions
         $questionService = $this->get('questionService');
@@ -886,7 +923,7 @@ class IndexController extends AbstractController
             $fileCount = 3;
             while (!feof($file)) {
                 $temp = fgets($file, 4096);
-                if (substr($temp, 7, -2) == '__question' . ($_SESSION['nb_questions']-1) . 'help') {$temp = fgets($file, 4096); $temp = fgets($file, 4096); break;}
+                if (substr($temp, 7, -2) == '__question' . ($_SESSION['question_max']) . 'help') {$temp = fgets($file, 4096); $temp = fgets($file, 4096); break;}
             }
             while (!feof($file)) {
                 $temp = fgets($file, 4096);
@@ -1186,33 +1223,33 @@ class IndexController extends AbstractController
                     $tab = json_decode($content, true);
 
                     // If the file is not 'translations.json'
-                    if (!isset($tab[1]['translation'])) {$tab = '';}
+                    if (!isset($tab[0]['translation'])) {$tab = '';}
                     else {
                         $nb_translations = 1;
-                        while (isset($tab[$nb_translations])) {$nb_translations++;}
+                        while (isset($tab[$nb_translations-1])) {$nb_translations++;}
                         for ($i=1; $i<$nb_translations - 1; $i++) {
                             for ($j=$i+1; $j<=$nb_translations - 1; $j++) {
-                                if ($tab[$i]['translation_key'] == $tab[$j]['translation_key']) {$error_key2 = 1;}
+                                if ($tab[$i-1]['translation_key'] == $tab[$j-1]['translation_key']) {$error_key = 1;}
                             }
                         }
                     }
 
-                    if ($tab != '' && $error_key2 == 0) {
+                    if ($tab != '' && $error_key == 0) {
                         rename($location_lang . $_SESSION['lang'] . '.po', $location_lang . $_SESSION['lang'] . '_temp.po');
                         $file_temp = fopen($location_lang . $_SESSION['lang'] . '_temp.po', 'r');
                         $file = fopen($location_lang . $_SESSION['lang'] . '.po', 'w');
                         while (!feof($file_temp)) {
                             $temp = fgets($file_temp, 4096);
-                            if (substr($temp, 7, -2) == '__question' . ($_SESSION['nb_questions']-1) . 'help') {fputs($file, $temp); $temp = fgets($file_temp, 4096); fputs($file, $temp); break;}
+                            if (substr($temp, 7, -2) == '__question' . ($_SESSION['question_max']) . 'help') {fputs($file, $temp); $temp = fgets($file_temp, 4096); fputs($file, $temp); break;}
                             fputs($file, $temp);
                         }
 
                         $i = 1;
-                        while (isset($tab[$i])) {
+                        while (isset($tab[$i-1])) {
                             fputs($file, PHP_EOL);
-                            fputs($file, 'msgid "' . $tab[$i]['translation_key'] . '"');
+                            fputs($file, 'msgid "' . $tab[$i-1]['translation_key'] . '"');
                             fputs($file, PHP_EOL);
-                            fputs($file, 'msgstr "' . $tab[$i]['translation'] . '"');
+                            fputs($file, 'msgstr "' . $tab[$i-1]['translation'] . '"');
                             fputs($file, PHP_EOL);
                             $i++;
                         }
@@ -1253,7 +1290,7 @@ class IndexController extends AbstractController
 
                 // Encode in a file
                 $fichier = fopen('/var/www/diagnostic/translations_' . $_SESSION['lang'] . '.json', 'w+');
-                fwrite($fichier, json_encode($translations, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES));
+                fwrite($fichier, json_encode(array_values($translations), JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES));
                 fclose($fichier);
 
                 // Ddl the file and delete it in the VM
@@ -1283,7 +1320,7 @@ class IndexController extends AbstractController
             'error_lang_del' => $error_lang_del,
             'error_lang_del2' => $error_lang_del2,
             'error_upload' => $error_upload,
-            'error_key2' => $error_key2
+            'error_key' => $error_key
         ]);
     }
 
@@ -1321,8 +1358,10 @@ class IndexController extends AbstractController
                 $questionService = $this->get('questionService');
                 $questions = $questionService->getBddQuestions();
                 $i = 1;
-                foreach ($questions as $question) {$i++;}
-                $formData['id'] = $i;
+                foreach ($questions as $question) {
+                    if (substr($question->getTranslationKey(), 10) > $i) {$i = substr($question->getTranslationKey(), 10);}
+                }
+                $formData['id'] = $i+1;
 
                 $questionService->create((array)$formData);
                 $questionService->resetCache();
@@ -1337,7 +1376,7 @@ class IndexController extends AbstractController
                     while (!feof($file_temp)) {
                         $temp = fgets($file_temp, 4096);
                         fputs($file, $temp);
-                        if (substr($temp, 7, -2) == '__question' . ($_SESSION['nb_questions']-1) . 'help') {
+                        if (substr($temp, 7, -2) == '__question' . ($_SESSION['question_max']) . 'help') {
                             $temp = fgets($file_temp, 4096);
                             fputs($file, $temp);
                             fputs($file, PHP_EOL);
@@ -1410,8 +1449,10 @@ class IndexController extends AbstractController
                 $categoryService = $this->get('categoryService');
                 $categories = $categoryService->getBddCategories();
                 $i = 1;
-                foreach ($categories as $category) {$i++;}
-                $formData['id'] = $i;
+                foreach ($categories as $category) {
+                    if (substr($category->getTranslationKey(), 10) > $i) {$i = substr($category->getTranslationKey(), 10);}
+                }
+                $formData['id'] = $i+1;
 
                 $categoryService->create((array)$formData);
                 $categoryService->resetCache();
@@ -1426,7 +1467,7 @@ class IndexController extends AbstractController
                     while (!feof($file_temp)) {
                         $temp = fgets($file_temp, 4096);
                         fputs($file, $temp);
-                        if (substr($temp, 7, -2) == '__category' . ($_SESSION['nb_categories']-1)) {
+                        if (substr($temp, 7, -2) == '__category' . ($_SESSION['category_max'])) {
                             $temp = fgets($file_temp, 4096);
                             fputs($file, $temp);
                             fputs($file, PHP_EOL);
@@ -1997,6 +2038,8 @@ class IndexController extends AbstractController
         fclose($file_lang);
 
         $categoryService->delete($id);
+        $categoryService->resetCache();
+        $questionService->resetCache();
 
         //redirect
         return $this->redirect()->toRoute('admin', ['controller' => 'index', 'action' => 'categories']);

@@ -172,7 +172,7 @@ $id = 0;
         <?= $this->form()->openTag($form); ?>
         <?= $this->formTextarea($form->get('information')) ?>
         <br/>
-        <span style="color: grey;"><?php if ($this->type == 1) {echo $this->translate('__information_help');}else {echo $this->translate('__information_help2');;} ?></span> <br /><br />
+        <span style="color: grey;"><?php if ($this->type == 1) {echo $this->translate('__organization_help');}else {echo $this->translate('__synthesis_help');} ?></span> <br /><br />
 
         <div class="col-lg-5 text-left">
         <label><?= $this->translate($form->get('activity')->getLabel()) ?></label>

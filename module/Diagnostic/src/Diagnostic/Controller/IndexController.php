@@ -771,7 +771,7 @@ class IndexController extends AbstractController
         $iv = $config['iv_key'];
         $cryptExport = openssl_encrypt($export,'AES-256-CBC', $encryptionKey, OPENSSL_RAW_DATA, $iv);
         //create file
-        $filename = 'data_' . date('YmdHis') . '.cases';
+        $filename = 'diagnostic_' . date('YmdHis') . '.cases';
         !$handle = fopen($filename, 'w');
         fwrite($handle, $cryptExport);
         fclose($handle);
@@ -914,20 +914,20 @@ class IndexController extends AbstractController
                 }
 
                 // Encode in a file
-                $fichier = fopen('/var/www/diagnostic/statistics.json', 'w+');
+                $fichier = fopen('/var/www/diagnostic/stat_' . $_SESSION['id_diagnostic'] . '.json', 'w+');
                 fwrite($fichier, json_encode(array_values($statistics), JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES));
                 fclose($fichier);
 
                 // Ddl the file and delete it in the VM
                 header('Content-Description: File Transfer');
                 header('Content-Type: application/octet-stream');
-                header('Content-Disposition: attachment; filename=statistics.json');
+                header('Content-Disposition: attachment; filename=stat_' . $_SESSION['id_diagnostic'] . '.json');
                 header('Expires: 0');
                 header('Cache-Control: must-revalidate');
                 header('Pragma: public');
-                header('Content-Length: ' . filesize('/var/www/diagnostic/statistics.json'));
-                readfile('/var/www/diagnostic/statistics.json');
-                unlink('/var/www/diagnostic/statistics.json');
+                header('Content-Length: ' . filesize('/var/www/diagnostic/stat_' . $_SESSION['id_diagnostic'] . '.json'));
+                readfile('/var/www/diagnostic/stat_' . $_SESSION['id_diagnostic'] . '.json');
+                unlink('/var/www/diagnostic/stat_' . $_SESSION['id_diagnostic'] . '.json');
             }
         }
 

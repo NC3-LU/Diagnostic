@@ -18,7 +18,7 @@ $this->form->prepare(); ?>
             <tr>
                 <td><label><?= $this->translate($form->get('translation_key')->getLabel()) ?></label></td>
                 <td>
-                    <?= $this->formText($form->get('translation_key')->setValue('__category' . $_SESSION['nb_categories'])->setAttributes(['readonly' => 'true', 'style' => 'pointer-events: none'])) ?>
+                    <?= $this->formText($form->get('translation_key')->setValue('__category' . ($_SESSION['category_max']+1))->setAttributes(['readonly' => 'true', 'style' => 'pointer-events: none'])) ?>
                 </td>
             </tr>
             <tr>

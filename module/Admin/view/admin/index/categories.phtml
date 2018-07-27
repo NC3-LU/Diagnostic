@@ -1,7 +1,7 @@
 <?php
 $title = $this->translate('__categories');
 $this->headTitle($title);
-$_SESSION['nb_categories'] = 1; // Count number of category
+$_SESSION['category_max'] = 1; // Count number of category
 
 $this->form->setAttribute('action', $this->url('admin', ['action' => 'categories']));
 $this->form->prepare();
@@ -47,7 +47,7 @@ $this->form->prepare();
             </tr>
             <?php
             foreach ($categories as $category) :
-                $_SESSION['nb_categories']++;
+                if (substr($category->getTranslationKey(), 10) > $_SESSION['category_max']) {$_SESSION['category_max'] = substr($category->getTranslationKey(), 10);}
                 $urlModify = $this->url('admin', ['action' => 'modify-category', 'id' => $category->getId()]);
                 $urlDelete = $this->url('admin', ['action' => 'delete-category', 'id' => $category->getId()]);
             ?>
