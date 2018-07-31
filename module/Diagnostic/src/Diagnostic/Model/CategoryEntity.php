@@ -20,6 +20,11 @@ class CategoryEntity
     public $translation_key;
 
     /**
+     * Uid
+     */
+    public $uid;
+
+    /**
      * New
      */
     public $new = false;
@@ -63,6 +68,24 @@ class CategoryEntity
     /**
      * @return mixed
      */
+    public function getUid()
+    {
+        return $this->uid;
+    }
+
+    /**
+     * @param mixed $uid
+     * @return CategoryEntity
+     */
+    public function setUid($uid)
+    {
+        $this->uid = $uid;
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
     public function getNew()
     {
         return $this->new;
@@ -95,6 +118,7 @@ class CategoryEntity
         }
 
         $this->translation_key = (isset($data['translation_key'])) ? $data['translation_key'] : null;
+        $this->uid = (isset($data['uid'])) ? $data['uid'] : null;
         $this->new = (isset($data['new'])) ? $data['new'] : false;
     }
 

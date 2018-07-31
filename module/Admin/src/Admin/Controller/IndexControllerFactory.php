@@ -19,6 +19,7 @@ class IndexControllerFactory extends AbstractControllerFactory
         'questionService' => 'Diagnostic\Service\QuestionService',
         'categoryService' => 'Diagnostic\Service\CategoryService',
         'languageService' => 'Diagnostic\Service\LanguageService',
+        'translator' => 'translator',
     ];
 
     protected $forms = [

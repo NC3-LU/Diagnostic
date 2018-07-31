@@ -11,8 +11,9 @@ $this->form->prepare();
 
 <?= $this->form()->openTag($form) ?>
 
-<!-- // Display confirmation when you want to delete a question -->
-<script>var delete_question = <?php echo json_encode($this->translate('__delete_question')) ?></script>
+<!-- // Display confirmation when you want to delete a question. You can't delete the 1st quest -->
+<script>var delete_question = <?php echo json_encode($this->translate('__delete_question')) ?>;
+var delete_quest1 = <?php echo json_encode($this->translate('__delete_quest1')) ?></script>
 
 <div class="row">
     <div class="col-lg-12 text-left">
@@ -25,7 +26,8 @@ $this->form->prepare();
         <br />
         <div class="col-lg-3 text-left">
             <?php if($error_upload == 1){ echo "<ul class='bg-danger'> <li>" . $this->translate('__error_file'). "</li></ul>"; }
-            if($error_categ == 1){ echo "<ul class='bg-danger'> <li>" . $this->translate('__error_categ'). "</li></ul>"; } ?>
+            if($error_categ == 1){ echo "<ul class='bg-danger'> <li>" . $this->translate('__error_categ'). "</li></ul>"; }
+            if($error_id == 1){ echo "<ul class='bg-danger'> <li>" . $this->translate('__error_id'). "</li></ul>"; } ?>
         </div>
 
 
@@ -59,7 +61,8 @@ $this->form->prepare();
                     <td align="center">
                         <a href="<?= $urlModify ?>"><span class="glyphicon glyphicon-pencil"></span></a>
                         &nbsp;&nbsp;
-                        <a href="<?= $urlDelete ?>" onclick='return confirm(delete_question)'><span class="glyphicon glyphicon-remove"></span></a>
+                        <?php if ($question->getId() != 1) { ?><a href="<?= $urlDelete ?>" onclick='return confirm(delete_question)'><span class="glyphicon glyphicon-remove"></span></a><?php }
+                        else { ?><a href="<?= $urlDelete ?>" onclick='return alert(delete_quest1)'><span class="glyphicon glyphicon-remove"></span></a><?php } ?>
                     </td>
                 </tr>
             <?php

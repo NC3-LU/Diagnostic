@@ -5,7 +5,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Poedit 2.0.6\n"
 "Project-Id-Version: cases-diagnostic\n"
-"Language: en\n"
+"Language: fr\n"
 "POT-Creation-Date: \n"
 "PO-Revision-Date: \n"
 "Last-Translator: \n"
@@ -614,6 +614,9 @@ msgstr "Le mot de passe et la confirmation doivent être identiques"
 msgid "__error_categ"
 msgstr "Le fichier contient un ID de catégorie inconnu"
 
+msgid "__error_id"
+msgstr "Les IDs doivent être uniques et rangés par ordre croissant"
+
 msgid "__statistics"
 msgstr "Statistiques"
 
@@ -746,5 +749,11 @@ msgstr "Aide pour l'organisation"
 msgid "__synthesis_help"
 msgstr "Aide pour la synthèse"
 
-msgid "__error_key"
-msgstr "Les clés de traduction doivent être uniques"
+msgid "__delete_quest1"
+msgstr "Vous ne pouvez pas supprimer la première question"
+
+msgid "__delete_categ1"
+msgstr "Vous ne pouvez pas supprimer la première catégorie"
+
+msgid "__delete_trans1"
+msgstr "Vous ne pouvez pas supprimer la première traduction"

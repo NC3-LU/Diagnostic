@@ -614,6 +614,9 @@ msgstr "The two given tokens do not match"
 msgid "__error_categ"
 msgstr "The file contain an unknown category ID"
 
+msgid "__error_id"
+msgstr "The IDs must be unique and follow an ascending order"
+
 msgid "__statistics"
 msgstr "Statistics"
 
@@ -746,5 +749,11 @@ msgstr "Organization help"
 msgid "__synthesis_help"
 msgstr "Synthesis help"
 
-msgid "__error_key"
-msgstr "The translations key must be unique"
+msgid "__delete_quest1"
+msgstr "You cannot delete the first question"
+
+msgid "__delete_categ1"
+msgstr "You cannot delete the first category"
+
+msgid "__delete_trans1"
+msgstr "You cannot delete the first translation"

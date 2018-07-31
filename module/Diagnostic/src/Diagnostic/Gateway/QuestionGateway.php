@@ -23,7 +23,7 @@ class QuestionGateway extends AbstractGateway
         $select = $this->tableGateway
             ->getSql()
             ->select()
-            ->columns(['id', 'category_id', 'translation_key', 'translation_key_help' => new Expression('CONCAT(questions.translation_key, \'help\')'), 'threshold'])
+            ->columns(['id', 'category_id', 'translation_key', 'translation_key_help' => new Expression('CONCAT(questions.translation_key, \'help\')'), 'threshold', 'uid'])
             ->join('categories', 'categories.id = category_id', ['category_translation_key' => 'translation_key'], 'left');
 
         $resultSet = $this->tableGateway->selectWith($select);
@@ -61,7 +61,8 @@ class QuestionGateway extends AbstractGateway
         $this->tableGateway->update([
             'category_id' => $data['category_id'],
             'translation_key' => $data['translation_key'],
-            'threshold' => $data['threshold']
+            'threshold' => $data['threshold'],
+            'uid' => $data['uid']
         ], ['id' => $id]);
     }
 }

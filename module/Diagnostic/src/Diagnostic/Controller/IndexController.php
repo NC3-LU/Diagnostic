@@ -40,6 +40,7 @@ class IndexController extends AbstractController
     protected $linkDownloadForm;
     protected $downloadForm;
     protected $questionService;
+    protected $categoryService;
     protected $userService;
     protected $userTokenService;
     protected $mailService;
@@ -816,7 +817,12 @@ class IndexController extends AbstractController
         //retrieve questions
         /** @var QuestionService $questionService */
         $questionService = $this->get('questionService');
-        $questions = $questionService->getQuestions();
+        $questions = $questionService->getBddQuestions();
+
+        //retrieve categories: used for the Uid
+        /** @var CategoryService $categoryService */
+        $categoryService = $this->get('categoryService');
+        $categories2 = $categoryService->getBddCategories();
 
         //retrieve categories
         $categories = [];
@@ -878,6 +884,8 @@ class IndexController extends AbstractController
                 $statistics[0]['nb_employees'] = $translator->translate($container->information['nb_employees']);
                 $statistics[0]['final_result'] = $calculResults['total'];
                 while (isset($questions[$i])) {
+                    $statistics[$i]['uid'] = $questions[$i]->getUid();
+
                     $statistics[$i]['question'] = $questions[$i]->getTranslationKey();
 
                     if ($results[$i]['maturity'] == 0) {
@@ -907,6 +915,7 @@ class IndexController extends AbstractController
 
                 $j = 1;
                 while (isset($categories['__category' . $j])) {
+                    $statistics[$i]['uid'] = $categories2[$j]->getUid();
                     $statistics[$i]['category'] = '__category' . $j;
                     $statistics[$i]['category_maturity'] = $categories['__category' . $j];
                     $i++;
