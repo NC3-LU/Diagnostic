@@ -382,13 +382,17 @@ class TemplateProcessorService extends TemplateProcessor implements ServiceLocat
 	// Add categories to the legends : set color by level of maturity
 	$i = 0;
         foreach ($categories as $categoryId => $category) {
-	    if ($category['percent'] < 33) {
+            if ($category['percent'] == 0 && $category['percentTarget'] == 0) {
+	        $text = $section->addText($translator->translate($category['label']), ['size' => 10, 'name' => 'Calibri', 'color' => '#A5A5A5'], ['spaceAfter' => 100]);
+	        $text2 = $section2->addText($translator->translate('__maturity_NA'), ['size' => 10, 'name' => 'Calibri', 'color' => '#A5A5A5', 'bold' => 'true'], ['alignment' => 'center', 'spaceAfter' => 100]);
+	    }
+	    elseif ($category['percent'] < 33) {
 	        $text = $section->addText($translator->translate($category['label']), ['size' => 10, 'name' => 'Calibri', 'color' => 'red'], ['spaceAfter' => 100]);
 	        $text2 = $section2->addText($translator->translate($category['percent']) . '%', ['size' => 10, 'name' => 'Calibri', 'color' => 'red', 'bold' => 'true'], ['alignment' => 'center', 'spaceAfter' => 100]);
 	    }
 	    elseif ($category['percent'] > 66) {
-	        $text = $section->addText($translator->translate($category['label']), ['size' => 10, 'name' => 'Calibri', 'color' => '#20DD1A'], ['spaceAfter' => 100]);
-	        $text2 = $section2->addText($translator->translate($category['percent']) . '%', ['size' => 10, 'name' => 'Calibri', 'color' => '#20DD1A', 'bold' => 'true'], ['alignment' => 'center', 'spaceAfter' => 100]);
+	        $text = $section->addText($translator->translate($category['label']), ['size' => 10, 'name' => 'Calibri', 'color' => '#3DC015'], ['spaceAfter' => 100]);
+	        $text2 = $section2->addText($translator->translate($category['percent']) . '%', ['size' => 10, 'name' => 'Calibri', 'color' => '#3DC015', 'bold' => 'true'], ['alignment' => 'center', 'spaceAfter' => 100]);
 	    }
 	    else {
 	        $text = $section->addText($translator->translate($category['label']), ['size' => 10, 'name' => 'Calibri', 'color' => 'orange'], ['spaceAfter' => 100]);
