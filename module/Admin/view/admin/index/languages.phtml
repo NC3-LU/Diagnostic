@@ -16,11 +16,10 @@ $_SESSION['nb_translations'] = 0;
 
 ?>
 
-<!-- // Display confirmation when you want to delete a language or a translation. You can't delete the 1st translation -->
+<!-- // Display confirmation when you want to delete a language or a translation. -->
 <script>
     var delete_lang = <?php echo json_encode($this->translate('__delete_lang')) ?>;
     var delete_trans = <?php echo json_encode($this->translate('__delete_trans')) ?>;
-    var delete_trans1 = <?php echo json_encode($this->translate('__delete_trans1')) ?>;
 </script>
 
 <div class="row">
@@ -74,11 +73,11 @@ $_SESSION['nb_translations'] = 0;
 
                 $trans_key = 3; $trans = 2; $num_button = 1; $id_trans_ref = 1;
 
-                $file = fopen($location_lang . substr($temp_lang, 0, -1) . '.po', 'r');
+                $file = fopen($location_lang . 'translations_' . substr($temp_lang, 0, -1) . '.po', 'r');
                 // Go to translations to display in the po file
                 while (!feof($file)) {
                     $temp = fgets($file, 4096);
-                    if (substr($temp, 7, -2) == '__question' . ($_SESSION['question_max']) . 'help') {$temp = fgets($file, 4096); $temp = fgets($file, 4096); break;}
+                    if ($temp == PHP_EOL) {break;}
                 }
                 while (!feof($file)) {
                     $temp = fgets($file, 4096);
@@ -123,8 +122,7 @@ $_SESSION['nb_translations'] = 0;
                         echo '<td style=text-align:center>';
                         echo $this->formSubmit($form->get('mod' . $num_button)->setValue($this->translate('__modify')));
                         echo "&nbsp;&nbsp;";
-                        if ($num_button != 1) {echo $this->formSubmit($form->get('del'.$num_button)->setValue($this->translate('__delete'))->setAttribute('onClick', 'return confirm(delete_trans)'));}
-                        else {echo $this->formSubmit($form->get('del'.$num_button)->setValue($this->translate('__delete'))->setAttribute('onClick', 'return alert(delete_trans1)'));}
+                        echo $this->formSubmit($form->get('del'.$num_button)->setValue($this->translate('__delete'))->setAttribute('onClick', 'return confirm(delete_trans)'));
                         echo "</td></div></tr>";
                         $num_button++;
                         $id_trans_ref++;
@@ -146,11 +144,11 @@ $_SESSION['nb_translations'] = 0;
 
                 $trans = 2; $id_trans_ref = 1;
 
-                $file = fopen($location_lang . substr($temp_lang, 0, -1) . '.po', 'r');
+                $file = fopen($location_lang . 'translations_' . substr($temp_lang, 0, -1) . '.po', 'r');
                 // Go to the first msgid in the po file
                 while (!feof($file)) {
                     $temp = fgets($file, 4096);
-                    if (substr($temp, 7, -2) == '__question' . ($_SESSION['question_max']) . 'help') {$temp = fgets($file, 4096); $temp = fgets($file, 4096); break;}
+                    if ($temp == PHP_EOL) {break;}
                 }
                 while (!feof($file)) {
                     $temp = fgets($file, 4096);

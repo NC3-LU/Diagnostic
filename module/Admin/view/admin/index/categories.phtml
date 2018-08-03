@@ -10,9 +10,8 @@ $this->form->prepare();
 
 <?= $this->form()->openTag($form) ?>
 
-<!-- // Display confirmation if you want to delete a category. You can't delete the 1st categ -->
-<script>var delete_category = <?php echo json_encode($this->translate('__delete_category')) ?>;
-var delete_categ1 = <?php echo json_encode($this->translate('__delete_categ1')) ?></script>
+<!-- // Display confirmation if you want to delete a category. -->
+<script>var delete_category = <?php echo json_encode($this->translate('__delete_category')) ?></script>
 
 <div class="row">
     <div class="col-lg-2"></div>
@@ -59,8 +58,7 @@ var delete_categ1 = <?php echo json_encode($this->translate('__delete_categ1')) 
                     <td align="center">
                         <a href="<?= $urlModify ?>"><span class="glyphicon glyphicon-pencil"></span></a>
                         &nbsp;&nbsp;
-                        <?php if ($category->getId() != 1) { ?><a href="<?= $urlDelete ?>" onclick='return confirm(delete_category)'><span class="glyphicon glyphicon-remove"></span></a><?php }
-                        else { ?><a href="<?= $urlDelete ?>" onclick='return alert(delete_categ1)'><span class="glyphicon glyphicon-remove"></span></a><?php } ?>
+                        <a href="<?= $urlDelete ?>" onclick='return confirm(delete_category)'><span class="glyphicon glyphicon-remove"></span></a>
                     </td>
                 </tr>
             <?php

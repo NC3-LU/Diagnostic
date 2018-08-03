@@ -11,9 +11,8 @@ $this->form->prepare();
 
 <?= $this->form()->openTag($form) ?>
 
-<!-- // Display confirmation when you want to delete a question. You can't delete the 1st quest -->
-<script>var delete_question = <?php echo json_encode($this->translate('__delete_question')) ?>;
-var delete_quest1 = <?php echo json_encode($this->translate('__delete_quest1')) ?></script>
+<!-- // Display confirmation when you want to delete a question. -->
+<script>var delete_question = <?php echo json_encode($this->translate('__delete_question')) ?></script>
 
 <div class="row">
     <div class="col-lg-12 text-left">
@@ -61,8 +60,7 @@ var delete_quest1 = <?php echo json_encode($this->translate('__delete_quest1')) 
                     <td align="center">
                         <a href="<?= $urlModify ?>"><span class="glyphicon glyphicon-pencil"></span></a>
                         &nbsp;&nbsp;
-                        <?php if ($question->getId() != 1) { ?><a href="<?= $urlDelete ?>" onclick='return confirm(delete_question)'><span class="glyphicon glyphicon-remove"></span></a><?php }
-                        else { ?><a href="<?= $urlDelete ?>" onclick='return alert(delete_quest1)'><span class="glyphicon glyphicon-remove"></span></a><?php } ?>
+                        <a href="<?= $urlDelete ?>" onclick='return confirm(delete_question)'><span class="glyphicon glyphicon-remove"></span></a>
                     </td>
                 </tr>
             <?php

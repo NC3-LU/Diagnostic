@@ -17,12 +17,12 @@
           "vboxmanage": [
             ["modifyvm", "{{.Name}}", "--vram", "64"],
 		    ["modifyvm", "{{.Name}}", "--memory", "1024"],
-			["modifyvm", "{{.Name}}", "--cpus", "2"],	
+			["modifyvm", "{{.Name}}", "--cpus", "2"],
 			["modifyvm", "{{.Name}}", "--nic1", "nat"]
         ],
-		
+
 		"vboxmanage_post": [
-			["modifyvm", "{{.Name}}", "--nic1","hostonly"], 
+			["modifyvm", "{{.Name}}", "--nic1","hostonly"],
 			["modifyvm", "{{.Name}}", "--hostonlyadapter1", "[MY_HOST_ONLY_ADAPTER]"]
         ],
 
