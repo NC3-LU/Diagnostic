@@ -73,7 +73,7 @@ $_SESSION['nb_translations'] = 0;
 
                 $trans_key = 3; $trans = 2; $num_button = 1; $id_trans_ref = 1;
 
-                $file = fopen($location_lang . 'translations_' . substr($temp_lang, 0, -1) . '.po', 'r');
+                $file = fopen($location_lang . substr($temp_lang, 0, -1) . '/' . 'translations.po', 'r');
                 // Go to translations to display in the po file
                 while (!feof($file)) {
                     $temp = fgets($file, 4096);
@@ -144,7 +144,7 @@ $_SESSION['nb_translations'] = 0;
 
                 $trans = 2; $id_trans_ref = 1;
 
-                $file = fopen($location_lang . 'translations_' . substr($temp_lang, 0, -1) . '.po', 'r');
+                $file = fopen($location_lang . substr($temp_lang, 0, -1) . '/' . 'translations.po', 'r');
                 // Go to the first msgid in the po file
                 while (!feof($file)) {
                     $temp = fgets($file, 4096);

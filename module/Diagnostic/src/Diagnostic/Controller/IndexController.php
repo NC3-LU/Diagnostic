@@ -883,7 +883,7 @@ class IndexController extends AbstractController
                 $statistics[0]['activity'] = $translator->translate($container->information['activity']);
                 $statistics[0]['nb_employees'] = $translator->translate($container->information['nb_employees']);
                 $statistics[0]['final_result'] = $calculResults['total'];
-                while (isset($questions[$i])) {
+                while (isset($results[$i])) {
                     $statistics[$i]['uid'] = $questions[$i]->getUid();
 
                     $statistics[$i]['question'] = $questions[$i]->getTranslationKey();
