@@ -1,4 +1,4 @@
-__diagnosis,1,92,92
+__diagnosis
 __activity1
 __activity2
 __activity3
@@ -11,7 +11,7 @@ __activity9
 __activity10
 __activity11
 __activity12
-__activity13,1,92,92
+__activity13
 __activity14
 __activity15
 __activity16
