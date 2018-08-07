@@ -16,13 +16,21 @@ class SettingFormFilter extends InputFilter
     {
         $this->add([
             'name' => 'encryption_key',
-            'required' => true,
             'validators' => [
                 [
                     'name' => 'StringLength',
                     'options' => [
-                        'min' => 8
+                        'min' => 3
                     ],
+                ],
+            ],
+        ]);
+
+        $this->add([
+            'name' => 'diagnosis_stat',
+            'validators' => [
+                [
+                    'name' => 'Digits',
                 ],
             ],
         ]);

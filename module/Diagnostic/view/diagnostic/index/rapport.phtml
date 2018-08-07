@@ -14,10 +14,45 @@ foreach ($this->totalCategoryTarget as $key => $value) {
     $jsPercentsTarget[] = $value;
 }
 
+for ($i=0; $i<count($totalCategory); $i++) {
+    if ($jsPercents[$i] == $jsPercentsTarget[$i] && $jsPercents[$i] == 0) {unset($jsPercentsTarget[$i]); unset($jsPercents[$i]); unset($jsCategories[$i]);}
+}
+
+$jsCategories = array_values($jsCategories);
+$jsPercentsTarget = array_values($jsPercentsTarget);
+$jsPercents = array_values($jsPercents);
+
+$file_bar = fopen('/var/www/diagnostic/data/resources/statistics.txt', 'r');
+$contents = fread($file_bar, filesize('/var/www/diagnostic/data/resources/statistics.txt'));
+fclose($file_bar);
+$contents = explode(PHP_EOL, $contents); // PHP_EOL equals to /n in Linux
+$contents[0] = explode(',', $contents[0]);
+$diagnosis_exist = 0;
+if (isset($contents[0][1])) {
+    $average_diagnosis = $contents[0][count($contents[0])-1];
+    $diagnosis_exist = 1;
+}
+$contents[0] = implode(',', $contents[0]);
+
+$activity_exist = 0;
+if (isset($_SESSION['activity'])) {
+    for ($i=1; $i<count($contents); $i++) {
+        $contents[$i] = explode(',', $contents[$i]);
+        if ($contents[$i][0] == $_SESSION['activity']) {
+                if (isset($contents[$i][1])) {$activity_exist = 1; $average_activity = $contents[$i][count($contents[$i])-1];}
+        }
+        $contents[$i] = implode(',', $contents[$i]);
+    }
+}
+
 $color1 = 'rgba(217, 83, 79, 0.4)';
 $color1Border = 'rgba(212, 63, 58, 1)';
 $color2 = 'rgba(91, 192, 222, 0.2)';
 $color2Border = 'rgba(70, 184, 218, 1)';
+$color3 = 'rgba(0, 254, 0, 0.2)';
+$color3Border = 'rgba(41, 195, 46, 1)';
+$color4 = 'rgba(254, 254, 0, 0.3)';
+$color4Border = 'rgba(230, 215, 3, 1)';
 
 echo $this->inlineScript()->prependFile($this->basePath('js/Chart.js-master/Chart.js'));
 //echo $this->inlineScript()->prependFile($this->basePath('npm_components/chart.js/dist/Chart.min.js'));
@@ -54,10 +89,18 @@ echo $this->inlineScript()->prependFile($this->basePath('js/Chart.js-master/Char
                             $form->setAttribute('action', $this->url('diagnostic', ['action' => 'rapport']));
                             $form->prepare();
                             echo $this->form()->openTag($form);
+                            // If the diagnosis isn't finish, the statistics button is disabled
+                            if (count($results) != count($questions)) {$disabled = "disabled = 'disabled'";}
+                            else {
+                                for ($i=1; $i<=count($results); $i++) {
+                                    if ($results[$i]['notes'] == '') {$disabled = "disabled = 'disabled'"; break;}
+                                    else {$disabled = "";}
+                                }
+                            }
                             ?>
                         </td>
                         <td align="center">
-                            <button type="submit" name="submit_stat" class="btn btn-warning" style="padding: 7px 50px 7px 50px;">
+                            <button type="submit" name="submit_stat" class="btn btn-warning" style="padding: 7px 50px 7px 50px;" <?= $disabled ?>>
                                 <span class="glyphicon glyphicon-download-alt"></span>&nbsp;<?= $this->translate('__statistics') ?>
                             </button>
                         </td>
@@ -76,7 +119,6 @@ echo $this->inlineScript()->prependFile($this->basePath('js/Chart.js-master/Char
         <tr>
             <td align="center">
                 <?php
-
                 $container = new \Zend\Session\Container('navigation');
                 if ($container->offsetExists('lastQuestion')) {
                     $link = $this->url('diagnostic', ['action' => 'diagnostic', 'id' => $container->lastQuestion]);
@@ -391,7 +433,7 @@ var barChartData = {
     labels: [''],
     datasets: [
         {
-            label: "<?= $this->translate('__actual') ?>",
+            label: "<?= $this->translate('__actual') . ':' . $this->total ?>",
             fillColor: "<?= $color1 ?>",
             strokeColor: "<?= $color1Border ?>",
             highlightFill: "<?= $color1 ?>",
@@ -399,20 +441,41 @@ var barChartData = {
             data: [<?= $this->total ?>],
         },
         {
-            label: "<?= $this->translate('__target') ?>",
+            label: "<?= $this->translate('__target') . ':'. $this->totalTarget ?>",
             fillColor: "<?= $color2 ?>",
             strokeColor: "<?= $color2Border ?>",
             highlightFill: "<?= $color2 ?>",
             highlightStroke: "<?= $color2Border ?>",
             data: [<?= $this->totalTarget ?>],
         },
-
+        <?php if ($activity_exist == 1) { ?>
+        {
+            label: "<?= $this->translate('__average_activity') . ':'. $average_activity ?>",
+            fillColor: "<?= $color3 ?>",
+            strokeColor: "<?= $color3Border ?>",
+            highlightFill: "<?= $color3 ?>",
+            highlightStroke: "<?= $color3Border ?>",
+            data: [<?= $average_activity ?>],
+        },
+        <?php } if ($diagnosis_exist == 1) { ?>
+        {
+            label: "<?= $this->translate('__average_diagnosis') . ':'. $average_diagnosis ?>",
+            fillColor: "<?= $color4 ?>",
+            strokeColor: "<?= $color4Border ?>",
+            highlightFill: "<?= $color4 ?>",
+            highlightStroke: "<?= $color4Border ?>",
+            data: [<?= $average_diagnosis ?>],
+        },
+        <?php } ?>
     ]
 };
 
 var myBarChart = new Chart(document.getElementById("canvas3").getContext("2d")).Bar(barChartData, {
     responsive: true,
-    tooltipTemplate: "<%= value %>%",
+    scaleOverride: true,
+    scaleSteps : 10,
+    scaleStepWidth : 10,
+    scaleStartValue : 0,
     onAnimationComplete: function () {
         document.querySelector('input[name="bar"]').value = myBarChart.toBase64Image();
     }

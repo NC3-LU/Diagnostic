@@ -38,8 +38,43 @@ $this->form->prepare();
                 <td style="text-align: center;"><?= $this->translate($form->get('encryption_key')->getLabel()); ?></td>
                 <td><?= $this->formText($form->get('encryption_key')) ?></td>
             </tr>
+            <tr>
+                <td>
+                    <?php if($success_upload == 1){ echo "<ul class='bg-success'> <li>" . $this->translate('__success_file'). "</li></ul>"; } ?>
+                </td>
+            </tr>
         </table>
         <span style='float:right'><?= $this->formSubmit($form->get('submit')) ?></span>
+     </div>
+</div>
+
+<div class="row">
+    <div class="col-lg-3"></div>
+    <div class="col-lg-4">
+        <h2><?= $this->translate('__statistics') ?></h2>
+
+        <br />
+        <br />
+
+        <table class="table">
+            <tr>
+                <th style="text-align: center"><?= $this->translate('__activity'); ?></th>
+                <th style="text-align: center"><?= $this->translate('__action'); ?></th>
+                <th style="text-align: center"><?= $this->translate('__record'); ?></th>
+            </tr>
+
+            <tr>
+                <td class="col-lg-9"><?= $this->formSelect($form->get('activity')) ?></td>
+                <td class="col-lg-1"><?= $this->formText($form->get('diagnosis_stat')) ?></td>
+                <td class="col-lg-2" style="text-align: center;"><?= $this->formSubmit($form->get('submit_stat')) ?></td>
+            </tr>
+            <tr>
+                <td>
+                    <?php if($error_res == 1){ echo "<ul class='bg-danger'> <li>" . $this->translate('__error_res'). "</li></ul>"; } ?>
+                    <?php if($success_upload2 == 1){ echo "<ul class='bg-success'> <li>" . $this->translate('__success_file'). "</li></ul>"; } ?>
+                </td>
+            </tr>
+        </table>
      </div>
 </div>
 

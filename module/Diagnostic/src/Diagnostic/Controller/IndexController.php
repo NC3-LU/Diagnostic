@@ -562,6 +562,7 @@ class IndexController extends AbstractController
                     $information['activity'] = $formData['activity'];
                     $information['nb_employees'] = $formData['nb_employees'];
                     $container->information = $information;
+                    $_SESSION['activity'] = $information['activity'];
 
                     //retrieve first question
                     $firstId = false;
@@ -584,6 +585,7 @@ class IndexController extends AbstractController
         $binding = (array_key_exists($informationKey, $information)) ? ['information' => $information[$informationKey], 'activity' => $information['activity'], 'nb_employees' => $information['nb_employees']] : [];
         $informationEntity->exchangeArray($binding);
         $form->bind($informationEntity);
+        $_SESSION['activity'] = $information['activity'];
 
         //send to view
         return new ViewModel([
@@ -951,6 +953,8 @@ class IndexController extends AbstractController
             'recommandations' => $calculResults['recommandations'],
             'categoriesRepartition' => $categoriesRepartition,
             'download' => (count($results)) ? true : false,
+            'questions' => $questions,
+            'results' => $results,
         ]);
     }
 

@@ -59,10 +59,78 @@ class SettingForm extends Form
         $this->add([
             'name' => 'encryption_key',
             'type' => 'Text',
-            'required' => true,
             'options' => [
                 'label' => '__encryption_key'
             ],
+            'attributes' => [
+                'class' => 'form-control',
+            ]
+        ]);
+
+        $this->add([
+            'name' => 'activity',
+            'type' => 'Select',
+            'options' => [
+                'label' => '__activity',
+                'value_options' => [
+                    '__activity1' => '__activity1',
+                    '__activity2' => '__activity2',
+                    '__activity3' => '__activity3',
+                    '__activity4' => '__activity4',
+                    '__activity5' => '__activity5',
+                    '__activity6' => '__activity6',
+                    '__activity7' => '__activity7',
+                    '__activity8' => '__activity8',
+                    '__activity9' => '__activity9',
+                    '__activity10' => '__activity10',
+                    '__activity11' => '__activity11',
+                    '__activity12' => '__activity12',
+                    '__activity13' => '__activity13',
+                    '__activity14' => '__activity14',
+                    '__activity15' => '__activity15',
+                    '__activity16' => '__activity16',
+                    '__activity17' => '__activity17',
+                    '__activity18' => '__activity18',
+                    '__activity19' => '__activity19',
+                    '__activity20' => '__activity20',
+                    '__activity21' => '__activity21',
+                    '__activity22' => '__activity22',
+                    '__activity23' => '__activity23',
+                    '__activity24' => '__activity24',
+                    '__activity25' => '__activity25',
+                    '__activity26' => '__activity26',
+                    '__activity27' => '__activity27',
+                    '__activity28' => '__activity28',
+                    '__activity19' => '__activity19',
+                    '__activity20' => '__activity20',
+                    '__activity21' => '__activity21',
+                    '__activity22' => '__activity22',
+                    '__activity23' => '__activity23',
+                    '__activity24' => '__activity24',
+                    '__activity25' => '__activity25',
+                    '__activity26' => '__activity26',
+                    '__activity27' => '__activity27',
+                    '__activity28' => '__activity28',
+                    '__activity29' => '__activity29',
+                    '__activity30' => '__activity30',
+                    '__activity31' => '__activity31',
+                    '__activity32' => '__activity32',
+                    '__activity33' => '__activity33',
+                    '__activity34' => '__activity34',
+                    '__activity35' => '__activity35',
+                    '__activity36' => '__activity36',
+                    '__activity37' => '__activity37',
+                    '__activity38' => '__activity38'
+                ]
+            ],
+            'attributes' => [
+                'class' => 'form-control',
+            ]
+        ]);
+
+        $this->add([
+            'name' => 'diagnosis_stat',
+            'type' => 'Text',
             'attributes' => [
                 'class' => 'form-control',
             ]
@@ -86,5 +154,14 @@ class SettingForm extends Form
                 'class' => 'btn btn-success',
             ],
         ]);
-	}
+
+        $this->add([
+            'name' => 'submit_stat',
+            'type' => 'Submit',
+            'attributes' => [
+                'value' => '__record',
+                'class' => 'btn btn-success',
+            ],
+        ]);
+    }
 }

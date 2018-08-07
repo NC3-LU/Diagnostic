@@ -532,3 +532,12 @@ msgstr "Aide pour l'organisation"
 
 msgid "__synthesis_help"
 msgstr "Aide pour la synthèse"
+
+msgid "__error_res"
+msgstr "Le résultat doit être un nombre entier entre 0 et 100"
+
+msgid "__average_diagnosis"
+msgstr "Moyenne diagnostic"
+
+msgid "__average_activity"
+msgstr "Moyenne activité"

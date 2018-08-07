@@ -532,3 +532,12 @@ msgstr "Organization help"
 
 msgid "__synthesis_help"
 msgstr "Synthesis help"
+
+msgid "__error_res"
+msgstr "The result must be an integer between 0 and 100"
+
+msgid "__average_diagnosis"
+msgstr "Average_diagnosis"
+
+msgid "__average_activity"
+msgstr "Average_activity"

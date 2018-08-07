@@ -685,6 +685,10 @@ class IndexController extends AbstractController
      */
     public function settingsAction()
     {
+        $error_res = 0;
+        $success_upload = 0;
+        $success_upload2 = 0;
+
         $request = $this->getRequest();
         $form = $this->get('adminSettingForm');
 
@@ -748,7 +752,8 @@ class IndexController extends AbstractController
         if ($request->isPost()) {
             $form->setData($request->getPost());
 
-            if($_POST['submit']) {
+            if(isset($_POST['submit'])) {
+                $success_upload = 1;
 
                 // See if the language chosen in the select form is in the languages.txt file
                 $file_lang = fopen('/var/www/diagnostic/language/languages.txt', 'r');
@@ -820,11 +825,11 @@ class IndexController extends AbstractController
                 $contents = fread($file_login, filesize('/var/www/diagnostic/module/Diagnostic/src/Diagnostic/InputFilter/LoginFormFilter.php'));
                 fclose($file_login);
                 $contents = explode(PHP_EOL, $contents); // PHP_EOL equals to /n in Linux
-                $contents[$num_line_login+1] = "                        'useMxCheck' => " . $mxCheck . ","; // Change the default translation with the new one
+                $contents[$num_line_login+1] = "                        'useMxCheck' => " . $mxCheck . ","; // Change the mxcheck with the new one
                 $contents = array_values($contents);
                 $contents = implode(PHP_EOL, $contents);
                 $file_login = fopen('/var/www/diagnostic/module/Diagnostic/src/Diagnostic/InputFilter/LoginFormFilter.php', 'w');
-                fwrite($file_login, $contents); // Write the file with the new default translation
+                fwrite($file_login, $contents); // Write the file with the new default mxcheck
                 fclose($file_login);
 
                 // Change mxcheck
@@ -836,7 +841,7 @@ class IndexController extends AbstractController
                 $contents = array_values($contents);
                 $contents = implode(PHP_EOL, $contents);
                 $file_email = fopen('/var/www/diagnostic/module/Admin/src/Admin/InputFilter/EmailNotExistFilter.php', 'w');
-                fwrite($file_email, $contents); // Write the file with the new default translation
+                fwrite($file_email, $contents); // Write the file with the new default mxcheck
                 fclose($file_email);
 
                 // Change mxcheck
@@ -860,7 +865,7 @@ class IndexController extends AbstractController
                 }
                 fclose($file_encrypt);
 
-                // Change the encryption8key
+                // Change the encryption_key
                 $file_encrypt = fopen('/var/www/diagnostic/config/autoload/local.php', 'r');
                 $contents = fread($file_encrypt, filesize('/var/www/diagnostic/config/autoload/local.php'));
                 fclose($file_encrypt);
@@ -871,12 +876,63 @@ class IndexController extends AbstractController
                 $file_encrypt = fopen('/var/www/diagnostic/config/autoload/local.php', 'w');
                 fwrite($file_encrypt, $contents); // Write the file with the new encryption_key
                 fclose($file_encrypt);
+            }
 
+            if(isset($_POST['submit_stat'])) {
+                if ($request->getPost('diagnosis_stat') == '' || $request->getPost('diagnosis_stat') < 0 || $request->getPost('diagnosis_stat') > 100 || !is_numeric($request->getPost('diagnosis_stat')) || !is_int($request->getPost('diagnosis_stat') + 0)) {
+                    $error_res = 1;
+                }else {
+                    $success_upload2 = 1;
+                    $file_stat = fopen('/var/www/diagnostic/data/resources/statistics.txt', 'r');
+                    $contents = fread($file_stat, filesize('/var/www/diagnostic/data/resources/statistics.txt'));
+                    fclose($file_stat);
+                    $contents = explode(PHP_EOL, $contents); // PHP_EOL equals to /n in Linux
+                    $contents[0] = explode(',', $contents[0]);
+                    if (isset($contents[0][1])) {
+                        $contents[0][1] += 1;
+                        $contents[0][$contents[0][1]+1] = $request->getPost('diagnosis_stat');
+                        $total = 0;
+                        for ($j=0; $j<$contents[0][1]; $j++) {$total += $contents[0][$j+2];}
+                        $average = intdiv($total, $contents[0][1]);
+                        array_push($contents[0], $average);
+                    }else {
+                        array_push($contents[0], 1);
+                        array_push($contents[0], $request->getPost('diagnosis_stat'));
+                        array_push($contents[0], $request->getPost('diagnosis_stat'));
+                    }
+                    $contents[0] = implode(',', $contents[0]);
+                    for ($i=1; $i<count($contents); $i++) {
+                        $contents[$i] = explode(',', $contents[$i]);
+                        if ($request->getPost('activity') == $contents[$i][0]) {
+                            if (isset($contents[$i][1])) {
+                                $contents[$i][1] += 1;
+                                $contents[$i][$contents[$i][1]+1] = $request->getPost('diagnosis_stat');
+                                $total = 0;
+                                for ($j=0; $j<$contents[$i][1]; $j++) {$total += $contents[$i][$j+2];}
+                                $average = intdiv($total, $contents[$i][1]);
+                                array_push($contents[$i], $average);
+                            }else {
+                                array_push($contents[$i], 1);
+                                array_push($contents[$i], $request->getPost('diagnosis_stat'));
+                                array_push($contents[$i], $request->getPost('diagnosis_stat'));
+                            }
+                        }
+                        $contents[$i] = implode(',', $contents[$i]);
+                    }
+                    $contents = array_values($contents);
+                    $contents = implode(PHP_EOL, $contents);
+                    $file_stat = fopen('/var/www/diagnostic/data/resources/statistics.txt', 'w');
+                    fwrite($file_stat, $contents);
+                    fclose($file_stat);
+                }
             }
         }
         //send to view
         return new ViewModel([
-            'form' => $form
+            'form' => $form,
+            'error_res' => $error_res,
+            'success_upload' => $success_upload,
+            'success_upload2' => $success_upload2
         ]);
     }
 
