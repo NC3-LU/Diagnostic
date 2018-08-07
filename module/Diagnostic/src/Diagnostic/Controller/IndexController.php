@@ -774,7 +774,7 @@ class IndexController extends AbstractController
         $iv = $config['iv_key'];
         $cryptExport = openssl_encrypt($export,'AES-256-CBC', $encryptionKey, OPENSSL_RAW_DATA, $iv);
         //create file
-        $filename = 'diagnostic_' . date('YmdHis') . '.cases';
+        $filename = 'Diagnostic_' . date('YmdHis') . '.cases';
         !$handle = fopen($filename, 'w');
         fwrite($handle, $cryptExport);
         fclose($handle);
