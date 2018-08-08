@@ -1017,7 +1017,7 @@ class IndexController extends AbstractController
                     $calculService = $this->get('calculService');
                     $calculResults = $calculService->calcul();
 
-			//generating the deliverable according to the language
+                    //generating the deliverable according to the language
                     $word = new TemplateProcessorService('data/resources/model_'.$translator->getLocale().'.docx');
                     $word->generateWord($data, $questions, $calculResults, $information, $translator);
                 }

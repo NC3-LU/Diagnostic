@@ -360,6 +360,10 @@ class TemplateProcessorService extends TemplateProcessor implements ServiceLocat
 	$legend_pie = new PhpWord();
 	$section4 = $legend_pie->addSection();
 
+        // Variable for the bar legend
+	$legend_bar = new PhpWord();
+	$section5 = $legend_bar->addSection();
+
 	//categories repartition
         $categoriesColor = [
             ['color' => '#F7464A'],
@@ -398,12 +402,32 @@ class TemplateProcessorService extends TemplateProcessor implements ServiceLocat
 	        $text = $section->addText($translator->translate($category['label']), ['size' => 10, 'name' => 'Calibri', 'color' => 'orange'], ['spaceAfter' => 100]);
 	        $text2 = $section2->addText($translator->translate($category['percent']) . '%', ['size' => 10, 'name' => 'Calibri', 'color' => 'orange', 'bold' => 'true'], ['alignment' => 'center', 'spaceAfter' => 100]);
 	    }
-	    $text3 = $section3->addText($translator->translate($category['percentTarget']) . '%', ['size' => 10, 'name' => 'Calibri', 'color' => 767171, 'bold' => 'true'], ['alignment' => 'center', 'spaceAfter' => 100]);
-	    $text4 = $section4->addTextRun();
-	    $text4->addText('n', ['size' => 10, 'name' => 'Wingdings', 'color' => $categoriesColor[$i]['color']]);
-	    $text4->addText($translator->translate($category['label']), ['size' => 10, 'name' => 'Calibri', 'color' => 'black']);
-	    $i++;
+            $text3 = $section3->addText($translator->translate($category['percentTarget']) . '%', ['size' => 10, 'name' => 'Calibri', 'color' => 767171, 'bold' => 'true'], ['alignment' => 'center', 'spaceAfter' => 100]);
+            $text4 = $section4->addTextRun();
+            $text4->addText('n', ['size' => 10, 'name' => 'Wingdings', 'color' => $categoriesColor[$i]['color']]);
+            $text4->addText($translator->translate($category['label']), ['size' => 10, 'name' => 'Calibri', 'color' => 'black']);
+            $i++;
 	}
+
+        $text5 = $section5->addTextRun();
+        $text5->addText('n', ['size' => 10, 'name' => 'Wingdings', 'color' => '#d9534f']);
+        $text5->addText($translator->translate('__actual') . ':' . $results['total'], ['size' => 10, 'name' => 'Calibri', 'color' => 'black']);
+
+        $text5 = $section5->addTextRun();
+        $text5->addText('n', ['size' => 10, 'name' => 'Wingdings', 'color' => '#5BC0DE']);
+        $text5->addText($translator->translate('__target') . ':' . $results['totalTarget'], ['size' => 10, 'name' => 'Calibri', 'color' => 'black']);
+
+        if (isset($_SESSION['average_activity'])) {
+            $text5 = $section5->addTextRun();
+            $text5->addText('n', ['size' => 10, 'name' => 'Wingdings', 'color' => '#00FE00']);
+            $text5->addText($translator->translate('__average') . '_' . $translator->translate($_SESSION['activity']) . ':' . $_SESSION['average_activity'], ['size' => 10, 'name' => 'Calibri', 'color' => 'black']);
+        }
+
+        if (isset($_SESSION['average_diagnosis'])) {
+            $text5 = $section5->addTextRun();
+            $text5->addText('n', ['size' => 10, 'name' => 'Wingdings', 'color' => '#FEFE00']);
+            $text5->addText($translator->translate('__average_diagnosis') . ':' . $_SESSION['average_diagnosis'], ['size' => 10, 'name' => 'Calibri', 'color' => 'black']);
+        }
 
 	$this->setValue('PRISE_NOTE_CATEG', $this->getWordXmlFromWordObject($prise_note_categ));
 	$this->setValue('CATEG__PERCENT', $this->getWordXmlFromWordObject($categ_percent));
@@ -414,6 +438,9 @@ class TemplateProcessorService extends TemplateProcessor implements ServiceLocat
 
 	$this->setValue('LEGEND_PIE', $this->getWordXmlFromWordObject($legend_pie));
 	unset($legend_pie);
+
+	$this->setValue('LEGEND_BAR', $this->getWordXmlFromWordObject($legend_bar));
+	unset($legend_bar);
 
         $this->saveAs($filepath);
 

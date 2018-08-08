@@ -29,7 +29,7 @@ $contents = explode(PHP_EOL, $contents); // PHP_EOL equals to /n in Linux
 $contents[0] = explode(',', $contents[0]);
 $diagnosis_exist = 0;
 if (isset($contents[0][1])) {
-    $average_diagnosis = $contents[0][count($contents[0])-1];
+    $_SESSION['average_diagnosis'] = $contents[0][count($contents[0])-1];
     $diagnosis_exist = 1;
 }
 $contents[0] = implode(',', $contents[0]);
@@ -39,7 +39,7 @@ if (isset($_SESSION['activity'])) {
     for ($i=1; $i<count($contents); $i++) {
         $contents[$i] = explode(',', $contents[$i]);
         if ($contents[$i][0] == $_SESSION['activity']) {
-                if (isset($contents[$i][1])) {$activity_exist = 1; $average_activity = $contents[$i][count($contents[$i])-1];}
+                if (isset($contents[$i][1])) {$activity_exist = 1; $_SESSION['average_activity'] = $contents[$i][count($contents[$i])-1];}
         }
         $contents[$i] = implode(',', $contents[$i]);
     }
@@ -100,7 +100,7 @@ echo $this->inlineScript()->prependFile($this->basePath('js/Chart.js-master/Char
                             ?>
                         </td>
                         <td align="center">
-                            <button type="submit" name="submit_stat" class="btn btn-warning" style="padding: 7px 50px 7px 50px;" <?= $disabled ?>>
+                            <button type="submit" name="submit_stat" class="btn btn-warning" style="padding: 7px 20px 7px 20px;" <?= $disabled ?>>
                                 <span class="glyphicon glyphicon-download-alt"></span>&nbsp;<?= $this->translate('__statistics') ?>
                             </button>
                         </td>
@@ -450,21 +450,21 @@ var barChartData = {
         },
         <?php if ($activity_exist == 1) { ?>
         {
-            label: "<?= $this->translate('__average_activity') . ':'. $average_activity ?>",
+            label: "<?= $this->translate('__average') . '_' . $this->translate($_SESSION['activity']) . ':'. $_SESSION['average_activity'] ?>",
             fillColor: "<?= $color3 ?>",
             strokeColor: "<?= $color3Border ?>",
             highlightFill: "<?= $color3 ?>",
             highlightStroke: "<?= $color3Border ?>",
-            data: [<?= $average_activity ?>],
+            data: [<?= $_SESSION['average_activity'] ?>],
         },
         <?php } if ($diagnosis_exist == 1) { ?>
         {
-            label: "<?= $this->translate('__average_diagnosis') . ':'. $average_diagnosis ?>",
+            label: "<?= $this->translate('__average_diagnosis') . ':'. $_SESSION['average_diagnosis'] ?>",
             fillColor: "<?= $color4 ?>",
             strokeColor: "<?= $color4Border ?>",
             highlightFill: "<?= $color4 ?>",
             highlightStroke: "<?= $color4Border ?>",
-            data: [<?= $average_diagnosis ?>],
+            data: [<?= $_SESSION['average_diagnosis'] ?>],
         },
         <?php } ?>
     ]
