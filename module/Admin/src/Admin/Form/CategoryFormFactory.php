@@ -24,7 +24,7 @@ class CategoryFormFactory implements FactoryInterface
     {
         $categories = $serviceLocator->getServiceLocator()->get('Diagnostic\Service\CategoryService')->getCategories();
 
-	//retrieve categories
+        //retrieve categories
         $tab_categories = [];
         foreach ($categories as $category) {
             $tab_categories[$category->getId()] = $category->getTranslationKey();

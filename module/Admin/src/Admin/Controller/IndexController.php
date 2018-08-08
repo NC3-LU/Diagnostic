@@ -816,7 +816,7 @@ class IndexController extends AbstractController
 
                 if($request->getPost('checkbox_mxCheck')) {
                     $mxCheck = 'true';
-		}else {
+                }else {
                     $mxCheck = 'false';
                 }
 
@@ -1042,7 +1042,7 @@ class IndexController extends AbstractController
      */
     public function languagesAction()
     {
-	$location_lang = '/var/www/diagnostic/language/';
+        $location_lang = '/var/www/diagnostic/language/';
 
         // Variable to display error message when adding or deleting an invalid language
         $error_lang_exist = 0; // The language already exist and can't be added

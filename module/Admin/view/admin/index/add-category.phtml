@@ -31,7 +31,7 @@ $this->form->prepare(); ?>
 
             <!-- // Translations label and form-text -->
             <?php
-	    $location_lang = '/var/www/diagnostic/language/languages.txt';
+            $location_lang = '/var/www/diagnostic/language/languages.txt';
             $file_lang = fopen($location_lang, 'r');
             for($i=1; $i<$_SESSION['nb_lang']; $i++) {
                 $temp_lang = fgets($file_lang, 4096);

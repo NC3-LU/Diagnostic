@@ -22,7 +22,7 @@ class LanguageFormFactory implements FactoryInterface
     public function createService(ServiceLocatorInterface $serviceLocator)
     {
         $languages = $serviceLocator->getServiceLocator()->get('Diagnostic\Service\LanguageService')->getLanguages();
-	$languages_ref = $serviceLocator->getServiceLocator()->get('Diagnostic\Service\LanguageService')->getLanguagesRef();
+        $languages_ref = $serviceLocator->getServiceLocator()->get('Diagnostic\Service\LanguageService')->getLanguagesRef();
 
         $form = new LanguageForm();
         $form->setLanguages($languages);

@@ -502,7 +502,7 @@ class IndexController extends AbstractController
         $result = ($container->offsetExists('result')) ? $container->result : [];
         $information = ($container->offsetExists('information')) ? $container->information : ['organization' => '', 'synthesis' => '', 'activity' => '', 'nb_employees' => ''];
 
-	//form
+        //form
         $form = $this->get('informationForm');
         $formUpload = $this->get('uploadForm');
 
@@ -770,7 +770,7 @@ class IndexController extends AbstractController
         $config = $this->get('config');
         $encryptionKey = $config['encryption_key'];
 
-	//encrypt result
+        //encrypt result
         $iv = $config['iv_key'];
         $cryptExport = openssl_encrypt($export,'AES-256-CBC', $encryptionKey, OPENSSL_RAW_DATA, $iv);
         //create file
@@ -1065,7 +1065,7 @@ class IndexController extends AbstractController
 
         $container = new Container('diagnostic');
 
-	$location_lang = '/var/www/diagnostic/language/languages.txt';
+        $location_lang = '/var/www/diagnostic/language/languages.txt';
         $file_lang = fopen($location_lang, 'r');
         for ($i=1; $i<$_SESSION['nb_lang']; $i++) {
             $temp_lang = fgets($file_lang, 4096);

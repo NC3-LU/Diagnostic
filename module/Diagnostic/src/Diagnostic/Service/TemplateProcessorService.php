@@ -154,7 +154,7 @@ class TemplateProcessorService extends TemplateProcessor implements ServiceLocat
             $this->setValue('EVALUATION_SYNTHESYS', '');
         }
 
-	 // ContentMat : 0 = 0/1, 1 = 0.5/1, 2 = 1/1, 3 = NA
+         // ContentMat : 0 = 0/1, 1 = 0.5/1, 2 = 1/1, 3 = NA
          //css Tables
          $styleHeaderCell = ['valign' => 'center', 'bgcolor' => 'DFDFDF', 'size' => 10];
          $styleHeaderCellBlack = ['valign' => 'center', 'bgcolor' => '444444', 'size' => 10];
@@ -222,7 +222,7 @@ class TemplateProcessorService extends TemplateProcessor implements ServiceLocat
 
           $maturity = $translator->translate('__maturity_none');
           $styleContentCellMaturity = ['align' => 'left', 'bgcolor' => 'FD661F', 'valign' => 'center', 'size' => 10];
-	  // 2 = 100%, 1 = 50%, 3 = not applicable for the  maturity
+          // 2 = 100%, 1 = 50%, 3 = not applicable for the  maturity
           switch ($value['maturity']) {
               case 3:
                   $maturity = $translator->translate('__maturity_NA');
@@ -348,23 +348,23 @@ class TemplateProcessorService extends TemplateProcessor implements ServiceLocat
         $this->setValue('NOTES_TABLE', $this->getWordXmlFromWordObject($tableWord));
         unset($tableWord);
 
-	// Variables for the radar legend
-	$prise_note_categ = new PhpWord();
-	$categ_percent = new PhpWord();
-	$categ_percent_targ = new PhpWord();
-	$section = $prise_note_categ->addSection();
-	$section2 = $categ_percent->addSection();
-	$section3 = $categ_percent_targ->addSection();
+        // Variables for the radar legend
+        $prise_note_categ = new PhpWord();
+        $categ_percent = new PhpWord();
+        $categ_percent_targ = new PhpWord();
+        $section = $prise_note_categ->addSection();
+        $section2 = $categ_percent->addSection();
+        $section3 = $categ_percent_targ->addSection();
 
-	// Variable for the pie legend
-	$legend_pie = new PhpWord();
-	$section4 = $legend_pie->addSection();
+        // Variable for the pie legend
+        $legend_pie = new PhpWord();
+        $section4 = $legend_pie->addSection();
 
         // Variable for the bar legend
-	$legend_bar = new PhpWord();
-	$section5 = $legend_bar->addSection();
+        $legend_bar = new PhpWord();
+        $section5 = $legend_bar->addSection();
 
-	//categories repartition
+        //categories repartition
         $categoriesColor = [
             ['color' => '#F7464A'],
             ['color' => '#46BFBD'],
@@ -383,31 +383,31 @@ class TemplateProcessorService extends TemplateProcessor implements ServiceLocat
             ['color' => '#E500DD'],
         ];
 
-	// Add categories to the legends : set color by level of maturity
-	$i = 0;
+        // Add categories to the legends : set color by level of maturity
+        $i = 0;
         foreach ($categories as $categoryId => $category) {
             if ($category['percent'] == 0 && $category['percentTarget'] == 0) {
-	        $text = $section->addText($translator->translate($category['label']), ['size' => 10, 'name' => 'Calibri', 'color' => '#A5A5A5'], ['spaceAfter' => 100]);
-	        $text2 = $section2->addText($translator->translate('__maturity_NA'), ['size' => 10, 'name' => 'Calibri', 'color' => '#A5A5A5', 'bold' => 'true'], ['alignment' => 'center', 'spaceAfter' => 100]);
-	    }
-	    elseif ($category['percent'] < 33) {
-	        $text = $section->addText($translator->translate($category['label']), ['size' => 10, 'name' => 'Calibri', 'color' => 'red'], ['spaceAfter' => 100]);
-	        $text2 = $section2->addText($translator->translate($category['percent']) . '%', ['size' => 10, 'name' => 'Calibri', 'color' => 'red', 'bold' => 'true'], ['alignment' => 'center', 'spaceAfter' => 100]);
-	    }
-	    elseif ($category['percent'] > 66) {
-	        $text = $section->addText($translator->translate($category['label']), ['size' => 10, 'name' => 'Calibri', 'color' => '#3DC015'], ['spaceAfter' => 100]);
-	        $text2 = $section2->addText($translator->translate($category['percent']) . '%', ['size' => 10, 'name' => 'Calibri', 'color' => '#3DC015', 'bold' => 'true'], ['alignment' => 'center', 'spaceAfter' => 100]);
-	    }
-	    else {
-	        $text = $section->addText($translator->translate($category['label']), ['size' => 10, 'name' => 'Calibri', 'color' => 'orange'], ['spaceAfter' => 100]);
-	        $text2 = $section2->addText($translator->translate($category['percent']) . '%', ['size' => 10, 'name' => 'Calibri', 'color' => 'orange', 'bold' => 'true'], ['alignment' => 'center', 'spaceAfter' => 100]);
-	    }
+                $text = $section->addText($translator->translate($category['label']), ['size' => 10, 'name' => 'Calibri', 'color' => '#A5A5A5'], ['spaceAfter' => 100]);
+                $text2 = $section2->addText($translator->translate('__maturity_NA'), ['size' => 10, 'name' => 'Calibri', 'color' => '#A5A5A5', 'bold' => 'true'], ['alignment' => 'center', 'spaceAfter' => 100]);
+            }
+            elseif ($category['percent'] < 33) {
+                $text = $section->addText($translator->translate($category['label']), ['size' => 10, 'name' => 'Calibri', 'color' => 'red'], ['spaceAfter' => 100]);
+                $text2 = $section2->addText($translator->translate($category['percent']) . '%', ['size' => 10, 'name' => 'Calibri', 'color' => 'red', 'bold' => 'true'], ['alignment' => 'center', 'spaceAfter' => 100]);
+            }
+            elseif ($category['percent'] > 66) {
+                $text = $section->addText($translator->translate($category['label']), ['size' => 10, 'name' => 'Calibri', 'color' => '#3DC015'], ['spaceAfter' => 100]);
+                $text2 = $section2->addText($translator->translate($category['percent']) . '%', ['size' => 10, 'name' => 'Calibri', 'color' => '#3DC015', 'bold' => 'true'], ['alignment' => 'center', 'spaceAfter' => 100]);
+            }
+            else {
+                $text = $section->addText($translator->translate($category['label']), ['size' => 10, 'name' => 'Calibri', 'color' => 'orange'], ['spaceAfter' => 100]);
+                $text2 = $section2->addText($translator->translate($category['percent']) . '%', ['size' => 10, 'name' => 'Calibri', 'color' => 'orange', 'bold' => 'true'], ['alignment' => 'center', 'spaceAfter' => 100]);
+            }
             $text3 = $section3->addText($translator->translate($category['percentTarget']) . '%', ['size' => 10, 'name' => 'Calibri', 'color' => 767171, 'bold' => 'true'], ['alignment' => 'center', 'spaceAfter' => 100]);
             $text4 = $section4->addTextRun();
             $text4->addText('n', ['size' => 10, 'name' => 'Wingdings', 'color' => $categoriesColor[$i]['color']]);
             $text4->addText($translator->translate($category['label']), ['size' => 10, 'name' => 'Calibri', 'color' => 'black']);
             $i++;
-	}
+        }
 
         $text5 = $section5->addTextRun();
         $text5->addText('n', ['size' => 10, 'name' => 'Wingdings', 'color' => '#d9534f']);
@@ -429,18 +429,18 @@ class TemplateProcessorService extends TemplateProcessor implements ServiceLocat
             $text5->addText($translator->translate('__average_diagnosis') . ':' . $_SESSION['average_diagnosis'], ['size' => 10, 'name' => 'Calibri', 'color' => 'black']);
         }
 
-	$this->setValue('PRISE_NOTE_CATEG', $this->getWordXmlFromWordObject($prise_note_categ));
-	$this->setValue('CATEG__PERCENT', $this->getWordXmlFromWordObject($categ_percent));
-	$this->setValue('CATEG__PERCENT_TARG', $this->getWordXmlFromWordObject($categ_percent_targ));
+        $this->setValue('PRISE_NOTE_CATEG', $this->getWordXmlFromWordObject($prise_note_categ));
+        $this->setValue('CATEG__PERCENT', $this->getWordXmlFromWordObject($categ_percent));
+        $this->setValue('CATEG__PERCENT_TARG', $this->getWordXmlFromWordObject($categ_percent_targ));
         unset($prise_note_categ);
-	unset($categ_percent);
-	unset($categ_percent_targ);
+        unset($categ_percent);
+        unset($categ_percent_targ);
 
-	$this->setValue('LEGEND_PIE', $this->getWordXmlFromWordObject($legend_pie));
-	unset($legend_pie);
+        $this->setValue('LEGEND_PIE', $this->getWordXmlFromWordObject($legend_pie));
+        unset($legend_pie);
 
-	$this->setValue('LEGEND_BAR', $this->getWordXmlFromWordObject($legend_bar));
-	unset($legend_bar);
+        $this->setValue('LEGEND_BAR', $this->getWordXmlFromWordObject($legend_bar));
+        unset($legend_bar);
 
         $this->saveAs($filepath);
 

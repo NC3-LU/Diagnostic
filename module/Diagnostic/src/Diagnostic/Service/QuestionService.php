@@ -98,15 +98,15 @@ class QuestionService extends AbstractService
         //encryption key
         $config = $this->get('config');
         $encryptionKey = $config['encryption_key'];
-	$iv = $config['iv_key'];
-	//encrypt result
+        $iv = $config['iv_key'];
+        //encrypt result
         $temp = openssl_decrypt($json,'AES-256-CBC', $encryptionKey, OPENSSL_RAW_DATA, $iv);
         if($temp==false){
 	    $blockCipher = BlockCipher::factory('mcrypt', ['algo' => 'aes']);
             $blockCipher->setKey($encryptionKey);
             $json = $blockCipher->decrypt($json);
         }
-	else {
+        else {
 	    $json = openssl_decrypt($json,'AES-256-CBC', $encryptionKey, OPENSSL_RAW_DATA, $iv);
         }
 

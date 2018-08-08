@@ -28,7 +28,7 @@ class SettingFormFactory implements FactoryInterface
 
         $form->setLanguagesRef($languages_ref);
 
-	$settingFormFilter = new SettingFormFilter($serviceLocator->getServiceLocator()->get('Zend\Db\Adapter\Adapter'));
+        $settingFormFilter = new SettingFormFilter($serviceLocator->getServiceLocator()->get('Zend\Db\Adapter\Adapter'));
         $form->setInputFilter($settingFormFilter);
 
         return $form;
