@@ -541,3 +541,6 @@ msgstr "Average_Diagnosis"
 
 msgid "__average"
 msgstr "Average"
+
+msgid "__date_bar"
+msgstr "Average for the year"

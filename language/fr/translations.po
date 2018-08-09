@@ -541,3 +541,6 @@ msgstr "Moyenne_Diagnostic"
 
 msgid "__average"
 msgstr "Moyenne"
+
+msgid "__date_bar"
+msgstr "Moyenne pour l'année"

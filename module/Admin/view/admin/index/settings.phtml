@@ -50,7 +50,7 @@ $this->form->prepare();
 
 <div class="row">
     <div class="col-lg-3"></div>
-    <div class="col-lg-4">
+    <div class="col-lg-5">
         <h2><?= $this->translate('__statistics') ?></h2>
 
         <br />
@@ -58,17 +58,20 @@ $this->form->prepare();
 
         <table class="table">
             <tr>
+                <th style="text-align: center"><?= $this->translate('Date'); ?></th>
                 <th style="text-align: center"><?= $this->translate('__activity'); ?></th>
                 <th style="text-align: center"><?= $this->translate('__action'); ?></th>
                 <th style="text-align: center"><?= $this->translate('__record'); ?></th>
             </tr>
 
             <tr>
-                <td class="col-lg-9"><?= $this->formSelect($form->get('activity')) ?></td>
+                <td class="col-lg-2"><?= $this->formSelect($form->get('date')) ?></td>
+                <td class="col-lg-7"><?= $this->formSelect($form->get('activity')) ?></td>
                 <td class="col-lg-1"><?= $this->formText($form->get('diagnosis_stat')) ?></td>
                 <td class="col-lg-2" style="text-align: center;"><?= $this->formSubmit($form->get('submit_stat')) ?></td>
             </tr>
             <tr>
+                <td></td>
                 <td>
                     <?php if($error_res == 1){ echo "<ul class='bg-danger'> <li>" . $this->translate('__error_res'). "</li></ul>"; } ?>
                     <?php if($success_upload2 == 1){ echo "<ul class='bg-success'> <li>" . $this->translate('__success_file'). "</li></ul>"; } ?>

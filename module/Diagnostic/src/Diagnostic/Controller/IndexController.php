@@ -803,6 +803,10 @@ class IndexController extends AbstractController
      */
     public function rapportAction()
     {
+        $_SESSION['average_activity'] = -1;
+        $_SESSION['average_diagnosis'] = -1;
+        $_SESSION['date'] = -1;
+
         //form
         $form = $this->get('linkDownloadForm');
         $request = $this->getRequest();
@@ -939,6 +943,28 @@ class IndexController extends AbstractController
                 header('Content-Length: ' . filesize('/var/www/diagnostic/stat_' . $_SESSION['id_diagnostic'] . '.json'));
                 readfile('/var/www/diagnostic/stat_' . $_SESSION['id_diagnostic'] . '.json');
                 unlink('/var/www/diagnostic/stat_' . $_SESSION['id_diagnostic'] . '.json');
+            }
+
+            if (isset($_POST['submit_date']) && file_exists('/var/www/diagnostic/data/resources/statistics_' . $request->getPost('date') . '.txt')) {
+                $file_bar = fopen('/var/www/diagnostic/data/resources/statistics_' . $request->getPost('date') . '.txt', 'r');
+                $contents = fread($file_bar, filesize('/var/www/diagnostic/data/resources/statistics_' . $request->getPost('date') . '.txt'));
+                fclose($file_bar);
+                $contents = explode(PHP_EOL, $contents); // PHP_EOL equals to /n in Linux
+                $contents[0] = explode(',', $contents[0]);
+                if (isset($contents[0][1])) {
+                    $_SESSION['average_diagnosis'] = $contents[0][count($contents[0])-1];
+                }
+                $contents[0] = implode(',', $contents[0]);
+                if (isset($_SESSION['activity'])) {
+                    for ($i=1; $i<count($contents); $i++) {
+                        $contents[$i] = explode(',', $contents[$i]);
+                        if ($contents[$i][0] == $_SESSION['activity']) {
+                                if (isset($contents[$i][1])) {$_SESSION['average_activity'] = $contents[$i][count($contents[$i])-1];}
+                        }
+                        $contents[$i] = implode(',', $contents[$i]);
+                    }
+                }
+                $_SESSION['date'] = $request->getPost('date');
             }
         }
 

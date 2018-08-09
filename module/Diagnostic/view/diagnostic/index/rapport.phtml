@@ -22,29 +22,6 @@ $jsCategories = array_values($jsCategories);
 $jsPercentsTarget = array_values($jsPercentsTarget);
 $jsPercents = array_values($jsPercents);
 
-$file_bar = fopen('/var/www/diagnostic/data/resources/statistics.txt', 'r');
-$contents = fread($file_bar, filesize('/var/www/diagnostic/data/resources/statistics.txt'));
-fclose($file_bar);
-$contents = explode(PHP_EOL, $contents); // PHP_EOL equals to /n in Linux
-$contents[0] = explode(',', $contents[0]);
-$diagnosis_exist = 0;
-if (isset($contents[0][1])) {
-    $_SESSION['average_diagnosis'] = $contents[0][count($contents[0])-1];
-    $diagnosis_exist = 1;
-}
-$contents[0] = implode(',', $contents[0]);
-
-$activity_exist = 0;
-if (isset($_SESSION['activity'])) {
-    for ($i=1; $i<count($contents); $i++) {
-        $contents[$i] = explode(',', $contents[$i]);
-        if ($contents[$i][0] == $_SESSION['activity']) {
-                if (isset($contents[$i][1])) {$activity_exist = 1; $_SESSION['average_activity'] = $contents[$i][count($contents[$i])-1];}
-        }
-        $contents[$i] = implode(',', $contents[$i]);
-    }
-}
-
 $color1 = 'rgba(217, 83, 79, 0.4)';
 $color1Border = 'rgba(212, 63, 58, 1)';
 $color2 = 'rgba(91, 192, 222, 0.2)';
@@ -86,6 +63,7 @@ echo $this->inlineScript()->prependFile($this->basePath('js/Chart.js-master/Char
                                 <span class="glyphicon glyphicon-download-alt"></span>&nbsp;<?= $this->translate('__download_delivery') ?>
                             </button>
                             <?php echo $this->form()->closeTag();
+
                             $form->setAttribute('action', $this->url('diagnostic', ['action' => 'rapport']));
                             $form->prepare();
                             echo $this->form()->openTag($form);
@@ -282,7 +260,39 @@ echo $this->inlineScript()->prependFile($this->basePath('js/Chart.js-master/Char
                 <canvas id="canvas3" width="300" height="200"></canvas>
                 <div id="canvas3-legend" class="chart-legend"></div>
             </div>
-            <div class="col-lg-3 text-left"></div>
+            <div class="col-lg-3 text-center">
+                <?php
+                $form->setAttribute('action', $this->url('diagnostic', ['action' => 'rapport']));
+                $form->prepare();
+                echo $this->form()->openTag($form);
+                ?>
+                <table>
+                    <tr>
+                        <td>
+                            <select name="date" class="form-control">
+                                <option <?php if ($_SESSION['date'] == '2015') {echo 'selected';} ?> value='2015'>2015</option>
+                                <option <?php if ($_SESSION['date'] == '2016') {echo 'selected';} ?> value='2016'>2016</option>
+                                <option <?php if ($_SESSION['date'] == '2017') {echo 'selected';} ?> value='2017'>2017</option>
+                                <option <?php if ($_SESSION['date'] == '2018') {echo 'selected';} ?> value='2018'>2018</option>
+                                <option <?php if ($_SESSION['date'] == '2019') {echo 'selected';} ?> value='2019'>2019</option>
+                                <option <?php if ($_SESSION['date'] == '2020') {echo 'selected';} ?> value='2020'>2020</option>
+                                <option <?php if ($_SESSION['date'] == '2021') {echo 'selected';} ?> value='2021'>2021</option>
+                                <option <?php if ($_SESSION['date'] == '2022') {echo 'selected';} ?> value='2022'>2022</option>
+                                <option <?php if ($_SESSION['date'] == '2023') {echo 'selected';} ?> value='2023'>2023</option>
+                                <option <?php if ($_SESSION['date'] == '2024') {echo 'selected';} ?> value='2024'>2024</option>
+                                <option <?php if ($_SESSION['date'] == '2025') {echo 'selected';} ?> value='2025'>2025</option>
+                            </select>
+                        </td>
+                        <td>
+                            &nbsp;&nbsp;
+                            <button type="submit" name="submit_date" class="btn btn-success">
+                                <span></span>&nbsp;<?= 'Ok' ?>
+                            </button>
+                        </td>
+                    </tr>
+                </table>
+                <?php echo $this->form()->closeTag(); ?>
+            </div>
         </div>
         <br/>
         <h1><?php echo ucfirst($this->translate($this->escapeHtml('__doughnut_legend'))); ?></h1>
@@ -441,25 +451,25 @@ var barChartData = {
             data: [<?= $this->total ?>],
         },
         {
-            label: "<?= $this->translate('__target') . ':'. $this->totalTarget ?>",
+            label: "<?= $this->translate('__target') . ':' . $this->totalTarget ?>",
             fillColor: "<?= $color2 ?>",
             strokeColor: "<?= $color2Border ?>",
             highlightFill: "<?= $color2 ?>",
             highlightStroke: "<?= $color2Border ?>",
             data: [<?= $this->totalTarget ?>],
         },
-        <?php if ($activity_exist == 1) { ?>
+        <?php if ($_SESSION['average_activity'] != -1) { ?>
         {
-            label: "<?= $this->translate('__average') . '_' . $this->translate($_SESSION['activity']) . ':'. $_SESSION['average_activity'] ?>",
+            label: "<?= $this->translate('__average') . '_' . $this->translate($_SESSION['activity']) . ':' . $_SESSION['average_activity'] ?>",
             fillColor: "<?= $color3 ?>",
             strokeColor: "<?= $color3Border ?>",
             highlightFill: "<?= $color3 ?>",
             highlightStroke: "<?= $color3Border ?>",
             data: [<?= $_SESSION['average_activity'] ?>],
         },
-        <?php } if ($diagnosis_exist == 1) { ?>
+        <?php } if ($_SESSION['average_diagnosis'] != -1) { ?>
         {
-            label: "<?= $this->translate('__average_diagnosis') . ':'. $_SESSION['average_diagnosis'] ?>",
+            label: "<?= $this->translate('__average_diagnosis') . ':' . $_SESSION['average_diagnosis'] ?>",
             fillColor: "<?= $color4 ?>",
             strokeColor: "<?= $color4Border ?>",
             highlightFill: "<?= $color4 ?>",
@@ -484,3 +494,4 @@ var myBarChart = new Chart(document.getElementById("canvas3").getContext("2d")).
 document.getElementById('canvas3-legend').innerHTML = myBarChart.generateLegend();
 
 </script>
+

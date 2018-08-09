@@ -68,6 +68,29 @@ class SettingForm extends Form
         ]);
 
         $this->add([
+            'name' => 'date',
+            'type' => 'Select',
+            'options' => [
+                'value_options' => [
+                    '2015' => '2015',
+                    '2016' => '2016',
+                    '2017' => '2017',
+                    '2018' => '2018',
+                    '2019' => '2019',
+                    '2020' => '2020',
+                    '2021' => '2021',
+                    '2022' => '2022',
+                    '2023' => '2023',
+                    '2024' => '2024',
+                    '2025' => '2025',
+                ]
+            ],
+            'attributes' => [
+                'class' => 'form-control',
+            ],
+        ]);
+
+        $this->add([
             'name' => 'activity',
             'type' => 'Select',
             'options' => [

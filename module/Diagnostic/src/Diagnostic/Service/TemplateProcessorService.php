@@ -364,6 +364,10 @@ class TemplateProcessorService extends TemplateProcessor implements ServiceLocat
         $legend_bar = new PhpWord();
         $section5 = $legend_bar->addSection();
 
+        // Variable for the date of the bar legend
+        $legend_date = new PhpWord();
+        $section6 = $legend_date->addSection();
+
         //categories repartition
         $categoriesColor = [
             ['color' => '#F7464A'],
@@ -417,16 +421,20 @@ class TemplateProcessorService extends TemplateProcessor implements ServiceLocat
         $text5->addText('n', ['size' => 10, 'name' => 'Wingdings', 'color' => '#5BC0DE']);
         $text5->addText($translator->translate('__target') . ':' . $results['totalTarget'], ['size' => 10, 'name' => 'Calibri', 'color' => 'black']);
 
-        if (isset($_SESSION['average_activity'])) {
+        if ($_SESSION['average_activity'] != -1) {
             $text5 = $section5->addTextRun();
             $text5->addText('n', ['size' => 10, 'name' => 'Wingdings', 'color' => '#00FE00']);
             $text5->addText($translator->translate('__average') . '_' . $translator->translate($_SESSION['activity']) . ':' . $_SESSION['average_activity'], ['size' => 10, 'name' => 'Calibri', 'color' => 'black']);
         }
 
-        if (isset($_SESSION['average_diagnosis'])) {
+        if ($_SESSION['average_diagnosis'] != -1) {
             $text5 = $section5->addTextRun();
             $text5->addText('n', ['size' => 10, 'name' => 'Wingdings', 'color' => '#FEFE00']);
             $text5->addText($translator->translate('__average_diagnosis') . ':' . $_SESSION['average_diagnosis'], ['size' => 10, 'name' => 'Calibri', 'color' => 'black']);
+        }
+
+        if ($_SESSION['average_diagnosis'] != -1 || $_SESSION['average_activity'] != -1) {
+            $text6 = $section6->addText('(' . $translator->translate('__date_bar') . ' ' . $_SESSION['date'] . ')', ['size' => 10, 'name' => 'Calibri', 'color' => 'black']);
         }
 
         $this->setValue('PRISE_NOTE_CATEG', $this->getWordXmlFromWordObject($prise_note_categ));
@@ -441,6 +449,9 @@ class TemplateProcessorService extends TemplateProcessor implements ServiceLocat
 
         $this->setValue('LEGEND_BAR', $this->getWordXmlFromWordObject($legend_bar));
         unset($legend_bar);
+
+        $this->setValue('LEGEND_DATE', $this->getWordXmlFromWordObject($legend_date));
+        unset($legend_date);
 
         $this->saveAs($filepath);
 

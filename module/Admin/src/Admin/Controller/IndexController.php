@@ -883,8 +883,15 @@ class IndexController extends AbstractController
                     $error_res = 1;
                 }else {
                     $success_upload2 = 1;
-                    $file_stat = fopen('/var/www/diagnostic/data/resources/statistics.txt', 'r');
-                    $contents = fread($file_stat, filesize('/var/www/diagnostic/data/resources/statistics.txt'));
+
+                    if (!file_exists('/var/www/diagnostic/data/resources/statistics_' . $request->getPost('date') . '.txt')) {
+                        $file_stat = fopen('/var/www/diagnostic/data/resources/statistics_' . $request->getPost('date') . '.txt', 'w');
+                        fputs($file_stat, '__diagnosis' . PHP_EOL);
+                        for ($i=1; $i<=38; $i++) {fputs($file_stat, '__activity' . $i . PHP_EOL);}
+                        fclose($file_stat);
+                    }
+                    $file_stat = fopen('/var/www/diagnostic/data/resources/statistics_' . $request->getPost('date') . '.txt', 'r');
+                    $contents = fread($file_stat, filesize('/var/www/diagnostic/data/resources/statistics_' . $request->getPost('date') . '.txt'));
                     fclose($file_stat);
                     $contents = explode(PHP_EOL, $contents); // PHP_EOL equals to /n in Linux
                     $contents[0] = explode(',', $contents[0]);
@@ -921,7 +928,7 @@ class IndexController extends AbstractController
                     }
                     $contents = array_values($contents);
                     $contents = implode(PHP_EOL, $contents);
-                    $file_stat = fopen('/var/www/diagnostic/data/resources/statistics.txt', 'w');
+                    $file_stat = fopen('/var/www/diagnostic/data/resources/statistics_' . $request->getPost('date') . '.txt', 'w');
                     fwrite($file_stat, $contents);
                     fclose($file_stat);
                 }
