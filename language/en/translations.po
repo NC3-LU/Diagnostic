@@ -544,3 +544,15 @@ msgstr "Average"
 
 msgid "__date_bar"
 msgstr "Average for the year"
+
+msgid "__threat"
+msgstr "Threat :"
+
+msgid "__weight"
+msgstr "Weight :"
+
+msgid "__blocking"
+msgstr "Blocking question"
+
+msgid "__legend_block"
+msgstr "An essential domain for the entity is not managed (question with a fragile maturity)"

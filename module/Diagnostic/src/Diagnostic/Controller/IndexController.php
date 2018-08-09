@@ -655,7 +655,8 @@ class IndexController extends AbstractController
                     'category_translation_key' => $categories[$categoryId],
                     'translation_key' => $formData['question'],
                     'translation_key_help' => $formData['help'],
-                    'threshold' => $formData['threshold'],
+                    'threat' => $formData['threat'],
+                    'weight' => $formData['weight'],
                     'new' => true,
                 ]);
 

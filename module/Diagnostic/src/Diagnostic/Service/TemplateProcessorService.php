@@ -165,6 +165,7 @@ class TemplateProcessorService extends TemplateProcessor implements ServiceLocat
          $styleContentFontMat1 = ['bold' => true, 'size' => 18, 'color' => 'FFBC1C', 'name' => 'Wingdings'];
          $styleContentFontMat2 = ['bold' => true, 'size' => 18, 'color' => 'D6F107', 'name' => 'Wingdings'];
          $styleContentCell = ['align' => 'left', 'valign' => 'center', 'size' => 10];
+         $styleContentCellBlocking = ['align' => 'left', 'valign' => 'center', 'size' => 10, 'bgcolor' => 'FEA642'];
          $styleContentCellMat0 = ['align' => 'left', 'valign' => 'center', 'size' => 10];
          $styleContentCellMat3 = ['align' => 'left', 'valign' => 'center', 'size' => 10];
          $styleContentCellMat1 = ['align' => 'left', 'valign' => 'center', 'size' => 10];
@@ -209,6 +210,8 @@ class TemplateProcessorService extends TemplateProcessor implements ServiceLocat
 
          $recommandations = $results['recommandations'];
 
+
+         $legend_block = 0;
          $i = 1;
          foreach ($recommandations as $recommandation => $value) {
           if ($value['recommandation']) {
@@ -259,8 +262,15 @@ class TemplateProcessorService extends TemplateProcessor implements ServiceLocat
 
           $table->addRow(400);
           $table->addCell(\PhpOffice\Common\Font::centimeterSizeToTwips(1.00), $styleContentCell)->addText($i, $styleContentFont, $alignCenter);
-          $table->addCell(\PhpOffice\Common\Font::centimeterSizeToTwips(10.00), $styleContentCell)->addText($value['recommandation'], $styleContentFont, $alignLeft);
-          $table->addCell(\PhpOffice\Common\Font::centimeterSizeToTwips(5.50), $styleContentCell)->addText($category, $styleContentFont, $alignLeft);
+          if ($_SESSION['blockRec' . $i] == 1) {
+              $legend_block = 1;
+              $table->addCell(\PhpOffice\Common\Font::centimeterSizeToTwips(10.00), $styleContentCellBlocking)->addText($value['recommandation'], $styleContentFont, $alignLeft);
+              $table->addCell(\PhpOffice\Common\Font::centimeterSizeToTwips(5.50), $styleContentCellBlocking)->addText($category, $styleContentFont, $alignLeft);
+          }
+          else {
+              $table->addCell(\PhpOffice\Common\Font::centimeterSizeToTwips(10.00), $styleContentCell)->addText($value['recommandation'], $styleContentFont, $alignLeft);
+              $table->addCell(\PhpOffice\Common\Font::centimeterSizeToTwips(5.50), $styleContentCell)->addText($category, $styleContentFont, $alignLeft);
+          }
           $table->addCell(\PhpOffice\Common\Font::centimeterSizeToTwips(1.50), $styleContentCell)->addText($gravity, $styleContentFontGravity, $alignCenter);
           $table->addCell(\PhpOffice\Common\Font::centimeterSizeToTwips(2.20), $styleContentCellMaturity)->addText($maturity, $styleContentFontBold, $alignCenter);
           $table->addCell(\PhpOffice\Common\Font::centimeterSizeToTwips(2.20), $styleContentCellMaturityTarget)->addText($maturityTarget, $styleContentFontBold, $alignCenter);
@@ -324,15 +334,28 @@ class TemplateProcessorService extends TemplateProcessor implements ServiceLocat
                   }
 
                   $table->addRow(400);
-                  $table->addCell(\PhpOffice\Common\Font::centimeterSizeToTwips(7.00), $styleContentCell)->addText($questionCollect, $styleContentFont, $alignLeft);
-                  $table->addCell(\PhpOffice\Common\Font::centimeterSizeToTwips(7.00), $styleContentCell)->addText($notes, $styleContentFont, $alignLeft);
-                  $table->addCell(\PhpOffice\Common\Font::centimeterSizeToTwips(1.00), $styleContentCellMat2)->addText('', $styleContentFontBold, $alignCenter);
-                  $table->addCell(\PhpOffice\Common\Font::centimeterSizeToTwips(1.00), $styleContentCellMat1)->addText('', $styleContentFontBold, $alignCenter);
-                  $table->addCell(\PhpOffice\Common\Font::centimeterSizeToTwips(1.00), $styleContentCellMat0)->addText('', $styleContentFontBold, $alignCenter);
-                  $table->addCell(\PhpOffice\Common\Font::centimeterSizeToTwips(1.00), $styleContentCellMat3)->addText('', $styleContentFontBold, $alignCenter);
-                  $table->addCell(\PhpOffice\Common\Font::centimeterSizeToTwips(7.00), $styleContentCell)->addText($value['recommandation'], $styleContentFont, $alignLeft);
-                  $table->addCell(\PhpOffice\Common\Font::centimeterSizeToTwips(1.00), $styleContentCellMatTarget2)->addText('', $styleContentFontBold, $alignCenter);
-                  $table->addCell(\PhpOffice\Common\Font::centimeterSizeToTwips(1.00), $styleContentCellMatTarget1)->addText('', $styleContentFontBold, $alignCenter);
+                  if ($value['maturity'] == 0 && $questions[$recommandation]->getBlocking() == '✓') {
+                      $table->addCell(\PhpOffice\Common\Font::centimeterSizeToTwips(7.00), $styleContentCellBlocking)->addText($questionCollect, $styleContentFont, $alignLeft);
+                      $table->addCell(\PhpOffice\Common\Font::centimeterSizeToTwips(7.00), $styleContentCellBlocking)->addText($notes, $styleContentFont, $alignLeft);
+                      $table->addCell(\PhpOffice\Common\Font::centimeterSizeToTwips(1.00), $styleContentCellMat2)->addText('', $styleContentFontBold, $alignCenter);
+                      $table->addCell(\PhpOffice\Common\Font::centimeterSizeToTwips(1.00), $styleContentCellMat1)->addText('', $styleContentFontBold, $alignCenter);
+                      $table->addCell(\PhpOffice\Common\Font::centimeterSizeToTwips(1.00), $styleContentCellMat0)->addText('', $styleContentFontBold, $alignCenter);
+                      $table->addCell(\PhpOffice\Common\Font::centimeterSizeToTwips(1.00), $styleContentCellMat3)->addText('', $styleContentFontBold, $alignCenter);
+                      $table->addCell(\PhpOffice\Common\Font::centimeterSizeToTwips(7.00), $styleContentCellBlocking)->addText($value['recommandation'], $styleContentFont, $alignLeft);
+                      $table->addCell(\PhpOffice\Common\Font::centimeterSizeToTwips(1.00), $styleContentCellMatTarget2)->addText('', $styleContentFontBold, $alignCenter);
+                      $table->addCell(\PhpOffice\Common\Font::centimeterSizeToTwips(1.00), $styleContentCellMatTarget1)->addText('', $styleContentFontBold, $alignCenter);
+                  }
+                  else {
+                      $table->addCell(\PhpOffice\Common\Font::centimeterSizeToTwips(7.00), $styleContentCell)->addText($questionCollect, $styleContentFont, $alignLeft);
+                      $table->addCell(\PhpOffice\Common\Font::centimeterSizeToTwips(7.00), $styleContentCell)->addText($notes, $styleContentFont, $alignLeft);
+                      $table->addCell(\PhpOffice\Common\Font::centimeterSizeToTwips(1.00), $styleContentCellMat2)->addText('', $styleContentFontBold, $alignCenter);
+                      $table->addCell(\PhpOffice\Common\Font::centimeterSizeToTwips(1.00), $styleContentCellMat1)->addText('', $styleContentFontBold, $alignCenter);
+                      $table->addCell(\PhpOffice\Common\Font::centimeterSizeToTwips(1.00), $styleContentCellMat0)->addText('', $styleContentFontBold, $alignCenter);
+                      $table->addCell(\PhpOffice\Common\Font::centimeterSizeToTwips(1.00), $styleContentCellMat3)->addText('', $styleContentFontBold, $alignCenter);
+                      $table->addCell(\PhpOffice\Common\Font::centimeterSizeToTwips(7.00), $styleContentCell)->addText($value['recommandation'], $styleContentFont, $alignLeft);
+                      $table->addCell(\PhpOffice\Common\Font::centimeterSizeToTwips(1.00), $styleContentCellMatTarget2)->addText('', $styleContentFontBold, $alignCenter);
+                      $table->addCell(\PhpOffice\Common\Font::centimeterSizeToTwips(1.00), $styleContentCellMatTarget1)->addText('', $styleContentFontBold, $alignCenter);
+                  }
 
                   for ($i = 0; $i <= 3 ; $i++) {
                       ${'styleContentCellMat' . $i} = ['valign' => 'center', 'size' => 10];
@@ -452,6 +475,18 @@ class TemplateProcessorService extends TemplateProcessor implements ServiceLocat
 
         $this->setValue('LEGEND_DATE', $this->getWordXmlFromWordObject($legend_date));
         unset($legend_date);
+
+        // Display or not the legend about blocking question
+        $legend_blocking = new PhpWord();
+	$section = $legend_blocking->addSection();
+        if ($legend_block == 1) {
+            $text = $section->addTextRun();
+            $text->addText('n', ['size' => 16, 'name' => 'Wingdings', 'color' => 'FEA642']);
+            $text->addText(' : ' . $translator->translate('__legend_block'), ['size' => 11, 'name' => 'Century Schoolbook']);
+        }
+        else {$text = $section->addText('', ['size' => 1, 'name' => 'Calibri']);}
+        $this->setValue('LEGEND_BLOCKING', $this->getWordXmlFromWordObject($legend_blocking));
+        unset($legend_blocking);
 
         $this->saveAs($filepath);
 

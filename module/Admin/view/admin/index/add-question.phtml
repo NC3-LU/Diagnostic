@@ -81,15 +81,27 @@ $this->form->prepare(); ?>
                 </td>
             </tr>
             <tr>
-                <td><label><?= $this->translate($form->get('threshold')->getLabel()) ?></label></td>
+                <td><label><?= $this->translate('__threshold_max') ?></label></td>
                 <td>
-                    <?= $this->formSelect($form->get('threshold')) ?>
+                    <label><?= $this->translate($form->get('threat')->getLabel()) ?></label>
+                    <?= $this->formSelect($form->get('threat')) ?>
+                    &nbsp; X &nbsp;
+                    <label><?= $this->translate($form->get('weight')->getLabel()) ?></label>
+                    <?= $this->formSelect($form->get('weight')) ?>
+                </td>
+            </tr>
+            <tr>
+                <td><label><?= $this->translate('__blocking') ?></label></td>
+                <td>
+                    <?= $this->formCheckbox($form->get('blocking')) ?>
                 </td>
             </tr>
             <tr>
                 <td colspan="2">
                     <?= $this->formElementErrors($form->get('category_id'), ['class' => 'bg-danger']) ?>
-                    <?= $this->formElementErrors($form->get('threshold'), ['class' => 'bg-danger']) ?>
+                    <?= $this->formElementErrors($form->get('threat'), ['class' => 'bg-danger']) ?>
+                    <?= $this->formElementErrors($form->get('weight'), ['class' => 'bg-danger']) ?>
+                    <?= $this->formElementErrors($form->get('blocking'), ['class' => 'bg-danger']) ?>
                     <?= $this->formSubmit($form->get('submit')) ?>
                 </td>
             </tr>

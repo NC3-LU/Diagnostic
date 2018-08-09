@@ -43,7 +43,17 @@ class QuestionFormFilter extends InputFilter
         ]);
 
         $this->add([
-            'name' => 'threshold',
+            'name' => 'threat',
+            'required' => true,
+            'validators' => [
+                [
+                    'name' => 'Digits',
+                ],
+            ],
+        ]);
+
+        $this->add([
+            'name' => 'weight',
             'required' => true,
             'validators' => [
                 [

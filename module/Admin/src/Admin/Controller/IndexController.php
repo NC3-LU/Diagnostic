@@ -1549,7 +1549,7 @@ class IndexController extends AbstractController
         $_SESSION['erreur_exist'] = 0;
 
         // Things we need for the db
-        $tabToGet = ['category_id', 'translation_key', 'threshold', 'csrf', 'submit'];
+        $tabToGet = ['category_id', 'translation_key', 'threat', 'weight', 'blocking', 'csrf', 'submit'];
 
         $form = $this->get('adminQuestionForm');
 
@@ -1797,7 +1797,7 @@ class IndexController extends AbstractController
         // Session value to know if the translation key already exist
         $_SESSION['erreur_exist'] = 0;
 
-        $tabToGet = ['category_id', 'translation_key', 'threshold', 'csrf', 'submit'];
+        $tabToGet = ['category_id', 'translation_key', 'threat', 'weight', 'blocking', 'csrf', 'submit'];
 
         $id = $this->getEvent()->getRouteMatch()->getParam('id');
 

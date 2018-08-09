@@ -136,10 +136,17 @@ echo $this->inlineScript()->prependFile($this->basePath('js/Chart.js-master/Char
             </tr>
             <?php
             foreach ($totalCategory as $key => $value):
+                $blocking = 0;
+                foreach ($questions as $question) {
+                    if ('__category' . $question->getCategoryId() == $key && $question->getBlocking() == '✓' && isset($results[$question->getId()]['maturity'])){
+                        if ($results[$question->getId()]['maturity'] == 0) {$blocking = 1;}
+                    }
+                }
             ?>
                 <tr> <!-- // Color the text in red if maturity < 33%, in orange if < 66%, in green if > 66% -->
-                    <td class="text-left"><?php if ($value == 0 && (int)$this->totalCategoryTarget[$key] == 0){ ?><font color="#A5A5A5"><?= $this->translate($this->escapeHtml($key)); ?></font><?php }
-                                                else if ($value < 33){ ?><font color="red"><?= $this->translate($this->escapeHtml($key)); ?></font><?php }
+                    <td class="text-left"><?php if ($blocking == 1) { $legend_block = 1; ?><font style="background-color:#FEA642"><?= $this->translate($this->escapeHtml($key)); ?></font><?php }
+                                                elseif ($value == 0 && (int)$this->totalCategoryTarget[$key] == 0){ ?><font color="#A5A5A5"><?= $this->translate($this->escapeHtml($key)); ?></font><?php }
+                                                elseif ($value < 33){ ?><font color="red"><?= $this->translate($this->escapeHtml($key)); ?></font><?php }
                                                 elseif ($value > 66){ ?><font color="#3DC015"><?= $this->translate($this->escapeHtml($key)); ?></font><?php }
                                                 else { ?><font color="orange"><?= $this->translate($this->escapeHtml($key)); ?></font><?php } ?>
                     </td>
@@ -154,6 +161,7 @@ echo $this->inlineScript()->prependFile($this->basePath('js/Chart.js-master/Char
             endforeach;
             ?>
         </table>
+        <?php if (isset($legend_block)) { ?><font style="background-color:#FEA642">&nbsp;&nbsp&nbsp </font>&nbsp; <?= $this->translate('__legend_block'); } ?>
         <td>
             <table class="table" style="background-color: lightgrey; border: 1px solid darkgrey; height: 35px;">
                 <tr>
@@ -182,11 +190,24 @@ echo $this->inlineScript()->prependFile($this->basePath('js/Chart.js-master/Char
                     <th style="text-align: center" width="100"><?= $this->translate('__goal'); ?></th>
                 </tr>
                 <?php
+                $j = 1;
                 foreach ($this->recommandations as $recommandation) :
+                    $_SESSION['blockRec' . $j] = 0;
+                    $blocking = 0;
+                    foreach ($questions as $question) {
+                        if (isset($results[$question->getId()]['recommandation'])) {
+                            if (htmlspecialchars($recommandation['recommandation']) == $results[$question->getId()]['recommandation'] && $question->getBlocking() == '✓' && isset($results[$question->getId()]['maturity'])){
+                                if ($results[$question->getId()]['maturity'] == 0) {$blocking = 1; $_SESSION['blockRec' . $j] = 1;}
+                            }
+                        }
+                    }
                     if (strlen($recommandation['recommandation'])) {
                 ?>
                         <tr>
-                            <td style="text-align: left;"><?= htmlspecialchars($recommandation['recommandation']); ?></td>
+                            <td style="text-align: left;">
+                                <?php if ($blocking == 1) { $legend_block2 = 1; ?><font style="background-color:#FEA642"><?= htmlspecialchars($recommandation['recommandation']); ?></font><?php }
+                                      else { echo htmlspecialchars($recommandation['recommandation']); } ?>
+                            </td>
                             <td style="text-align: left;">
                                 <?php
                                 for ($i=1; $i<=count($totalCategory); $i++) { // Search the right category and set its colour in the recommandation table
@@ -205,9 +226,11 @@ echo $this->inlineScript()->prependFile($this->basePath('js/Chart.js-master/Char
                         </tr>
                 <?php
                     }
+                $j++;
                 endforeach;
                 ?>
             </table>
+            <?php if (isset($legend_block2)) { ?><font style="background-color:#FEA642">&nbsp;&nbsp&nbsp </font>&nbsp; <?= $this->translate('__legend_block'); } ?>
             <br/>
             <table class="table table-borderless">
                 <tr>

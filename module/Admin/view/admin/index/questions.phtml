@@ -44,6 +44,7 @@ $this->form->prepare();
                 <th><?= $this->translate('__translation_key'); ?></th>
                 <th style="text-align: center"><?= $this->translate('__category'); ?></th>
                 <th style="text-align: center;"><?= $this->translate('__threshold_max'); ?></th>
+                <th style="text-align: center;"><?= $this->translate('__blocking'); ?></th>
                 <th style="text-align: center;"><?= $this->translate('__action'); ?></th>
             </tr>
             <?php
@@ -56,7 +57,8 @@ $this->form->prepare();
                     <td><?= $this->translate($question->getTranslationKey()); ?></td>
                     <td><?= $question->getTranslationKey(); ?></td>
                     <td align="center"><?= $this->translate($question->getCategoryTranslationKey()); ?></td>
-                    <td align="center"><?= $question->getThreshold(); ?></td>
+                    <td align="center"><?= $question->getThreat() * $question->getWeight(); ?></td>
+                    <td align="center"><?= $question->getBlocking() ?></td>
                     <td align="center">
                         <a href="<?= $urlModify ?>"><span class="glyphicon glyphicon-pencil"></span></a>
                         &nbsp;&nbsp;

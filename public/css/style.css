@@ -151,6 +151,7 @@ div.container a.brand {
 
 .threshold {
 	width: 40px;
+        display: inline;
 }
 
 #navbar a { color: #fff !important;}

@@ -544,3 +544,15 @@ msgstr "Moyenne"
 
 msgid "__date_bar"
 msgstr "Moyenne pour l'année"
+
+msgid "__threat"
+msgstr "Menace :"
+
+msgid "__weight"
+msgstr "Poids :"
+
+msgid "__blocking"
+msgstr "Question bloquante"
+
+msgid "__legend_block"
+msgstr "Un domaine essentiel pour l'entité n'est pas géré (question avec une maturité fragile)"
