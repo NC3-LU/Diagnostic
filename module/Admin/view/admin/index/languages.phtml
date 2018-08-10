@@ -12,7 +12,7 @@ foreach ($questions as $question) :
     if (substr($question->getTranslationKey(), 10) > $_SESSION['question_max']) {$_SESSION['question_max'] = substr($question->getTranslationKey(), 10);}
 endforeach;
 
-$_SESSION['nb_translations'] = 0;
+$_SESSION['nb_translations'] = 0; // Count the number of translations
 
 ?>
 
@@ -26,11 +26,12 @@ $_SESSION['nb_translations'] = 0;
 
     <?= $this->form()->openTag($form) ?>
 
+    <!-- // Add a language part -->
     <span style="float:right"><?= $this->translate($form->get('add_language')->getLabel()) ?>
     <?= $this->formSelect($form->get('add_language')) ?>
     <?= $this->formSubmit($form->get('submit_lang_add')) ?>
     <?= $this->formSubmit($form->get('submit_lang_del')->setAttribute('onClick', 'return confirm(delete_lang)')) ?>
-    <!-- // Display error if you want : to add a language already added, to delete a language which has not been added, to delete english -->
+    <!-- // Display error if you want : to add a language already added, to delete a language which has not been added, to delete english, to delete the current language -->
     <?php if($error_lang_exist == 1){ echo "<ul class='bg-danger'> <li>" . $this->translate('__error_lang_exist'). "</li></ul>"; } ?>
     <?php if($error_lang_add == 1){ echo "<ul class='bg-danger'> <li>" . $this->translate('__error_lang_add'). "</li></ul>"; } ?>
     <?php if($error_lang_del == 1){ echo "<ul class='bg-danger'> <li>" . $this->translate('__error_lang_del'). "</li></ul>"; } ?>
@@ -40,6 +41,7 @@ $_SESSION['nb_translations'] = 0;
 
     <br />
 
+    <!-- // Upload part -->
     <div class="col-lg-3 text-left"><?= $this->formFile($form->get('file')); ?></div>
     <?= $this->formSubmit($form->get('submit_file')); ?>
     <?= $this->formSubmit($form->get('submit_export')); ?>
@@ -65,15 +67,15 @@ $_SESSION['nb_translations'] = 0;
         $location_lang = '/var/www/diagnostic/language/';
         $file_lang = fopen($location_lang . 'languages.txt', 'r');
         for ($i=1; $i<$_SESSION['nb_lang']; $i++) {
-            $temp_lang = fgets($file_lang, 4096);
+            $temp_lang = substr(fgets($file_lang, 4096), 0, -1);
 
-            if ($this->plugin('translate')->getTranslator()->getLocale() == substr($temp_lang, 0, -1)) {
+            if ($this->plugin('translate')->getTranslator()->getLocale() == $temp_lang) {
 
-                $_SESSION['lang'] = substr($temp_lang, 0, -1);
+                $_SESSION['lang'] = $temp_lang;
 
                 $trans_key = 3; $trans = 2; $num_button = 1; $id_trans_ref = 1;
 
-                $file = fopen($location_lang . substr($temp_lang, 0, -1) . '/' . 'translations.po', 'r');
+                $file = fopen($location_lang . $temp_lang . '/' . 'translations.po', 'r');
                 // Go to translations to display in the po file
                 while (!feof($file)) {
                     $temp = fgets($file, 4096);
@@ -108,7 +110,7 @@ $_SESSION['nb_translations'] = 0;
 
                     if($trans_key==3){
                         echo "<tr><td class=col-lg-2 style=text-align:center>";
-                        echo $_SESSION['key_' . substr($temp_lang, 0, -1)][$num_button]=substr($temp, 7, -2);
+                        echo $_SESSION['key_' . $temp_lang][$num_button]=substr($temp, 7, -2);
                         echo "</td>";
                         $trans_key=0;
                         $_SESSION['nb_translations']++;
@@ -136,15 +138,16 @@ $_SESSION['nb_translations'] = 0;
         }
         fclose($file_lang);
 
+        // Fill the reference translation column
         $file_lang = fopen($location_lang . 'languages.txt', 'r');
         for ($i=1; $i<$_SESSION['nb_lang']; $i++) {
-            $temp_lang = fgets($file_lang, 4096);
+            $temp_lang = substr(fgets($file_lang, 4096), 0, -1);
 
-            if ($_SESSION['change_language'] == substr($temp_lang, 0, -1)) {
+            if ($_SESSION['change_language'] == $temp_lang) {
 
                 $trans = 2; $id_trans_ref = 1;
 
-                $file = fopen($location_lang . substr($temp_lang, 0, -1) . '/' . 'translations.po', 'r');
+                $file = fopen($location_lang . $temp_lang . '/' . 'translations.po', 'r');
                 // Go to the first msgid in the po file
                 while (!feof($file)) {
                     $temp = fgets($file, 4096);

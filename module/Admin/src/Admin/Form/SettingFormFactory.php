@@ -10,7 +10,7 @@ use Zend\ServiceManager\ServiceLocatorInterface;
  * Setting Form Factory
  *
  * @package Admin\Factory
- * @author Romain DESJARDINS
+ * @author Romain Desjardins
  */
 class SettingFormFactory implements FactoryInterface
 {

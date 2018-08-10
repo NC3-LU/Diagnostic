@@ -80,6 +80,9 @@ msgstr "Comment"
 msgid "__record"
 msgstr "Record"
 
+msgid "__record_continue"
+msgstr "Record and continue"
+
 msgid "__domain"
 msgstr "Domain"
 
@@ -98,8 +101,8 @@ msgstr "Collected information"
 msgid "__notes"
 msgstr "Notes"
 
-msgid "__record_continue"
-msgstr "Record and continue"
+msgid "__add"
+msgstr "Add"
 
 msgid "__add_a_question"
 msgstr "Add a question"
@@ -113,14 +116,35 @@ msgstr "Add a language"
 msgid "__add_a_translation"
 msgstr "Add a translation"
 
-msgid "__add"
-msgstr "Add"
-
 msgid "__question"
 msgstr "Question"
 
+msgid "__questions"
+msgstr "Questions"
+
+msgid "__category"
+msgstr "Category"
+
+msgid "__categories"
+msgstr "Categories"
+
+msgid "__translation"
+msgstr "Translation"
+
+msgid "__translation_key"
+msgstr "Translation key"
+
+msgid "__translation_ref"
+msgstr "Reference translation"
+
 msgid "__languages"
 msgstr "Languages"
+
+msgid "__rapport"
+msgstr "Report"
+
+msgid "__rapports"
+msgstr "Reports"
 
 msgid "__export"
 msgstr "Export"
@@ -134,26 +158,20 @@ msgstr "Access diagnosis"
 msgid "__help"
 msgstr "Help"
 
+msgid "__threshold"
+msgstr "Threshold"
+
 msgid "__threshold_max"
 msgstr "Upper threshold"
-
-msgid "__rapport"
-msgstr "Report"
-
-msgid "__rapports"
-msgstr "Reports"
 
 msgid "__results"
 msgstr "Results"
 
-msgid "__categories"
-msgstr "Categories"
+msgid "__template"
+msgstr "Template"
 
 msgid "__templates"
 msgstr "Report templates"
-
-msgid "__template"
-msgstr "Template"
 
 msgid "__last_modif"
 msgstr "Last modification"
@@ -179,38 +197,20 @@ msgstr "User details"
 msgid "__modify"
 msgstr "Change"
 
+msgid "__modify_question"
+msgstr "Change question"
+
+msgid "__modify_category"
+msgstr "Change category"
+
 msgid "__modify_all"
 msgstr "Change all translations"
 
 msgid "__change_default_language"
 msgstr "Change the default language"
 
-msgid "__questions"
-msgstr "Questions"
-
-msgid "__translation_key"
-msgstr "Translation key"
-
-msgid "__translation_ref"
-msgstr "Reference translation"
-
-msgid "__translation"
-msgstr "Translation"
-
-msgid "__category"
-msgstr "Category"
-
-msgid "__threshold"
-msgstr "Threshold"
-
 msgid "__action"
 msgstr "Action"
-
-msgid "__modify_question"
-msgstr "Change question"
-
-msgid "__modify_category"
-msgstr "Change category"
 
 msgid "__admin"
 msgstr "Administration"
@@ -257,26 +257,14 @@ msgstr "Medium"
 msgid "__strong"
 msgstr "Strong"
 
-msgid "__back_rapport"
-msgstr "Back to report"
-
 msgid "__back"
 msgstr "Back"
 
+msgid "__back_rapport"
+msgstr "Back to report"
+
 msgid "__delete"
 msgstr "Delete"
-
-msgid "__login_error"
-msgstr "Impossible to log in"
-
-msgid "__no_file"
-msgstr "File missing"
-
-msgid "__error_file"
-msgstr "File invalid"
-
-msgid "__success_file"
-msgstr "Successful modification"
 
 msgid "__goal"
 msgstr "Goal"
@@ -332,6 +320,57 @@ msgstr "Summary of evaluation"
 msgid "__categories_maturities"
 msgstr "Maturities by category"
 
+msgid "__statistics"
+msgstr "Statistics"
+
+msgid "__mail_verif"
+msgstr "Mail verification"
+
+msgid "__activity"
+msgstr "Activity"
+
+msgid "__employees"
+msgstr "Number of employees"
+
+msgid "__organization_help"
+msgstr "Organization help"
+
+msgid "__synthesis_help"
+msgstr "Synthesis help"
+
+msgid "__average_diagnosis"
+msgstr "Average_Diagnosis"
+
+msgid "__average"
+msgstr "Average"
+
+msgid "__date_bar"
+msgstr "Average for the year"
+
+msgid "__threat"
+msgstr "Threat :"
+
+msgid "__weight"
+msgstr "Weight :"
+
+msgid "__blocking"
+msgstr "Blocking question"
+
+msgid "__legend_block"
+msgstr "An essential domain for the entity is not managed (question with a fragile maturity)"
+
+msgid "__login_error"
+msgstr "Impossible to log in"
+
+msgid "__no_file"
+msgstr "File missing"
+
+msgid "__error_file"
+msgstr "File invalid"
+
+msgid "__success_file"
+msgstr "Successful modification"
+
 msgid "__error_exist"
 msgstr "This key already exist"
 
@@ -346,6 +385,15 @@ msgstr "You could not delete this language"
 
 msgid "__error_lang_del2"
 msgstr "You could not delete a current used language"
+
+msgid "__error_categ"
+msgstr "The file contain an unknown category ID"
+
+msgid "__error_id"
+msgstr "The IDs must be unique and follow an ascending order"
+
+msgid "__error_res"
+msgstr "The result must be an integer between 0 and 100"
 
 msgid "__delete_lang"
 msgstr "Do you really want to delete this language ?"
@@ -394,24 +442,6 @@ msgstr "password must be at least 8 characters in length"
 
 msgid "The two given tokens do not match"
 msgstr "The two given tokens do not match"
-
-msgid "__error_categ"
-msgstr "The file contain an unknown category ID"
-
-msgid "__error_id"
-msgstr "The IDs must be unique and follow an ascending order"
-
-msgid "__statistics"
-msgstr "Statistics"
-
-msgid "__mail_verif"
-msgstr "Mail verification"
-
-msgid "__activity"
-msgstr "Activity"
-
-msgid "__employees"
-msgstr "Number of employees"
 
 msgid "__activity1"
 msgstr "Craft"
@@ -526,33 +556,3 @@ msgstr "Textile, fashion and luxury"
 
 msgid "__activity38"
 msgstr "Third age sector"
-
-msgid "__organization_help"
-msgstr "Organization help"
-
-msgid "__synthesis_help"
-msgstr "Synthesis help"
-
-msgid "__error_res"
-msgstr "The result must be an integer between 0 and 100"
-
-msgid "__average_diagnosis"
-msgstr "Average_Diagnosis"
-
-msgid "__average"
-msgstr "Average"
-
-msgid "__date_bar"
-msgstr "Average for the year"
-
-msgid "__threat"
-msgstr "Threat :"
-
-msgid "__weight"
-msgstr "Weight :"
-
-msgid "__blocking"
-msgstr "Blocking question"
-
-msgid "__legend_block"
-msgstr "An essential domain for the entity is not managed (question with a fragile maturity)"

@@ -7,7 +7,7 @@ use Zend\Form\Form;
  * Language Form
  *
  * @package Diagnostic\Form
- * @author Romain DESJARDINS
+ * @author Romain Desjardins
  */
 class LanguageForm extends Form
 {

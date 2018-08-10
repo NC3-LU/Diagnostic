@@ -8,6 +8,7 @@ use Zend\Form\Form;
  *
  * @package Diagnostic\Form
  * @author Jerome De Almeida <jerome.dealmeida@vesperiagroup.com>
+ * @author Romain Desjardins
  */
 class QuestionForm extends Form
 {

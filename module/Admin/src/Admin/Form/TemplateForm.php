@@ -7,7 +7,7 @@ use Zend\Form\Form;
  * Template Form
  *
  * @package Diagnostic\Form
- * @author Romain DESJARDINS
+ * @author Romain Desjardins
  */
 class TemplateForm extends Form
 {

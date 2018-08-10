@@ -883,6 +883,7 @@ class IndexController extends AbstractController
 
         if ($request->isPost()) {
             $form->setData($request->getPost());
+            // Download statistics
             if (isset($_POST['submit_stat'])) {
                 $i = 1;
                 $statistics = [];
@@ -946,6 +947,7 @@ class IndexController extends AbstractController
                 unlink('/var/www/diagnostic/stat_' . $_SESSION['id_diagnostic'] . '.json');
             }
 
+            // Choose the date for the statistic to display
             if (isset($_POST['submit_date']) && file_exists('/var/www/diagnostic/data/resources/statistics_' . $request->getPost('date') . '.txt')) {
                 $file_bar = fopen('/var/www/diagnostic/data/resources/statistics_' . $request->getPost('date') . '.txt', 'r');
                 $contents = fread($file_bar, filesize('/var/www/diagnostic/data/resources/statistics_' . $request->getPost('date') . '.txt'));

@@ -5,7 +5,7 @@ namespace Diagnostic\Model;
  * Category Entity
  *
  * @package Diagnostic\Model
- * @author Romain DESJARDINS
+ * @author Romain Desjardins
  */
 class CategoryEntity
 {

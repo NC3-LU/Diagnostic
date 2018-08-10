@@ -19,6 +19,7 @@ $this->form->prepare();
         <h2><?= $this->translate('__questions') ?></h2>
         <br/>
 
+        <!-- // Upload part -->
         <div class="col-lg-3 text-left"><?= $this->formFile($form->get('file')); ?></div>
         <?= $this->formSubmit($form->get('submit_file')); ?>
         <?= $this->formSubmit($form->get('submit')); ?>

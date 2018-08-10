@@ -8,7 +8,7 @@ use Zend\Validator\Hostname;
  * Category Form Filter
  *
  * @package Admin\Form
- * @author Romain DESJARDINS
+ * @author Romain Desjardins
  */
 class CategoryFormFilter extends InputFilter
 {

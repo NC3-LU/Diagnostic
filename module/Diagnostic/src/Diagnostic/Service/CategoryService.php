@@ -8,7 +8,7 @@ use Zend\Session\Container;
  * CategoryService
  *
  * @package Diagnostic\Service
- * @author Romain DESJARDINS
+ * @author Romain Desjardins
  */
 class CategoryService extends AbstractService
 {

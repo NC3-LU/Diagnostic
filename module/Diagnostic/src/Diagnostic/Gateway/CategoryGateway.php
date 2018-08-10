@@ -8,7 +8,7 @@ use Zend\Db\Sql\Predicate\Expression;
  * Category Gateway
  *
  * @package Diagnostic\Gateway
- * @author Romain DESJARDINS
+ * @author Romain Desjardins
  */
 class CategoryGateway extends AbstractGateway
 {

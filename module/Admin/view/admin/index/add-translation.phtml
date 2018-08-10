@@ -34,10 +34,10 @@ $this->form->prepare(); ?>
             $location_lang = '/var/www/diagnostic/language/languages.txt';
             $file_lang = fopen($location_lang, 'r');
             for($i=1; $i<$_SESSION['nb_lang']; $i++) {
-                $temp_lang = fgets($file_lang, 4096);
+                $temp_lang = substr(fgets($file_lang, 4096), 0, -1); // substr is for deleting the /n
 
                 // Creation translation form
-                $translation = new Element('translation_' . substr($temp_lang, 0, -1)); // substr is for deleting the /n
+                $translation = new Element('translation_' . $temp_lang);
                 $translation->setLabel('__translation');
                 $translation->setAttributes([
                     'type'  => 'text',
@@ -46,9 +46,9 @@ $this->form->prepare(); ?>
                 $form->add($translation);
                 ?>
                 <tr>
-                    <td><label><?= $this->translate($form->get('translation_' . substr($temp_lang, 0, -1))->getLabel()) ?></label>&nbsp;<span class="flag-icon flag-icon-<?= $temp_lang ?>"></span></td>
+                    <td><label><?= $this->translate($form->get('translation_' . $temp_lang)->getLabel()) ?></label>&nbsp;<span class="flag-icon flag-icon-<?= $temp_lang ?>"></span></td>
                     <td>
-                        <?= $this->formText($form->get('translation_' . substr($temp_lang, 0, -1))) ?>
+                        <?= $this->formText($form->get('translation_' . $temp_lang)) ?>
                     </td>
                 </tr>
             <?php

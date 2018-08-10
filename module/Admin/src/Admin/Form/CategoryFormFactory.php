@@ -10,7 +10,7 @@ use Zend\ServiceManager\ServiceLocatorInterface;
  * Category Form Factory
  *
  * @package Admin\Factory
- * @author Romain DESJARDINS
+ * @author Romain Desjardins
  */
 class CategoryFormFactory implements FactoryInterface
 {

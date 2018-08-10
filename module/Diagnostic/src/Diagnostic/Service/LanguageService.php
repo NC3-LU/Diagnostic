@@ -7,7 +7,7 @@ use Zend\Session\Container;
  * LanguageService
  *
  * @package Diagnostic\Service
- * @author Romain DESJARDINS
+ * @author Romain Desjardins
  */
 class LanguageService extends AbstractService
 {

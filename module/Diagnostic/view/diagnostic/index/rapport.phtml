@@ -14,10 +14,10 @@ foreach ($this->totalCategoryTarget as $key => $value) {
     $jsPercentsTarget[] = $value;
 }
 
+// If a category is NA, delete it in the radar chart
 for ($i=0; $i<count($totalCategory); $i++) {
     if ($jsPercents[$i] == $jsPercentsTarget[$i] && $jsPercents[$i] == 0) {unset($jsPercentsTarget[$i]); unset($jsPercents[$i]); unset($jsCategories[$i]);}
 }
-
 $jsCategories = array_values($jsCategories);
 $jsPercentsTarget = array_values($jsPercentsTarget);
 $jsPercents = array_values($jsPercents);
@@ -143,7 +143,7 @@ echo $this->inlineScript()->prependFile($this->basePath('js/Chart.js-master/Char
                     }
                 }
             ?>
-                <tr> <!-- // Color the text in red if maturity < 33%, in orange if < 66%, in green if > 66% -->
+                <tr> <!-- // Color the text in grey if maturity is NA, red if maturity < 33%, in orange if < 66%, in green if > 66% -->
                     <td class="text-left"><?php if ($blocking == 1) { $legend_block = 1; ?><font style="background-color:#FEA642"><?= $this->translate($this->escapeHtml($key)); ?></font><?php }
                                                 elseif ($value == 0 && (int)$this->totalCategoryTarget[$key] == 0){ ?><font color="#A5A5A5"><?= $this->translate($this->escapeHtml($key)); ?></font><?php }
                                                 elseif ($value < 33){ ?><font color="red"><?= $this->translate($this->escapeHtml($key)); ?></font><?php }
@@ -210,7 +210,7 @@ echo $this->inlineScript()->prependFile($this->basePath('js/Chart.js-master/Char
                             </td>
                             <td style="text-align: left;">
                                 <?php
-                                for ($i=1; $i<=count($totalCategory); $i++) { // Search the right category and set its colour in the recommandation table
+                                for ($i=1; $i<=count($totalCategory); $i++) { // Search the right category and set its color in the recommendation table
                                     if ('__category' . $i == $recommandation['domaine']){
                                         if ($totalCategory['__category' . $i] < 33){ ?><font color="red"><?= $this->translate($recommandation['domaine']); ?></font><?php }
                                         elseif ($totalCategory['__category' . $i] > 66){ ?><font color="#3DC015"><?= $this->translate($recommandation['domaine']); ?></font><?php }

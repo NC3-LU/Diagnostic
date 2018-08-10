@@ -7,7 +7,7 @@ use Zend\Session\Container;
  *
  * @package Diagnostic\Service
  * @author Jerome De Almeida <jerome.dealmeida@vesperiagroup.com>
- * @author Romain DESJARDINS
+ * @author Romain Desjardins
  */
 class CalculService extends AbstractService
 {

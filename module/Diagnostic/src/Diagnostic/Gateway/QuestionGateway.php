@@ -9,6 +9,7 @@ use Zend\Db\Sql\Predicate\Expression;
  *
  * @package Diagnostic\Gateway
  * @author Jerome De Almeida <jerome.dealmeida@vesperiagroup.com>
+ * @author Romain Desjardins
  */
 class QuestionGateway extends AbstractGateway
 {

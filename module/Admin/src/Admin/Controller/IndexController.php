@@ -218,13 +218,13 @@ class IndexController extends AbstractController
 
                         $file_lang = fopen($location_lang . 'languages.txt', 'r');
                         for ($k=1; $k<$_SESSION['nb_lang']; $k++) {
-                            $temp_lang = fgets($file_lang, 4096);
+                            $temp_lang = substr(fgets($file_lang, 4096), 0, -1);
 
                             // Start new translations after the first question
-                            if (isset($tab[0]['translation_' . substr($temp_lang, 0, -1)])) {
-                                rename($location_lang . substr($temp_lang, 0, -1) .  '/' . 'questions.po', $location_lang . substr($temp_lang, 0, -1) .  '/' . 'questions_temp.po');
-                                $file_temp = fopen($location_lang . substr($temp_lang, 0, -1) .  '/' . 'questions_temp.po', 'r');
-                                $file = fopen($location_lang . substr($temp_lang, 0, -1) .  '/' . 'questions.po', 'w');
+                            if (isset($tab[0]['translation_' . $temp_lang])) {
+                                rename($location_lang . $temp_lang . '/questions.po', $location_lang . $temp_lang . '/questions_temp.po');
+                                $file_temp = fopen($location_lang . $temp_lang . '/questions_temp.po', 'r');
+                                $file = fopen($location_lang . $temp_lang . '/questions.po', 'w');
                                 while (!feof($file_temp)) {
                                     $temp = fgets($file_temp, 4096);
                                     if ($temp == PHP_EOL) {break;}
@@ -238,22 +238,22 @@ class IndexController extends AbstractController
                                     fputs($file, PHP_EOL);
                                     fputs($file, 'msgid "__question' . $j . '"');
                                     fputs($file, PHP_EOL);
-                                    fputs($file, 'msgstr "' . $tab[$i-1]['translation_' . substr($temp_lang, 0, -1)] . '"');
+                                    fputs($file, 'msgstr "' . $tab[$i-1]['translation_' . $temp_lang] . '"');
                                     fputs($file, PHP_EOL);
                                     fputs($file, PHP_EOL);
                                     fputs($file, 'msgid "__question' . $j . 'help"');
                                     fputs($file, PHP_EOL);
-                                    fputs($file, 'msgstr "' . $tab[$i-1]['translation_help_' . substr($temp_lang, 0, -1)] . '"');
+                                    fputs($file, 'msgstr "' . $tab[$i-1]['translation_help_' . $temp_lang] . '"');
                                     fputs($file, PHP_EOL);
                                     $i++;
                                     $j++;
                                 }
                                 fclose($file_temp);
                                 fclose($file);
-                                unlink($location_lang . substr($temp_lang, 0, -1) .  '/' . 'questions_temp.po');
+                                unlink($location_lang . $temp_lang . '/questions_temp.po');
 
                                 // compile from po to mo
-                                shell_exec('msgfmt ' . $location_lang . substr($temp_lang, 0, -1) .  '/' . 'questions.po -o ' . $location_lang . substr($temp_lang, 0, -1) .  '/' . 'questions.mo');
+                                shell_exec('msgfmt ' . $location_lang . $temp_lang . '/questions.po -o ' . $location_lang . $temp_lang . '/questions.mo');
                             }
                         }
                         fclose($file_lang);
@@ -264,7 +264,7 @@ class IndexController extends AbstractController
                         while (isset($tab[$i-1])) {
                             $hash[$i]['translation_en'] = $tab[$i-1]['translation_en'];
 
-                            $file = fopen($location_lang . 'en/' . 'categories.po', 'r');
+                            $file = fopen($location_lang . 'en/categories.po', 'r');
                             while (!feof($file)) {
                                 $temp = fgets($file, 4096);
                                 if (substr($temp, 7, -2) == '__category' . $tab[$i-1]['category_id']) {
@@ -281,12 +281,12 @@ class IndexController extends AbstractController
                         // Delete things that are not in the database
                         $file_country = fopen($location_lang . 'code_country.txt', 'r');
                         while (!feof($file_country)) {
-                            $temp_country = fgets($file_country, 4096);
+                            $temp_country = substr(fgets($file_country, 4096), 0, -1);
                             $i = 1;
-                            if (isset($tab[0]['translation_' . substr($temp_country, 0, -1)])) {
+                            if (isset($tab[0]['translation_' . $temp_country])) {
                                 while (isset($tab[$i-1])) {
-                                    unset($tab[$i-1]['translation_' . substr($temp_country, 0, -1)]);
-                                    unset($tab[$i-1]['translation_help_' . substr($temp_country, 0, -1)]);
+                                    unset($tab[$i-1]['translation_' . $temp_country]);
+                                    unset($tab[$i-1]['translation_help_' . $temp_country]);
                                     $i++;
                                 }
                             }
@@ -328,9 +328,9 @@ class IndexController extends AbstractController
 
                 $file_lang = fopen($location_lang . 'languages.txt', 'r');
                 for ($j=1; $j<$_SESSION['nb_lang']; $j++) {
-                    $temp_lang = fgets($file_lang, 4096);
+                    $temp_lang = substr(fgets($file_lang, 4096), 0, -1);
 
-                    $file = fopen($location_lang . substr($temp_lang, 0, -1) .  '/' . 'questions.po', 'r');
+                    $file = fopen($location_lang . $temp_lang . '/questions.po', 'r');
                     // Go to the question translations
                     while (!feof($file)) {
                         $temp = fgets($file, 4096);
@@ -342,11 +342,11 @@ class IndexController extends AbstractController
                         if (isset($questions[$i])) {
                             $temp = fgets($file, 4096);
                             $questions[$i] = (array)$questions[$i];
-                            $questions[$i]['translation_' . substr($temp_lang, 0, -1)] = substr($temp, 8, -2);
+                            $questions[$i]['translation_' . $temp_lang] = substr($temp, 8, -2);
                             $temp = fgets($file, 4096);
                             $temp = fgets($file, 4096);
                             $temp = fgets($file, 4096);
-                            $questions[$i]['translation_help_' . substr($temp_lang, 0, -1)] = substr($temp, 8, -2);
+                            $questions[$i]['translation_help_' . $temp_lang] = substr($temp, 8, -2);
                             $temp = fgets($file, 4096);
                             $temp = fgets($file, 4096);
                             $questions[$i] = (object)$questions[$i];
@@ -463,12 +463,12 @@ class IndexController extends AbstractController
                         $tab_temp = [];
                         $file_country = fopen($location_lang . 'code_country.txt', 'r');
                         while (!feof($file_country)) {
-                            $temp_country = fgets($file_country, 4096);
+                            $temp_country = substr(fgets($file_country, 4096), 0, -1);
                             $i = 1;
-                            if (isset($tab[0]['translation_' . substr($temp_country, 0, -1)])) {
+                            if (isset($tab[0]['translation_' . $temp_country])) {
                                 while (isset($tab[$i-1])) {
-                                    $tab_temp[$i-1]['translation_' . substr($temp_country, 0, -1)] = $tab[$i-1]['translation_' . substr($temp_country, 0, -1)];
-                                    unset($tab[$i-1]['translation_' . substr($temp_country, 0, -1)]);
+                                    $tab_temp[$i-1]['translation_' . $temp_country] = $tab[$i-1]['translation_' . $temp_country];
+                                    unset($tab[$i-1]['translation_' . $temp_country]);
                                     $i++;
                                 }
                             }
@@ -517,12 +517,12 @@ class IndexController extends AbstractController
                         // Write in translation files
                         $file_lang = fopen($location_lang . 'languages.txt', 'r');
                         for ($l=1; $l<$_SESSION['nb_lang']; $l++) {
-                            $temp_lang = fgets($file_lang, 4096);
+                            $temp_lang = substr(fgets($file_lang, 4096), 0, -1);
 
-                            if (isset($tab_temp[0]['translation_' . substr($temp_lang, 0, -1)])) {
-                                rename($location_lang . substr($temp_lang, 0, -1) .  '/' . 'categories.po', $location_lang . substr($temp_lang, 0, -1) .  '/' . 'categories_temp.po');
-                                $file_temp = fopen($location_lang . substr($temp_lang, 0, -1) .  '/' . 'categories_temp.po', 'r');
-                                $file = fopen($location_lang . substr($temp_lang, 0, -1) .  '/' . 'categories.po', 'w');
+                            if (isset($tab_temp[0]['translation_' . $temp_lang])) {
+                                rename($location_lang . $temp_lang . '/categories.po', $location_lang . $temp_lang . '/categories_temp.po');
+                                $file_temp = fopen($location_lang . $temp_lang . '/categories_temp.po', 'r');
+                                $file = fopen($location_lang . $temp_lang . '/categories.po', 'w');
                                 while (!feof($file_temp)) {
                                     $temp = fgets($file_temp, 4096);
                                     if ($temp == PHP_EOL) {break;}
@@ -536,22 +536,22 @@ class IndexController extends AbstractController
                                     fputs($file, PHP_EOL);
                                     fputs($file, 'msgid "__category' . $j . '"');
                                     fputs($file, PHP_EOL);
-                                    fputs($file, 'msgstr "' . $tab_temp[$i-1]['translation_' . substr($temp_lang, 0, -1)] . '"');
+                                    fputs($file, 'msgstr "' . $tab_temp[$i-1]['translation_' . $temp_lang] . '"');
                                     fputs($file, PHP_EOL);
                                     $i++;
                                     $j++;
                                 }
                                 fclose($file_temp);
                                 fclose($file);
-                                unlink($location_lang . substr($temp_lang, 0, -1) .  '/' . 'categories_temp.po');
+                                unlink($location_lang . $temp_lang . '/categories_temp.po');
 
                                 // compile from po to mo
-                                shell_exec('msgfmt ' . $location_lang . substr($temp_lang, 0, -1) .  '/' . 'categories.po -o ' . $location_lang . substr($temp_lang, 0, -1) .  '/' . 'categories.mo');
+                                shell_exec('msgfmt ' . $location_lang . $temp_lang . '/categories.po -o ' . $location_lang . $temp_lang . '/categories.mo');
 
                                 // Write the restaured questions
-                                rename($location_lang . substr($temp_lang, 0, -1) .  '/' . 'questions.po', $location_lang . substr($temp_lang, 0, -1) .  '/' . 'questions_temp.po');
-                                $file_temp = fopen($location_lang . substr($temp_lang, 0, -1) .  '/' . 'questions_temp.po', 'r');
-                                $file = fopen($location_lang . substr($temp_lang, 0, -1) .  '/' . 'questions.po', 'w');
+                                rename($location_lang . $temp_lang . '/questions.po', $location_lang . $temp_lang . '/questions_temp.po');
+                                $file_temp = fopen($location_lang . $temp_lang . '/questions_temp.po', 'r');
+                                $file = fopen($location_lang . $temp_lang . '/questions.po', 'w');
 
                                 while (!feof($file_temp)) {
                                     $temp = fgets($file_temp, 4096);
@@ -594,10 +594,10 @@ class IndexController extends AbstractController
                                 }
                                 fclose($file_temp);
                                 fclose($file);
-                                unlink($location_lang . substr($temp_lang, 0, -1) .  '/' . 'questions_temp.po');
+                                unlink($location_lang . $temp_lang . '/questions_temp.po');
 
                                 // compile from po to mo
-                                shell_exec('msgfmt ' . $location_lang . substr($temp_lang, 0, -1) .  '/' . 'questions.po -o ' . $location_lang . substr($temp_lang, 0, -1) .  '/' . 'questions.mo');
+                                shell_exec('msgfmt ' . $location_lang . $temp_lang . '/questions.po -o ' . $location_lang . $temp_lang . '/questions.mo');
                             }
                         }
                         fclose($file_lang);
@@ -623,9 +623,9 @@ class IndexController extends AbstractController
 
                 $file_lang = fopen($location_lang . 'languages.txt', 'r');
                 for ($j=1; $j<$_SESSION['nb_lang']; $j++) {
-                    $temp_lang = fgets($file_lang, 4096);
+                    $temp_lang = substr(fgets($file_lang, 4096), 0, -1);
 
-                    $file = fopen($location_lang . substr($temp_lang, 0, -1) .  '/' . 'categories.po', 'r');
+                    $file = fopen($location_lang . $temp_lang . '/categories.po', 'r');
                     // Go to categories
                     while (!feof($file)) {
                         $temp = fgets($file, 4096);
@@ -637,7 +637,7 @@ class IndexController extends AbstractController
                         if (isset($categories[$i])) {
                             $temp = fgets($file, 4096);
                             $categories[$i] = (array)$categories[$i];
-                            $categories[$i]['translation_' . substr($temp_lang, 0, -1)] = substr($temp, 8, -2);
+                            $categories[$i]['translation_' . $temp_lang] = substr($temp, 8, -2);
                             $temp = fgets($file, 4096);
                             $temp = fgets($file, 4096);
                             $categories[$i] = (object)$categories[$i];
@@ -685,15 +685,19 @@ class IndexController extends AbstractController
      */
     public function settingsAction()
     {
-        $error_res = 0;
-        $success_upload = 0;
-        $success_upload2 = 0;
+        $location_lang = '/var/www/diagnostic/language/';
+        $location_mod = '/var/www/diagnostic/module/';
+        $location_stat = '/var/www/diagnostic/data/resources/statistics_';
+
+        $error_res = 0; // Number for the statistic not valid
+        $success_upload = 0; // Success for the 1st record
+        $success_upload2 = 0; // Success for the 2nd record
 
         $request = $this->getRequest();
         $form = $this->get('adminSettingForm');
 
         //////////////////////// Bind select \\\\\\\\\\\\\\\\\\\\\\\\\\
-        $file_config = fopen('/var/www/diagnostic/module/Diagnostic/config/module.config.php', 'r');
+        $file_config = fopen($location_mod . 'Diagnostic/config/module.config.php', 'r');
         while(!feof($file_config)) {
             $temp_config = fgets($file_config, 4096);
             if($temp_config == "    'translator' => [" . PHP_EOL){$temp_config = fgets($file_config, 4096); $value_select = substr($temp_config, 21, -3); break;}
@@ -702,7 +706,7 @@ class IndexController extends AbstractController
 
 
         // Count the number of languages
-        $file_lang = fopen('/var/www/diagnostic/language/languages.txt', 'r');
+        $file_lang = fopen($location_lang . 'languages.txt', 'r');
         $fileCount = 0;
         while (!feof($file_lang)) {
             $temp_lang = fgets($file_lang, 4096);
@@ -711,10 +715,10 @@ class IndexController extends AbstractController
         fclose($file_lang);
 
         // See if the language chosen in the select form is in the languages.txt file
-        $file_lang = fopen('/var/www/diagnostic/language/languages.txt', 'r');
+        $file_lang = fopen($location_lang . 'languages.txt', 'r');
         for ($i=0; $i<$fileCount; $i++) {
-            $temp_lang = fgets($file_lang, 4096);
-            if ($value_select == substr($temp_lang, 0, -1)) {
+            $temp_lang = substr(fgets($file_lang, 4096), 0, -1);
+            if ($value_select == $temp_lang) {
                 $value_select = $i;
                 break;
             }
@@ -725,7 +729,7 @@ class IndexController extends AbstractController
         //////////////////////// End bind \\\\\\\\\\\\\\\\\\\\\\\\\\
 
         ////////////////////// Bind checkbox \\\\\\\\\\\\\\\\\\\\\\\
-        $file_login = fopen('/var/www/diagnostic/module/Diagnostic/src/Diagnostic/InputFilter/LoginFormFilter.php', 'r');
+        $file_login = fopen($location_mod . 'Diagnostic/src/Diagnostic/InputFilter/LoginFormFilter.php', 'r');
         while(!feof($file_login)) {
             $temp_login = fgets($file_login, 4096);
             if($temp_login == "                        'allow' => Hostname::ALLOW_DNS," . PHP_EOL){$temp_login = fgets($file_login, 4096); $value_checkbox = substr($temp_login, 40, -2); break;}
@@ -756,7 +760,7 @@ class IndexController extends AbstractController
                 $success_upload = 1;
 
                 // See if the language chosen in the select form is in the languages.txt file
-                $file_lang = fopen('/var/www/diagnostic/language/languages.txt', 'r');
+                $file_lang = fopen($location_lang . 'languages.txt', 'r');
                 for ($i=0; $i<$fileCount; $i++) {
                     $temp_lang = fgets($file_lang, 4096);
                     if ($request->getPost('select_language') == $i) {
@@ -766,7 +770,7 @@ class IndexController extends AbstractController
                 fclose($file_lang);
 
                 // Search the default translation line
-                $file_config = fopen('/var/www/diagnostic/module/Diagnostic/config/module.config.php', 'r');
+                $file_config = fopen($location_mod . 'Diagnostic/config/module.config.php', 'r');
                 $fileCount = -1;
                 while(!feof($file_config)) {
                     $temp_config = fgets($file_config, 4096);
@@ -776,18 +780,18 @@ class IndexController extends AbstractController
                 fclose($file_config);
 
                 // Change the default translation
-                $file_config = fopen('/var/www/diagnostic/module/Diagnostic/config/module.config.php', 'r');
-                $contents = fread($file_config, filesize('/var/www/diagnostic/module/Diagnostic/config/module.config.php'));
+                $file_config = fopen($location_mod . 'Diagnostic/config/module.config.php', 'r');
+                $contents = fread($file_config, filesize($location_mod . 'Diagnostic/config/module.config.php'));
                 fclose($file_config);
                 $contents = explode(PHP_EOL, $contents); // PHP_EOL equals to /n in Linux
                 $contents[$num_line+1] = "        'locale' => '" . substr($temp, 0, -1) . "',"; // Change the default translation with the new one
                 $contents = array_values($contents);
                 $contents = implode(PHP_EOL, $contents);
-                $file_config = fopen('/var/www/diagnostic/module/Diagnostic/config/module.config.php', 'w');
+                $file_config = fopen($location_mod . 'Diagnostic/config/module.config.php', 'w');
                 fwrite($file_config, $contents); // Write the file with the new default translation
                 fclose($file_config);
 
-                $file_login = fopen('/var/www/diagnostic/module/Diagnostic/src/Diagnostic/InputFilter/LoginFormFilter.php', 'r');
+                $file_login = fopen($location_mod . 'Diagnostic/src/Diagnostic/InputFilter/LoginFormFilter.php', 'r');
                 $fileCount = -1;
                 while(!feof($file_login)) {
                     $temp_login = fgets($file_login, 4096);
@@ -796,7 +800,7 @@ class IndexController extends AbstractController
                 }
                 fclose($file_login);
 
-                $file_email = fopen('/var/www/diagnostic/module/Admin/src/Admin/InputFilter/EmailNotExistFilter.php', 'r');
+                $file_email = fopen($location_mod . 'Admin/src/Admin/InputFilter/EmailNotExistFilter.php', 'r');
                 $fileCount = -1;
                 while(!feof($file_email)) {
                     $temp_email = fgets($file_email, 4096);
@@ -805,7 +809,7 @@ class IndexController extends AbstractController
                 }
                 fclose($file_email);
 
-                $file_user = fopen('/var/www/diagnostic/module/Admin/src/Admin/InputFilter/UserFormFilter.php', 'r');
+                $file_user = fopen($location_mod . 'Admin/src/Admin/InputFilter/UserFormFilter.php', 'r');
                 $fileCount = -1;
                 while(!feof($file_user)) {
                     $temp_user = fgets($file_user, 4096);
@@ -820,39 +824,39 @@ class IndexController extends AbstractController
                     $mxCheck = 'false';
                 }
 
-                // Change mxcheck
-                $file_login = fopen('/var/www/diagnostic/module/Diagnostic/src/Diagnostic/InputFilter/LoginFormFilter.php', 'r');
-                $contents = fread($file_login, filesize('/var/www/diagnostic/module/Diagnostic/src/Diagnostic/InputFilter/LoginFormFilter.php'));
+                // Change mxcheck 1st file
+                $file_login = fopen($location_mod . 'Diagnostic/src/Diagnostic/InputFilter/LoginFormFilter.php', 'r');
+                $contents = fread($file_login, filesize($location_mod . 'Diagnostic/src/Diagnostic/InputFilter/LoginFormFilter.php'));
                 fclose($file_login);
                 $contents = explode(PHP_EOL, $contents); // PHP_EOL equals to /n in Linux
                 $contents[$num_line_login+1] = "                        'useMxCheck' => " . $mxCheck . ","; // Change the mxcheck with the new one
                 $contents = array_values($contents);
                 $contents = implode(PHP_EOL, $contents);
-                $file_login = fopen('/var/www/diagnostic/module/Diagnostic/src/Diagnostic/InputFilter/LoginFormFilter.php', 'w');
+                $file_login = fopen($location_mod . 'Diagnostic/src/Diagnostic/InputFilter/LoginFormFilter.php', 'w');
                 fwrite($file_login, $contents); // Write the file with the new default mxcheck
                 fclose($file_login);
 
-                // Change mxcheck
-                $file_email = fopen('/var/www/diagnostic/module/Admin/src/Admin/InputFilter/EmailNotExistFilter.php', 'r');
-                $contents = fread($file_email, filesize('/var/www/diagnostic/module/Admin/src/Admin/InputFilter/EmailNotExistFilter.php'));
+                // Change mxcheck 2nd file
+                $file_email = fopen($location_mod . 'Admin/src/Admin/InputFilter/EmailNotExistFilter.php', 'r');
+                $contents = fread($file_email, filesize($location_mod . 'Admin/src/Admin/InputFilter/EmailNotExistFilter.php'));
                 fclose($file_email);
                 $contents = explode(PHP_EOL, $contents); // PHP_EOL equals to /n in Linux
                 $contents[$num_line_email+1] = "                        'useMxCheck' => " . $mxCheck . ","; // Change the mxcheck with the new one
                 $contents = array_values($contents);
                 $contents = implode(PHP_EOL, $contents);
-                $file_email = fopen('/var/www/diagnostic/module/Admin/src/Admin/InputFilter/EmailNotExistFilter.php', 'w');
+                $file_email = fopen($location_mod . 'Admin/src/Admin/InputFilter/EmailNotExistFilter.php', 'w');
                 fwrite($file_email, $contents); // Write the file with the new default mxcheck
                 fclose($file_email);
 
-                // Change mxcheck
-                $file_user = fopen('/var/www/diagnostic/module/Admin/src/Admin/InputFilter/UserFormFilter.php', 'r');
-                $contents = fread($file_user, filesize('/var/www/diagnostic/module/Admin/src/Admin/InputFilter/UserFormFilter.php'));
+                // Change mxcheck 3rd file
+                $file_user = fopen($location_mod . 'Admin/src/Admin/InputFilter/UserFormFilter.php', 'r');
+                $contents = fread($file_user, filesize($location_mod . 'Admin/src/Admin/InputFilter/UserFormFilter.php'));
                 fclose($file_user);
                 $contents = explode(PHP_EOL, $contents); // PHP_EOL equals to /n in Linux
                 $contents[$num_line_user+1] = "                        'useMxCheck' => " . $mxCheck . ","; // Change the mxcheck with the new one
                 $contents = array_values($contents);
                 $contents = implode(PHP_EOL, $contents);
-                $file_user = fopen('/var/www/diagnostic/module/Admin/src/Admin/InputFilter/UserFormFilter.php', 'w');
+                $file_user = fopen($location_mod . 'Admin/src/Admin/InputFilter/UserFormFilter.php', 'w');
                 fwrite($file_user, $contents); // Write the file with the new default mxcheck
                 fclose($file_user);
 
@@ -878,20 +882,24 @@ class IndexController extends AbstractController
                 fclose($file_encrypt);
             }
 
+            // Add a statistic
             if(isset($_POST['submit_stat'])) {
+                // The number must be an integer between 0 and 100 or it is not valid
                 if ($request->getPost('diagnosis_stat') == '' || $request->getPost('diagnosis_stat') < 0 || $request->getPost('diagnosis_stat') > 100 || !is_numeric($request->getPost('diagnosis_stat')) || !is_int($request->getPost('diagnosis_stat') + 0)) {
                     $error_res = 1;
                 }else {
                     $success_upload2 = 1;
 
-                    if (!file_exists('/var/www/diagnostic/data/resources/statistics_' . $request->getPost('date') . '.txt')) {
-                        $file_stat = fopen('/var/www/diagnostic/data/resources/statistics_' . $request->getPost('date') . '.txt', 'w');
+                    // Create a file if it does not exist
+                    if (!file_exists($location_stat . $request->getPost('date') . '.txt')) {
+                        $file_stat = fopen($location_stat . $request->getPost('date') . '.txt', 'w');
                         fputs($file_stat, '__diagnosis' . PHP_EOL);
                         for ($i=1; $i<=38; $i++) {fputs($file_stat, '__activity' . $i . PHP_EOL);}
                         fclose($file_stat);
                     }
-                    $file_stat = fopen('/var/www/diagnostic/data/resources/statistics_' . $request->getPost('date') . '.txt', 'r');
-                    $contents = fread($file_stat, filesize('/var/www/diagnostic/data/resources/statistics_' . $request->getPost('date') . '.txt'));
+
+                    $file_stat = fopen($location_stat . $request->getPost('date') . '.txt', 'r');
+                    $contents = fread($file_stat, filesize($location_stat . $request->getPost('date') . '.txt'));
                     fclose($file_stat);
                     $contents = explode(PHP_EOL, $contents); // PHP_EOL equals to /n in Linux
                     $contents[0] = explode(',', $contents[0]);
@@ -928,7 +936,7 @@ class IndexController extends AbstractController
                     }
                     $contents = array_values($contents);
                     $contents = implode(PHP_EOL, $contents);
-                    $file_stat = fopen('/var/www/diagnostic/data/resources/statistics_' . $request->getPost('date') . '.txt', 'w');
+                    $file_stat = fopen($location_stat . $request->getPost('date') . '.txt', 'w');
                     fwrite($file_stat, $contents);
                     fclose($file_stat);
                 }
@@ -962,16 +970,16 @@ class IndexController extends AbstractController
             $location_lang = '/var/www/diagnostic/language/';
             $file_lang = fopen($location_lang . 'languages.txt', 'r');
             for ($i=1; $i<$_SESSION['nb_lang']; $i++) {
-                $temp_lang = fgets($file_lang, 4096);
+                $temp_lang = substr(fgets($file_lang, 4096), 0, -1);
 
                 // Download the template in the current language
                 if (isset($_POST['dl'.$i])){
-                    $file = '/var/www/diagnostic/data/resources/model_' . substr($temp_lang, 0, -1) . '.docx';
+                    $file = '/var/www/diagnostic/data/resources/model_' . $temp_lang . '.docx';
 
                     if (filesize($file) != 0) {
                         header('Content-Description: File Transfer');
                         header('Content-Type: application/octet-stream');
-                        header('Content-Disposition: attachment; filename=model_' . substr($temp_lang, 0, -1) . '.docx');
+                        header('Content-Disposition: attachment; filename=model_' . $temp_lang . '.docx');
                         header('Expires: 0');
                         header('Cache-Control: must-revalidate');
                         header('Pragma: public');
@@ -981,7 +989,7 @@ class IndexController extends AbstractController
                         $file = '/var/www/diagnostic/data/resources/model_' . $_SESSION['lang'] . '.docx';
                         header('Content-Description: File Transfer');
                         header('Content-Type: application/octet-stream');
-                        header('Content-Disposition: attachment; filename=model_' . substr($temp_lang, 0, -1) . '.docx');
+                        header('Content-Disposition: attachment; filename=model_' . $temp_lang . '.docx');
                         header('Expires: 0');
                         header('Cache-Control: must-revalidate');
                         header('Pragma: public');
@@ -996,8 +1004,8 @@ class IndexController extends AbstractController
             if (isset($_POST['submit_file'])){
                 $file_country = fopen($location_lang . 'code_country.txt', 'r');
                 while(!feof($file_country)){
-                    $temp_country = fgets($file_country, 4096);
-                    if($temp_country == substr($_FILES['file']['name'], 6, -5).PHP_EOL){$valid_file = substr($temp_country, 0, -1); break;}
+                    $temp_country = substr(fgets($file_country, 4096), 0, -1);
+                    if($temp_country == substr($_FILES['file']['name'], 6, -5)){$valid_file = $temp_country; break;}
                     $valid_file = 'en';
                 }
                 fclose($file_country);
@@ -1075,7 +1083,7 @@ class IndexController extends AbstractController
             }
 
             // Go to translations
-            $file = fopen($location_lang . 'en/' . 'translations.po', 'r');
+            $file = fopen($location_lang . 'en/translations.po', 'r');
             $nb_translation = 0;
             $fileCount = 3;
             while (!feof($file)) {
@@ -1090,7 +1098,7 @@ class IndexController extends AbstractController
             fclose($file);
 
             // num_line_all is used to change all translations in 1 button
-            $file = fopen($location_lang . 'en/' . 'translations.po', 'r');
+            $file = fopen($location_lang . 'en/translations.po', 'r');
             $num_line_all = -1;
             while (!feof($file)) {
                 $temp = fgets($file, 4096);
@@ -1102,8 +1110,8 @@ class IndexController extends AbstractController
             // Search the translation key in order to know the translation to change or delete
             $file_lang = fopen($location_lang . 'languages.txt', 'r');
             for ($j=1; $j<$_SESSION['nb_lang']; $j++) {
-                $temp_lang = fgets($file_lang, 4096);
-                if ($_SESSION['lang'] == substr($temp_lang, 0, -1)) {
+                $temp_lang = substr(fgets($file_lang, 4096), 0, -1);
+                if ($_SESSION['lang'] == $temp_lang) {
 
                     for ($i=1; $i<=$nb_translation; $i++){
 
@@ -1112,44 +1120,44 @@ class IndexController extends AbstractController
                             $_SESSION['base_lang'] = 1; // Don't change translation ref when modifying translation
 
                             // Search for the line of the translation key to modify
-                            $file = fopen($location_lang . substr($temp_lang, 0, -1) .  '/' . 'translations.po', 'r');
+                            $file = fopen($location_lang . $temp_lang . '/translations.po', 'r');
                             $fileCount = -1;
                             $num_line = 0;
                             while (!feof($file)) {
                                 $temp = fgets($file, 4096);
                                 $fileCount++;
-                                if(substr($temp, 7, -2) == $_SESSION['key_' . substr($temp_lang, 0, -1)][$i]){
+                                if(substr($temp, 7, -2) == $_SESSION['key_' . $temp_lang][$i]){
                                     $num_line = $fileCount;
                                 }
                             }
                             fclose($file);
 
                             // Modify the translation
-                            $file = fopen($location_lang . substr($temp_lang, 0, -1) .  '/' . 'translations.po', 'r');
-                            $contents = fread($file, filesize($location_lang . substr($temp_lang, 0, -1) .  '/' . 'translations.po'));
+                            $file = fopen($location_lang . $temp_lang . '/translations.po', 'r');
+                            $contents = fread($file, filesize($location_lang . $temp_lang .  '/translations.po'));
                             fclose($file);
                             $contents = explode(PHP_EOL, $contents); // PHP_EOL equals to /n in Linux
-                            $contents[$num_line+1] = 'msgstr ' . '"' . $request->getPost('translation'.$i) . '"'; // Change the translation with the new one
+                            $contents[$num_line+1] = 'msgstr "' . $request->getPost('translation'.$i) . '"'; // Change the translation with the new one
                             $contents = array_values($contents);
                             $contents = implode(PHP_EOL, $contents);
-                            $file = fopen($location_lang . substr($temp_lang, 0, -1) .  '/' . 'translations.po', 'w');
+                            $file = fopen($location_lang . $temp_lang . '/translations.po', 'w');
                             fwrite($file, $contents); // Write the file with the new translation
                             fclose($file);
 
-                            shell_exec('msgfmt ' . $location_lang . substr($temp_lang, 0, -1) .  '/' . 'translations.po -o ' . $location_lang . substr($temp_lang, 0, -1) .  '/' . 'translations.mo');
+                            shell_exec('msgfmt ' . $location_lang . $temp_lang . '/translations.po -o ' . $location_lang . $temp_lang . '/translations.mo');
                         }
 
                         // Action to delete translation
                         if (isset($_POST['del'.$i]) && $i != 1){
 
                             // Search for the line of the translation key to delete
-                            $file = fopen($location_lang . substr($temp_lang, 0, -1) .  '/' . 'translations.po', 'r');
+                            $file = fopen($location_lang . $temp_lang . '/translations.po', 'r');
                             $fileCount = -1;
                             $num_line3 = 0;
                             while (!feof($file)) {
                                 $temp = fgets($file, 4096);
                                 $fileCount++;
-                                if(substr($temp, 7, -2) == $_SESSION['key_'  . substr($temp_lang, 0, -1)][$i]){
+                                if(substr($temp, 7, -2) == $_SESSION['key_'  . $temp_lang][$i]){
                                     $num_line3 = $fileCount;
                                 }
                             }
@@ -1159,28 +1167,28 @@ class IndexController extends AbstractController
 
                     // Action to modify all translations
                     if (isset($_POST['submit_all'])){
-                        $file = fopen($location_lang . substr($temp_lang, 0, -1) .  '/' . 'translations.po', 'r');
-                        $contents = fread($file, filesize($location_lang . substr($temp_lang, 0, -1) .  '/' . 'translations.po'));
+                        $file = fopen($location_lang . $temp_lang . '/translations.po', 'r');
+                        $contents = fread($file, filesize($location_lang . $temp_lang . '/translations.po'));
                         fclose($file);
                         $contents = explode(PHP_EOL, $contents); // PHP_EOL equals to /n in Linux
                         for ($i=1; $i<=$nb_translation; $i++){
-                            $contents[$num_line_all] = 'msgstr ' . '"' . $request->getPost('translation'.$i) . '"'; // Change the translation with the new one
+                            $contents[$num_line_all] = 'msgstr "' . $request->getPost('translation'.$i) . '"'; // Change the translation with the new one
                             $num_line_all+=3;
                         }
                         $contents = array_values($contents);
                         $contents = implode(PHP_EOL, $contents);
-                        $file = fopen($location_lang . substr($temp_lang, 0, -1) .  '/' . 'translations.po', 'w');
+                        $file = fopen($location_lang . $temp_lang . '/translations.po', 'w');
                         fwrite($file, $contents); // Write the file with the new translation
                         fclose($file);
 
-                        shell_exec('msgfmt ' . $location_lang . substr($temp_lang, 0, -1) .  '/' . 'translations.po -o ' . $location_lang . substr($temp_lang, 0, -1) .  '/' . 'translations.mo');
+                        shell_exec('msgfmt ' . $location_lang . $temp_lang . '/translations.po -o ' . $location_lang . $temp_lang . '/translations.mo');
                     }
                 }
 
                 // Change reference language thanks to the session value
                 if (isset($_POST['submit_lang_ref'])){
                     if ($request->getPost('language_ref') == $j-1) {
-                        $_SESSION['change_language'] = substr($temp_lang, 0, -1);
+                        $_SESSION['change_language'] = $temp_lang;
                     }
                 }
             }
@@ -1189,13 +1197,13 @@ class IndexController extends AbstractController
             // Delete translation
             $file_lang = fopen($location_lang . 'languages.txt', 'r');
             for ($j=1; $j<$_SESSION['nb_lang']; $j++) {
-                $temp_lang = fgets($file_lang, 4096);
+                $temp_lang = substr(fgets($file_lang, 4096), 0, -1);
                 for ($i=1; $i<=$nb_translation; $i++){
                     if (isset($_POST['del'.$i]) && $i != 1){
                         $_SESSION['base_lang'] = 1;
 
-                        $file = fopen($location_lang . substr($temp_lang, 0, -1) .  '/' . 'translations.po', 'r');
-                        $contents = fread($file, filesize($location_lang . substr($temp_lang, 0, -1) .  '/' . 'translations.po'));
+                        $file = fopen($location_lang . $temp_lang . '/translations.po', 'r');
+                        $contents = fread($file, filesize($location_lang . $temp_lang . '/translations.po'));
                         fclose($file);
                         $contents = explode(PHP_EOL, $contents); // PHP_EOL equals to /n in Linux
                         unset($contents[$num_line3-1]); // Delete the line break
@@ -1203,11 +1211,11 @@ class IndexController extends AbstractController
                         unset($contents[$num_line3+1]); // Delete the translation
                         $contents = array_values($contents);
                         $contents = implode(PHP_EOL, $contents);
-                        $file = fopen($location_lang . substr($temp_lang, 0, -1) .  '/' . 'translations.po', 'w');
+                        $file = fopen($location_lang . $temp_lang . '/translations.po', 'w');
                         fwrite($file, $contents); // Write the file with the new translation
                         fclose($file);
 
-                        shell_exec('msgfmt ' . $location_lang . substr($temp_lang, 0, -1) .  '/' . 'translations.po -o ' . $location_lang . substr($temp_lang, 0, -1) .  '/' . 'translations.mo');
+                        shell_exec('msgfmt ' . $location_lang . $temp_lang . '/translations.po -o ' . $location_lang . $temp_lang . '/translations.mo');
                     }
                 }
             }
@@ -1227,24 +1235,24 @@ class IndexController extends AbstractController
                 // See if the language chosen in the select form is in the code_country file
                 $file_country = fopen($location_lang . 'code_country.txt', 'r');
                 for ($i=0; $i<$fileCount; $i++) {
-                    $temp_country = fgets($file_country, 4096);
+                    $temp_country = substr(fgets($file_country, 4096), 0, -1);
                     if ($request->getPost('add_language') == $i) {
                         $temp = $temp_country;
                         $file_temp = fopen($location_lang . 'languages.txt', 'a+');
                         while (!feof($file_temp)) {
-                            $temp_country = fgets($file_temp, 4096);
+                            $temp_country = substr(fgets($file_temp, 4096), 0, -1);
                             if ($temp_country == $temp) {$error_lang_exist=1; break;}
                         }
 
                         if ($error_lang_exist == 0) {
-                            fputs($file_temp, $temp);
+                            fputs($file_temp, $temp.PHP_EOL);
 
                             // Creation file for the new language
-                            mkdir($location_lang . substr($temp, 0, -1), 0700);
+                            mkdir($location_lang . $temp, 0700);
 
                             // Creation translations file by copying the beginning of the english file
-                            $new_file = fopen($location_lang . substr($temp, 0, -1) .  '/' . 'translations.po', 'a+');
-                            $en_file = fopen($location_lang . 'en/' . 'translations.po', 'r');
+                            $new_file = fopen($location_lang . $temp . '/translations.po', 'a+');
+                            $en_file = fopen($location_lang . 'en/translations.po', 'r');
                             while (!feof($en_file)) {
                                 $en_temp = fgets($en_file, 4096);
                                 fputs($new_file, $en_temp);
@@ -1262,11 +1270,11 @@ class IndexController extends AbstractController
                             fclose($en_file);
                             fclose($new_file);
 
-                            shell_exec('msgfmt ' . $location_lang . substr($temp, 0, -1) .  '/' . 'translations.po -o ' . $location_lang . substr($temp, 0, -1) .  '/' . 'translations.mo');
+                            shell_exec('msgfmt ' . $location_lang . $temp . '/translations.po -o ' . $location_lang . $temp . '/translations.mo');
 
                             // Creation questions file by copying the beginning of the english file
-                            $new_file = fopen($location_lang . substr($temp, 0, -1) .  '/' . 'questions.po', 'a+');
-                            $en_file = fopen($location_lang . 'en/' . 'questions.po', 'r');
+                            $new_file = fopen($location_lang . $temp . '/questions.po', 'a+');
+                            $en_file = fopen($location_lang . 'en/questions.po', 'r');
                             while (!feof($en_file)) {
                                 $en_temp = fgets($en_file, 4096);
                                 fputs($new_file, $en_temp);
@@ -1284,11 +1292,11 @@ class IndexController extends AbstractController
                             fclose($en_file);
                             fclose($new_file);
 
-                            shell_exec('msgfmt ' . $location_lang . substr($temp, 0, -1) .  '/' . 'questions.po -o ' . $location_lang . substr($temp, 0, -1) .  '/' . 'questions.mo');
+                            shell_exec('msgfmt ' . $location_lang . $temp . '/questions.po -o ' . $location_lang . $temp . '/questions.mo');
 
                             // Creation categories file by copying the beginning of the english file
-                            $new_file = fopen($location_lang . substr($temp, 0, -1) .  '/' . 'categories.po', 'a+');
-                            $en_file = fopen($location_lang . 'en/' . 'categories.po', 'r');
+                            $new_file = fopen($location_lang . $temp . '/categories.po', 'a+');
+                            $en_file = fopen($location_lang . 'en/categories.po', 'r');
                             while (!feof($en_file)) {
                                 $en_temp = fgets($en_file, 4096);
                                 fputs($new_file, $en_temp);
@@ -1306,11 +1314,11 @@ class IndexController extends AbstractController
                             fclose($en_file);
                             fclose($new_file);
 
-                            shell_exec('msgfmt ' . $location_lang . substr($temp, 0, -1) .  '/' . 'categories.po -o ' . $location_lang . substr($temp, 0, -1) .  '/' . 'categories.mo');
+                            shell_exec('msgfmt ' . $location_lang . $temp . '/categories.po -o ' . $location_lang . $temp . '/categories.mo');
 
                             // Create the template
-                            $file_template = fopen('/var/www/diagnostic/data/resources/model_' . substr($temp, 0, -1) . '.docx', 'a+');
-                            copy('/var/www/diagnostic/data/resources/model_en.docx', '/var/www/diagnostic/data/resources/model_' . substr($temp, 0, -1) . '.docx');
+                            $file_template = fopen('/var/www/diagnostic/data/resources/model_' . $temp . '.docx', 'a+');
+                            copy('/var/www/diagnostic/data/resources/model_en.docx', '/var/www/diagnostic/data/resources/model_' . $temp . '.docx');
                             fclose($file_template);
 
                             // Create the user mail for the template
@@ -1339,17 +1347,17 @@ class IndexController extends AbstractController
 
                 $file_lang = fopen($location_lang . 'code_country.txt', 'r');
                 for ($i=0; $i<$fileCount; $i++) {
-                    $temp_lang = fgets($file_lang, 4096);
+                    $temp_lang = substr(fgets($file_lang, 4096), 0, -1);
                     if ($request->getPost('add_language') == $i) {
                         $temp = $temp_lang;
                         $file_temp = fopen($location_lang . 'languages.txt', 'r');
                         $num_line = -1;
                         while (!feof($file_temp)) {
-                            $temp_lang = fgets($file_temp, 4096);
+                            $temp_lang = substr(fgets($file_temp, 4096), 0, -1);
                             $num_line++;
                             if ($temp_lang == $temp) {
                                 $error_lang_add=2;
-                                if($temp_lang == $_SESSION['lang'].PHP_EOL) {$error_lang_del2 = 1;}
+                                if($temp_lang == $_SESSION['lang']) {$error_lang_del2 = 1;}
                                 break;
                             }
                         }
@@ -1371,20 +1379,20 @@ class IndexController extends AbstractController
                             fwrite($file_temp, $contents); // Write the file without the deleted files
                             fclose($file_temp);
 
-                            unlink($location_lang . substr($temp_lang, 0, -1) . '/' . 'translations.po');
-                            unlink($location_lang . substr($temp_lang, 0, -1) . '/' . 'translations.mo');
+                            unlink($location_lang . $temp_lang . '/translations.po');
+                            unlink($location_lang . $temp_lang . '/translations.mo');
 
-                            unlink($location_lang . substr($temp_lang, 0, -1) . '/' . 'questions.po');
-                            unlink($location_lang . substr($temp_lang, 0, -1) . '/' . 'questions.mo');
+                            unlink($location_lang . $temp_lang . '/questions.po');
+                            unlink($location_lang . $temp_lang . '/questions.mo');
 
-                            unlink($location_lang . substr($temp_lang, 0, -1) . '/' . 'categories.po');
-                            unlink($location_lang . substr($temp_lang, 0, -1) . '/' . 'categories.mo');
+                            unlink($location_lang . $temp_lang . '/categories.po');
+                            unlink($location_lang . $temp_lang . '/categories.mo');
 
-                            rmdir($location_lang . substr($temp_lang, 0, -1));
+                            rmdir($location_lang . $temp_lang);
 
                             // Delete the template if exist
-                            if(file_exists('/var/www/diagnostic/data/resources/model_' . substr($temp_lang, 0, -1) . '.docx')) {
-                                unlink('/var/www/diagnostic/data/resources/model_' . substr($temp_lang, 0, -1) . '.docx' );
+                            if(file_exists('/var/www/diagnostic/data/resources/model_' . $temp_lang . '.docx')) {
+                                unlink('/var/www/diagnostic/data/resources/model_' . $temp_lang . '.docx' );
                             }
 
                             // Delete the user email of the template deleted
@@ -1447,9 +1455,9 @@ class IndexController extends AbstractController
                     }
 
                     if ($tab != '' && $error_key == 0) {
-                        rename($location_lang . $_SESSION['lang'] . '/' . 'translations.po', $location_lang . $_SESSION['lang'] . '/' . 'translations_temp.po');
-                        $file_temp = fopen($location_lang . $_SESSION['lang'] . '/' . 'translations_temp.po', 'r');
-                        $file = fopen($location_lang . $_SESSION['lang'] . '/' . 'translations.po', 'w');
+                        rename($location_lang . $_SESSION['lang'] . '/translations.po', $location_lang . $_SESSION['lang'] . '/translations_temp.po');
+                        $file_temp = fopen($location_lang . $_SESSION['lang'] . '/translations_temp.po', 'r');
+                        $file = fopen($location_lang . $_SESSION['lang'] . '/translations.po', 'w');
                         while (!feof($file_temp)) {
                             $temp = fgets($file_temp, 4096);
                             if ($temp == PHP_EOL) {$temp = fgets($file_temp, 4096); break;}
@@ -1467,10 +1475,10 @@ class IndexController extends AbstractController
                         }
                         fclose($file_temp);
                         fclose($file);
-                        unlink($location_lang . $_SESSION['lang'] . '/' . 'translations_temp.po');
+                        unlink($location_lang . $_SESSION['lang'] . '/translations_temp.po');
 
                         // compile from po to mo
-                        shell_exec('msgfmt ' . $location_lang . $_SESSION['lang'] . '/' . 'translations.po -o ' . $location_lang . $_SESSION['lang'] . '/' . 'translations.mo');
+                        shell_exec('msgfmt ' . $location_lang . $_SESSION['lang'] . '/translations.po -o ' . $location_lang . $_SESSION['lang'] . '/translations.mo');
                         fclose($file_lang);
 
                         return $this->redirect()->toRoute('admin', ['controller' => 'index', 'action' => 'languages']);
@@ -1480,7 +1488,7 @@ class IndexController extends AbstractController
 
             // Export
             if (isset($_POST['submit_export'])) {
-                $file = fopen($location_lang . $_SESSION['lang'] . '/' . 'translations.po', 'r');
+                $file = fopen($location_lang . $_SESSION['lang'] . '/translations.po', 'r');
                 // Go to translations
                 while (!feof($file)) {
                     $temp = fgets($file, 4096);
@@ -1559,12 +1567,12 @@ class IndexController extends AbstractController
             $form->setData($request->getPost());
 
             // Determine if the translation key already exist
-            $cmd='grep -c -w ' . $request->getPost('translation_key') . ' ' . $location_lang . 'en/' . 'questions.po';
+            $cmd='grep -c -w ' . $request->getPost('translation_key') . ' ' . $location_lang . 'en/questions.po';
             if(exec($cmd) != 0){ $_SESSION['erreur_exist'] = 1;}
 
             if ($form->isValid() && $_SESSION['erreur_exist'] == 0) {
                 // Get the category label of the question to have an UID based on it
-                $file = fopen($location_lang . 'en/' . 'categories.po', 'r');
+                $file = fopen($location_lang . 'en/categories.po', 'r');
                 while (!feof($file)) {
                     $temp = fgets($file, 4096);
                     if($temp == 'msgid "' . $form->get('category_id')->getValueOptions('label')[$request->getPost('category_id')] . '"' . PHP_EOL){
@@ -1598,39 +1606,39 @@ class IndexController extends AbstractController
                 // Add translation to the .po files.
                 $file_lang = fopen($location_lang . 'languages.txt', 'r');
                 for ($i=1; $i<$_SESSION['nb_lang']; $i++) {
-                    $temp_lang = fgets($file_lang, 4096);
-                    rename($location_lang . substr($temp_lang, 0, -1) .  '/' . 'questions.po', $location_lang . substr($temp_lang, 0, -1) .  '/' . 'questions_temp.po');
-                    $file_temp = fopen($location_lang . substr($temp_lang, 0, -1) .  '/' . 'questions_temp.po', 'r');
-                    $file = fopen($location_lang . substr($temp_lang, 0, -1) .  '/' . 'questions.po', 'w');
+                    $temp_lang = substr(fgets($file_lang, 4096), 0, -1);
+                    rename($location_lang . $temp_lang . '/questions.po', $location_lang . $temp_lang . '/questions_temp.po');
+                    $file_temp = fopen($location_lang . $temp_lang . '/questions_temp.po', 'r');
+                    $file = fopen($location_lang . $temp_lang . '/questions.po', 'w');
                     while (!feof($file_temp)) {
                         $temp = fgets($file_temp, 4096);
                         fputs($file, $temp);
-                        if (substr($temp, 7, -2) == '__question' . ($_SESSION['question_max']) . 'help') {
+                        if (substr($temp, 7, -2) == '__question' . $_SESSION['question_max'] . 'help') {
                             $temp = fgets($file_temp, 4096);
                             fputs($file, $temp);
                             fputs($file, PHP_EOL);
                             fputs($file,  'msgid "' . $request->getPost('translation_key') . '"');
                             fputs($file, PHP_EOL);
-                            fputs($file,  'msgstr "' . $request->getPost('translation_' . substr($temp_lang, 0, -1)) . '"');
+                            fputs($file,  'msgstr "' . $request->getPost('translation_' . $temp_lang) . '"');
                             fputs($file, PHP_EOL);
                             fputs($file, PHP_EOL);
                             fputs($file,  'msgid "' . $request->getPost('translation_key') . 'help"');
                             fputs($file, PHP_EOL);
-                            if($request->getPost('help_' . substr($temp_lang, 0, -1)) == ''){
+                            if($request->getPost('help_' . $temp_lang) == ''){
                                 fputs($file,  'msgstr " "');
                             }
                             else{
-                                fputs($file,  'msgstr "' . $request->getPost('help_' . substr($temp_lang, 0, -1)) . '"');
+                                fputs($file,  'msgstr "' . $request->getPost('help_' . $temp_lang) . '"');
                             }
                             fputs($file, PHP_EOL);
                         }
                     }
                     fclose($file_temp);
                     fclose($file);
-                    unlink($location_lang . substr($temp_lang, 0, -1) .  '/' . 'questions_temp.po');
+                    unlink($location_lang . $temp_lang . '/questions_temp.po');
 
                     // compile from po to mo
-                    shell_exec('msgfmt ' . $location_lang . substr($temp_lang, 0, -1) .  '/' . 'questions.po -o ' . $location_lang . substr($temp_lang, 0, -1) .  '/' . 'questions.mo');
+                    shell_exec('msgfmt ' . $location_lang . $temp_lang . '/questions.po -o ' . $location_lang . $temp_lang . '/questions.mo');
                 }
                 fclose($file_lang);
 
@@ -1667,7 +1675,7 @@ class IndexController extends AbstractController
             $form->setData($request->getPost());
 
             // Determine if the translation key already exist
-            $cmd='grep -c -w ' . $request->getPost('translation_key') . ' ' . $location_lang . 'en/' . 'categories.po';
+            $cmd='grep -c -w ' . $request->getPost('translation_key') . ' ' . $location_lang . 'en/categories.po';
             if(exec($cmd) != 0){ $_SESSION['erreur_exist'] = 1;}
 
             if ($form->isValid() && $_SESSION['erreur_exist'] == 0) {
@@ -1694,29 +1702,29 @@ class IndexController extends AbstractController
                 // Add translation to the .po files.
                 $file_lang = fopen($location_lang . 'languages.txt', 'r');
                 for ($i=1; $i<$_SESSION['nb_lang']; $i++) {
-                    $temp_lang = fgets($file_lang, 4096);
-                    rename($location_lang . substr($temp_lang, 0, -1) .  '/' . 'categories.po', $location_lang . substr($temp_lang, 0, -1) .  '/' . 'categories_temp.po');
-                    $file_temp = fopen($location_lang . substr($temp_lang, 0, -1) .  '/' . 'categories_temp.po', 'r');
-                    $file = fopen($location_lang . substr($temp_lang, 0, -1) .  '/' . 'categories.po', 'w');
+                    $temp_lang = substr(fgets($file_lang, 4096), 0, -1);
+                    rename($location_lang . $temp_lang . '/categories.po', $location_lang . $temp_lang . '/categories_temp.po');
+                    $file_temp = fopen($location_lang . $temp_lang . '/categories_temp.po', 'r');
+                    $file = fopen($location_lang . $temp_lang . '/categories.po', 'w');
                     while (!feof($file_temp)) {
                         $temp = fgets($file_temp, 4096);
                         fputs($file, $temp);
-                        if (substr($temp, 7, -2) == '__category' . ($_SESSION['category_max'])) {
+                        if (substr($temp, 7, -2) == '__category' . $_SESSION['category_max']) {
                             $temp = fgets($file_temp, 4096);
                             fputs($file, $temp);
                             fputs($file, PHP_EOL);
                             fputs($file,  'msgid "' . $request->getPost('translation_key') . '"');
                             fputs($file, PHP_EOL);
-                            fputs($file,  'msgstr "' . $request->getPost('translation_' . substr($temp_lang, 0, -1)) . '"');
+                            fputs($file,  'msgstr "' . $request->getPost('translation_' . $temp_lang) . '"');
                             fputs($file, PHP_EOL);
                         }
                     }
                     fclose($file_temp);
                     fclose($file);
-                    unlink($location_lang . substr($temp_lang, 0, -1) .  '/' . 'categories_temp.po');
+                    unlink($location_lang . $temp_lang . '/categories_temp.po');
 
                     // compile from po to mo
-                    shell_exec('msgfmt ' . $location_lang . substr($temp_lang, 0, -1) .  '/' . 'categories.po -o ' . $location_lang . substr($temp_lang, 0, -1) .  '/' . 'categories.mo');
+                    shell_exec('msgfmt ' . $location_lang . $temp_lang . '/categories.po -o ' . $location_lang . $temp_lang . '/categories.mo');
                 }
                 fclose($file_lang);
 
@@ -1751,7 +1759,7 @@ class IndexController extends AbstractController
             $form->setData($request->getPost());
 
             // Determine if the translation key already exist
-            $cmd='grep -c -w ' . $request->getPost('translation_key') . ' ' . $location_lang . 'en/' . 'translations.po';
+            $cmd='grep -c -w ' . $request->getPost('translation_key') . ' ' . $location_lang . 'en/translations.po';
             if(exec($cmd) != 0){ $_SESSION['erreur_exist'] = 1;}
 
             if ($form->isValid() && $_SESSION['erreur_exist'] == 0) {
@@ -1759,17 +1767,17 @@ class IndexController extends AbstractController
                 // Add translation to the .po files.
                 $file_lang = fopen($location_lang . 'languages.txt', 'r');
                 for ($i=1; $i<$_SESSION['nb_lang']; $i++) {
-                    $temp_lang = fgets($file_lang, 4096);
-                    $file = fopen($location_lang . substr($temp_lang, 0, -1) .  '/' . 'translations.po', 'a+');
+                    $temp_lang = substr(fgets($file_lang, 4096), 0, -1);
+                    $file = fopen($location_lang . $temp_lang . '/translations.po', 'a+');
                     fputs($file, PHP_EOL);
                     fputs($file,  'msgid "' . $request->getPost('translation_key') . '"');
                     fputs($file, PHP_EOL);
-                    fputs($file,  'msgstr "' . $request->getPost('translation_' . substr($temp_lang, 0, -1)) . '"');
+                    fputs($file,  'msgstr "' . $request->getPost('translation_' . $temp_lang) . '"');
                     fputs($file, PHP_EOL);
                     fclose($file);
 
                     // compile from po to mo
-                    shell_exec('msgfmt ' . $location_lang . substr($temp_lang, 0, -1) .  '/' . 'translations.po -o ' . $location_lang . substr($temp_lang, 0, -1) .  '/' . 'translations.mo');
+                    shell_exec('msgfmt ' . $location_lang . $temp_lang . '/translations.po -o ' . $location_lang . $temp_lang . '/translations.mo');
                 }
                 fclose($file_lang);
 
@@ -1819,17 +1827,17 @@ class IndexController extends AbstractController
         // Display the current value of the translation in the form-text (all languages)
         $file_lang = fopen($location_lang . 'languages.txt', 'r');
         for ($i=1; $i<$_SESSION['nb_lang']; $i++) {
-            $temp_lang = fgets($file_lang, 4096);
-            $file = fopen($location_lang . substr($temp_lang, 0, -1) .  '/' . 'questions.po', 'r');
+            $temp_lang = substr(fgets($file_lang, 4096), 0, -1);
+            $file = fopen($location_lang . $temp_lang . '/questions.po', 'r');
             while (!feof($file)) { // Read the file
                 $temp = fgets($file, 4096); // Variable which contains one by one lines of the file
                 // This condition determines where the translation key is in the file, and put its translation in a session variable
-                if($temp == 'msgid "' . $questions[$id]->getTranslationKey() . '"' . PHP_EOL){$_SESSION['value_' . substr($temp_lang, 0, -1)] = fgets($file, 4096);}
-                if($temp == 'msgid "' . $questions[$id]->getTranslationKey() . 'help"' . PHP_EOL){$_SESSION['value_' . substr($temp_lang, 0, -1) . '_help'] = fgets($file, 4096);}
+                if($temp == 'msgid "' . $questions[$id]->getTranslationKey() . '"' . PHP_EOL){$_SESSION['value_' . $temp_lang] = fgets($file, 4096);}
+                if($temp == 'msgid "' . $questions[$id]->getTranslationKey() . 'help"' . PHP_EOL){$_SESSION['value_' . $temp_lang . '_help'] = fgets($file, 4096);}
             }
             fclose($file);
-            $_SESSION['value_' . substr($temp_lang, 0, -1)] = substr($_SESSION['value_' . substr($temp_lang, 0, -1)], 8, -2);
-            $_SESSION['value_' . substr($temp_lang, 0, -1) . '_help'] = substr($_SESSION['value_' . substr($temp_lang, 0, -1) . '_help'], 8, -2);
+            $_SESSION['value_' . $temp_lang] = substr($_SESSION['value_' . $temp_lang], 8, -2);
+            $_SESSION['value_' . $temp_lang . '_help'] = substr($_SESSION['value_' . $temp_lang . '_help'], 8, -2);
         }
         fclose($file_lang);
 
@@ -1841,14 +1849,14 @@ class IndexController extends AbstractController
             $form->setData($request->getPost());
 
             // Determine if the translation key already exist
-            $cmd='grep -c -w ' . $request->getPost('translation_key') . ' ' . $location_lang . 'en/' . 'questions.po';
+            $cmd='grep -c -w ' . $request->getPost('translation_key') . ' ' . $location_lang . 'en/questions.po';
             if(exec($cmd) != 0){ $_SESSION['erreur_exist'] = 1;}
             // If the translation key is the same than the current one, there is no error. Happens when you only want to change translations
             if($request->getPost('translation_key') == $questions[$id]->getTranslationKey()){$_SESSION['erreur_exist'] = 0;}
 
             if ($form->isValid() && $_SESSION['erreur_exist'] == 0) {
                 // Get the category label of the question to have an UID based on it
-                $file = fopen($location_lang . 'en/' . 'categories.po', 'r');
+                $file = fopen($location_lang . 'en/categories.po', 'r');
                 while (!feof($file)) {
                     $temp = fgets($file, 4096);
                     if($temp == 'msgid "' . $form->get('category_id')->getValueOptions('label')[$request->getPost('category_id')] . '"' . PHP_EOL){
@@ -1874,10 +1882,10 @@ class IndexController extends AbstractController
                 // Create variables which will determine where to delete previous information in the translation files
                 $file_lang = fopen($location_lang . 'languages.txt', 'r');
                 for ($i=1; $i<$_SESSION['nb_lang']; $i++) {
-                    $temp_lang = fgets($file_lang, 4096);
+                    $temp_lang = substr(fgets($file_lang, 4096), 0, -1);
                     $fileCount = -1; // Variable to determine the position of the current line
                     $num_line = 0;
-                    $file = fopen($location_lang . substr($temp_lang, 0, -1) .  '/' . 'questions.po', 'r');
+                    $file = fopen($location_lang . $temp_lang . '/questions.po', 'r');
                     while (!feof($file)) {
                         $temp = fgets($file, 4096);
                         $fileCount++;
@@ -1886,9 +1894,9 @@ class IndexController extends AbstractController
                     fclose($file);
 
                     // Rewrite the new translations
-                    rename($location_lang . substr($temp_lang, 0, -1) .  '/' . 'questions.po', $location_lang . substr($temp_lang, 0, -1) .  '/' . 'questions_temp.po');
-                    $file_temp = fopen($location_lang . substr($temp_lang, 0, -1) .  '/' . 'questions_temp.po', 'r');
-                    $file = fopen($location_lang . substr($temp_lang, 0, -1) .  '/' . 'questions.po', 'w');
+                    rename($location_lang . $temp_lang . '/questions.po', $location_lang . $temp_lang . '/questions_temp.po');
+                    $file_temp = fopen($location_lang . $temp_lang . '/questions_temp.po', 'r');
+                    $file = fopen($location_lang . $temp_lang . '/questions.po', 'w');
                     while (!feof($file_temp)) {
                         $temp = fgets($file_temp, 4096);
                         fputs($file, $temp);
@@ -1898,27 +1906,27 @@ class IndexController extends AbstractController
                             fputs($file, PHP_EOL);
                             fputs($file,  'msgid "' . $request->getPost('translation_key') . '"');
                             fputs($file, PHP_EOL);
-                            fputs($file,  'msgstr "' . $request->getPost('translation_' . substr($temp_lang, 0, -1)) . '"');
+                            fputs($file,  'msgstr "' . $request->getPost('translation_' . $temp_lang) . '"');
                             fputs($file, PHP_EOL);
                             fputs($file, PHP_EOL);
                             fputs($file,  'msgid "' . $request->getPost('translation_key') . 'help"');
                             fputs($file, PHP_EOL);
-                            if($request->getPost('help_' . substr($temp_lang, 0, -1)) == ''){
+                            if($request->getPost('help_' . $temp_lang) == ''){
                                 fputs($file,  'msgstr " "');
                             }
                             else{
-                                fputs($file,  'msgstr "' . $request->getPost('help_' . substr($temp_lang, 0, -1)) . '"');
+                                fputs($file,  'msgstr "' . $request->getPost('help_' . $temp_lang) . '"');
                             }
                             fputs($file, PHP_EOL);
                         }
                     }
                     fclose($file_temp);
                     fclose($file);
-                    unlink($location_lang . substr($temp_lang, 0, -1) .  '/' . 'questions_temp.po');
+                    unlink($location_lang . $temp_lang . '/questions_temp.po');
 
                     // Open the translation files and delete previous questions in order to add them with changes
-                    $file = fopen($location_lang . substr($temp_lang, 0, -1) .  '/' . 'questions.po', 'r');
-                    $contents = fread($file, filesize($location_lang . substr($temp_lang, 0, -1) .  '/' . 'questions.po'));
+                    $file = fopen($location_lang . $temp_lang . '/questions.po', 'r');
+                    $contents = fread($file, filesize($location_lang . $temp_lang . '/questions.po'));
                     fclose($file);
                     $contents = explode(PHP_EOL, $contents); // PHP_EOL equals to /n in Linux
                     unset($contents[$num_line-1]); // Delete the line break
@@ -1929,12 +1937,12 @@ class IndexController extends AbstractController
                     unset($contents[$num_line+4]); // Delete the help translation
                     $contents = array_values($contents);
                     $contents = implode(PHP_EOL, $contents);
-                    $file = fopen($location_lang . substr($temp_lang, 0, -1) .  '/' . 'questions.po', 'w');
+                    $file = fopen($location_lang . $temp_lang . '/questions.po', 'w');
                     fwrite($file, $contents); // Write the file without the deleted files
                     fclose($file);
 
                     // compile from po to mo
-                    shell_exec('msgfmt ' . $location_lang . substr($temp_lang, 0, -1) .  '/' . 'questions.po -o ' . $location_lang . substr($temp_lang, 0, -1) .  '/' . 'questions.mo');
+                    shell_exec('msgfmt ' . $location_lang . $temp_lang . '/questions.po -o ' . $location_lang . $temp_lang . '/questions.mo');
                 }
                 fclose($file_lang);
 
@@ -1988,15 +1996,15 @@ class IndexController extends AbstractController
         // Display the current value of the translation in the form-text (all languages)
         $file_lang = fopen($location_lang . 'languages.txt', 'r');
         for ($i=1; $i<$_SESSION['nb_lang']; $i++) {
-            $temp_lang = fgets($file_lang, 4096);
-            $file = fopen($location_lang . substr($temp_lang, 0, -1) .  '/' . 'categories.po', 'r');
+            $temp_lang = substr(fgets($file_lang, 4096), 0, -1);
+            $file = fopen($location_lang . $temp_lang . '/categories.po', 'r');
             while (!feof($file)) { // Read the file
                 $temp = fgets($file, 4096); // Variable which contains one by one lines of the file
                 // This condition determines where the translation key is in the file, and put its translation in a session variable
-                if($temp == 'msgid "' . $cat->getTranslationKey() . '"' . PHP_EOL){$_SESSION['value_' . substr($temp_lang, 0, -1)] = fgets($file, 4096);}
+                if($temp == 'msgid "' . $cat->getTranslationKey() . '"' . PHP_EOL){$_SESSION['value_' . $temp_lang] = fgets($file, 4096);}
             }
             fclose($file);
-            $_SESSION['value_' . substr($temp_lang, 0, -1)] = substr($_SESSION['value_' . substr($temp_lang, 0, -1)], 8, -2);
+            $_SESSION['value_' . $temp_lang] = substr($_SESSION['value_' . $temp_lang], 8, -2);
         }
         fclose($file_lang);
 
@@ -2006,7 +2014,7 @@ class IndexController extends AbstractController
             $form->setData($request->getPost());
 
             // Determine if the translation key already exist
-            $cmd='grep -c -w ' . $request->getPost('translation_key') . ' ' . $location_lang . 'en/' . 'categories.po';
+            $cmd='grep -c -w ' . $request->getPost('translation_key') . ' ' . $location_lang . 'en/categories.po';
             if(exec($cmd) != 0){ $_SESSION['erreur_exist'] = 1;}
             // If the translation key is the same than the current one, there is no error. Happens when you only want to change translations
             if($request->getPost('translation_key') == $cat->getTranslationKey()){$_SESSION['erreur_exist'] = 0;}
@@ -2027,10 +2035,10 @@ class IndexController extends AbstractController
                 // Create variables which will determine where to delete previous information in the translation files
                 $file_lang = fopen($location_lang . 'languages.txt', 'r');
                 for ($i=1; $i<$_SESSION['nb_lang']; $i++) {
-                    $temp_lang = fgets($file_lang, 4096);
+                    $temp_lang = substr(fgets($file_lang, 4096), 0, -1);
                     $fileCount = -1; // Variable to determine the position of the current line
                     $num_line = 0;
-                    $file = fopen($location_lang . substr($temp_lang, 0, -1) .  '/' . 'categories.po', 'r');
+                    $file = fopen($location_lang . $temp_lang . '/categories.po', 'r');
                     while (!feof($file)) {
                         $temp = fgets($file, 4096);
                         $fileCount++;
@@ -2039,9 +2047,9 @@ class IndexController extends AbstractController
                     fclose($file);
 
                     // Rewrite the new translations
-                    rename($location_lang . substr($temp_lang, 0, -1) .  '/' . 'categories.po', $location_lang . substr($temp_lang, 0, -1) .  '/' . 'categories_temp.po');
-                    $file_temp = fopen($location_lang . substr($temp_lang, 0, -1) .  '/' . 'categories_temp.po', 'r');
-                    $file = fopen($location_lang . substr($temp_lang, 0, -1) .  '/' . 'categories.po', 'w');
+                    rename($location_lang . $temp_lang . '/categories.po', $location_lang . $temp_lang . '/categories_temp.po');
+                    $file_temp = fopen($location_lang . $temp_lang . '/categories_temp.po', 'r');
+                    $file = fopen($location_lang . $temp_lang . '/categories.po', 'w');
                     while (!feof($file_temp)) {
                         $temp = fgets($file_temp, 4096);
                         fputs($file, $temp);
@@ -2051,17 +2059,17 @@ class IndexController extends AbstractController
                             fputs($file, PHP_EOL);
                             fputs($file,  'msgid "' . $request->getPost('translation_key') . '"');
                             fputs($file, PHP_EOL);
-                            fputs($file,  'msgstr "' . $request->getPost('translation_' . substr($temp_lang, 0, -1)) . '"');
+                            fputs($file,  'msgstr "' . $request->getPost('translation_' . $temp_lang) . '"');
                             fputs($file, PHP_EOL);
                         }
                     }
                     fclose($file_temp);
                     fclose($file);
-                    unlink($location_lang . substr($temp_lang, 0, -1) .  '/' . 'categories_temp.po');
+                    unlink($location_lang . $temp_lang . '/categories_temp.po');
 
                     // Open the translation files and delete previous questions in order to add them with changes.
-                    $file = fopen($location_lang . substr($temp_lang, 0, -1) .  '/' . 'categories.po', 'r');
-                    $contents = fread($file, filesize($location_lang . substr($temp_lang, 0, -1) .  '/' . 'categories.po'));
+                    $file = fopen($location_lang . $temp_lang . '/categories.po', 'r');
+                    $contents = fread($file, filesize($location_lang . $temp_lang . '/categories.po'));
                     fclose($file);
                     $contents = explode(PHP_EOL, $contents); // PHP_EOL equals to /n in Linux
                     unset($contents[$num_line-1]); // Delete the line break
@@ -2069,12 +2077,12 @@ class IndexController extends AbstractController
                     unset($contents[$num_line+1]); // Delete the translation
                     $contents = array_values($contents);
                     $contents = implode(PHP_EOL, $contents);
-                    $file = fopen($location_lang . substr($temp_lang, 0, -1) . '/' . 'categories.po', 'w');
+                    $file = fopen($location_lang . $temp_lang . '/categories.po', 'w');
                     fwrite($file, $contents); // Write the file without the deleted files
                     fclose($file);
 
                     // compile from po to mo
-                    shell_exec('msgfmt ' . $location_lang . substr($temp_lang, 0, -1) . '/' . 'categories.po -o ' . $location_lang . substr($temp_lang, 0, -1) . '/' . 'categories.mo');
+                    shell_exec('msgfmt ' . $location_lang . $temp_lang . '/categories.po -o ' . $location_lang . $temp_lang . '/categories.mo');
                 }
                 fclose($file_lang);
 
@@ -2152,10 +2160,10 @@ class IndexController extends AbstractController
             // Delete translations from the translation files
             $file_lang = fopen($location_lang . 'languages.txt', 'r');
             for ($i=1; $i<$_SESSION['nb_lang']; $i++) {
-                $temp_lang = fgets($file_lang, 4096);
+                $temp_lang = substr(fgets($file_lang, 4096), 0, -1);
                 $fileCount = -1;
                 $num_line = 0;
-                $file = fopen($location_lang . substr($temp_lang, 0, -1) . '/' . 'questions.po', 'r');
+                $file = fopen($location_lang . $temp_lang . '/questions.po', 'r');
                 while (!feof($file)) {
                     $temp = fgets($file, 4096);
                     $fileCount++;
@@ -2163,8 +2171,8 @@ class IndexController extends AbstractController
                 }
                 fclose($file);
 
-                $file = fopen($location_lang . substr($temp_lang, 0, -1) . '/' . 'questions.po', 'r');
-                $contents = fread($file, filesize($location_lang . substr($temp_lang, 0, -1) . '/' . 'questions.po'));
+                $file = fopen($location_lang . $temp_lang . '/questions.po', 'r');
+                $contents = fread($file, filesize($location_lang . $temp_lang . '/questions.po'));
                 fclose($file);
                 $contents = explode(PHP_EOL, $contents);
                 unset($contents[$num_line-1]);
@@ -2175,11 +2183,11 @@ class IndexController extends AbstractController
                 unset($contents[$num_line+4]);
                 $contents = array_values($contents);
                 $contents = implode(PHP_EOL, $contents);
-                $file = fopen($location_lang . substr($temp_lang, 0, -1) . '/' . 'questions.po', 'w');
+                $file = fopen($location_lang . $temp_lang . '/questions.po', 'w');
                 fwrite($file, $contents);
                 fclose($file);
 
-                shell_exec('msgfmt ' . $location_lang . substr($temp_lang, 0, -1) . '/' . 'questions.po -o ' . $location_lang . substr($temp_lang, 0, -1) . '/' . 'questions.mo');
+                shell_exec('msgfmt ' . $location_lang . $temp_lang . '/questions.po -o ' . $location_lang . $temp_lang . '/questions.mo');
             }
             fclose($file_lang);
 
@@ -2225,10 +2233,10 @@ class IndexController extends AbstractController
                 if($question->getCategoryTranslationKey() == $cat->getTranslationKey()){
                     $file_lang = fopen($location_lang . 'languages.txt', 'r');
                     for ($i=1; $i<$_SESSION['nb_lang']; $i++) {
-                        $temp_lang = fgets($file_lang, 4096);
+                        $temp_lang = substr(fgets($file_lang, 4096), 0, -1);
                         $fileCount = -1;
                         $num_line = 0;
-                        $file = fopen($location_lang . substr($temp_lang, 0, -1) . '/' . 'questions.po', 'r');
+                        $file = fopen($location_lang . $temp_lang . '/questions.po', 'r');
                         while (!feof($file)) {
                             $temp = fgets($file, 4096);
                             $fileCount++;
@@ -2236,8 +2244,8 @@ class IndexController extends AbstractController
                         }
                         fclose($file);
 
-                        $file = fopen($location_lang . substr($temp_lang, 0, -1) . '/' . 'questions.po', 'r');
-                        $contents = fread($file, filesize($location_lang . substr($temp_lang, 0, -1) . '/' . 'questions.po'));
+                        $file = fopen($location_lang . $temp_lang . '/questions.po', 'r');
+                        $contents = fread($file, filesize($location_lang . $temp_lang . '/questions.po'));
                         fclose($file);
                         $contents = explode(PHP_EOL, $contents);
                         unset($contents[$num_line-1]);
@@ -2248,11 +2256,11 @@ class IndexController extends AbstractController
                         unset($contents[$num_line+4]);
                         $contents = array_values($contents);
                         $contents = implode(PHP_EOL, $contents);
-                        $file = fopen($location_lang . substr($temp_lang, 0, -1) . '/' . 'questions.po', 'w');
+                        $file = fopen($location_lang . $temp_lang . '/questions.po', 'w');
                         fwrite($file, $contents);
                         fclose($file);
 
-                        shell_exec('msgfmt ' . $location_lang . substr($temp_lang, 0, -1) . '/' . 'questions.po -o ' . $location_lang . substr($temp_lang, 0, -1) . '/' . 'questions.mo');
+                        shell_exec('msgfmt ' . $location_lang . $temp_lang . '/questions.po -o ' . $location_lang . $temp_lang . '/questions.mo');
                     }
                     fclose($file_lang);
                 }
@@ -2261,10 +2269,10 @@ class IndexController extends AbstractController
             // See comments in the delete function above
             $file_lang = fopen($location_lang . 'languages.txt', 'r');
             for ($i=1; $i<$_SESSION['nb_lang']; $i++) {
-                $temp_lang = fgets($file_lang, 4096);
+                $temp_lang = substr(fgets($file_lang, 4096), 0, -1);
                 $fileCount = -1;
                 $num_line = 0;
-                $file = fopen($location_lang . substr($temp_lang, 0, -1) . '/' . 'categories.po', 'r');
+                $file = fopen($location_lang . $temp_lang . '/categories.po', 'r');
                 while (!feof($file)) {
                     $temp = fgets($file, 4096);
                     $fileCount++;
@@ -2272,8 +2280,8 @@ class IndexController extends AbstractController
                 }
                 fclose($file);
 
-                $file = fopen($location_lang . substr($temp_lang, 0, -1) . '/' . 'categories.po', 'r');
-                $contents = fread($file, filesize($location_lang . substr($temp_lang, 0, -1) . '/' . 'categories.po'));
+                $file = fopen($location_lang . $temp_lang . '/categories.po', 'r');
+                $contents = fread($file, filesize($location_lang . $temp_lang . '/categories.po'));
                 fclose($file);
                 $contents = explode(PHP_EOL, $contents);
                 unset($contents[$num_line-1]);
@@ -2281,11 +2289,11 @@ class IndexController extends AbstractController
                 unset($contents[$num_line+1]);
                 $contents = array_values($contents);
                 $contents = implode(PHP_EOL, $contents);
-                $file = fopen($location_lang . substr($temp_lang, 0, -1) . '/' . 'categories.po', 'w');
+                $file = fopen($location_lang . $temp_lang . '/categories.po', 'w');
                 fwrite($file, $contents);
                 fclose($file);
 
-                shell_exec('msgfmt ' . $location_lang . substr($temp_lang, 0, -1) . '/' . 'categories.po -o ' . $location_lang . substr($temp_lang, 0, -1) . '/' . 'categories.mo');
+                shell_exec('msgfmt ' . $location_lang . $temp_lang . '/categories.po -o ' . $location_lang . $temp_lang . '/categories.mo');
             }
             fclose($file_lang);
 

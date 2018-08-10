@@ -6,6 +6,7 @@ namespace Diagnostic\Model;
  *
  * @package Diagnostic\Model
  * @author Jerome De Almeida <jerome.dealmeida@vesperiagroup.com>
+ * @author Romain Desjardins
  */
 class InformationEntity
 {

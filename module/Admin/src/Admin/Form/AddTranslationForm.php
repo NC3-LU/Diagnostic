@@ -7,7 +7,7 @@ use Zend\Form\Form;
  * Add Translation Form
  *
  * @package Diagnostic\Form
- * @author Romain DESJARDINS
+ * @author Romain Desjardins
  */
 class AddTranslationForm extends Form
 {

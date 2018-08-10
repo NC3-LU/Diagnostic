@@ -21,25 +21,18 @@ $form->prepare();
                     <?= $this->formText($form->get('translation_key')->setAttributes(['readonly' => 'true', 'style' => 'pointer-events: none'])) ?>
                 </td>
             </tr>
-            <tr>
-                <td colspan="2">
-                    <?= $this->formElementErrors($form->get('translation_key'), ['class' => 'bg-danger']) ?>
-                    <!-- // Display error if the translation key already exist -->
-                    <?php if($_SESSION['erreur_exist'] == 1){ echo "<ul class='bg-danger'> <li>" . $this->translate('__error_exist'). "</li></ul>"; } ?>
-                </td>
-            </tr>
 
-            <!-- // Translations label and form-text -->
+            <!-- // Translation labels and form-text -->
             <?php
             $location_lang = '/var/www/diagnostic/language/languages.txt';
             $file_lang = fopen($location_lang, 'r');
             for($i=1; $i<$_SESSION['nb_lang']; $i++) {
-                $temp_lang = fgets($file_lang, 4096);
+                $temp_lang = substr(fgets($file_lang, 4096), 0, - 1);
 
                 // Creation translation form
-                $translation = new Element('translation_' . substr($temp_lang, 0, -1)); // substr is for deleting the /n
+                $translation = new Element('translation_' . $temp_lang); // substr is for deleting the /n
                 $translation->setLabel('__translation');
-                $translation->setValue($_SESSION['value_' . substr($temp_lang, 0, -1)]);
+                $translation->setValue($_SESSION['value_' . $temp_lang]);
                 $translation->setAttributes([
                     'type'  => 'text',
                     'class' => 'form-control'
@@ -47,9 +40,9 @@ $form->prepare();
                 $form->add($translation);
 
                 // Creation help form
-                $help = new Element('help_' . substr($temp_lang, 0, -1));
+                $help = new Element('help_' . $temp_lang);
                 $help->setLabel('__help');
-                $help->setValue($_SESSION['value_' . substr($temp_lang, 0, -1) . '_help']);
+                $help->setValue($_SESSION['value_' . $temp_lang . '_help']);
                 $help->setAttributes([
                     'type'  => 'text',
                     'class' => 'form-control'
@@ -57,15 +50,15 @@ $form->prepare();
                 $form->add($help);
                 ?>
                 <tr>
-                    <td><label><?= $this->translate($form->get('translation_' . substr($temp_lang, 0, -1))->getLabel()) ?></label>&nbsp;<span class="flag-icon flag-icon-<?= $temp_lang ?>"></span></td>
+                    <td><label><?= $this->translate($form->get('translation_' . $temp_lang)->getLabel()) ?></label>&nbsp;<span class="flag-icon flag-icon-<?= $temp_lang ?>"></span></td>
                     <td>
-                        <?= $this->formText($form->get('translation_' . substr($temp_lang, 0, -1))) ?>
+                        <?= $this->formText($form->get('translation_' . $temp_lang)) ?>
                     </td>
                 </tr>
                 <tr>
-                    <td><label><?= $this->translate($form->get('help_' . substr($temp_lang, 0, -1))->getLabel()) ?></label>&nbsp;<span class="flag-icon flag-icon-<?= $temp_lang ?>"></span></td>
+                    <td><label><?= $this->translate($form->get('help_' . $temp_lang)->getLabel()) ?></label>&nbsp;<span class="flag-icon flag-icon-<?= $temp_lang ?>"></span></td>
                     <td>
-                        <?= $this->formText($form->get('help_' . substr($temp_lang, 0, -1))) ?>
+                        <?= $this->formText($form->get('help_' . $temp_lang)) ?>
                     </td>
                 </tr>
             <?php

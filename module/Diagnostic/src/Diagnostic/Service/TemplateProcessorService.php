@@ -14,6 +14,7 @@ use Zend\Session\Container;
  *
  * @package Diagnostic\Service
  * @author Jerome De Almeida <jerome.dealmeida@vesperiagroup.com>
+ * @author Romain Desjardins
  */
 class TemplateProcessorService extends TemplateProcessor implements ServiceLocatorAwareInterface
 {

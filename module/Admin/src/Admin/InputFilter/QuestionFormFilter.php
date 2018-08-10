@@ -9,6 +9,7 @@ use Zend\Validator\Hostname;
  *
  * @package Admin\Form
  * @author Jerome De Almeida <jerome.dealmeida@vesperiagroup.com>
+ * @author Romain Desjardins
  */
 class QuestionFormFilter extends InputFilter
 {

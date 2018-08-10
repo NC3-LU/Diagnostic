@@ -7,7 +7,7 @@ use Zend\Form\Form;
  * Setting Form
  *
  * @package Diagnostic\Form
- * @author Romain DESJARDINS
+ * @author Romain Desjardins
  */
 class SettingForm extends Form
 {
