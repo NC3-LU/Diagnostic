@@ -127,7 +127,7 @@ You are good to go then !
 Changelogs
 ==========
 
-CHANGE LOG VERSION 1.1 JUNE 2018
+### CHANGE LOG VERSION 1.1 JUNE 2018
 
 - Update Ubuntu from 17.04 to 18.04.
 - Update Php from 7.0 to 7.1.
@@ -141,7 +141,7 @@ CHANGE LOG VERSION 1.1 JUNE 2018
 - Update the administration mode. It is now possible to translate questions and categories without getting in >the .po files.
 - Update documentation to match with new features.
 
-CHANGE LOG VERSION 1.2 AUGUST 2018
+### CHANGE LOG VERSION 1.2 AUGUST 2018
 
 - Add language tab in the administration mode. It is now possible to add/modify/delete new languages and new translations.
 - Add confirmation before deleting something(questions, categories, languages, translations).
