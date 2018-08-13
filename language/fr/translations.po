@@ -80,6 +80,9 @@ msgstr "Commentaire"
 msgid "__record"
 msgstr "Enregistrer"
 
+msgid "__record_continue"
+msgstr "Enregistrer et continuer"
+
 msgid "__domain"
 msgstr "Domaine"
 
@@ -98,8 +101,8 @@ msgstr "Information collectée"
 msgid "__notes"
 msgstr "Notes"
 
-msgid "__record_continue"
-msgstr "Enregistrer et continuer"
+msgid "__add"
+msgstr "Ajouter"
 
 msgid "__add_a_question"
 msgstr "Ajouter une question"
@@ -113,14 +116,35 @@ msgstr "Ajouter une langue"
 msgid "__add_a_translation"
 msgstr "Ajouter une traduction"
 
-msgid "__add"
-msgstr "Ajouter"
-
 msgid "__question"
 msgstr "Question"
 
+msgid "__questions"
+msgstr "Questions"
+
+msgid "__category"
+msgstr "Catégorie"
+
+msgid "__categories"
+msgstr "Catégories"
+
+msgid "__translation"
+msgstr "Traduction"
+
+msgid "__translation_key"
+msgstr "Clef de traduction"
+
+msgid "__translation_ref"
+msgstr "Traduction de référence"
+
 msgid "__languages"
 msgstr "Langues"
+
+msgid "__rapport"
+msgstr "Rapport"
+
+msgid "__rapports"
+msgstr "Rapports"
 
 msgid "__export"
 msgstr "Exporter"
@@ -134,26 +158,20 @@ msgstr "Accéder au diagnostic"
 msgid "__help"
 msgstr "Aide"
 
+msgid "__threshold"
+msgstr "Seuil"
+
 msgid "__threshold_max"
 msgstr "Seuil max"
-
-msgid "__rapport"
-msgstr "Rapport"
-
-msgid "__rapports"
-msgstr "Rapports"
 
 msgid "__results"
 msgstr "Résultat"
 
-msgid "__categories"
-msgstr "Catégories"
+msgid "__template"
+msgstr "Modèle"
 
 msgid "__templates"
 msgstr "Modèles de rapport"
-
-msgid "__template"
-msgstr "Modèle"
 
 msgid "__last_modif"
 msgstr "Dernière modification"
@@ -179,38 +197,20 @@ msgstr "Détails de l'utilisateur"
 msgid "__modify"
 msgstr "Modifier"
 
+msgid "__modify_question"
+msgstr "Modifier la question"
+
+msgid "__modify_category"
+msgstr "Modifier la catégorie"
+
 msgid "__modify_all"
 msgstr "Modifier toutes les traductions"
 
 msgid "__change_default_language"
 msgstr "Changer la langue par défaut"
 
-msgid "__questions"
-msgstr "Questions"
-
-msgid "__translation_key"
-msgstr "Clef de traduction"
-
-msgid "__translation_ref"
-msgstr "Traduction de référence"
-
-msgid "__translation"
-msgstr "Traduction"
-
-msgid "__category"
-msgstr "Catégorie"
-
-msgid "__threshold"
-msgstr "Seuil"
-
 msgid "__action"
 msgstr "Action"
-
-msgid "__modify_question"
-msgstr "Modifier la question"
-
-msgid "__modify_category"
-msgstr "Modifier la catégorie"
 
 msgid "__admin"
 msgstr "Administration"
@@ -257,26 +257,14 @@ msgstr "Moyen"
 msgid "__strong"
 msgstr "Fort"
 
-msgid "__back_rapport"
-msgstr "Retour au rapport"
-
 msgid "__back"
 msgstr "Retour"
 
+msgid "__back_rapport"
+msgstr "Retour au rapport"
+
 msgid "__delete"
 msgstr "Supprimer"
-
-msgid "__login_error"
-msgstr "Impossible de se connecter"
-
-msgid "__no_file"
-msgstr "Fichier manquant"
-
-msgid "__error_file"
-msgstr "Fichier non valide"
-
-msgid "__success_file"
-msgstr "Modification effectuée"
 
 msgid "__goal"
 msgstr "Objectif"
@@ -332,6 +320,57 @@ msgstr "Synthèse sur l'évaluation"
 msgid "__categories_maturities"
 msgstr "Maturités par catégories"
 
+msgid "__statistics"
+msgstr "Statistiques"
+
+msgid "__mail_verif"
+msgstr "Vérification mail"
+
+msgid "__activity"
+msgstr "Activité"
+
+msgid "__employees"
+msgstr "Nombre d'employés"
+
+msgid "__organization_help"
+msgstr "Aide pour l'organisation"
+
+msgid "__synthesis_help"
+msgstr "Aide pour la synthèse"
+
+msgid "__average_diagnosis"
+msgstr "Moyenne_Diagnostic"
+
+msgid "__average"
+msgstr "Moyenne"
+
+msgid "__date_bar"
+msgstr "Moyenne pour l'année"
+
+msgid "__threat"
+msgstr "Menace :"
+
+msgid "__weight"
+msgstr "Poids :"
+
+msgid "__blocking"
+msgstr "Question bloquante"
+
+msgid "__legend_block"
+msgstr "Un domaine essentiel pour l'entité n'est pas géré (question avec une maturité fragile)"
+
+msgid "__login_error"
+msgstr "Impossible de se connecter"
+
+msgid "__no_file"
+msgstr "Fichier manquant"
+
+msgid "__error_file"
+msgstr "Fichier non valide"
+
+msgid "__success_file"
+msgstr "Modification effectuée"
+
 msgid "__error_exist"
 msgstr "Cette clé existe déjà"
 
@@ -346,6 +385,12 @@ msgstr "Vous ne pouvez pas supprimer cette langue"
 
 msgid "__error_lang_del2"
 msgstr "Vous ne pouvez pas supprimer une langue actuellement utilisée"
+
+msgid "__error_id"
+msgstr "Les IDs doivent être uniques et rangés par ordre croissant"
+
+msgid "__error_res"
+msgstr "Le résultat doit être un nombre entier entre 0 et 100"
 
 msgid "__delete_lang"
 msgstr "Voulez-vous vraiment supprimer cette langue ?"
@@ -394,24 +439,6 @@ msgstr "Le mot de passe doit contenir au moins 8 caractères"
 
 msgid "The two given tokens do not match"
 msgstr "Le mot de passe et la confirmation doivent être identiques"
-
-msgid "__error_categ"
-msgstr "Le fichier contient un ID de catégorie inconnu"
-
-msgid "__error_id"
-msgstr "Les IDs doivent être uniques et rangés par ordre croissant"
-
-msgid "__statistics"
-msgstr "Statistiques"
-
-msgid "__mail_verif"
-msgstr "Vérification mail"
-
-msgid "__activity"
-msgstr "Activité"
-
-msgid "__employees"
-msgstr "Nombre d'employés"
 
 msgid "__activity1"
 msgstr "Artisanat"
@@ -526,33 +553,3 @@ msgstr "Textile, mode et luxe"
 
 msgid "__activity38"
 msgstr "Secteur du grand âge"
-
-msgid "__organization_help"
-msgstr "Aide pour l'organisation"
-
-msgid "__synthesis_help"
-msgstr "Aide pour la synthèse"
-
-msgid "__error_res"
-msgstr "Le résultat doit être un nombre entier entre 0 et 100"
-
-msgid "__average_diagnosis"
-msgstr "Moyenne_Diagnostic"
-
-msgid "__average"
-msgstr "Moyenne"
-
-msgid "__date_bar"
-msgstr "Moyenne pour l'année"
-
-msgid "__threat"
-msgstr "Menace :"
-
-msgid "__weight"
-msgstr "Poids :"
-
-msgid "__blocking"
-msgstr "Question bloquante"
-
-msgid "__legend_block"
-msgstr "Un domaine essentiel pour l'entité n'est pas géré (question avec une maturité fragile)"

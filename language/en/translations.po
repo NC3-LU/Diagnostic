@@ -386,9 +386,6 @@ msgstr "You could not delete this language"
 msgid "__error_lang_del2"
 msgstr "You could not delete a current used language"
 
-msgid "__error_categ"
-msgstr "The file contain an unknown category ID"
-
 msgid "__error_id"
 msgstr "The IDs must be unique and follow an ascending order"
 

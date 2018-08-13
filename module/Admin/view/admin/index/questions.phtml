@@ -2,7 +2,6 @@
 
 $title = $this->translate('__questions');
 $this->headTitle($title);
-$_SESSION['question_max'] = 1; // Count number of question
 
 $this->form->setAttribute('action', $this->url('admin', ['action' => 'questions']));
 $this->form->prepare();
@@ -26,7 +25,6 @@ $this->form->prepare();
         <br />
         <div class="col-lg-3 text-left">
             <?php if($error_upload == 1){ echo "<ul class='bg-danger'> <li>" . $this->translate('__error_file'). "</li></ul>"; }
-            if($error_categ == 1){ echo "<ul class='bg-danger'> <li>" . $this->translate('__error_categ'). "</li></ul>"; }
             if($error_id == 1){ echo "<ul class='bg-danger'> <li>" . $this->translate('__error_id'). "</li></ul>"; } ?>
         </div>
 
@@ -50,7 +48,6 @@ $this->form->prepare();
             </tr>
             <?php
             foreach ($questions as $question) :
-                if (substr($question->getTranslationKey(), 10) > $_SESSION['question_max']) {$_SESSION['question_max'] = substr($question->getTranslationKey(), 10);}
                 $urlModify = $this->url('admin', ['action' => 'modify-question', 'id' => $question->getId()]);
                 $urlDelete = $this->url('admin', ['action' => 'delete-question', 'id' => $question->getId()]);
             ?>

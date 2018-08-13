@@ -1,14 +1,7 @@
 <?php
 $title = $this->translate('__categories');
 $this->headTitle($title);
-$_SESSION['category_max'] = 1; // Count number of category
-
-$this->form->setAttribute('action', $this->url('admin', ['action' => 'categories']));
-$this->form->prepare();
-
 ?>
-
-<?= $this->form()->openTag($form) ?>
 
 <!-- // Display confirmation if you want to delete a category. -->
 <script>var delete_category = <?php echo json_encode($this->translate('__delete_category')) ?></script>
@@ -17,20 +10,7 @@ $this->form->prepare();
     <div class="col-lg-2"></div>
     <div class="col-lg-8 text-left">
         <h2><?= $this->translate('__categories') ?></h2>
-        <br />
 
-        <!-- // Upload part -->
-        <div class="col-lg-4 text-left"><?= $this->formFile($form->get('file')); ?></div>
-        <?= $this->formSubmit($form->get('submit_file')); ?>
-        <?= $this->formSubmit($form->get('submit')); ?>
-        <br />
-        <div class="col-lg-4 text-left">
-            <?php if($error_upload == 1){ echo "<ul class='bg-danger'> <li>" . $this->translate('__error_file'). "</li></ul>"; }
-            if($error_id == 1){ echo "<ul class='bg-danger'> <li>" . $this->translate('__error_id'). "</li></ul>"; } ?>
-        </div>
-
-        <br />
-        <br />
         <br />
 
         <?php
@@ -49,7 +29,6 @@ $this->form->prepare();
             </tr>
             <?php
             foreach ($categories as $category) :
-                if (substr($category->getTranslationKey(), 10) > $_SESSION['category_max']) {$_SESSION['category_max'] = substr($category->getTranslationKey(), 10);}
                 $urlModify = $this->url('admin', ['action' => 'modify-category', 'id' => $category->getId()]);
                 $urlDelete = $this->url('admin', ['action' => 'delete-category', 'id' => $category->getId()]);
             ?>
@@ -68,5 +47,3 @@ $this->form->prepare();
         </table>
     </div>
 </div>
-
-<?= $this->form()->closeTag() ?>

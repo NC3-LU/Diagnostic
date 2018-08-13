@@ -136,6 +136,16 @@ class QuestionService extends AbstractService
             }
         }
 
+        //categories
+        $categories = [];
+        $categoryEntity = $this->get('entity_categ');
+        if (array_key_exists('categories', $data)) {
+            foreach ($data['categories'] as $key => $value) {
+                $categories[$key] = new $categoryEntity;
+                $categories[$key]->exchangeArray($value);
+            }
+        }
+
         // UID diagnostic
         $_SESSION['id_diagnostic'] = $data['id_diagnostic'];
 
@@ -144,6 +154,7 @@ class QuestionService extends AbstractService
             $container->result = $result;
             $container->information = $information;
             $container->questions = $questions;
+            $container->categories = $categories;
 
             return true;
         } else {

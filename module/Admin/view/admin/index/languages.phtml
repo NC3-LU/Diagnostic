@@ -6,12 +6,6 @@ $this->headTitle($title);
 $this->form->setAttribute('action', $this->url('admin', ['action' => 'languages']));
 $this->form->prepare();
 
-// Retrieve question max
-$_SESSION['question_max'] = 1;
-foreach ($questions as $question) :
-    if (substr($question->getTranslationKey(), 10) > $_SESSION['question_max']) {$_SESSION['question_max'] = substr($question->getTranslationKey(), 10);}
-endforeach;
-
 $_SESSION['nb_translations'] = 0; // Count the number of translations
 
 ?>
@@ -75,7 +69,7 @@ $_SESSION['nb_translations'] = 0; // Count the number of translations
 
                 $trans_key = 3; $trans = 2; $num_button = 1; $id_trans_ref = 1;
 
-                $file = fopen($location_lang . $temp_lang . '/' . 'translations.po', 'r');
+                $file = fopen($location_lang . $temp_lang . '/translations.po', 'r');
                 // Go to translations to display in the po file
                 while (!feof($file)) {
                     $temp = fgets($file, 4096);
@@ -110,7 +104,7 @@ $_SESSION['nb_translations'] = 0; // Count the number of translations
 
                     if($trans_key==3){
                         echo "<tr><td class=col-lg-2 style=text-align:center>";
-                        echo $_SESSION['key_' . $temp_lang][$num_button]=substr($temp, 7, -2);
+                        echo $_SESSION['key_' . $temp_lang][$num_button] = substr($temp, 7, -2);
                         echo "</td>";
                         $trans_key=0;
                         $_SESSION['nb_translations']++;

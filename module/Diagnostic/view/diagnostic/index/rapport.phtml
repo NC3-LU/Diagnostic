@@ -71,8 +71,10 @@ echo $this->inlineScript()->prependFile($this->basePath('js/Chart.js-master/Char
                             if (count($results) != count($questions)) {$disabled = "disabled = 'disabled'";}
                             else {
                                 for ($i=1; $i<=count($results); $i++) {
-                                    if ($results[$i]['notes'] == '') {$disabled = "disabled = 'disabled'"; break;}
-                                    else {$disabled = "";}
+                                    if (isset($results[$i])) {
+                                        if ($results[$i]['notes'] == '') {$disabled = "disabled = 'disabled'"; break;}
+                                        else {$disabled = "";}
+                                    }
                                 }
                             }
                             ?>
@@ -517,4 +519,3 @@ var myBarChart = new Chart(document.getElementById("canvas3").getContext("2d")).
 document.getElementById('canvas3-legend').innerHTML = myBarChart.generateLegend();
 
 </script>
-

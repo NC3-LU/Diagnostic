@@ -401,7 +401,7 @@ class IndexController extends AbstractController
         $questions = $questionService->getQuestions();
 
         if (!array_key_exists($id, $questions)) {
-            throw new \Exception('Question not exist');
+            return $this->redirect()->toRoute('diagnostic', ['controller' => 'index', 'action' => 'information', 'id' => 1]);
         }
 
         //retrieve categories
@@ -426,6 +426,7 @@ class IndexController extends AbstractController
         //retrieve result
         $container = new Container('diagnostic');
         $result = ($container->offsetExists('result')) ? $container->result : [];
+
         $information = ($container->offsetExists('information')) ? $container->information : ['organization' => '', 'synthesis' => ''];
         //form
         $form = $this->get('questionForm');
@@ -758,11 +759,17 @@ class IndexController extends AbstractController
         $questionService = $this->get('questionService');
         $questions = $questionService->getQuestions();
 
+        //retrieve categories
+        /** @var CategoryService $categoryService */
+        $categoryService = $this->get('categoryService');
+        $categories = $categoryService->getCategories();
+
         //format result
         $export = [
             'result' => $result,
             'information' => $information,
             'questions' => $questions,
+            'categories' => $categories,
             'id_diagnostic' => $_SESSION['id_diagnostic']
         ];
         $export = json_encode($export);
@@ -824,7 +831,12 @@ class IndexController extends AbstractController
         //retrieve questions
         /** @var QuestionService $questionService */
         $questionService = $this->get('questionService');
-        $questions = $questionService->getBddQuestions();
+        $questions = $questionService->getQuestions();
+
+        //retrieve questions: used for the Uid
+        /** @var QuestionService $questionService */
+        $questionService = $this->get('questionService');
+        $questions2 = $questionService->getBddQuestions();
 
         //retrieve categories: used for the Uid
         /** @var CategoryService $categoryService */
@@ -885,16 +897,31 @@ class IndexController extends AbstractController
             $form->setData($request->getPost());
             // Download statistics
             if (isset($_POST['submit_stat'])) {
-                $i = 1;
-                $statistics = [];
-                $statistics[0]['id_diagnostic'] = $_SESSION['id_diagnostic'];
-                $statistics[0]['activity'] = $translator->translate($container->information['activity']);
-                $statistics[0]['nb_employees'] = $translator->translate($container->information['nb_employees']);
-                $statistics[0]['final_result'] = $calculResults['total'];
-                while (isset($results[$i])) {
-                    $statistics[$i]['uid'] = $questions[$i]->getUid();
 
-                    $statistics[$i]['question'] = $questions[$i]->getTranslationKey();
+                $stat_global = [];
+                $stat_categ = [];
+                $stat_quest = [];
+
+                $stat_global[0]['id_diagnostic'] = $_SESSION['id_diagnostic'];
+                $stat_global[0]['activity'] = $translator->translate($container->information['activity']);
+                $stat_global[0]['nb_employees'] = $translator->translate($container->information['nb_employees']);
+                $stat_global[0]['final_result'] = $calculResults['total'];
+
+                $i = 1;
+                $j = 1;
+                while (isset($categories['__category' . $j])) {
+                    $stat_categ[$i]['uid'] = $categories2[$j]->getUid();
+                    $stat_categ[$i]['category'] = '__category' . $j;
+                    $stat_categ[$i]['category_maturity'] = $categories['__category' . $j];
+                    $i++;
+                    $j++;
+                }
+
+                $i = 1;
+                while (isset($results[$i])) {
+                    $stat_quest[$i]['uid'] = $questions2[$i]->getUid();
+
+                    $stat_quest[$i]['question'] = $questions[$i]->getTranslationKey();
 
                     if ($results[$i]['maturity'] == 0) {
                         $maturity = $translator->translate('__maturity_none');
@@ -905,7 +932,7 @@ class IndexController extends AbstractController
                     }else {
                         $maturity = $translator->translate('__maturity_NA');
                     }
-                    $statistics[$i]['maturity'] = $maturity;
+                    $stat_quest[$i]['maturity'] = $maturity;
 
                     if ($results[$i]['gravity'] == 1) {
                         $gravity = $translator->translate('__low');
@@ -914,25 +941,21 @@ class IndexController extends AbstractController
                     }else {
                         $gravity = $translator->translate('__strong');
                     }
-                    $statistics[$i]['gravity'] = $gravity;
+                    $stat_quest[$i]['gravity'] = $gravity;
 
-                    $statistics[$i]['category'] = $questions[$i]->getCategoryTranslationKey();
+                    $stat_quest[$i]['category'] = $questions[$i]->getCategoryTranslationKey();
 
                     $i++;
                 }
 
-                $j = 1;
-                while (isset($categories['__category' . $j])) {
-                    $statistics[$i]['uid'] = $categories2[$j]->getUid();
-                    $statistics[$i]['category'] = '__category' . $j;
-                    $statistics[$i]['category_maturity'] = $categories['__category' . $j];
-                    $i++;
-                    $j++;
-                }
+                $statistics = [];
+                $statistics[0] = array_values($stat_global);
+                $statistics[1] = array_values($stat_categ);
+                $statistics[2] = array_values($stat_quest);
 
                 // Encode in a file
                 $fichier = fopen('/var/www/diagnostic/stat_' . $_SESSION['id_diagnostic'] . '.json', 'w+');
-                fwrite($fichier, json_encode(array_values($statistics), JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES));
+                fwrite($fichier, json_encode($statistics, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES));
                 fclose($fichier);
 
                 // Ddl the file and delete it in the VM

@@ -4,7 +4,15 @@ $title = $this->translate('__category');
 $this->headTitle($title);
 
 $this->form->setAttribute('action', $this->url('admin', ['action' => 'add-category']));
-$this->form->prepare(); ?>
+$this->form->prepare();
+
+// Retrieve category max
+$categories_max = 1;
+foreach ($categories as $category) :
+    if (substr($category->getTranslationKey(), 10) > $categories_max) {$categories_max = substr($category->getTranslationKey(), 10);}
+endforeach;
+
+?>
 
 <div class="row">
     <div class="col-lg-3 text-center"></div>
@@ -18,7 +26,7 @@ $this->form->prepare(); ?>
             <tr>
                 <td><label><?= $this->translate($form->get('translation_key')->getLabel()) ?></label></td>
                 <td>
-                    <?= $this->formText($form->get('translation_key')->setValue('__category' . ($_SESSION['category_max']+1))->setAttributes(['readonly' => 'true', 'style' => 'pointer-events: none'])) ?>
+                    <?= $this->formText($form->get('translation_key')->setValue('__category' . ($categories_max+1))->setAttributes(['readonly' => 'true', 'style' => 'pointer-events: none'])) ?>
                 </td>
             </tr>
 

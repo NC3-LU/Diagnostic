@@ -8,7 +8,15 @@ $title = $this->translate('__question');
 $this->headTitle($title);
 
 $this->form->setAttribute('action', $this->url('admin', ['action' => 'add-question']));
-$this->form->prepare(); ?>
+$this->form->prepare();
+
+// Retrieve question max
+$questions_max = 1;
+foreach ($questions as $question) :
+    if (substr($question->getTranslationKey(), 10) > $questions_max) {$questions_max = substr($question->getTranslationKey(), 10);}
+endforeach;
+
+?>
 
 <div class="row">
     <div class="col-lg-3 text-center"></div>
@@ -22,7 +30,7 @@ $this->form->prepare(); ?>
             <tr>
                 <td><label><?= $this->translate($form->get('translation_key')->getLabel()) ?></label></td>
                 <td>
-                    <?= $this->formText($form->get('translation_key')->setValue('__question' . ($_SESSION['question_max']+1))->setAttributes(['readonly' => 'true', 'style' => 'pointer-events: none'])) ?>
+                    <?= $this->formText($form->get('translation_key')->setValue('__question' . ($questions_max+1))->setAttributes(['readonly' => 'true', 'style' => 'pointer-events: none'])) ?>
                 </td>
             </tr>
 
