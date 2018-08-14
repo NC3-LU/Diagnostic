@@ -196,7 +196,7 @@ address or choose whether it is admin or not.
 > The only way to modify a password is to get a password Forgotten link,
 > or the script which is with the Virtual Machine.
 
-You can also delete an user by clicking on the right side, the red
+You can also delete a user by clicking on the right side, the red
 button where "Delete" is written.
 
 > **Warning**
@@ -355,7 +355,7 @@ translations or export them in a json format.
 
 ![Administration Panel – QuestionsJson](img/UG_Diagnostic_050.PNG)
 
-As you can see in this screenshot there is some translations, and
+As you can see in this screenshot there are some translations, and
 it is possible to add/modify/delete them
 following the same form written in this file.
 
@@ -513,7 +513,7 @@ recommendations, their gravity and their current and target maturity.
 ![Recommendation Tab](img/UG_Diagnostic_027.PNG)
 
 Just below the first tab, you will find the current maturity level and
-the target level (First and second bar). If there is some statistics
+the target level (First and second bar). If there are some statistics
 of the current domain and overall diagnoses, you can see them by
 choosing a statistic year and press the 'Ok' button.
 
@@ -586,7 +586,7 @@ As you can also see, tags which can be modified in their order, or that could be
 * \$\{EVALUATION\_SYNTHESYS} : Some important conclusions of the diagnosis, or important information to underline (Field got on the last free-text field, "Summary of evaluation")
 * \$\{LEGEND\_BAR} : The legend of the bar chart (Got automatically)
 * \$\{LEGEND\_BLOCKING} : The legend which explain a blocking question (Got automatically)
-* \$\{LEGEND\_DATE} : The sentence below the bar chart legend which show the year of the statistics chosen (Got automatically)
+* \$\{LEGEND\_DATE} : The sentence below the bar chart legend which shows the year of the statistics chosen (Got automatically)
 * \$\{LEGEND\_PIE} : The legend of the pie chart which contains all the categories (Got automatically)
 * \$\{NB\_EMPLOYEES} : The number of employees of the organization (Got automatically)
 * \$\{NOTES\_TABLE} : The table which contains all the notes, maturity, recommendation of each questions (Got automatically)
