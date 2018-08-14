@@ -126,8 +126,8 @@ Imagine you need a specific question on the BYOD, and you think this
 should be really important. Moreover you have, in the same category,
 a question less important.
 
-If the threshold are respectively 10 (threat 2 * weight 5 for exemple)
-and 5 (threat 1 * weight 5 for exemple), then the maturity on a level
+If the threshold are respectively 10 (threat 2 * weight 5 for example)
+and 5 (threat 1 * weight 5 for example), then the maturity on a level
 is calculated this way: ((10/3 x maturity) + (5/3 x maturity))
 where the maturity could be 0 if not managed, 1 if more or less managed
 and 2 if managed. So if a policy is more or less managed about BYOD and
