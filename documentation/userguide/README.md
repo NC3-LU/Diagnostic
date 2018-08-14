@@ -56,11 +56,11 @@ On the top of the screen but below the header, at left, you could see a
 button where you could just resume form an old diagnosis (**2.** on the
 picture).
 
-Just below, you have the navigation panel (**3.** on the picture), which
+Just below, there is the navigation panel (**3.** on the picture), which
 we will describe just a little later. Same for the two buttons used to
 get the report or save the current Diagnosis (**4.** on the picture).
 
-Finally, on the right of the screen, you have a free-text panel, where
+Finally, on the right of the screen, there is a free-text panel, where
 you should put some text which will be in the report (**5.** on the
 picture). Most of the time, the introduction is used to give the context
 of this diagnosis, and some info that could be useful when you read the
@@ -291,7 +291,7 @@ open a new Diagnosis.
 
 ![Administration Panel – Categories](img/UG_Diagnostic_036.PNG)
 
-In the ‘Category’ column, you have all the categories that will appear.
+In the ‘Category’ column, there are all the categories that will appear.
 The translation key is mainly used to link categories through all languages.
 To finish, the ‘action’ column represents the possibility to edit
 the category (by clicking the pen (![Pen](img/UG_Diagnostic_012.PNG)))
@@ -307,7 +307,7 @@ category](img/UG_Diagnostic_038.PNG) button.
 The first field is for the translation key used by the PO file.
 You do not need to touch it.
 
-Then you have some fields in which you can translate your category.
+Then there are some fields in which you can translate your category.
 
 > **Tip**
 >
@@ -384,7 +384,7 @@ As you can see, the translation tab is empty, and you can then fill in
 translations as you want to. The Reference translation may help you
 filling translations, as you can choose a language to support you.
 
-At the end of the page, you have two buttons which are ‘Add a translation’
+At the end of the page, there are two buttons which are ‘Add a translation’
 and ‘Change all translations’.
 
 ![Administration Panel – Add-Delete translation](img/UG_Diagnostic_042.PNG)
@@ -404,7 +404,7 @@ that you do not have to change one by one all the translations.
 
 The first field is for the translation key used by the PO file. You can put the key you need to translate.
 
-Then you have some fields in which you can translate your translation.
+Then there are some fields in which you can translate your translation.
 
 > **Tip**
 >

@@ -35,9 +35,9 @@ On the header, at the right side (**1.** on the picture), you can set, by clicki
 
 On the top of the screen but below the header, at left, you could see a button where you could just resume form an old diagnosis (**2.** on the picture).
 
-Just below, you have the navigation panel (**3.** on the picture), which we will describe just a little later. Same for the two buttons used to get the report or save the current Diagnosis (**4.** on the picture).
+Just below, there is the navigation panel (**3.** on the picture), which we will describe just a little later. Same for the two buttons used to get the report or save the current Diagnosis (**4.** on the picture).
 
-Finally, on the right of the screen, you have a free-text panel, where you should put some text which will be in the report (**5.** on the picture). Most of the time, the introduction is used to give the context of this diagnosis, and some info that could be useful when you read the report. You can also put the activity of the organization, and its number of employees.
+Finally, on the right of the screen, there is a free-text panel, where you should put some text which will be in the report (**5.** on the picture). Most of the time, the introduction is used to give the context of this diagnosis, and some info that could be useful when you read the report. You can also put the activity of the organization, and its number of employees.
 
 image::UG_Diagnostic_006.PNG[Main Page – Information about organization with text]
 
@@ -79,7 +79,7 @@ Finally, just hit the green ‘Add’ button to add your new question and get ba
 
 image::UG_Diagnostic_010.PNG[Main Page – First Question]
 
-On the right side, you have a text field ‘Note’ where you can put what you have seen, what has been said during the interview, precision about what you want…
+On the right side, there is a text field ‘Note’ where you can put what you have seen, what has been said during the interview, precision about what you want…
 
 The maturity panel is where you can set the current maturity on a scale of four levels (managed, more or less managed, not managed and not applicable). You will also have some reminders to think when you ask the question, what you should have in mind when you asking it, and what kind of answer you should have.
 
@@ -125,7 +125,7 @@ The second tab list all the default questions that will appear when you open a n
 
 image::UG_Diagnostic_017.PNG[Administration Panel – Questions]
 
-In the ‘Question’ column, you have all the questions that will appear. The translation key is mainly used to link questions through all languages. The category is, of course, the main theme linked, and the threshold could be assimilated to the maturity that will bring a managed control. The 'Blocking question' column is a way to know if a question is essential for the organization and must be managed. If a blocking question is not managed, it will be displayed in red in the report to highlight it as a problem for the entity. To finish, the ‘action’ column represents the possibility to edit the question (by clicking the pen (image:UG_Diagnostic_012.PNG[Pen])) or delete it (by clicking the cross (image:UG_Diagnostic_013.PNG[Cross])).
+In the ‘Question’ column, there are all the questions that will appear. The translation key is mainly used to link questions through all languages. The category is, of course, the main theme linked, and the threshold could be assimilated to the maturity that will bring a managed control. The 'Blocking question' column is a way to know if a question is essential for the organization and must be managed. If a blocking question is not managed, it will be displayed in red in the report to highlight it as a problem for the entity. To finish, the ‘action’ column represents the possibility to edit the question (by clicking the pen (image:UG_Diagnostic_012.PNG[Pen])) or delete it (by clicking the cross (image:UG_Diagnostic_013.PNG[Cross])).
 
 Above the tab, there is a section in which you can upload the current questions and categories or export them in a json format.
 
@@ -143,7 +143,7 @@ image::UG_Diagnostic_018.PNG[Administration Panel – Add Questions]
 
 The first field is for the translation key used by the PO file. You do not need to touch it.
 
-Then you have some fields in which you can translate your question and its help.
+Then there are some fields in which you can translate your question and its help.
 
 TIP: If you do not put translations, the name of the question will be the key written above. You can choose to translate in one language and not in the others. Writing some help is optional, it depends on your needs.
 
@@ -171,7 +171,7 @@ The third tab list all the default categories that will appear when you open a n
 
 image::UG_Diagnostic_036.PNG[Administration Panel – Categories]
 
-In the ‘Category’ column, you have all the categories that will appear. The translation key is mainly used to link categories through all languages. To finish, the ‘action’ column represents the possibility to edit the category (by clicking the pen (image:UG_Diagnostic_012.PNG[Pen])) or delete it (by clicking the cross (image:UG_Diagnostic_013.PNG[Cross])).
+In the ‘Category’ column, there are all the categories that will appear. The translation key is mainly used to link categories through all languages. To finish, the ‘action’ column represents the possibility to edit the category (by clicking the pen (image:UG_Diagnostic_012.PNG[Pen])) or delete it (by clicking the cross (image:UG_Diagnostic_013.PNG[Cross])).
 
 ==== Add a Category
 
@@ -181,7 +181,7 @@ image::UG_Diagnostic_037.PNG[Administration Panel – Add Categories]
 
 The first field is for the translation key used by the PO file. You do not need to touch it.
 
-Then you have some fields in which you can translate your category.
+Then there are some fields in which you can translate your category.
 
 TIP: If you do not put translations, the name of the category will be the key written above. You can choose to translate in one language and not in the others.
 
@@ -231,7 +231,7 @@ image::UG_Diagnostic_044.PNG[Administration Panel – Language added]
 
 As you can see, the translation column is empty, and you can then fill in translations as you want to. The Reference translation may help you filling translations, as you can choose a language to support you.
 
-At the end of the page, you have two buttons which are ‘Add a translation’ and ‘Change all translations’.
+At the end of the page, there are two buttons which are ‘Add a translation’ and ‘Change all translations’.
 
 image::UG_Diagnostic_042.PNG[Administration Panel – Add-Delete translation]
 
@@ -245,7 +245,7 @@ image::UG_Diagnostic_045.PNG[Administration Panel – Add Translations]
 
 The first field is for the translation key used by the PO file. You can put the key you need to translate.
 
-Then you have some fields in which you can translate your translation.
+Then there are some fields in which you can translate your translation.
 
 TIP: If you do not put translations, the name of the translation will be empty.
 
