@@ -159,11 +159,33 @@ class IndexController extends AbstractController
         $questionService = $this->get('questionService');
         $questions = $questionService->getBddQuestions();
         $questions_max = count($questions);
+        $max_quest = 1;
+        $i = 1;
+        $j = 1;
+        // Put the highest question id in $max_quest
+        while ($i <= $questions_max) {
+            if (isset($questions[$j])) {
+                if ($questions[$j]->id > $max_quest) {$max_quest = $questions[$j]->id;}
+                $i++;
+                $j++;
+            }else {$j++;}
+        }
 
         //retrieve categories
         $categoryService = $this->get('categoryService');
         $categories = $categoryService->getBddCategories();
         $categories_max = count($categories);
+        $max_categ = 1;
+        $i = 1;
+        $j = 1;
+        // Put the highest category id in $max_categ
+        while ($i <= $categories_max) {
+            if (isset($categories[$j])) {
+                if ($categories[$j]->id > $max_categ) {$max_categ = $categories[$j]->id;}
+                $i++;
+                $j++;
+            }else {$j++;}
+        }
 
         $request = $this->getRequest();
         $form = $this->get('adminQuestionForm');
@@ -172,7 +194,6 @@ class IndexController extends AbstractController
 
         //form is post and valid
         if ($request->isPost()) {
-            $form->setData($request->getPost());
 
             // Upload
             if (isset($_POST['submit_file'])) {
@@ -182,54 +203,60 @@ class IndexController extends AbstractController
                     $content = file_get_contents($_FILES['file']['tmp_name']);
                     $tab = json_decode($content, true);
 
-                    // If the file is not 'questions.json'
-                    if (!isset($tab[0]['questions'][0]['category_id'])) {$tab = '';}
+                    // Verify if the file is correct
+                    $error_file = 0;
+                    $i = 1;
+                    while (isset($tab[$i-1])) {
+                        if (count($tab[$i-1]) < 2 || !isset($tab[$i-1]['id']) || !isset($tab[$i-1]['questions'])) {$error_file = 1;}
+                        $j = 1;
+                        while (isset($tab[$i-1]['questions'][$j-1])) {
+                            if (count($tab[$i-1]['questions'][$j-1]) < 4 || !isset($tab[$i-1]['questions'][$j-1]['id']) || !isset($tab[$i-1]['questions'][$j-1]['threat']) || !isset($tab[$i-1]['questions'][$j-1]['weight']) || !isset($tab[$i-1]['questions'][$j-1]['blocking'])) {$error_file = 1;}
+                            $j++;
+                        }
+                        $i++;
+                    }
+
+                    if ($error_file == 1) {$tab = '';}
                     else {
                         $i = 1;
                         while (isset($tab[$i-1])) {
                             // Avoid to put a wrong category id
                             $j = $i + 1;
                             while (isset($tab[$j-1])) {
-                                if ($tab[$i-1]['id'] >= $tab[$j-1]['id']) {$error_id = 1;}
+                                if ($tab[$i-1]['id'] == $tab[$j-1]['id']) {$error_id = 1;}
                                 $j++;
                             }
 
+                            // Avoid to put a wrong question id
                             $k = 1;
                             while (isset($tab[$i-1]['questions'][$k-1])) {
-                                // Avoid to put a wrong question id
-                                $l = $k + 1;
-                                while (isset($tab[$i-1]['questions'][$l-1])) {
-                                    if ($tab[$i-1]['questions'][$k-1]['id'] >= $tab[$i-1]['questions'][$l-1]['id']) {$error_id = 1;}
-                                    $l++;
+                                $m = $i;
+                                while (isset($tab[$m-1])) {
+                                    if ($m == $i) {$l = $k + 1;}
+                                    else {$l = 1;}
+                                    while (isset($tab[$m-1]['questions'][$l-1])) {
+                                        if ($tab[$i-1]['questions'][$k-1]['id'] == $tab[$m-1]['questions'][$l-1]['id']) {$error_id = 1;}
+                                        $l++;
+                                    }
+                                    $m++;
                                 }
                                 $k++;
-                            }
-                            if (isset($tab[$i])) {
-                                if ($tab[$i-1]['questions'][count($tab[$i-1]['questions'])-1]['id'] >= $tab[$i]['questions'][0]['id']) {$error_id = 1;}
                             }
                             $i++;
                         }
                     }
 
-                    if ($tab != '' && $error_categ == 0 && $error_id == 0) {
-                        // Delete the previous question database
-                        $i = 1;
-                        $l = 1;
-                        while ($questions_max >= $l) {
-                            if (isset($questions[$i])) {
-                                $questionService->delete($i);
-                                $l++;
-                            }
-                            $i++;
-                        }
+                    if ($tab != '' && $error_id == 0) {
+
+
+                        ///////////////////////// CATEGORY PART \\\\\\\\\\\\\\\\\\\\\\\\\\
+
 
                         // Delete the previous category database
                         $i = 1;
-                        $l = 1;
-                        while ($categories_max >= $l) {
+                        while ($max_categ >= $i) {
                             if (isset($categories[$i])) {
                                 $categoryService->delete($i);
-                                $l++;
                             }
                             $i++;
                         }
@@ -242,33 +269,17 @@ class IndexController extends AbstractController
                             $i++;
                         }
 
-                        // Delete things that are not in the category database
-                        $tab_temp = [];
-                        $tab_temp = $tab;
-                        $file_country = fopen($location_lang . 'code_country.txt', 'r');
-                        while (!feof($file_country)) {
-                            $temp_country = substr(fgets($file_country, 4096), 0, -1);
-                            $i = 1;
-                            if (isset($tab[0]['translation_' . $temp_country])) {
-                                while (isset($tab[$i-1])) {
-                                    unset($tab_temp[$i-1]['translation_' . $temp_country]);
-                                    unset($tab_temp[$i-1]['questions']);
-                                    $i++;
-                                }
-                            }
-                        }
-                        fclose($file_country);
-
-                        // Import the new category database
+                        // Import the new category database with the things needed for categories database
+                        $tab_database = [];
                         $i = 1;
                         $j = 1;
-                        while (isset($tab_temp[$i-1])) {
-                            if ($tab_temp[$i-1]['id'] != $j) {$j = $tab_temp[$i-1]['id'];}
-                            $tab_temp[$i-1]['translation_key'] = '__category' . $j;
-                            $tab_temp[$i-1]['uid'] = md5(serialize($hash_categ[$i]));
-                            $categoryService->create($tab_temp[$i-1]);
+                        while (isset($tab[$i-1])) {
+                            if ($tab[$i-1]['id'] != $j) {$j = $tab[$i-1]['id'];}
+                            $tab_database[$i-1]['id'] = $j;
+                            $tab_database[$i-1]['translation_key'] = '__category' . $j;
+                            $tab_database[$i-1]['uid'] = md5(serialize($hash_categ[$i]));
+                            $categoryService->create($tab_database[$i-1]);
                             $i++;
-                            $j++;
                         }
                         $categoryService->resetCache();
 
@@ -279,83 +290,63 @@ class IndexController extends AbstractController
                         for ($l=1; $l<$_SESSION['nb_lang']; $l++) {
                             $temp_lang = substr(fgets($file_lang, 4096), 0, -1);
 
-                            if (isset($tab[0]['translation_' . $temp_lang])) {
-                                rename($location_lang . $temp_lang . '/categories.po', $location_lang . $temp_lang . '/categories_temp.po');
-                                $file_temp = fopen($location_lang . $temp_lang . '/categories_temp.po', 'r');
-                                $file = fopen($location_lang . $temp_lang . '/categories.po', 'w');
-                                while (!feof($file_temp)) {
-                                    $temp = fgets($file_temp, 4096);
-                                    if ($temp == PHP_EOL) {break;}
-                                    fputs($file, $temp);
-                                }
+                            rename($location_lang . $temp_lang . '/categories.po', $location_lang . $temp_lang . '/categories_temp.po');
+                            $file_temp = fopen($location_lang . $temp_lang . '/categories_temp.po', 'r');
+                            $file = fopen($location_lang . $temp_lang . '/categories.po', 'w');
+                            while (!feof($file_temp)) {
+                                $temp = fgets($file_temp, 4096);
+                                if ($temp == PHP_EOL) {break;}
+                                fputs($file, $temp);
+                            }
 
-                                $i = 1;
-                                $j = 1;
-                                while (isset($tab[$i-1])) {
-                                    if ($tab[$i-1]['id'] != $j) {$j = $tab[$i-1]['id'];}
-                                    fputs($file, PHP_EOL);
-                                    fputs($file, 'msgid "__category' . $j . '"');
-                                    fputs($file, PHP_EOL);
+                            $i = 1;
+                            $j = 1;
+                            while (isset($tab[$i-1])) {
+                                if ($tab[$i-1]['id'] != $j) {$j = $tab[$i-1]['id'];}
+                                fputs($file, PHP_EOL);
+                                fputs($file, 'msgid "__category' . $j . '"');
+                                fputs($file, PHP_EOL);
+                                // Write if the translation exist. If not, create it empty
+                                if (isset($tab[$i-1]['translation_' . $temp_lang])) {
                                     fputs($file, 'msgstr "' . $tab[$i-1]['translation_' . $temp_lang] . '"');
-                                    fputs($file, PHP_EOL);
-                                    $i++;
-                                    $j++;
+                                }else {
+                                    fputs($file, 'msgstr ""');
                                 }
-                                fclose($file_temp);
-                                fclose($file);
-                                unlink($location_lang . $temp_lang . '/categories_temp.po');
-
-                                // compile from po to mo
-                                shell_exec('msgfmt ' . $location_lang . $temp_lang . '/categories.po -o ' . $location_lang . $temp_lang . '/categories.mo');
+                                fputs($file, PHP_EOL);
+                                $i++;
                             }
+                            fclose($file_temp);
+                            fclose($file);
+                            unlink($location_lang . $temp_lang . '/categories_temp.po');
+
+                            // compile from po to mo
+                            shell_exec('msgfmt ' . $location_lang . $temp_lang . '/categories.po -o ' . $location_lang . $temp_lang . '/categories.mo');
                         }
                         fclose($file_lang);
 
-                        // Write in question file
-                        $file_lang = fopen($location_lang . 'languages.txt', 'r');
-                        for ($l=1; $l<$_SESSION['nb_lang']; $l++) {
-                            $temp_lang = substr(fgets($file_lang, 4096), 0, -1);
 
-                            if (isset($tab[0]['questions'][0]['translation_' . $temp_lang])) {
-                                rename($location_lang . $temp_lang . '/questions.po', $location_lang . $temp_lang . '/questions_temp.po');
-                                $file_temp = fopen($location_lang . $temp_lang . '/questions_temp.po', 'r');
-                                $file = fopen($location_lang . $temp_lang . '/questions.po', 'w');
-                                while (!feof($file_temp)) {
-                                    $temp = fgets($file_temp, 4096);
-                                    if ($temp == PHP_EOL) {break;}
-                                    fputs($file, $temp);
-                                }
+                        ///////////////////////// QUESTION PART \\\\\\\\\\\\\\\\\\\\\\\\\\
 
-                                $i = 1;
-                                $k = 1;
-                                while (isset($tab[$i-1])) {
-                                    $j = 1;
-                                    while (isset($tab[$i-1]['questions'][$j-1])) {
-                                        if ($tab[$i-1]['questions'][$j-1]['id'] != $k) {$k = $tab[$i-1]['questions'][$j-1]['id'];}
-                                        fputs($file, PHP_EOL);
-                                        fputs($file, 'msgid "__question' . $k . '"');
-                                        fputs($file, PHP_EOL);
-                                        fputs($file, 'msgstr "' . $tab[$i-1]['questions'][$j-1]['translation_' . $temp_lang] . '"');
-                                        fputs($file, PHP_EOL);
-                                        fputs($file, PHP_EOL);
-                                        fputs($file, 'msgid "__question' . $k . 'help"');
-                                        fputs($file, PHP_EOL);
-                                        fputs($file, 'msgstr "' . $tab[$i-1]['questions'][$j-1]['translation_help_' . $temp_lang] . '"');
-                                        fputs($file, PHP_EOL);
-                                        $j++;
-                                        $k++;
-                                    }
-                                    $i++;
-                                }
-                                fclose($file_temp);
-                                fclose($file);
-                                unlink($location_lang . $temp_lang . '/questions_temp.po');
 
-                                // compile from po to mo
-                                shell_exec('msgfmt ' . $location_lang . $temp_lang . '/questions.po -o ' . $location_lang . $temp_lang . '/questions.mo');
+                        $max_quest_to_upload = 1; // Find the question with the highest number in the json file to upload
+                        $i = 1; // iteration for categories
+                        while (isset($tab[$i-1])) {
+                            $j = 1; // iteration for questions in each category
+                            while (isset($tab[$i-1]['questions'][$j-1])) {
+                                if ($tab[$i-1]['questions'][$j-1]['id'] > $max_quest_to_upload) {$max_quest_to_upload = $tab[$i-1]['questions'][$j-1]['id'];}
+                                $j++;
                             }
+                            $i++;
                         }
-                        fclose($file_lang);
+
+                        // Delete the previous question database
+                        $i = 1;
+                        while ($max_quest >= $i) {
+                            if (isset($questions[$i])) {
+                                $questionService->delete($i);
+                            }
+                            $i++;
+                        }
 
                         // Set question Uid
                         $hash_quest = [];
@@ -369,7 +360,7 @@ class IndexController extends AbstractController
                                 $file = fopen($location_lang . 'en/categories.po', 'r');
                                 while (!feof($file)) {
                                     $temp = fgets($file, 4096);
-                                    if (substr($temp, 7, -2) == '__category' . $tab[$i-1]['questions'][$j-1]['category_id']) {
+                                    if (substr($temp, 7, -2) == '__category' . $tab[$i-1]['id']) {
                                         $temp = fgets($file, 4096);
                                         $hash_quest[$k]['category_translation'] = substr($temp, 8, -2);
                                         break;
@@ -382,43 +373,100 @@ class IndexController extends AbstractController
                             $i++;
                         }
 
-                        // Delete things that are not in the question database
-                        $file_country = fopen($location_lang . 'code_country.txt', 'r');
-                        while (!feof($file_country)) {
-                            $temp_country = substr(fgets($file_country, 4096), 0, -1);
-                            $i = 1;
-                            if (isset($tab[0]['questions'][0]['translation_' . $temp_country])) {
-                                while (isset($tab[$i-1])) {
-                                    $j = 1;
-                                    while (isset($tab[$i-1]['questions'][$j-1])) {
-                                        unset($tab[$i-1]['questions'][$j-1]['translation_' . $temp_country]);
-                                        unset($tab[$i-1]['questions'][$j-1]['translation_help_' . $temp_country]);
-                                        $j++;
-                                    }
-                                    $i++;
-                                }
-                            }
-                        }
-                        fclose($file_country);
-
-                        // Import the new question database
-                        $i = 1;
-                        $k = 1;
-                        $l = 1;
+                        // Import the new question database with the things needed for questions database
+                        $tab_database = [];
+                        $i = 1; // iteration for categories
+                        $k = 1; // iteration for id of questions
+                        $l = 1; // iteration for UID of questions
                         while (isset($tab[$i-1])) {
-                            $j = 1;
+                            $j = 1; // iteration for questions in each category
                             while (isset($tab[$i-1]['questions'][$j-1])) {
                                 if ($tab[$i-1]['questions'][$j-1]['id'] != $k) {$k = $tab[$i-1]['questions'][$j-1]['id'];}
-                                $tab[$i-1]['questions'][$j-1]['translation_key'] = '__question' . $k;
-                                $tab[$i-1]['questions'][$j-1]['uid'] = md5(serialize($hash_quest[$l]));
-                                $questionService->create($tab[$i-1]['questions'][$j-1]);
+                                $tab_database[$j-1]['id'] = $k;
+                                $tab_database[$j-1]['category_id'] = $tab[$i-1]['id'];
+                                $tab_database[$j-1]['translation_key'] = '__question' . $k;
+                                $tab_database[$j-1]['threat'] = $tab[$i-1]['questions'][$j-1]['threat'];
+                                $tab_database[$j-1]['weight'] = $tab[$i-1]['questions'][$j-1]['weight'];
+                                $tab_database[$j-1]['blocking'] = $tab[$i-1]['questions'][$j-1]['blocking'];
+                                $tab_database[$j-1]['uid'] = md5(serialize($hash_quest[$l]));
+                                $questionService->create($tab_database[$j-1]);
                                 $j++;
                                 $l++;
                             }
                             $i++;
-                            $k++;
                         }
                         $questionService->resetCache();
+
+                        // Write in question file
+                        $file_lang = fopen($location_lang . 'languages.txt', 'r');
+                        for ($l=1; $l<$_SESSION['nb_lang']; $l++) {
+                            $temp_lang = substr(fgets($file_lang, 4096), 0, -1);
+
+                            rename($location_lang . $temp_lang . '/questions.po', $location_lang . $temp_lang . '/questions_temp.po');
+                            $file_temp = fopen($location_lang . $temp_lang . '/questions_temp.po', 'r');
+                            $file = fopen($location_lang . $temp_lang . '/questions.po', 'w');
+                            while (!feof($file_temp)) {
+                                $temp = fgets($file_temp, 4096);
+                                if ($temp == PHP_EOL) {break;}
+                                fputs($file, $temp);
+                            }
+
+                            // Compare questions eachother to write in the file ordered questions in ascending order
+                            $k = 1; // iteration for id of questions
+                            while ($k <= $max_quest_to_upload) {
+                                $i = 1; // iteration for categories
+                                $ok = 0; // Variable to verify if the next question is the right question to be in ascending order
+                                while (isset($tab[$i-1])) {
+                                    $j = 1; // iteration for questions in each category
+                                    while (isset($tab[$i-1]['questions'][$j-1])) {
+                                        if ($tab[$i-1]['questions'][$j-1]['id'] == $k) {
+                                            fputs($file, PHP_EOL);
+                                            fputs($file, 'msgid "__question' . $k . '"');
+                                            fputs($file, PHP_EOL);
+                                            // Write if the translation exist. If not, create it empty
+                                            if (isset($tab[$i-1]['questions'][$j-1]['translation_' . $temp_lang])) {
+                                                fputs($file, 'msgstr "' . $tab[$i-1]['questions'][$j-1]['translation_' . $temp_lang] . '"');
+                                            }else {
+                                                fputs($file, 'msgstr ""');
+                                            }
+                                            fputs($file, PHP_EOL);
+                                            fputs($file, PHP_EOL);
+                                            fputs($file, 'msgid "__question' . $k . 'help"');
+                                            fputs($file, PHP_EOL);
+                                            // Write if the translation exist. If not, create it empty
+                                            if (isset($tab[$i-1]['questions'][$j-1]['translation_' . $temp_lang])) {
+                                                fputs($file, 'msgstr "' . $tab[$i-1]['questions'][$j-1]['translation_help_' . $temp_lang] . '"');
+                                            }else {
+                                                fputs($file, 'msgstr " "');
+                                            }
+                                            fputs($file, PHP_EOL);
+                                            $k++;
+                                        }
+                                        $j++;
+                                    }
+                                    $i++;
+                                }
+
+                                // check if the next question has the right id
+                                $i = 1;
+                                while (isset($tab[$i-1])) {
+                                    $j = 1;
+                                    while (isset($tab[$i-1]['questions'][$j-1])) {
+                                        if ($tab[$i-1]['questions'][$j-1]['id'] == $k) {$ok = 1;}
+                                        $j++;
+                                    }
+                                    $i++;
+                                }
+                                if ($ok == 0) {$k++;}
+                            }
+                            fclose($file_temp);
+                            fclose($file);
+                            unlink($location_lang . $temp_lang . '/questions_temp.po');
+
+                            // compile from po to mo
+                            shell_exec('msgfmt ' . $location_lang . $temp_lang . '/questions.po -o ' . $location_lang . $temp_lang . '/questions.mo');
+                        }
+                        fclose($file_lang);
 
                         return $this->redirect()->toRoute('admin', ['controller' => 'index', 'action' => 'questions']);
                     }elseif ($tab == '') {$error_upload = 1;}
@@ -427,9 +475,58 @@ class IndexController extends AbstractController
 
             // Export
             if (isset($_POST['submit'])) {
-                // Delete things we don't need in the json file
+
+
+                ///////////////////////// CATEGORY PART \\\\\\\\\\\\\\\\\\\\\\\\\\
+
+
+                // Delete category things we don't need in the json file
                 $i = 1;
-                while ($questions_max >= $i) {
+                while ($max_categ >= $i) {
+                    if (isset($categories[$i])) {
+                        unset($categories[$i]->uid);
+                        unset($categories[$i]->translation_key);
+                        unset($categories[$i]->new);
+                    }
+                    $i++;
+                }
+
+                // Write translation categories in the json file
+                $file_lang = fopen($location_lang . 'languages.txt', 'r');
+                for ($j=1; $j<$_SESSION['nb_lang']; $j++) {
+                    $temp_lang = substr(fgets($file_lang, 4096), 0, -1);
+
+                    $file = fopen($location_lang . $temp_lang . '/categories.po', 'r');
+                    // Go to categories
+                    while (!feof($file)) {
+                        $temp = fgets($file, 4096);
+                        if ($temp == PHP_EOL) {$temp = fgets($file, 4096); break;}
+                    }
+
+                    // Put translations of categories
+                    $i = 1;
+                    while ($max_categ >= $i) {
+                        if (isset($categories[$i])) {
+                            $temp = fgets($file, 4096);
+                            $categories[$i] = (array)$categories[$i];
+                            $categories[$i]['translation_' . $temp_lang] = substr($temp, 8, -2);
+                            $categories[$i] = (object)$categories[$i];
+                            $temp = fgets($file, 4096);
+                            $temp = fgets($file, 4096);
+                        }
+                        $i++;
+                    }
+                    fclose($file);
+                }
+                fclose($file_lang);
+
+
+                ///////////////////////// QUESTION PART \\\\\\\\\\\\\\\\\\\\\\\\\\
+
+
+                // Delete question things we don't need in the json file
+                $i = 1;
+                while ($max_quest >= $i) {
                     if (isset($questions[$i])) {
                         unset($questions[$i]->translation_key);
                         unset($questions[$i]->category_translation_key);
@@ -440,6 +537,7 @@ class IndexController extends AbstractController
                     $i++;
                 }
 
+                // Write translation questions in the json file
                 $file_lang = fopen($location_lang . 'languages.txt', 'r');
                 for ($j=1; $j<$_SESSION['nb_lang']; $j++) {
                     $temp_lang = substr(fgets($file_lang, 4096), 0, -1);
@@ -452,7 +550,7 @@ class IndexController extends AbstractController
                     }
 
                     $i = 1;
-                    while ($questions_max >= $i) {
+                    while ($max_quest >= $i) {
                         if (isset($questions[$i])) {
                             $temp = fgets($file, 4096);
                             $questions[$i] = (array)$questions[$i];
@@ -461,9 +559,9 @@ class IndexController extends AbstractController
                             $temp = fgets($file, 4096);
                             $temp = fgets($file, 4096);
                             $questions[$i]['translation_help_' . $temp_lang] = substr($temp, 8, -2);
-                            $temp = fgets($file, 4096);
-                            $temp = fgets($file, 4096);
                             $questions[$i] = (object)$questions[$i];
+                            $temp = fgets($file, 4096);
+                            $temp = fgets($file, 4096);
                         }
                         $i++;
                     }
@@ -471,70 +569,39 @@ class IndexController extends AbstractController
                 }
                 fclose($file_lang);
 
-                // Delete things we don't need in the json file
-                $i = 1;
-                while ($categories_max >= $i) {
-                    if (isset($categories[$i])) {
-                        unset($categories[$i]->uid);
-                        unset($categories[$i]->translation_key);
-                        unset($categories[$i]->new);
-                    }
-                    $i++;
-                }
-
-                $file_lang = fopen($location_lang . 'languages.txt', 'r');
-                for ($j=1; $j<$_SESSION['nb_lang']; $j++) {
-                    $temp_lang = substr(fgets($file_lang, 4096), 0, -1);
-
-                    $file = fopen($location_lang . $temp_lang . '/categories.po', 'r');
-                    // Go to categories
-                    while (!feof($file)) {
-                        $temp = fgets($file, 4096);
-                        if ($temp == PHP_EOL) {$temp = fgets($file, 4096); break;}
-                    }
-
-                    $i = 1;
-                    while ($categories_max >= $i) {
-                        if (isset($categories[$i])) {
-                            $temp = fgets($file, 4096);
-                            $categories[$i] = (array)$categories[$i];
-                            $categories[$i]['translation_' . $temp_lang] = substr($temp, 8, -2);
-                            $temp = fgets($file, 4096);
-                            $temp = fgets($file, 4096);
-                            $categories[$i] = (object)$categories[$i];
-                        }
-                        $i++;
-                    }
-                    fclose($file);
-                }
-                fclose($file_lang);
-
+                // Put questions into categories
                 foreach ($categories as $category) {
                     $j=1;
                     $question = [];
-                    for ($i=1; $i<=count($questions); $i++) {
-                        if ($questions[$i]->category_id == $category->id) {$question[$j] = $questions[$i]; $j++;}
+                    for ($i=1; $i<=$max_quest; $i++) {
+                        if (isset($questions[$i])) {
+                            if ($questions[$i]->category_id == $category->id) {
+                                $question[$j] = $questions[$i];
+                                $question[$j] = (array)$question[$j];
+                                unset($question[$j]['category_id']); // Not needed in the json file
+                                $j++;
+                            }
+                        }else {$j++;}
                     }
                     $category->questions = array_values($question);
                 }
 
                 // Encode in a file
-                $fichier = fopen('/var/www/diagnostic/questions.json', 'w+');
+                $filename = 'questions_' . date('YmdHis') . '.json';
+                $fichier = fopen('/var/www/diagnostic/' . $filename, 'w+');
                 fwrite($fichier, json_encode(array_values($categories), JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES));
                 fclose($fichier);
 
                 // Ddl the file and delete it in the VM
                 header('Content-Description: File Transfer');
                 header('Content-Type: application/octet-stream');
-                header('Content-Disposition: attachment; filename=questions.json');
+                header('Content-Disposition: attachment; filename=' . $filename);
                 header('Expires: 0');
                 header('Cache-Control: must-revalidate');
                 header('Pragma: public');
-                header('Content-Length: ' . filesize('/var/www/diagnostic/questions.json'));
-                readfile('/var/www/diagnostic/questions.json');
-                unlink('/var/www/diagnostic/questions.json');
-
-                $questions = $questionService->getBddQuestions();
+                header('Content-Length: ' . filesize('/var/www/diagnostic/' . $filename));
+                readfile('/var/www/diagnostic/' . $filename);
+                unlink('/var/www/diagnostic/' . $filename);
             }
         }
 
@@ -1328,8 +1395,14 @@ class IndexController extends AbstractController
                     $content = file_get_contents($_FILES['file']['tmp_name']);
                     $tab = json_decode($content, true);
 
-                    // If the file is not 'translations.json'
-                    if (!isset($tab[0]['translation'])) {$tab = '';}
+                    // Verify is the file is correct
+                    $error_file = 0;
+                    $i = 1;
+                    while (isset($tab[$i-1])) {
+                        if (!isset($tab[$i-1]['translation']) || !isset($tab[$i-1]['translation_key'])) {$error_file = 1;}
+                        $i++;
+                    }
+                    if ($error_file == 1) {$tab = '';}
                     else {
                         $nb_translations = 1;
                         while (isset($tab[$nb_translations-1])) {$nb_translations++;}
@@ -1340,6 +1413,7 @@ class IndexController extends AbstractController
                         }
                     }
 
+                    // Write the translation in the file
                     if ($tab != '' && $error_key == 0) {
                         rename($location_lang . $_SESSION['lang'] . '/translations.po', $location_lang . $_SESSION['lang'] . '/translations_temp.po');
                         $file_temp = fopen($location_lang . $_SESSION['lang'] . '/translations_temp.po', 'r');

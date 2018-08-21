@@ -29,6 +29,12 @@ msgstr "File to upload"
 msgid "__upload"
 msgstr "Upload"
 
+msgid "__upload_diagno"
+msgstr "Upload a diagnosis"
+
+msgid "__upload_quest"
+msgstr "Upload questions"
+
 msgid "__login"
 msgstr "Log-in"
 
@@ -148,6 +154,12 @@ msgstr "Reports"
 
 msgid "__export"
 msgstr "Export"
+
+msgid "__export_diagno"
+msgstr "Export a diagnosis"
+
+msgid "__export_quest"
+msgstr "Export questions"
 
 msgid "__access"
 msgstr "Access"
@@ -387,7 +399,10 @@ msgid "__error_lang_del2"
 msgstr "You could not delete a current used language"
 
 msgid "__error_id"
-msgstr "The IDs must be unique and follow an ascending order"
+msgstr "The IDs must be unique"
+
+msgid "__error_key"
+msgstr "The translation key must be unique"
 
 msgid "__error_res"
 msgstr "The result must be an integer between 0 and 100"

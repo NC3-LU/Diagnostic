@@ -523,7 +523,6 @@ class IndexController extends AbstractController
                 ));
 
                 if ($formUpload->isValid()) {
-
                     $data = $formUpload->getData();
 
                     //load json
@@ -543,7 +542,6 @@ class IndexController extends AbstractController
                         $errorMessage = '__no_file';
                     }
                 }
-
             } else {
                 $form->setData($request->getPost());
                 if ($form->isValid()) {
@@ -597,7 +595,7 @@ class IndexController extends AbstractController
             'form' => $form,
             'type' => $type,
             'formUpload' => $formUpload,
-            'errorMessage' => $errorMessage,
+            'errorMessage' => $errorMessage
         ]);
     }
 
@@ -743,11 +741,11 @@ class IndexController extends AbstractController
     }
 
     /**
-     * Export
+     * Export Diagnostic
      *
      * @return ViewModel
      */
-    public function exportAction()
+    public function exportDiagnosticAction()
     {
         //retrieve result
         $container = new Container('diagnostic');
@@ -804,6 +802,170 @@ class IndexController extends AbstractController
         return $view;
     }
 
+   /**
+     * Export Questions
+     *
+     * @return ViewModel
+     */
+    public function exportQuestionsAction()
+    {
+        $location_lang = '/var/www/diagnostic/language/';
+
+        //retrieve questions
+        /** @var QuestionService $questionService */
+        $questionService = $this->get('questionService');
+        $questions = $questionService->getQuestions();
+        $questions_max = count($questions);
+        $max_quest = 1;
+        $i = 1;
+        $j = 1;
+        // Put the highest question id in $max_quest
+        while ($i <= $questions_max) {
+            if (isset($questions[$j])) {
+                if ($questions[$j]->id > $max_quest) {$max_quest = $questions[$j]->id;}
+                $i++;
+                $j++;
+            }else {$j++;}
+        }
+
+        //retrieve categories
+        /** @var CategoryService $categoryService */
+        $categoryService = $this->get('categoryService');
+        $categories = $categoryService->getCategories();
+        $categories_max = count($categories);
+        $max_categ = 1;
+        $i = 1;
+        $j = 1;
+        // Put the highest category id in $max_categ
+        while ($i <= $categories_max) {
+            if (isset($categories[$j])) {
+                if ($categories[$j]->id > $max_categ) {$max_categ = $categories[$j]->id;}
+                $i++;
+                $j++;
+            }else {$j++;}
+        }
+
+        $categories_temp = [];
+        $questions_temp = [];
+
+        // Only take category things we need in the json file
+        $i = 1;
+        while ($max_categ >= $i) {
+            if (isset($categories[$i])) {
+                $categories_temp[$i]['id'] = $i;
+            }
+            $i++;
+        }
+
+        // Only take question things we need in the json file
+        $i = 1;
+        while ($max_quest >= $i) {
+            if (isset($questions[$i])) {
+                $questions_temp[$i]['id'] = $i;
+                $questions_temp[$i]['threat'] = $questions[$i]->threat;
+                $questions_temp[$i]['weight'] = $questions[$i]->weight;
+                $questions_temp[$i]['blocking'] = $questions[$i]->blocking;
+            }
+            $i++;
+        }
+
+        // Write translation questions in the json file
+        $file_lang = fopen($location_lang . 'languages.txt', 'r');
+        for ($j=1; $j<$_SESSION['nb_lang']; $j++) {
+            $temp_lang = substr(fgets($file_lang, 4096), 0, -1);
+
+            $file = fopen($location_lang . $temp_lang . '/questions.po', 'r');
+            // Go to the question translations
+            while (!feof($file)) {
+                $temp = fgets($file, 4096);
+                if ($temp == PHP_EOL) {$temp = fgets($file, 4096); break;}
+            }
+
+            $i = 1;
+            while ($max_quest >= $i) {
+                if (isset($questions_temp[$i])) {
+                    $temp = fgets($file, 4096);
+                    $questions_temp[$i]['translation_' . $temp_lang] = substr($temp, 8, -2);
+                    $temp = fgets($file, 4096);
+                    $temp = fgets($file, 4096);
+                    $temp = fgets($file, 4096);
+                    $questions_temp[$i]['translation_help_' . $temp_lang] = substr($temp, 8, -2);
+                    $temp = fgets($file, 4096);
+                    $temp = fgets($file, 4096);
+                }
+                $i++;
+            }
+            fclose($file);
+        }
+        fclose($file_lang);
+
+        // Write translation categories in the json file
+        $file_lang = fopen($location_lang . 'languages.txt', 'r');
+        for ($j=1; $j<$_SESSION['nb_lang']; $j++) {
+            $temp_lang = substr(fgets($file_lang, 4096), 0, -1);
+
+            $file = fopen($location_lang . $temp_lang . '/categories.po', 'r');
+            // Go to categories
+            while (!feof($file)) {
+                $temp = fgets($file, 4096);
+                if ($temp == PHP_EOL) {$temp = fgets($file, 4096); break;}
+            }
+
+            // Put translations of categories
+            $i = 1;
+            while ($max_categ >= $i) {
+                if (isset($categories_temp[$i])) {
+                    $temp = fgets($file, 4096);
+                    $categories_temp[$i] = (array)$categories_temp[$i];
+                    $categories_temp[$i]['translation_' . $temp_lang] = substr($temp, 8, -2);
+                    $categories_temp[$i] = (object)$categories_temp[$i];
+                    $temp = fgets($file, 4096);
+                    $temp = fgets($file, 4096);
+                }
+                $i++;
+            }
+            fclose($file);
+        }
+        fclose($file_lang);
+
+        // Put questions into categories
+        foreach ($categories_temp as $category) {
+            $j=1;
+            $question = [];
+            for ($i=1; $i<=$max_quest; $i++) {
+                if (isset($questions[$i])) {
+                    if ($questions[$i]->category_id == $category->id) {
+                        $question[$j] = $questions_temp[$i];
+                        $j++;
+                    }
+                }else {$j++;}
+            }
+            $category->questions = array_values($question);
+        }
+
+        // Encode in a file
+        $filename = 'questions_temp_' . date('YmdHis') . '.json';
+        $fichier = fopen($filename, 'w+');
+        fwrite($fichier, json_encode(array_values($categories_temp), JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES));
+        fclose($fichier);
+
+        // Ddl the file and delete it in the VM
+        header("Cache-Control: public");
+        header("Content-Description: File Transfer");
+        header("Content-Length: " . filesize("$filename") . ";");
+        header("Content-Disposition: attachment; filename=$filename");
+        header("Content-Type: application/octet-stream; ");
+        header("Content-Transfer-Encoding: binary");
+
+        readfile($filename);
+        unlink($filename);
+
+        $view = new ViewModel();
+        $view->setTerminal(true);
+
+        return $view;
+    }
+
     /**
      * Rapport
      *
@@ -832,16 +994,6 @@ class IndexController extends AbstractController
         /** @var QuestionService $questionService */
         $questionService = $this->get('questionService');
         $questions = $questionService->getQuestions();
-
-        //retrieve questions: used for the Uid
-        /** @var QuestionService $questionService */
-        $questionService = $this->get('questionService');
-        $questions2 = $questionService->getBddQuestions();
-
-        //retrieve categories: used for the Uid
-        /** @var CategoryService $categoryService */
-        $categoryService = $this->get('categoryService');
-        $categories2 = $categoryService->getBddCategories();
 
         //retrieve categories
         $categories = [];
@@ -902,6 +1054,9 @@ class IndexController extends AbstractController
                 $stat_categ = [];
                 $stat_quest = [];
 
+                $hash_categ = [];
+                $hash_quest = [];
+
                 $stat_global[0]['id_diagnostic'] = $_SESSION['id_diagnostic'];
                 $stat_global[0]['activity'] = $translator->translate($container->information['activity']);
                 $stat_global[0]['nb_employees'] = $translator->translate($container->information['nb_employees']);
@@ -909,43 +1064,86 @@ class IndexController extends AbstractController
 
                 $i = 1;
                 $j = 1;
-                while (isset($categories['__category' . $j])) {
-                    $stat_categ[$i]['uid'] = $categories2[$j]->getUid();
-                    $stat_categ[$i]['category'] = '__category' . $j;
-                    $stat_categ[$i]['category_maturity'] = $categories['__category' . $j];
-                    $i++;
-                    $j++;
+                while ($i <= count($categories)) {
+                    if (isset($categories['__category' . $j])) {
+                        // Set category Uid
+                        $file = fopen('/var/www/diagnostic/language/en/categories.po', 'r');
+                        while (!feof($file)) {
+                            $temp = fgets($file, 4096);
+                            if (substr($temp, 7, -2) == '__category' . $j) {
+                                $temp = fgets($file, 4096);
+                                $hash_categ[$j]['translation_en'] = substr($temp, 8, -2);
+                                break;
+                            }
+                        }
+                        fclose($file);
+                        $stat_categ[$j]['uid'] = md5(serialize($hash_categ[$j]));
+
+                        $stat_categ[$j]['category'] = '__category' . $j;
+
+                        $stat_categ[$j]['category_maturity'] = $categories['__category' . $j];
+
+                        $i++;
+                        $j++;
+                    }else {$j++;}
                 }
 
                 $i = 1;
-                while (isset($results[$i])) {
-                    $stat_quest[$i]['uid'] = $questions2[$i]->getUid();
+                $j = 1;
+                while ($i <= count($results)) {
+                    if (isset($results[$j])) {
+                        // Set question Uid
+                        $file = fopen('/var/www/diagnostic/language/en/questions.po', 'r');
+                        while (!feof($file)) {
+                            $temp = fgets($file, 4096);
+                            if (substr($temp, 7, -2) == '__question' . $j) {
+                                $temp = fgets($file, 4096);
+                                $hash_quest[$j]['translation_en'] = substr($temp, 8, -2);
+                                break;
+                            }
+                        }
+                        fclose($file);
 
-                    $stat_quest[$i]['question'] = $questions[$i]->getTranslationKey();
+                        $file = fopen('/var/www/diagnostic/language/en/categories.po', 'r');
+                        while (!feof($file)) {
+                            $temp = fgets($file, 4096);
+                            if (substr($temp, 7, -2) == '__category' . $questions[$j]->getCategoryId()) {
+                                $temp = fgets($file, 4096);
+                                $hash_quest[$j]['category_translation'] = substr($temp, 8, -2);
+                                break;
+                            }
+                        }
+                        fclose($file);
 
-                    if ($results[$i]['maturity'] == 0) {
-                        $maturity = $translator->translate('__maturity_none');
-                    }elseif ($results[$i]['maturity'] == 1) {
-                        $maturity = $translator->translate('__maturity_medium');
-                    }elseif ($results[$i]['maturity'] == 2) {
-                        $maturity = $translator->translate('__maturity_ok');
-                    }else {
-                        $maturity = $translator->translate('__maturity_NA');
-                    }
-                    $stat_quest[$i]['maturity'] = $maturity;
+                        $stat_quest[$j]['uid'] = md5(serialize($hash_quest[$j]));
 
-                    if ($results[$i]['gravity'] == 1) {
-                        $gravity = $translator->translate('__low');
-                    }elseif ($results[$i]['gravity'] == 2) {
-                        $gravity = $translator->translate('__medium');
-                    }else {
-                        $gravity = $translator->translate('__strong');
-                    }
-                    $stat_quest[$i]['gravity'] = $gravity;
+                        $stat_quest[$j]['question'] = $questions[$j]->getTranslationKey();
 
-                    $stat_quest[$i]['category'] = $questions[$i]->getCategoryTranslationKey();
+                        if ($results[$j]['maturity'] == 0) {
+                            $maturity = $translator->translate('__maturity_none');
+                        }elseif ($results[$j]['maturity'] == 1) {
+                            $maturity = $translator->translate('__maturity_medium');
+                        }elseif ($results[$j]['maturity'] == 2) {
+                            $maturity = $translator->translate('__maturity_ok');
+                        }else {
+                            $maturity = $translator->translate('__maturity_NA');
+                        }
+                        $stat_quest[$j]['maturity'] = $maturity;
 
-                    $i++;
+                        if ($results[$j]['gravity'] == 1) {
+                            $gravity = $translator->translate('__low');
+                        }elseif ($results[$j]['gravity'] == 2) {
+                            $gravity = $translator->translate('__medium');
+                        }else {
+                            $gravity = $translator->translate('__strong');
+                        }
+                        $stat_quest[$j]['gravity'] = $gravity;
+
+                        $stat_quest[$j]['category'] = $questions[$j]->getCategoryTranslationKey();
+
+                        $i++;
+                        $j++;
+                    }else {$j++;}
                 }
 
                 $statistics = [];

@@ -29,6 +29,12 @@ msgstr "Fichier à charger"
 msgid "__upload"
 msgstr "Charger"
 
+msgid "__upload_diagno"
+msgstr "Charger un diagnostic"
+
+msgid "__upload_quest"
+msgstr "Charger des questions"
+
 msgid "__login"
 msgstr "Identifiant"
 
@@ -148,6 +154,12 @@ msgstr "Rapports"
 
 msgid "__export"
 msgstr "Exporter"
+
+msgid "__export_diagno"
+msgstr "Exporter le diagnostic"
+
+msgid "__export_quest"
+msgstr "Exporter les questions"
 
 msgid "__access"
 msgstr "Accéder"
@@ -387,7 +399,10 @@ msgid "__error_lang_del2"
 msgstr "Vous ne pouvez pas supprimer une langue actuellement utilisée"
 
 msgid "__error_id"
-msgstr "Les IDs doivent être uniques et rangés par ordre croissant"
+msgstr "Les IDs doivent être uniques"
+
+msgid "__error_key"
+msgstr "Les clés de traduction doivent être uniques"
 
 msgid "__error_res"
 msgstr "Le résultat doit être un nombre entier entre 0 et 100"
