@@ -147,7 +147,7 @@ Changelogs
 - Add confirmation before deleting something(questions, categories, languages, translations).
 - Add Reports tab in the administration mode in which we can download/upload report template modals.
 - Add Settings tab in the administration mode in which we can change some global settings and add diagnostic statistics.
-- Add importation/exportation for questions, categories and translations.
+- Add importation/exportation for questions and categories and for translations.
 - Add an Uid for the Diagnostic, for the questions and for the categories.
 - Add statistics importation for a diagnosis.
 - Add several information in a diagnosis. We can now choose the activity of the company and its number of employees.
@@ -157,6 +157,7 @@ Changelogs
 - Add an help part for the organization and synthesis parts in a diagnosis.
 - Aesthetics and ergonomics improved in the report. Better colors, N/A displayed instead of 0% out of 0%.
 - Translation files now divided between questions, categories and translations for more visibility.
+- Add a possibility to export temporal questions.
 - Update documentation to match with new features.
 
 Diagnostic - Cases

@@ -57,8 +57,8 @@ button where you could just resume form an old diagnosis (**2.** on the
 picture).
 
 Just below, there is the navigation panel (**3.** on the picture), which
-we will describe just a little later. Same for the two buttons used to
-get the report or save the current Diagnosis (**4.** on the picture).
+we will describe just a little later. Same for the three buttons used to
+get the report, save the current diagnosis or the current questions (**4.** on the picture).
 
 Finally, on the right of the screen, there is a free-text panel, where
 you should put some text which will be in the report (**5.** on the
@@ -353,7 +353,7 @@ you translate another language.
 Above the tab, there is a section in which you can upload the current
 translations or export them in a json format.
 
-![Administration Panel – QuestionsJson](img/UG_Diagnostic_050.PNG)
+![Administration Panel – TranslationsJson](img/UG_Diagnostic_050.PNG)
 
 As you can see in this screenshot there are some translations, and
 it is possible to add/modify/delete them
@@ -449,12 +449,24 @@ This is the result of the diagnosis.
 >
 > This feature is not important for you.
 
+Export current questions
+=============================
+
+You can export current questions if you created new questions for a special diagnosis and want to save them.
+The button to export current questions is a blue button next to the diagnosis report button.
+
+> **TIP**
+>
+> The button only appear when you are in the information about organization part or summary of the evaluation.
+
+![Administration Panel – QuestionsJson](img/UG_Diagnostic_049.PNG)
+
 Resume or finish a Diagnosis
 =============================
 
 Before your session ends for security reason, or if you want to resume
 your diagnosis later, it is recommended to export often your work, by
-hitting the yellow button below the navigation panel.
+hitting the blue button below the navigation panel.
 
 ![Exported file](img/UG_Diagnostic_023.PNG)
 
