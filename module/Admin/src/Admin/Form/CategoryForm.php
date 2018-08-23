@@ -7,7 +7,7 @@ use Zend\Form\Form;
  * Category Form
  *
  * @package Diagnostic\Form
- * @author Romain DESJARDINS
+ * @author Romain Desjardins
  */
 class CategoryForm extends Form
 {

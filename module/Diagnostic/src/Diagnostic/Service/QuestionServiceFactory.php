@@ -9,12 +9,12 @@
 
 namespace Diagnostic\Service;
 
-
 class QuestionServiceFactory extends AbstractServiceFactory
 {
     protected $resources = [
         'gateway' => 'Diagnostic\Gateway\QuestionGateway',
         'entity' => 'Diagnostic\Model\QuestionEntity',
+        'entity_categ' => 'Diagnostic\Model\CategoryEntity',
         'config' => 'Config',
     ];
 }

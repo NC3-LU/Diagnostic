@@ -30,8 +30,8 @@ $this->form->prepare();
             $file_lang = fopen($location_lang . 'languages.txt', 'r');
             $file_user = fopen('/var/www/diagnostic/module/Admin/config/users.txt', 'r+');
             for ($i=1; $i<$_SESSION['nb_lang']; $i++) {
-                $temp_lang = fgets($file_lang, 4096);
-                $temp_user = fgets($file_user, 4096);
+                $temp_lang = substr(fgets($file_lang, 4096), 0, -1);
+                $temp_user = substr(fgets($file_user, 4096), 0, -1);
 
                 // Creation download form
                 $submit = new Element('dl' . $i);
@@ -51,9 +51,9 @@ $this->form->prepare();
 
                 echo '<tr>';
                     echo '<td style="text-align: center">';
-                    echo basename('/var/www/diagnostic/data/resources/model_' . substr($temp_lang, 0, -1), '.docx');
+                    echo basename('/var/www/diagnostic/data/resources/model_' . $temp_lang, '.docx');
                     echo '</td><td style="text-align: center">';
-                    echo date('F d Y H:i:s', filemtime('/var/www/diagnostic/data/resources/model_' . substr($temp_lang, 0, -1) . '.docx')) . ' by ' . substr($temp_user, 0, -1);
+                    echo date('F d Y H:i:s', filemtime('/var/www/diagnostic/data/resources/model_' . $temp_lang . '.docx')) . ' by ' . $temp_user;
                     echo '</td><td style="text-align: center">';
                     echo $this->formSubmit($form->get('dl' . $i)->setValue($this->translate('__download')));
                     echo '</td>';

@@ -8,7 +8,7 @@ use Zend\Validator\Hostname;
  * Setting Form Filter
  *
  * @package Admin\Form
- * @author Romain DESJARDINS
+ * @author Romain Desjardins
  */
 class SettingFormFilter extends InputFilter
 {
@@ -16,13 +16,21 @@ class SettingFormFilter extends InputFilter
     {
         $this->add([
             'name' => 'encryption_key',
-            'required' => true,
             'validators' => [
                 [
                     'name' => 'StringLength',
                     'options' => [
-                        'min' => 8
+                        'min' => 3
                     ],
+                ],
+            ],
+        ]);
+
+        $this->add([
+            'name' => 'diagnosis_stat',
+            'validators' => [
+                [
+                    'name' => 'Digits',
                 ],
             ],
         ]);

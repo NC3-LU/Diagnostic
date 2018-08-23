@@ -8,6 +8,7 @@ use Zend\Form\Form;
  *
  * @package Diagnostic\Form
  * @author Jerome De Almeida <jerome.dealmeida@vesperiagroup.com>
+ * @author Romain Desjardins
  */
 class AddQuestionForm extends Form
 {
@@ -47,15 +48,40 @@ class AddQuestionForm extends Form
         ]);
 
         $this->add([
-            'name' => 'threshold',
+            'name' => 'threat',
             'type' => 'Select',
             'options' => [
-                'label' => '__threshold_max',
-                'value_options' => $threshold,
+                'label' => '__threat',
+                'value_options' => [
+                    '1' => 1,
+                    '2' => 2,
+                    '3' => 3,
+                    '4' => 4,
+                    '5' => 5,
+                ],
             ],
             'attributes' => [
                 'class' => 'form-control threshold',
             ],
+        ]);
+
+        $this->add([
+            'name' => 'weight',
+            'type' => 'Select',
+            'options' => [
+                'label' => '__weight',
+                'value_options' => [
+                    '1' => 1,
+                    '2' => 2,
+                    '3' => 3,
+                    '4' => 4,
+                    '5' => 5,
+                    '6' => 6,
+                ],
+            ],
+            'attributes' => [
+                'class' => 'form-control threshold',
+             ],
         ]);
 
         $this->add([

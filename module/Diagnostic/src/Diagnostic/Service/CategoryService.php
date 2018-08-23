@@ -8,7 +8,7 @@ use Zend\Session\Container;
  * CategoryService
  *
  * @package Diagnostic\Service
- * @author Romain DESJARDINS
+ * @author Romain Desjardins
  */
 class CategoryService extends AbstractService
 {
@@ -37,25 +37,33 @@ class CategoryService extends AbstractService
     {
         $container = new Container('diagnostic');
         if ($container->offsetExists('categories')) {
-            $questions = $container->categories;
+            $categories = $container->categories;
         } else {
-            $questionsObject = $this->fetchAllWithCategories();
+            $categoriesObject = $this->fetchAllWithCategories();
 
-            $questions = [];
-            foreach ($questionsObject as $question) {
-                $questions[$question->getId()] = $question;
+            $categories = [];
+            foreach ($categoriesObject as $category) {
+                $categories[$category->getId()] = $category;
             }
 
-            $container->categories = $questions;
+            $container->categories = $categories;
         }
 
-        return $questions;
+        $tmpArray = [];
+        foreach ($categories as $category) {
+            $tmpArray[$category->getId()] = $category;
+        }
+
+        ksort($tmpArray);
+        $categories = [];
+        foreach ($tmpArray as $value) {
+            $categories[$value->getId()] = $value;
+        }
+
+        return $categories;
     }
 
-
-
-
-	 /**
+    /**
      * Get Bdd Categories
      *
      * @return array

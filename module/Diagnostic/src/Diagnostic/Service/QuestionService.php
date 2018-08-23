@@ -10,6 +10,7 @@ use Zend\Session\Container;
  *
  * @package Diagnostic\Service
  * @author Jerome De Almeida <jerome.dealmeida@vesperiagroup.com>
+ * @author Romain Desjardins
  */
 class QuestionService extends AbstractService
 {
@@ -97,15 +98,15 @@ class QuestionService extends AbstractService
         //encryption key
         $config = $this->get('config');
         $encryptionKey = $config['encryption_key'];
-	$iv = $config['iv_key'];
-	//encrypt result
+        $iv = $config['iv_key'];
+        //encrypt result
         $temp = openssl_decrypt($json,'AES-256-CBC', $encryptionKey, OPENSSL_RAW_DATA, $iv);
         if($temp==false){
 	    $blockCipher = BlockCipher::factory('mcrypt', ['algo' => 'aes']);
             $blockCipher->setKey($encryptionKey);
             $json = $blockCipher->decrypt($json);
         }
-	else {
+        else {
 	    $json = openssl_decrypt($json,'AES-256-CBC', $encryptionKey, OPENSSL_RAW_DATA, $iv);
         }
 
@@ -127,19 +128,33 @@ class QuestionService extends AbstractService
 
         //questions
         $questions = [];
-		$questionEntity = $this->get('entity');
+        $questionEntity = $this->get('entity');
         if (array_key_exists('questions', $data)) {
             foreach ($data['questions'] as $key => $value) {
                 $questions[$key] = new $questionEntity;
-				$questions[$key]->exchangeArray($value);
+                $questions[$key]->exchangeArray($value);
             }
         }
+
+        //categories
+        $categories = [];
+        $categoryEntity = $this->get('entity_categ');
+        if (array_key_exists('categories', $data)) {
+            foreach ($data['categories'] as $key => $value) {
+                $categories[$key] = new $categoryEntity;
+                $categories[$key]->exchangeArray($value);
+            }
+        }
+
+        // UID diagnostic
+        $_SESSION['id_diagnostic'] = $data['id_diagnostic'];
 
         if (count($questions)) {
             $container = new Container('diagnostic');
             $container->result = $result;
             $container->information = $information;
             $container->questions = $questions;
+            $container->categories = $categories;
 
             return true;
         } else {

@@ -13,6 +13,7 @@ DBPASSWORD_ADMIN="$(openssl rand -hex 32)"			#The password of the administrator 
 DEFAULT_LANGUAGE='en'							#The default and main language of the diagnostic
 IP_ADDRESS='10.0.0.102'								#The IP address where you will find the diagnostic
 DISABLE_MXCHECK=true								#If the VM is connected on internet (which is depreciate), it could check the validity of the mail used. If it set to false, no check are done.
+BRANCH='dev'
 
 echo "\033[93m###############################################################################\\033[0m"
 echo "\033[93m#                             Diagnostic installer                            #\\033[0m"
@@ -50,7 +51,7 @@ cd $PATH_TO_DIAGNOSTIC
 sudo chown www-data:www-data $PATH_TO_DIAGNOSTIC
 #git install
 sudo apt-get install -y git > /dev/null 2>&1
-sudo -u www-data git clone -b dev $GITHUB_LINK . > /dev/null 2>&1
+sudo -u www-data git clone -b $BRANCH $GITHUB_LINK . > /dev/null 2>&1
 if [ $? -ne 0 ]; then
     echo "ERROR: unable to clone the Diagnostic repository"
     exit 1;

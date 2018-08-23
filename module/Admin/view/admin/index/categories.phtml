@@ -1,17 +1,18 @@
 <?php
 $title = $this->translate('__categories');
 $this->headTitle($title);
-$_SESSION['nb_categories'] = 1; // Count number of category
 ?>
 
-<!-- // Display confirmation if you want to delete a category -->
+<!-- // Display confirmation if you want to delete a category. -->
 <script>var delete_category = <?php echo json_encode($this->translate('__delete_category')) ?></script>
 
 <div class="row">
     <div class="col-lg-2"></div>
     <div class="col-lg-8 text-left">
         <h2><?= $this->translate('__categories') ?></h2>
-        <br/>
+
+        <br />
+
         <?php
         $urlAdd = $this->url('admin', ['action' => 'add-category']);
         ?>
@@ -28,7 +29,6 @@ $_SESSION['nb_categories'] = 1; // Count number of category
             </tr>
             <?php
             foreach ($categories as $category) :
-                $_SESSION['nb_categories']++;
                 $urlModify = $this->url('admin', ['action' => 'modify-category', 'id' => $category->getId()]);
                 $urlDelete = $this->url('admin', ['action' => 'delete-category', 'id' => $category->getId()]);
             ?>

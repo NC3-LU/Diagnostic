@@ -10,7 +10,7 @@ use Zend\ServiceManager\ServiceLocatorInterface;
  * Add Translation Form Factory
  *
  * @package Admin\Factory
- * @author Romain DESJARDINS
+ * @author Romain Desjardins
  */
 class AddTranslationFormFactory implements FactoryInterface
 {

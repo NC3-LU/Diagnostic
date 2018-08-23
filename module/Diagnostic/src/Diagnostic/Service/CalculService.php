@@ -7,7 +7,7 @@ use Zend\Session\Container;
  *
  * @package Diagnostic\Service
  * @author Jerome De Almeida <jerome.dealmeida@vesperiagroup.com>
- * @author Romain DESJARDINS
+ * @author Romain Desjardins
  */
 class CalculService extends AbstractService
 {
@@ -35,7 +35,7 @@ class CalculService extends AbstractService
         foreach ($questions as $questionId => $question) {
 
             $categoryId = $question->getCategoryId();
-            $threshold = $question->getThreshold();
+            $threshold = $question->getThreat() * $question->getWeight();
             if (array_key_exists($questionId, $results)) {
                 if (strlen($results[$questionId]['notes'])) {
                     $points = $results[$questionId]['maturity'] * $threshold;

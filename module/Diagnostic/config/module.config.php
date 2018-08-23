@@ -121,7 +121,17 @@ return [
             [
                 'type' => 'gettext',
                 'base_dir' => __DIR__ . '/../../../language',
-                'pattern' => '%s.mo',
+                'pattern' => '%s/questions.mo',
+            ],
+            [
+                'type' => 'gettext',
+                'base_dir' => __DIR__ . '/../../../language',
+                'pattern' => '%s/categories.mo',
+            ],
+            [
+                'type' => 'gettext',
+                'base_dir' => __DIR__ . '/../../../language',
+                'pattern' => '%s/translations.mo',
             ],
         ],
     ],

@@ -159,7 +159,7 @@ $currentCategoryId = (array_key_exists($id, $questions)) ? $questions[$id]->getC
                    style="padding: 7px 70px 7px 70px;"><?= $this->translate('__rapport') ?></a>
             </div>
             <div class="col-lg-6 text-center">
-                <a href="<?= $this->url('diagnostic', ['action' => 'export']); ?>" class="btn btn-info"
+                <a href="<?= $this->url('diagnostic', ['action' => 'exportDiagnostic']); ?>" class="btn btn-info"
                    style="padding: 7px 70px 7px 70px;"><?= $this->translate('__export') ?></a>
             </div>
         </div>

@@ -7,7 +7,7 @@ use Zend\Form\Form;
  * Language Form
  *
  * @package Diagnostic\Form
- * @author Romain DESJARDINS
+ * @author Romain Desjardins
  */
 class LanguageForm extends Form
 {
@@ -61,24 +61,24 @@ class LanguageForm extends Form
      */
     public function init()
     {
-	$this->add([
+        $this->add([
             'name' => 'add_language',
             'type' => 'Select',
             'options' => [
                 'label' => '__add_a_language',
-		'value_options' => $this->getLanguages(),
+                'value_options' => $this->getLanguages(),
             ],
             'attributes' => [
                 'class' => '',
             ]
         ]);
 
-	$this->add([
+        $this->add([
             'name' => 'language_ref',
             'type' => 'Select',
             'options' => [
                 'label' => '__translation_ref',
-		'value_options' => $this->getLanguagesRef(),
+                'value_options' => $this->getLanguagesRef(),
             ],
             'attributes' => [
                 'class' => '',
@@ -104,7 +104,7 @@ class LanguageForm extends Form
             ],
         ]);
 
-	$this->add([
+        $this->add([
             'name' => 'submit_lang_del',
             'type' => 'Submit',
             'attributes' => [
@@ -113,7 +113,7 @@ class LanguageForm extends Form
             ],
         ]);
 
-	$this->add([
+        $this->add([
             'name' => 'submit_lang_ref',
             'type' => 'Submit',
             'attributes' => [
@@ -122,7 +122,7 @@ class LanguageForm extends Form
             ],
         ]);
 
-	$this->add([
+        $this->add([
             'name' => 'submit_all',
             'type' => 'Submit',
             'attributes' => [
@@ -156,6 +156,15 @@ class LanguageForm extends Form
             'type' => 'Submit',
             'attributes' => [
                 'value' => '__upload',
+                'class' => 'btn btn-success',
+            ],
+        ]);
+
+        $this->add([
+            'name' => 'submit_export',
+            'type' => 'Submit',
+            'attributes' => [
+                'value' => '__export',
                 'class' => 'btn btn-success',
             ],
         ]);

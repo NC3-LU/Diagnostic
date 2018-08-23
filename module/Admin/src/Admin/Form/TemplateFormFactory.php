@@ -9,7 +9,7 @@ use Zend\ServiceManager\ServiceLocatorInterface;
  * Template Form Factory
  *
  * @package Admin\Factory
- * @author Romain DESJARDINS
+ * @author Romain Desjardins
  */
 class TemplateFormFactory implements FactoryInterface
 {
