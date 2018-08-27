@@ -161,6 +161,8 @@ network:
  renderer: networkd
  ethernets:
   enp0s3:
+   dhcp4: yes
+  enp0s8:
    dhcp4: no
    addresses: [$IP_ADDRESS/24]
    gateway4: 10.0.0.1
