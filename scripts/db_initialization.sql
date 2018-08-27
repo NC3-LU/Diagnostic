@@ -28,6 +28,7 @@ DROP TABLE IF EXISTS `categories`;
 CREATE TABLE `categories` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `translation_key` varchar(255) NOT NULL,
+  `uid` varchar(255) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -38,7 +39,7 @@ CREATE TABLE `categories` (
 
 LOCK TABLES `categories` WRITE;
 /*!40000 ALTER TABLE `categories` DISABLE KEYS */;
-INSERT INTO `categories` VALUES (1,'__category1'),(2,'__category2'),(3,'__category3'),(4,'__category4'),(5,'__category5'),(6,'__category6'),(7,'__category7'),(8,'__category8');
+INSERT INTO `categories` VALUES (1,'__category1','51edfa4e43b4526878723ed3397d9437'),(2,'__category2','681e44c650b5c9b411ca4bfb84b21fa4'),(3,'__category3','f73e69b0606ecafcbe6719ed3deaf5af'),(4,'__category4','85b2eae0267c0bb2354d2f9779462409'),(5,'__category5','728ec8201cd0d827b319bc189d0192c6'),(6,'__category6','9bdc5141543494549c13011c57a0d90f'),(7,'__category7','9efa98ce5754779d3ac367bfb4ec49e8'),(8,'__category8','68c167f24caeb416d0acd6f82110ed78');
 /*!40000 ALTER TABLE `categories` ENABLE KEYS */;
 UNLOCK TABLES;
 
