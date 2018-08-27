@@ -7,7 +7,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/mouchettes/diagnostic.git"
+    "url": "git+https://github.com/CASES-LU/diagnostic.git"
   },
   "dependencies": {
     "chart.js": "^2.7.2"
@@ -15,7 +15,7 @@
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/mouchettes/diagnostic/issues"
+    "url": "https://github.com/CASES-LU/diagnostic/issues"
   },
-  "homepage": "https://github.com/mouchettes/diagnostic#readme"
+  "homepage": "https://github.com/CASES-LU/diagnostic#readme"
 }
