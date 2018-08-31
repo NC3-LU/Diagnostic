@@ -1301,6 +1301,9 @@ class IndexController extends AbstractController
 
         $container = new Container('diagnostic');
         $container->language = $language;
+		
+		//Creation of an new UID
+		$_SESSION['id_diagnostic'] = bin2hex(random_bytes('10'));
 
         //redirection
         return $this->redirect()->toRoute('diagnostic', ['controller' => 'index', 'action' => 'diagnostic']);
