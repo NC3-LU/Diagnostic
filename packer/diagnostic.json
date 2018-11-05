@@ -17,19 +17,15 @@
           "vboxmanage": [
             ["modifyvm", "{{.Name}}", "--vram", "64"],
 		    ["modifyvm", "{{.Name}}", "--memory", "1024"],
-			["modifyvm", "{{.Name}}", "--cpus", "2"],	
-			["modifyvm", "{{.Name}}", "--nic1", "nat"]
+			["modifyvm", "{{.Name}}", "--cpus", "2"],
+			["modifyvm", "{{.Name}}", "--nic1", "nat"],
+			["modifyvm", "{{.Name}}", "--nic2", "hostonly"],
+			["modifyvm", "{{.Name}}", "--hostonlyadapter2", "VirtualBox Host-Only Ethernet Adapter #2"]
         ],
-		
-		"vboxmanage_post": [
-			["modifyvm", "{{.Name}}", "--nic1","hostonly"], 
-			["modifyvm", "{{.Name}}", "--hostonlyadapter1", "[MY_HOST_ONLY_ADAPTER]"]
-        ],
-
         "disk_size": "{{user `disk_size`}}",
 
-        "iso_url": "http://cdimage.ubuntu.com/releases/18.04/release/ubuntu-18.04-server-amd64.iso",
-        "iso_checksum": "a7f5c7b0cdd0e9560d78f1e47660e066353bb8a79eb78d1fc3f4ea62a07e6cbc",
+        "iso_url": "http://cdimage.ubuntu.com/releases/18.04/release/ubuntu-18.04.1-server-amd64.iso",
+        "iso_checksum": "a5b0ea5918f850124f3d72ef4b85bda82f0fcd02ec721be19c1a6952791c8ee8",
         "iso_checksum_type": "sha256",
 
         "http_directory" : "preseeds",
@@ -53,6 +49,7 @@
             "fb=false debconf/frontend=noninteractive ",
             "keyboard-configuration/modelcode=SKIP keyboard-configuration/layout=USA ",
             "keyboard-configuration/variant=USA console-setup/ask_detect=false ",
+			"netcfg/choose_interface=enp0s3 ",
 			"initrd=/install/initrd.gz -- <enter>"
         ]
     }

@@ -1,0 +1,570 @@
+msgid ""
+msgstr ""
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 2.0.6\n"
+"Project-Id-Version: cases-diagnostic\n"
+"Language: en\n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: \n"
+"Last-Translator: \n"
+"Language-Team: \n"
+
+msgid "__diagnostic"
+msgstr "Diagnosis"
+
+msgid "__welcome"
+msgstr "Welcome to CASES Diagnostic"
+
+msgid "__welcome_upload"
+msgstr "Upload a file"
+
+msgid "__welcome_login"
+msgstr "Create a diagnosis"
+
+msgid "__file_to_upload"
+msgstr "File to upload"
+
+msgid "__upload"
+msgstr "Upload"
+
+msgid "__upload_diagno"
+msgstr "Upload a diagnosis"
+
+msgid "__upload_quest"
+msgstr "Upload questions"
+
+msgid "__login"
+msgstr "Log-in"
+
+msgid "__password"
+msgstr "Password"
+
+msgid "__log_in"
+msgstr "Log in"
+
+msgid "__email"
+msgstr "Email address"
+
+msgid "__logout"
+msgstr "Log out"
+
+msgid "__password_forgotten"
+msgstr "Forgotten your password?"
+
+msgid "__new_password"
+msgstr "New password"
+
+msgid "__confirm_password"
+msgstr "Confirm new password"
+
+msgid "__change_password"
+msgstr "Change password"
+
+msgid "__message_password"
+msgstr "An e-mail will be sent to you at this address explaining how to change your password.<br /><strong>Note</strong> that the e-mail is only valid for 24 hours."
+
+msgid "__receive_mail_password"
+msgstr "Receive e-mail"
+
+msgid "__maturity"
+msgstr "Maturity"
+
+msgid "__maturity_target"
+msgstr "Maturity target"
+
+msgid "__recommandation"
+msgstr "Recommendation"
+
+msgid "__gravity"
+msgstr "Importance"
+
+msgid "__comment"
+msgstr "Comment"
+
+msgid "__record"
+msgstr "Record"
+
+msgid "__record_continue"
+msgstr "Record and continue"
+
+msgid "__domain"
+msgstr "Domain"
+
+msgid "__settings"
+msgstr "Settings"
+
+msgid "__current_maturity"
+msgstr "Current maturity"
+
+msgid "__information_collect"
+msgstr "Information to collect"
+
+msgid "__collected_information"
+msgstr "Collected information"
+
+msgid "__notes"
+msgstr "Notes"
+
+msgid "__add"
+msgstr "Add"
+
+msgid "__add_a_question"
+msgstr "Add a question"
+
+msgid "__add_a_category"
+msgstr "Add a category"
+
+msgid "__add_a_language"
+msgstr "Add a language"
+
+msgid "__add_a_translation"
+msgstr "Add a translation"
+
+msgid "__question"
+msgstr "Question"
+
+msgid "__questions"
+msgstr "Questions"
+
+msgid "__category"
+msgstr "Category"
+
+msgid "__categories"
+msgstr "Categories"
+
+msgid "__translation"
+msgstr "Translation"
+
+msgid "__translation_key"
+msgstr "Translation key"
+
+msgid "__translation_ref"
+msgstr "Reference translation"
+
+msgid "__languages"
+msgstr "Languages"
+
+msgid "__rapport"
+msgstr "Report"
+
+msgid "__rapports"
+msgstr "Reports"
+
+msgid "__export"
+msgstr "Export"
+
+msgid "__export_diagno"
+msgstr "Export a diagnosis"
+
+msgid "__export_quest"
+msgstr "Export questions"
+
+msgid "__access"
+msgstr "Access"
+
+msgid "__access_diagnostic"
+msgstr "Access diagnosis"
+
+msgid "__help"
+msgstr "Help"
+
+msgid "__threshold"
+msgstr "Threshold"
+
+msgid "__threshold_max"
+msgstr "Upper threshold"
+
+msgid "__results"
+msgstr "Results"
+
+msgid "__template"
+msgstr "Template"
+
+msgid "__templates"
+msgstr "Report templates"
+
+msgid "__last_modif"
+msgstr "Last modification"
+
+msgid "__recommandations"
+msgstr "Recommendations"
+
+msgid "__users"
+msgstr "Users"
+
+msgid "__add_a_user"
+msgstr "Add a user"
+
+msgid "__user_choose"
+msgstr "Select a user"
+
+msgid "__administrator"
+msgstr "Administrator"
+
+msgid "__users_details"
+msgstr "User details"
+
+msgid "__modify"
+msgstr "Change"
+
+msgid "__modify_question"
+msgstr "Change question"
+
+msgid "__modify_category"
+msgstr "Change category"
+
+msgid "__modify_all"
+msgstr "Change all translations"
+
+msgid "__change_default_language"
+msgstr "Change the default language"
+
+msgid "__action"
+msgstr "Action"
+
+msgid "__admin"
+msgstr "Administration"
+
+msgid "__document_name"
+msgstr "Document name"
+
+msgid "__company"
+msgstr "Company"
+
+msgid "__version"
+msgstr "Version"
+
+msgid "__state"
+msgstr "State"
+
+msgid "__classification"
+msgstr "Classification"
+
+msgid "__consultant"
+msgstr "Consultant"
+
+msgid "__client"
+msgstr "Client"
+
+msgid "__download_delivery"
+msgstr "Download deliverable"
+
+msgid "__download"
+msgstr "Download"
+
+msgid "__draft"
+msgstr "Draft"
+
+msgid "__final"
+msgstr "Final"
+
+msgid "__low"
+msgstr "Low"
+
+msgid "__medium"
+msgstr "Medium"
+
+msgid "__strong"
+msgstr "Strong"
+
+msgid "__back"
+msgstr "Back"
+
+msgid "__back_rapport"
+msgstr "Back to report"
+
+msgid "__delete"
+msgstr "Delete"
+
+msgid "__goal"
+msgstr "Goal"
+
+msgid "__maturity_levels"
+msgstr "Maturity levels"
+
+msgid "__gravity_levels"
+msgstr "Importance levels"
+
+msgid "__maturity_none"
+msgstr "Fragile"
+
+msgid "__maturity_NA"
+msgstr "N/A"
+
+msgid "__maturity_medium"
+msgstr "Basic"
+
+msgid "__maturity_ok"
+msgstr "Optimal"
+
+msgid "__doughnut_legend"
+msgstr "Weighting by category"
+
+msgid "__riks_cartography"
+msgstr "Risk cartography"
+
+msgid "__maturity_evolution"
+msgstr "Evolution of maturity"
+
+msgid "__home"
+msgstr "Home"
+
+msgid "__new_diagnostic"
+msgstr "New diagnosis"
+
+msgid "__actual"
+msgstr "Current"
+
+msgid "__target"
+msgstr "Target"
+
+msgid "__encryption_key"
+msgstr "Encryption key"
+
+msgid "__organization_information"
+msgstr "Information about organization"
+
+msgid "__evaluation_synthesis"
+msgstr "Summary of evaluation"
+
+msgid "__categories_maturities"
+msgstr "Maturities by category"
+
+msgid "__statistics"
+msgstr "Statistics"
+
+msgid "__mail_verif"
+msgstr "Mail verification"
+
+msgid "__activity"
+msgstr "Activity"
+
+msgid "__employees"
+msgstr "Number of employees"
+
+msgid "__organization_help"
+msgstr "Organization help"
+
+msgid "__synthesis_help"
+msgstr "Synthesis help"
+
+msgid "__average_diagnosis"
+msgstr "Average_Diagnosis"
+
+msgid "__average"
+msgstr "Average"
+
+msgid "__date_bar"
+msgstr "Average for the year"
+
+msgid "__threat"
+msgstr "Threat :"
+
+msgid "__weight"
+msgstr "Weight :"
+
+msgid "__blocking"
+msgstr "Blocking question"
+
+msgid "__legend_block"
+msgstr "An essential domain for the entity is not managed (question with a fragile maturity)"
+
+msgid "__login_error"
+msgstr "Impossible to log in"
+
+msgid "__no_file"
+msgstr "File missing"
+
+msgid "__error_file"
+msgstr "File invalid"
+
+msgid "__success_file"
+msgstr "Successful modification"
+
+msgid "__error_exist"
+msgstr "This key already exist"
+
+msgid "__error_lang_exist"
+msgstr "This language already exist"
+
+msgid "__error_lang_add"
+msgstr "This language has not been added"
+
+msgid "__error_lang_del"
+msgstr "You could not delete this language"
+
+msgid "__error_lang_del2"
+msgstr "You could not delete a current used language"
+
+msgid "__error_id"
+msgstr "The IDs must be unique"
+
+msgid "__error_key"
+msgstr "The translation key must be unique"
+
+msgid "__error_res"
+msgstr "The result must be an integer between 0 and 100"
+
+msgid "__delete_lang"
+msgstr "Do you really want to delete this language ?"
+
+msgid "__delete_question"
+msgstr "Do you really want to delete this question ?"
+
+msgid "__delete_category"
+msgstr "Do you really want to delete this category ?"
+
+msgid "__delete_trans"
+msgstr "Do you really want to delete this translation ?"
+
+msgid "__mail_password_forgotten_subject"
+msgstr "CASES diagnosis - password forgotten"
+
+msgid "__mail_password_forgotten_content1"
+msgstr "You have forgotten your password for the <strong>CASES diagnosis</strong>"
+
+msgid "__mail_password_forgotten_content2"
+msgstr "To create a new password, please click on the button below:"
+
+msgid "__mail_password_forgotten_content3"
+msgstr "If this e-mail does not concern you, please ignore this message"
+
+msgid "__mail_password_forgotten_link"
+msgstr "NEW PASSWORD"
+
+msgid "Value is required and can't be empty"
+msgstr "Value is required and can't be empty"
+
+msgid "The input is not a valid email address. Use the basic format local-part@hostname"
+msgstr "The input is not a valid email address. Use the basic format local-part@hostname"
+
+msgid "password must contain at least one uppercase letter"
+msgstr "password must contain at least one uppercase letter"
+
+msgid "password must contain at least one digit character"
+msgstr "password must contain at least one digit character"
+
+msgid "password must contain at least one special character"
+msgstr "password must contain at least one special character"
+
+msgid "password must be at least 8 characters in length"
+msgstr "password must be at least 8 characters in length"
+
+msgid "The two given tokens do not match"
+msgstr "The two given tokens do not match"
+
+msgid "__activity1"
+msgstr "Craft"
+
+msgid "__activity2"
+msgstr "Wellness"
+
+msgid "__activity3"
+msgstr "Boilermaking factory"
+
+msgid "__activity4"
+msgstr "Interior design"
+
+msgid "__activity5"
+msgstr "Industrial design"
+
+msgid "__activity6"
+msgstr "Sustainable development"
+
+msgid "__activity7"
+msgstr "E-commerce"
+
+msgid "__activity8"
+msgstr "Government"
+
+msgid "__activity9"
+msgstr "Mass-market retail"
+
+msgid "__activity10"
+msgstr "Hospitality"
+
+msgid "__activity11"
+msgstr "Humanitarian"
+
+msgid "__activity12"
+msgstr "Real estate"
+
+msgid "__activity13"
+msgstr "IT"
+
+msgid "__activity14"
+msgstr "International"
+
+msgid "__activity15"
+msgstr "Food industry"
+
+msgid "__activity16"
+msgstr "Railway infrastructure"
+
+msgid "__activity17"
+msgstr "Logistic and e-commerce"
+
+msgid "__activity18"
+msgstr "Metallurgy"
+
+msgid "__activity19"
+msgstr "Medicinal industry"
+
+msgid "__activity20"
+msgstr "Boating"
+
+msgid "__activity21"
+msgstr "Industrial cleaning"
+
+msgid "__activity22"
+msgstr "Paramedic"
+
+msgid "__activity23"
+msgstr "Catering"
+
+msgid "__activity24"
+msgstr "Security"
+
+msgid "__activity25"
+msgstr "Industry and work related to the food chain"
+
+msgid "__activity26"
+msgstr "The industry of pets"
+
+msgid "__activity27"
+msgstr "The catering sector"
+
+msgid "__activity28"
+msgstr "The industry of toys and games"
+
+msgid "__activity29"
+msgstr "Personal services"
+
+msgid "__activity30"
+msgstr "Fashion"
+
+msgid "__activity31"
+msgstr "Tourism"
+
+msgid "__activity32"
+msgstr "Transport"
+
+msgid "__activity33"
+msgstr "Rail transport"
+
+msgid "__activity34"
+msgstr "Children universe"
+
+msgid "__activity35"
+msgstr "Town planning"
+
+msgid "__activity36"
+msgstr "Web"
+
+msgid "__activity37"
+msgstr "Textile, fashion and luxury"
+
+msgid "__activity38"
+msgstr "Third age sector"

@@ -5,15 +5,15 @@ use Zend\Db\Sql\Platform\Mysql\Mysql;
 use Zend\Db\Sql\Predicate\Expression;
 
 /**
- * Question Gateway
+ * Category Gateway
  *
  * @package Diagnostic\Gateway
- * @author Jerome De Almeida <jerome.dealmeida@vesperiagroup.com>
+ * @author Romain Desjardins
  */
 class CategoryGateway extends AbstractGateway
 {
     /**
-     * Fetch all with questions
+     * Fetch all with categories
      *
      * @return null|\Zend\Db\ResultSet\ResultSetInterface
      */
@@ -23,7 +23,7 @@ class CategoryGateway extends AbstractGateway
         $select = $this->tableGateway
             ->getSql()
             ->select()
-            ->columns(['id', 'translation_key']);
+            ->columns(['id', 'translation_key', 'uid']);
 
         $resultSet = $this->tableGateway->selectWith($select);
 
@@ -31,7 +31,7 @@ class CategoryGateway extends AbstractGateway
     }
 
     /**
-     * Get question by id
+     * Get category by id
      *
      * @param $id
      * @return null|\Zend\Db\ResultSet\ResultSetInterface
@@ -58,7 +58,8 @@ class CategoryGateway extends AbstractGateway
     public function update($id, $data)
     {
         $this->tableGateway->update([
-            'translation_key' => $data['translation_key']
+            'translation_key' => $data['translation_key'],
+            'uid' => $data['uid']
         ], ['id' => $id]);
     }
 }

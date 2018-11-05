@@ -30,6 +30,7 @@ $id = 0;
         <?= $this->formHidden($formUpload->get('csrf')) ?>
         <?= $this->formElementErrors($formUpload->get('file'), ['class' => 'bg-danger']) ?>
         <?= $this->form()->closeTag() ?>
+
         <div class="row">
             <div class="col-lg-12 text-left" style="background-color: #EEEEEE; min-height: 600px;">
                 <div style="padding-top: 10px;">
@@ -152,13 +153,17 @@ $id = 0;
         <br/>
 
         <div class="row">
-            <div class="col-lg-6 text-center">
+            <div class="col-lg-4 text-center">
                 <a href="<?= $this->url('diagnostic', ['action' => 'rapport']); ?>" class="btn btn-warning"
-                   style="padding: 7px 70px 7px 70px;"><?= $this->translate('__rapport') ?></a>
+                   style="padding: 7px 50px 7px 50px;"><?= $this->translate('__rapport') ?></a>
             </div>
-            <div class="col-lg-6 text-center">
-                <a href="<?= $this->url('diagnostic', ['action' => 'export']); ?>" class="btn btn-info"
-                   style="padding: 7px 70px 7px 70px;"><?= $this->translate('__export') ?></a>
+            <div class="col-lg-4 text-center">
+                <a href="<?= $this->url('diagnostic', ['action' => 'exportDiagnostic']); ?>" class="btn btn-info"
+                   style="padding: 7px 20px 7px 20px;"><?= $this->translate('__export_diagno') ?></a>
+            </div>
+            <div class="col-lg-4 text-center">
+                <a href="<?= $this->url('diagnostic', ['action' => 'exportQuestions']); ?>" class="btn btn-info"
+                   style="padding: 7px 20px 7px 20px;"><?= $this->translate('__export_quest') ?></a>
             </div>
         </div>
 
@@ -169,9 +174,28 @@ $id = 0;
         ?>
         <h4 style="color: #DF1D31; font-weight: bold;"><?= $title ?></h4>
         <br/><br/>
-        <?= $this->form()->openTag($form) ?>
+        <?= $this->form()->openTag($form); ?>
         <?= $this->formTextarea($form->get('information')) ?>
         <br/>
+        <span style="color: grey;"><?php if ($this->type == 1) {echo $this->translate('__organization_help');}else {echo $this->translate('__synthesis_help');} ?></span> <br /><br />
+
+        <div class="col-lg-5 text-left">
+        <label><?= $this->translate($form->get('activity')->getLabel()) ?></label>
+        <?= $this->formSelect($form->get('activity')) ?>
+        </div>
+
+        <div class="col-lg-2 text-center"></div>
+
+        <div class="col-lg-3 text-left">
+        <label><?= $this->translate($form->get('nb_employees')->getLabel()) ?></label>
+        <?= $this->formSelect($form->get('nb_employees')) ?>
+        </div>
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+
         <center>
             <?= $this->formHidden($form->get('csrf')) ?>
             <?= $this->formSubmit($form->get('submit')); ?>

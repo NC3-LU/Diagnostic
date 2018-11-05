@@ -17,11 +17,12 @@ class IndexControllerFactory extends AbstractControllerFactory
         'userService' => 'Diagnostic\Service\UserService',
         'userTokenService' => 'Diagnostic\Service\UserTokenService',
         'questionService' => 'Diagnostic\Service\QuestionService',
-	'categoryService' => 'Diagnostic\Service\CategoryService',
-	'languageService' => 'Diagnostic\Service\LanguageService',
+        'categoryService' => 'Diagnostic\Service\CategoryService',
+        'languageService' => 'Diagnostic\Service\LanguageService',
+        'translator' => 'translator',
     ];
 
     protected $forms = [
-        'user', 'adminQuestion', 'adminCategory', 'adminLanguage'
+        'user', 'adminQuestion', 'adminCategory', 'adminLanguage', 'adminTemplate', 'adminSetting', 'adminAddTranslation'
     ];
 }

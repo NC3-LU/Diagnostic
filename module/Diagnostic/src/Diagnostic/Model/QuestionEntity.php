@@ -6,6 +6,7 @@ namespace Diagnostic\Model;
  *
  * @package Diagnostic\Model
  * @author Jerome De Almeida <jerome.dealmeida@vesperiagroup.com>
+ * @author Romain Desjardins
  */
 class QuestionEntity
 {
@@ -30,19 +31,29 @@ class QuestionEntity
     public $translation_key;
 
     /**
-     * Translation Key fr
-     */
-    public $translation_fr;
-
-    /**
      * Translation Key Help
      */
     public $translation_key_help;
 
     /**
-     * Threshold
+     * Threat
      */
-    public $threshold;
+    public $threat;
+
+    /**
+     * Weight
+     */
+    public $weight;
+
+    /**
+     * Blocking
+     */
+    public $blocking;
+
+    /**
+     * Uid
+     */
+    public $uid;
 
     /**
      * New
@@ -124,24 +135,6 @@ class QuestionEntity
     /**
      * @return mixed
      */
-    public function getTranslationFr()
-    {
-        return $this->translation_fr;
-    }
-
-    /**
-     * @param mixed $translation_key
-     * @return QuestionEntity
-     */
-    public function setTranslationFr($translation_fr)
-    {
-        $this->translation_fr = $translation_fr;
-        return $this;
-    }
-
-    /**
-     * @return mixed
-     */
     public function getTranslationKeyHelp()
     {
         return $this->translation_key_help;
@@ -160,18 +153,72 @@ class QuestionEntity
     /**
      * @return mixed
      */
-    public function getThreshold()
+    public function getThreat()
     {
-        return $this->threshold;
+        return $this->threat;
     }
 
     /**
-     * @param mixed $threshold
+     * @param mixed $threat
      * @return QuestionEntity
      */
-    public function setThreshold($threshold)
+    public function setThreat($threat)
     {
-        $this->threshold = $threshold;
+        $this->threat = $threat;
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getWeight()
+    {
+        return $this->weight;
+    }
+
+    /**
+     * @param mixed $weight
+     * @return QuestionEntity
+     */
+    public function setWeight($weight)
+    {
+        $this->weight = $weight;
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getBlocking()
+    {
+        return $this->blocking;
+    }
+
+    /**
+     * @param mixed $blocking
+     * @return QuestionEntity
+     */
+    public function setBlocking($blocking)
+    {
+        $this->blocking = $blocking;
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getUid()
+    {
+        return $this->uid;
+    }
+
+    /**
+     * @param mixed $uid
+     * @return QuestionEntity
+     */
+    public function setUid($uid)
+    {
+        $this->uid = $uid;
         return $this;
     }
 
@@ -212,9 +259,11 @@ class QuestionEntity
         $this->category_id = (isset($data['category_id'])) ? $data['category_id'] : null;
         $this->category_translation_key = (isset($data['category_translation_key'])) ? $data['category_translation_key'] : null;
         $this->translation_key = (isset($data['translation_key'])) ? $data['translation_key'] : null;
-	$this->translation_fr = (isset($data['translation_fr'])) ? $data['translation_fr'] : null;
         $this->translation_key_help = (isset($data['translation_key_help'])) ? $data['translation_key_help'] : null;
-        $this->threshold = (isset($data['threshold'])) ? $data['threshold'] : null;
+        $this->threat = (isset($data['threat'])) ? $data['threat'] : null;
+        $this->weight = (isset($data['weight'])) ? $data['weight'] : null;
+        $this->blocking = (isset($data['blocking'])) ? $data['blocking'] : null;
+        $this->uid = (isset($data['uid'])) ? $data['uid'] : null;
         $this->new = (isset($data['new'])) ? $data['new'] : false;
     }
 

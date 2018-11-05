@@ -46,8 +46,8 @@ Begin a Diagnosis as a User
 ![Main Page – Information about organization](img/UG_Diagnostic_005.PNG)
 
 On the header, at the right side (**1.** on the picture), you can set,
-by clicking on the corresponding button, your language (**French** and
-**English** are the two only choice right now). You can also disconnect
+by clicking on the corresponding button, your language (**English** and
+**French** are the two only choices right now). You can also disconnect
 by clicking on the ‘Log out’ button. Also, if you are administrator of
 the application, you should see the admin menu access button near the
 red button use to disconnect.
@@ -56,15 +56,16 @@ On the top of the screen but below the header, at left, you could see a
 button where you could just resume form an old diagnosis (**2.** on the
 picture).
 
-Just below, you have the navigation panel (**3.** on the picture), which
-we will describe just a little later. Same for the two buttons used to
-get the report or save the current Diagnosis (**4.** on the picture).
+Just below, there is the navigation panel (**3.** on the picture), which
+we will describe just a little later. Same for the three buttons used to
+get the report, save the current diagnosis or the current questions (**4.** on the picture).
 
-Finally, on the right of the screen, you have a free-text panel, where
+Finally, on the right of the screen, there is a free-text panel, where
 you should put some text which will be in the report (**5.** on the
 picture). Most of the time, the introduction is used to give the context
 of this diagnosis, and some info that could be useful when you read the
-report.
+report. You can also put the activity of the organization, and its number
+of employees.
 
 ![Main Page – Information about organization with
 text](img/UG_Diagnostic_006.PNG)
@@ -117,16 +118,17 @@ for the question creator. It’s useful to add details to the question, or
 have a reminder of the main points to talk about.
 
 The threshold is a little more difficult to use. To put it simply, this
-is the weight in the category of the question.
+is the multiplication of the threat and weight of the question in the category.
 
 Let’s take an example:
 
 Imagine you need a specific question on the BYOD, and you think this
-should be really important. You have, in the same category, a question
-less important.
+should be really important. Moreover you have, in the same category,
+a question less important.
 
-If the threshold are respectively 10 and 5, then the maturity 
-on a level is calculated this way: ((10/3 x maturity) + (5/3 x maturity)) 
+If the threshold are respectively 10 (threat 2 * weight 5 for example)
+and 5 (threat 1 * weight 5 for example), then the maturity on a level
+is calculated this way: ((10/3 x maturity) + (5/3 x maturity))
 where the maturity could be 0 if not managed, 1 if more or less managed
 and 2 if managed. So if a policy is more or less managed about BYOD and
 the other question is managed, the category will be ((15/3 x 1) + (10/3 x 2))
@@ -142,7 +144,7 @@ get back on the main page.
 
 ![Main Page – First Question](img/UG_Diagnostic_010.PNG)
 
-On the right side, you have a text field ‘Note’ where you can put what
+On the right side, there is a text field ‘Note’ where you can put what
 you have seen, what has been said during the interview, precision about
 what you want…
 
@@ -169,8 +171,8 @@ Administration Panel
 User Tab
 --------
 
-You have two tabs (On the blue header), the first one is for Users, and
-the second one is about the Questions.
+There are six tabs (On the blue header), the first one is for Users, and the other are for
+Questions, Categories, Languages, Reports and Settings.
 
 ![Administration Panel – User](img/UG_Diagnostic_011.PNG)
 
@@ -194,7 +196,7 @@ address or choose whether it is admin or not.
 > The only way to modify a password is to get a password Forgotten link,
 > or the script which is with the Virtual Machine.
 
-You can also delete an user by clicking on the right side, the red
+You can also delete a user by clicking on the right side, the red
 button where "Delete" is written.
 
 > **Warning**
@@ -212,14 +214,33 @@ open a new Diagnosis.
 
 ![Administration Panel – Questions](img/UG_Diagnostic_017.PNG)
 
-In the ‘Question’ column, you have all the questions that will appear.
+In the ‘Question’ column, there are all the questions that will appear.
 The translation key is mainly used to link questions through all
 languages. The category is, of course, the main theme linked, and the
 threshold could be assimilated to the maturity that will bring a managed
-control. To finish, the ‘action’ column represents the possibility to
-edit the question (by clicking the pen
+control. The 'Blocking question' column is a way to know if a question
+is essential for the organization and must be managed. If a blocking
+question is not managed, it will be displayed in red in the report
+to highlight it as a problem for the entity. To finish, the ‘action’
+column represents the possibility to edit the question (by clicking the pen
 (![Pen](img/UG_Diagnostic_012.PNG))) or delete it (by clicking the cross
 (![Cross](img/UG_Diagnostic_013.PNG))).
+
+Above the tab, there is a section in which you can upload the current
+questions and categories or export them in a json format.
+
+![Administration Panel – QuestionsJson](img/UG_Diagnostic_049.PNG)
+
+As you can see in this screenshot there is the first category which
+contains four questions. It is possible to add/modify/delete questions
+, or categories, following the same form written in this file.
+
+> **Tip**
+>
+> Be extremely careful, you have to know how to write in a json
+> format if you want to make some changes using this file.
+> Otherwise, I will explain below the best way to make changes
+> to questions or categories.
 
 ### Add a Question
 
@@ -228,22 +249,21 @@ question](img/UG_Diagnostic_008.PNG) button.
 
 ![Administration Panel – Add Questions](img/UG_Diagnostic_018.PNG)
 
-The first field is for the translation key used by the PO file. The
-built-in question is done by giving two underscores, the tag "question"
-and the number of the questions (For example, "\_\_question33").
+The first field is for the translation key used by the PO file.
+You do not need to touch it.
 
-Then you have some fields in which you can translate your question
+Then there are some fields in which you can translate your question
 and its help.
 
 > **Tip**
 >
 > If you do not put translations, the name of the question will
-> be the key you wrote above. You can choose to translate in one language
+> be the key written above. You can choose to translate in one language
 > and not in the others. Writing some help is optional, it depends
 > on your needs.
 
-You can also choose the category of the question, and its upper
-threshold as if you were adding a question which is not definitive.
+You can also choose the category of the question, its upper
+threshold as you saw before, and if the question must be blocking or not.
 
 Then, you will find the question in every diagnosis you will do.
 
@@ -271,7 +291,7 @@ open a new Diagnosis.
 
 ![Administration Panel – Categories](img/UG_Diagnostic_036.PNG)
 
-In the ‘Category’ column, you have all the categories that will appear.
+In the ‘Category’ column, there are all the categories that will appear.
 The translation key is mainly used to link categories through all languages.
 To finish, the ‘action’ column represents the possibility to edit
 the category (by clicking the pen (![Pen](img/UG_Diagnostic_012.PNG)))
@@ -285,15 +305,14 @@ category](img/UG_Diagnostic_038.PNG) button.
 ![Administration Panel – Add Categories](img/UG_Diagnostic_037.PNG)
 
 The first field is for the translation key used by the PO file.
-The built-in category is done by giving two underscores, the tag "category"
-and the number of the category (For example, "\_\_category9").
+You do not need to touch it.
 
-Then you have some fields in which you can translate your category.
+Then there are some fields in which you can translate your category.
 
 > **Tip**
 >
 > If you do not put translations, the name of the category will be the
-> key you wrote above. You can choose to translate in one language
+> key written above. You can choose to translate in one language
 > and not in the others.
 
 Then, when you add your category, you will find it in every diagnosis
@@ -313,16 +332,145 @@ a category. You can change details on the same ways.
 Just click on the blue cross (![Cross](img/UG_Diagnostic_013.PNG))
 to definitely delete the category, with a confirmation message.
 
+Languages Tab
+-------------
+
+### Languages Screen
+
+The first tab list all the default translations that exist when you
+open a new Diagnosis.
+
+![Administration Panel – Languages](img/UG_Diagnostic_041.PNG)
+
+In the ‘Translation’ column, there is the name of the translation keys,
+translated in the current language. You can modify it directly by changing
+its text and then click the green button ‘Change’ on the same line.
+You can also delete a translation by clicking the green button ‘Delete’.
+
+The third tab is the Reference translation and will be useful when
+you translate another language.
+
+Above the tab, there is a section in which you can upload the current
+translations or export them in a json format.
+
+![Administration Panel – TranslationsJson](img/UG_Diagnostic_050.PNG)
+
+As you can see in this screenshot there are some translations, and
+it is possible to add/modify/delete them
+following the same form written in this file.
+
+> **Tip**
+>
+> Be extremely careful, you have to know how to write in a json
+> format if you want to make some changes using this file.
+> Otherwise, I will explain below the best way to make changes
+> to translations.
+
+### Add a Language
+
+Indeed, at the top right of the page, you can add another language
+by selecting its code country and clicking the green button ‘Add’.
+You can also delete a language selected by clicking the button ‘Delete’.
+
+![Administration Panel – Add Languages](img/UG_Diagnostic_043.PNG)
+
+When the new language is added, a new button is created at the top
+right corner of the page, with the flag of the language chosen.
+You can click on the button.
+
+![Administration Panel – Language added](img/UG_Diagnostic_044.PNG)
+
+As you can see, the translation tab is empty, and you can then fill in
+translations as you want to. The Reference translation may help you
+filling translations, as you can choose a language to support you.
+
+At the end of the page, there are two buttons which are ‘Add a translation’
+and ‘Change all translations’.
+
+![Administration Panel – Add-Delete translation](img/UG_Diagnostic_042.PNG)
+
+‘Change all translations’ allows you to change multiple translations so
+that you do not have to change one by one all the translations.
+‘Add a translation’ is for adding a translation.
+
+> **Tip**
+>
+> Normally you won't use this last feature, unless you want to change
+> the code of the application and you need another translation.
+
+### Add a Translation
+
+![Administration Panel – Add Translations](img/UG_Diagnostic_045.PNG)
+
+The first field is for the translation key used by the PO file. You can put the key you need to translate.
+
+Then there are some fields in which you can translate your translation.
+
+> **Tip**
+>
+> If you do not put translations, the name of the translation will be empty.
+
+Templates Tab
+-------------
+
+### Templates Screen
+
+The fifth tab list all the default report templates that exist when you open a new Diagnosis.
+
+![Administration Panel – Templates](img/UG_Diagnostic_046.PNG)
+
+In this tab you can download all the actual templates in order to modify them.
+
+After modifying them, it is possible to upload them if you want to apply changes in the diagnosis.
+
+![Administration Panel – Upload templates](img/UG_Diagnostic_047.PNG)
+
+> **Warning**
+>
+> The uploaded template must have the same name that in the diagnosis.
+
+Settings Tab
+-------------
+
+### Settings Screen
+
+The sixth tab list all the default settings you can modify in the diagnosis,
+and also contains a statistic section.
+
+![Administration Panel – Settings](img/UG_Diagnostic_048.PNG)
+
+In the first tab you can modify the default language (The one which is used when you open a diagnosis),
+the mail verification (When this option is activated, it forces you to verify your mail address to enter a diagnosis)
+and the encryption key (Its strength).
+In the second tab, you can add some diagnosis statistics by putting a year, a domain and a number between 0 and 100 (only integer).
+This is the result of the diagnosis.
+
+> **TIP** 
+>
+> This feature is not important for you.
+
+Export current questions
+=============================
+
+You can export current questions if you created new questions for a special diagnosis and want to save them.
+The button to export current questions is a blue button next to the diagnosis report button.
+
+> **TIP**
+>
+> The button only appear when you are in the information about organization part or summary of the evaluation.
+
+![Administration Panel – QuestionsJson](img/UG_Diagnostic_049.PNG)
+
 Resume or finish a Diagnosis
 =============================
 
 Before your session ends for security reason, or if you want to resume
 your diagnosis later, it is recommended to export often your work, by
-hitting the yellow button below the navigation panel.
+hitting the blue button below the navigation panel.
 
 ![Exported file](img/UG_Diagnostic_023.PNG)
 
-Files are renamed by the following name: data\_yyyymmddhhnnss.cases
+Files are renamed by the following name: Diagnostic\_yyyymmddhhnnss.cases
 where
 
 -   y = year
@@ -369,14 +517,17 @@ report as a ‘.docx’.
 The first graph that you can see is the maturity by domains with the risk
 cartography and more precisely with the tab on the right. The colors determine
 the level of maturity of each category (red when maturity is under 33%, orange
-between 33% and 66% and green over 66%). You will also find the recommendation
-tab which briefly summarizes the recommendations, their gravity and their
-current and target maturity.
+between 33% and 66% and green over 66%). If a category is highlighted in orange,
+it means that it contains a blocking question which is not managed.
+You will also find the recommendation tab which briefly summarizes the
+recommendations, their gravity and their current and target maturity.
 
 ![Recommendation Tab](img/UG_Diagnostic_027.PNG)
 
 Just below the first tab, you will find the current maturity level and
-the target level.
+the target level (First and second bar). If there are some statistics
+of the current domain and overall diagnoses, you can see them by
+choosing a statistic year and press the 'Ok' button.
 
 ![Current and Target Maturity Level](img/UG_Diagnostic_028.PNG)
 
@@ -393,7 +544,7 @@ that, click on the yellow button ‘Download deliverable.’
 
 ![Download deliverable](img/UG_Diagnostic_030.PNG)
 
-You will need to put a Document Name, the company which concerned by the
+You will need to put a Document Name, the company which is concerned by the
 Diagnosis, the version of the document (If there are multiple
 Diagnoses, or if you want to correct it…), a choice if it’s a draft or
 a final version of the Diagnosis, the classification of the document
@@ -419,15 +570,13 @@ on in the document. a .docx
 There is also a tab which contains the questions, the note taken, the
 recommendation and the current and target maturity.
 
-Modify the template report
+Contents in the template report
 --------------------------
 
-The template report is quite simple to understand. It can be found in :
-\[*PATH\_TO\_DIAGNOSTIC*\]/data/resources. There is some tags which
-corresponding to some fields in the diagnosis. You can find a complete
-list just below. Concerning the charts, some dummy pictures are in the
-document. Their name are "*image9.png*", "*image5.png*" and
-"*image10.png*".
+There is some tags which corresponding to some fields in the diagnosis.
+You can find a complete list just below. Concerning the charts,
+some dummy pictures are in the document.
+Their name are "*image9.png*", "*image5.png*" and "*image10.png*".
 
 ![Name of the dummy chart for the template](img/UG_Diagnostic_034.PNG)
 
@@ -435,8 +584,9 @@ And here is the dummy for the pie chart :
 
 ![Dummy in the report](img/UG_Diagnostic_035.PNG)
 
-As you can also see, tags which can be modified in their order, or that could be just delete are under the form "${TAGS}". A complete list of the different existing tags can be found just below.
+As you can also see, tags which can be modified in their order, or that could be just deleted are under the form "${TAGS}". A complete list of the different existing tags can be found just below.
 
+* \$\{ACTIVITY} : The domain of the organization (Got automatically)
 * \$\{CATEG\_\_PERCENT} : The current percentage got in the categories (Got automatically)
 * \$\{CATEG\_\_PERCENT\_TARG} : The aimed percentage got in the categories (Got automatically)
 * \$\{CLASSIFICATION} : Indication to know where and how the document could be spread (Field got just before download the report)
@@ -446,7 +596,11 @@ As you can also see, tags which can be modified in their order, or that could be
 * \$\{DATE} : The date when is generated the report (Done automatically, depending of the server date)
 * \$\{DOCUMENT} : Name of the document (Field got just before download the report)
 * \$\{EVALUATION\_SYNTHESYS} : Some important conclusions of the diagnosis, or important information to underline (Field got on the last free-text field, "Summary of evaluation")
+* \$\{LEGEND\_BAR} : The legend of the bar chart (Got automatically)
+* \$\{LEGEND\_BLOCKING} : The legend which explain a blocking question (Got automatically)
+* \$\{LEGEND\_DATE} : The sentence below the bar chart legend which shows the year of the statistics chosen (Got automatically)
 * \$\{LEGEND\_PIE} : The legend of the pie chart which contains all the categories (Got automatically)
+* \$\{NB\_EMPLOYEES} : The number of employees of the organization (Got automatically)
 * \$\{NOTES\_TABLE} : The table which contains all the notes, maturity, recommendation of each questions (Got automatically)
 * \$\{ORGANIZATION\_INFORMATION} : Some information that are general on the company (Field got on the first free-text field, "Information about organization")
 * \$\{PRISE\_NOTE_CATEG} : The name of the categories/securities domain field (Got automatically)

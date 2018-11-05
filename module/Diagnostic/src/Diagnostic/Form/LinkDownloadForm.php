@@ -8,6 +8,7 @@ use Zend\Form\Form;
  *
  * @package Diagnostic\Form
  * @author Jerome De Almeida <jerome.dealmeida@vesperiagroup.com>
+ * @author Romain Desjardins
  */
 class LinkDownloadForm extends Form
 {
@@ -38,6 +39,16 @@ class LinkDownloadForm extends Form
                 'value' => '__download',
                 'id' => 'submitbutton',
                 'class' => 'btn btn-success',
+            ],
+        ]);
+
+        $this->add([
+            'name' => 'submit_stat',
+            'type' => 'Submit',
+            'attributes' => [
+                'value' => '__statistics',
+                'class' => 'btn btn-warning',
+                'style' => "padding: 7px 50px 7px 50px; margin-top: 15px;"
             ],
         ]);
     }

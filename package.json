@@ -1,13 +1,13 @@
 {
   "name": "package_diagnostic",
-  "version": "1.0.0",
+  "version": "1.2.0",
   "description": "Diagnostic quick start guide\r ============================",
   "scripts": {
     "postintall": "node -e \"try { require('fs').symlinkSync(require('path').resolve('node_modules/'), 'public/npm_components', 'junction') } catch (e) { }\""
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/mouchettes/diagnostic.git"
+    "url": "git+https://github.com/CASES-LU/diagnostic.git"
   },
   "dependencies": {
     "chart.js": "^2.7.2"
@@ -15,7 +15,7 @@
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/mouchettes/diagnostic/issues"
+    "url": "https://github.com/CASES-LU/diagnostic/issues"
   },
-  "homepage": "https://github.com/mouchettes/diagnostic#readme"
+  "homepage": "https://github.com/CASES-LU/diagnostic#readme"
 }

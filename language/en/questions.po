@@ -1,0 +1,204 @@
+msgid ""
+msgstr ""
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 2.0.6\n"
+"Project-Id-Version: cases-diagnostic\n"
+"Language: en\n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: \n"
+"Last-Translator: \n"
+"Language-Team: \n"
+
+msgid "__question1"
+msgstr "What security mechanisms already exist (other than technical mechanisms)?"
+
+msgid "__question1help"
+msgstr "Is there?<br><ul><li>a security policy</li><li>a user or administrator charter</li><li>procedures (e.g. back-up)</li><li>in-house instructions</li><li>etc</li></ul>"
+
+msgid "__question2"
+msgstr "What is the core business? The most sensitive processes/items of information?"
+
+msgid "__question2help"
+msgstr "Conscious of major assets? (services, processes, information, etc)"
+
+msgid "__question3"
+msgstr "What compliance obligations does the job involve?"
+
+msgid "__question3help"
+msgstr "Awareness and observance of compliance issues?"
+
+msgid "__question4"
+msgstr "Compliance with legislation on personal data?"
+
+msgid "__question4help"
+msgstr "Knowledge of the Law of 2 August 2002 or of the GDPR?"
+
+msgid "__question5"
+msgstr "Have staff members been on training courses recently?"
+
+msgid "__question5help"
+msgstr "Training culture?<br>Awareness of security issues?"
+
+msgid "__question6"
+msgstr "Management of staff turnover?"
+
+msgid "__question6help"
+msgstr "Rapid turnover?<br>HR and IT coordination?"
+
+msgid "__question7"
+msgstr "Are IT responsibilities (and possibly security responsibilities) defined?"
+
+msgid "__question7help"
+msgstr "Internally? Externally?<br>Specific post?"
+
+msgid "__question8"
+msgstr "Is any hardware supplied to certain employees for work purposes?"
+
+msgid "__question8help"
+msgstr "Hardware inventory?<br>Acknowledgement of receipt?"
+
+msgid "__question9"
+msgstr "Does tele-working exist?"
+
+msgid "__question9help"
+msgstr "No tele-working, or good management of tele-working environment?"
+
+msgid "__question10"
+msgstr "Have service providers signed confidentiality agreements?"
+
+msgid "__question10help"
+msgstr "NDAs signed?"
+
+msgid "__question11"
+msgstr "Do service providers give formal undertaking regarding quality of services?"
+
+msgid "__question11help"
+msgstr "SLAs signed for vital services?"
+
+msgid "__question12"
+msgstr "How is premises maintenance (cleaning) organised?"
+
+msgid "__question12help"
+msgstr "Access to sensitive areas?<br>During office hours?<br>External company?"
+
+msgid "__question13"
+msgstr "Are visitors able to move freely throughout the buildings?"
+
+msgid "__question13help"
+msgstr "Accompanied movement?<br>Visitors' register?<br>Badge?"
+
+msgid "__question14"
+msgstr "How is physical access attributed?"
+
+msgid "__question14help"
+msgstr "Good management of authorisations? (need to know, four eyes principle, etc)"
+
+msgid "__question15"
+msgstr "Are access points to the premises controlled?"
+
+msgid "__question15help"
+msgstr "Good management of access control? (key, badge, etc)"
+
+msgid "__question16"
+msgstr "Are restricted-access premises protected?"
+
+msgid "__question16help"
+msgstr "IT area? Archive area?<br>Is security sufficient?"
+
+msgid "__question17"
+msgstr "Is there an uninterruptible power supply?"
+
+msgid "__question17help"
+msgstr "Maintenance times?<br>Maintenance and testing?<br>Connected devices?"
+
+msgid "__question18"
+msgstr "How is logical access attributed?"
+
+msgid "__question18help"
+msgstr "Good management of authorisations?<br> (need to know, four eyes principle, etc)"
+
+msgid "__question19"
+msgstr "How is user authentication managed? "
+
+msgid "__question19help"
+msgstr "Passwords? Strong authentication?<br>Good management?"
+
+msgid "__question20"
+msgstr "How is the internal network constructed (LAN)?"
+
+msgid "__question20help"
+msgstr "Good network architecture? (segregation, DMZ, firewall, etc)"
+
+msgid "__question21"
+msgstr "How is the WiFi network managed?"
+
+msgid "__question21help"
+msgstr "Procedure for requesting access?<br>Segregated from internal local network?<br>Limited duration?"
+
+msgid "__question22"
+msgstr "Do suppliers have the possibility of carrying out tele-maintenance?"
+
+msgid "__question22help"
+msgstr "Tele-maintenance management non-existent or good?"
+
+msgid "__question23"
+msgstr "How are user work-stations managed?"
+
+msgid "__question23help"
+msgstr "Updating of operating system? Of software?<br>Admin rights?"
+
+msgid "__question24"
+msgstr "What are the rules for managing server updates?"
+
+msgid "__question24help"
+msgstr "Good management of updates? Periodicity?"
+
+msgid "__question25"
+msgstr "What is the anti-virus management method?"
+
+msgid "__question25help"
+msgstr "Anti-virus management good?"
+
+msgid "__question26"
+msgstr "How are back-ups managed?"
+
+msgid "__question26help"
+msgstr "Good practices regarding back-ups? <br><ul><li>Exhaustiveness</li><li>Periodicity</li><li>Retention</li><li>Off-line storage</li><li>Delocalisation</li><li>Test</li><li>etc</li></ul>"
+
+msgid "__question27"
+msgstr "How do you manage the storage and the destruction of physical documents?"
+
+msgid "__question27help"
+msgstr "Where are they stored?<br>Is a shredder used?<br>Clean desk policy?"
+
+msgid "__question28"
+msgstr "Is personal use of tools provided regulated/tolerated?"
+
+msgid "__question28help"
+msgstr "Regulated use?"
+
+msgid "__question29"
+msgstr "Is e-mail a work tool?"
+
+msgid "__question29help"
+msgstr "Transfer of sensitive information?"
+
+msgid "__question30"
+msgstr "How do you manage the disposal of hardware?"
+
+msgid "__question30help"
+msgstr "User work-stations? Servers? etc"
+
+msgid "__question31"
+msgstr "Is any incident management in place?"
+
+msgid "__question31help"
+msgstr "Have people been made aware?<br>Who to contact, and how?"
+
+msgid "__question32"
+msgstr "Is there a recovery plan ?"
+
+msgid "__question32help"
+msgstr "Outline or comprehensive ?"

@@ -11,6 +11,7 @@ use Zend\ServiceManager\ServiceLocatorInterface;
  *
  * @package Admin\Factory
  * @author Jerome De Almeida <jerome.dealmeida@vesperiagroup.com>
+ * @author Romain Desjardins
  */
 class QuestionFormFactory implements FactoryInterface
 {

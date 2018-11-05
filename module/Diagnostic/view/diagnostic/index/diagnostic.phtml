@@ -89,17 +89,17 @@ $currentCategoryId = (array_key_exists($id, $questions)) ? $questions[$id]->getC
                                         </a>
                                         <?php
                                         if ($nb > 1) {
-                                            ?>
+                                        ?>
                                             &nbsp;
                                             <a href="<?= $this->url('diagnostic', ['action' => 'delete-question', 'id' => $question->getId()]) ?>"
                                                style="color: #DF1D31;">
                                                 <span class="glyphicon glyphicon-remove"></span>
                                             </a>
-                                            <?php
+                                        <?php
                                         }
                                         $titleQuestion = $this->translate($this->escapeHtml($question->getTranslationKey()));
                                         $titleHelp = (is_null($question->getTranslationKeyHelp())) ? '' : $this->translate($this->escapeHtml($question->getTranslationKeyHelp()));
-					} else {
+                                        } else {
                                         $linkColor = 'dimgrey';
                                         if (array_key_exists($question->getId(), $result)) {
                                             if (strlen($result[$question->getId()]['notes'])) {
@@ -113,13 +113,13 @@ $currentCategoryId = (array_key_exists($id, $questions)) ? $questions[$id]->getC
                                         </a>
                                         <?php
                                         if ($nb > 1) {
-                                            ?>
+                                        ?>
                                             &nbsp;
                                             <a href="<?= $this->url('diagnostic', ['action' => 'delete-question', 'id' => $question->getId()]) ?>"
                                                style="color: #DF1D31;">
                                                 <span class="glyphicon glyphicon-remove"></span>
                                             </a>
-                                            <?php
+                                        <?php
                                         }
                                     }
                                     echo '<br />';
@@ -159,7 +159,7 @@ $currentCategoryId = (array_key_exists($id, $questions)) ? $questions[$id]->getC
                    style="padding: 7px 70px 7px 70px;"><?= $this->translate('__rapport') ?></a>
             </div>
             <div class="col-lg-6 text-center">
-                <a href="<?= $this->url('diagnostic', ['action' => 'export']); ?>" class="btn btn-info"
+                <a href="<?= $this->url('diagnostic', ['action' => 'exportDiagnostic']); ?>" class="btn btn-info"
                    style="padding: 7px 70px 7px 70px;"><?= $this->translate('__export') ?></a>
             </div>
         </div>

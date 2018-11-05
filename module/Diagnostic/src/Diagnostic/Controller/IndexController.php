@@ -40,6 +40,7 @@ class IndexController extends AbstractController
     protected $linkDownloadForm;
     protected $downloadForm;
     protected $questionService;
+    protected $categoryService;
     protected $userService;
     protected $userTokenService;
     protected $mailService;
@@ -116,6 +117,10 @@ class IndexController extends AbstractController
                             $container = new Container('user');
                             $container->email = $user->current()->email;
                             $container->admin = $user->current()->admin;
+
+                            $_SESSION['email'] = $user->current()->email;
+
+                            $_SESSION['id_diagnostic'] = bin2hex(random_bytes('10'));
 
                             return $this->redirect()->toRoute('diagnostic', ['controller' => 'index', 'action' => 'diagnostic']);
                         } else {
@@ -396,7 +401,7 @@ class IndexController extends AbstractController
         $questions = $questionService->getQuestions();
 
         if (!array_key_exists($id, $questions)) {
-            throw new \Exception('Question not exist');
+            return $this->redirect()->toRoute('diagnostic', ['controller' => 'index', 'action' => 'information', 'id' => 1]);
         }
 
         //retrieve categories
@@ -421,6 +426,7 @@ class IndexController extends AbstractController
         //retrieve result
         $container = new Container('diagnostic');
         $result = ($container->offsetExists('result')) ? $container->result : [];
+
         $information = ($container->offsetExists('information')) ? $container->information : ['organization' => '', 'synthesis' => ''];
         //form
         $form = $this->get('questionForm');
@@ -495,9 +501,9 @@ class IndexController extends AbstractController
         //retrieve result
         $container = new Container('diagnostic');
         $result = ($container->offsetExists('result')) ? $container->result : [];
-        $information = ($container->offsetExists('information')) ? $container->information : ['organization' => '', 'synthesis' => ''];
+        $information = ($container->offsetExists('information')) ? $container->information : ['organization' => '', 'synthesis' => '', 'activity' => '', 'nb_employees' => ''];
 
-	//form
+        //form
         $form = $this->get('informationForm');
         $formUpload = $this->get('uploadForm');
 
@@ -508,7 +514,7 @@ class IndexController extends AbstractController
         $errorMessage = '';
         $request = $this->getRequest();
 
-	if ($request->isPost()) {
+        if ($request->isPost()) {
 
             if (count($request->getFiles())) {
                 $formUpload->setData(array_merge_recursive(
@@ -517,7 +523,6 @@ class IndexController extends AbstractController
                 ));
 
                 if ($formUpload->isValid()) {
-
                     $data = $formUpload->getData();
 
                     //load json
@@ -537,7 +542,6 @@ class IndexController extends AbstractController
                         $errorMessage = '__no_file';
                     }
                 }
-
             } else {
                 $form->setData($request->getPost());
                 if ($form->isValid()) {
@@ -554,8 +558,10 @@ class IndexController extends AbstractController
 
                     //record information
                     $information[$informationKey] = $formData['information'];
+                    $information['activity'] = $formData['activity'];
+                    $information['nb_employees'] = $formData['nb_employees'];
                     $container->information = $information;
-
+                    $_SESSION['activity'] = $information['activity'];
 
                     //retrieve first question
                     $firstId = false;
@@ -575,9 +581,10 @@ class IndexController extends AbstractController
 
         //populate
         $informationEntity = $this->get('informationEntity');
-        $binding = (array_key_exists($informationKey, $information)) ? ['information' => $information[$informationKey]] : [];
+        $binding = (array_key_exists($informationKey, $information)) ? ['information' => $information[$informationKey], 'activity' => $information['activity'], 'nb_employees' => $information['nb_employees']] : [];
         $informationEntity->exchangeArray($binding);
         $form->bind($informationEntity);
+        $_SESSION['activity'] = $information['activity'];
 
         //send to view
         return new ViewModel([
@@ -588,7 +595,7 @@ class IndexController extends AbstractController
             'form' => $form,
             'type' => $type,
             'formUpload' => $formUpload,
-            'errorMessage' => $errorMessage,
+            'errorMessage' => $errorMessage
         ]);
     }
 
@@ -647,7 +654,8 @@ class IndexController extends AbstractController
                     'category_translation_key' => $categories[$categoryId],
                     'translation_key' => $formData['question'],
                     'translation_key_help' => $formData['help'],
-                    'threshold' => $formData['threshold'],
+                    'threat' => $formData['threat'],
+                    'weight' => $formData['weight'],
                     'new' => true,
                 ]);
 
@@ -733,11 +741,11 @@ class IndexController extends AbstractController
     }
 
     /**
-     * Export
+     * Export Diagnostic
      *
      * @return ViewModel
      */
-    public function exportAction()
+    public function exportDiagnosticAction()
     {
         //retrieve result
         $container = new Container('diagnostic');
@@ -749,11 +757,18 @@ class IndexController extends AbstractController
         $questionService = $this->get('questionService');
         $questions = $questionService->getQuestions();
 
+        //retrieve categories
+        /** @var CategoryService $categoryService */
+        $categoryService = $this->get('categoryService');
+        $categories = $categoryService->getCategories();
+
         //format result
         $export = [
             'result' => $result,
             'information' => $information,
-            'questions' => $questions
+            'questions' => $questions,
+            'categories' => $categories,
+            'id_diagnostic' => $_SESSION['id_diagnostic']
         ];
         $export = json_encode($export);
 
@@ -761,11 +776,8 @@ class IndexController extends AbstractController
         $config = $this->get('config');
         $encryptionKey = $config['encryption_key'];
 
-	//encrypt result
-        //$blockCipher = BlockCipher::factory('mcrypt', ['algo' => 'aes']);
-        //$blockCipher->setKey($encryptionKey);
-        //$cryptExport = $blockCipher->encrypt($export);
-	$iv = $config['iv_key'];
+        //encrypt result
+        $iv = $config['iv_key'];
         $cryptExport = openssl_encrypt($export,'AES-256-CBC', $encryptionKey, OPENSSL_RAW_DATA, $iv);
         //create file
         $filename = 'Diagnostic_' . date('YmdHis') . '.cases';
@@ -790,6 +802,170 @@ class IndexController extends AbstractController
         return $view;
     }
 
+   /**
+     * Export Questions
+     *
+     * @return ViewModel
+     */
+    public function exportQuestionsAction()
+    {
+        $location_lang = '/var/www/diagnostic/language/';
+
+        //retrieve questions
+        /** @var QuestionService $questionService */
+        $questionService = $this->get('questionService');
+        $questions = $questionService->getQuestions();
+        $questions_max = count($questions);
+        $max_quest = 1;
+        $i = 1;
+        $j = 1;
+        // Put the highest question id in $max_quest
+        while ($i <= $questions_max) {
+            if (isset($questions[$j])) {
+                if ($questions[$j]->id > $max_quest) {$max_quest = $questions[$j]->id;}
+                $i++;
+                $j++;
+            }else {$j++;}
+        }
+
+        //retrieve categories
+        /** @var CategoryService $categoryService */
+        $categoryService = $this->get('categoryService');
+        $categories = $categoryService->getCategories();
+        $categories_max = count($categories);
+        $max_categ = 1;
+        $i = 1;
+        $j = 1;
+        // Put the highest category id in $max_categ
+        while ($i <= $categories_max) {
+            if (isset($categories[$j])) {
+                if ($categories[$j]->id > $max_categ) {$max_categ = $categories[$j]->id;}
+                $i++;
+                $j++;
+            }else {$j++;}
+        }
+
+        $categories_temp = [];
+        $questions_temp = [];
+
+        // Only take category things we need in the json file
+        $i = 1;
+        while ($max_categ >= $i) {
+            if (isset($categories[$i])) {
+                $categories_temp[$i]['id'] = $i;
+            }
+            $i++;
+        }
+
+        // Only take question things we need in the json file
+        $i = 1;
+        while ($max_quest >= $i) {
+            if (isset($questions[$i])) {
+                $questions_temp[$i]['id'] = $i;
+                $questions_temp[$i]['threat'] = $questions[$i]->threat;
+                $questions_temp[$i]['weight'] = $questions[$i]->weight;
+                $questions_temp[$i]['blocking'] = $questions[$i]->blocking;
+            }
+            $i++;
+        }
+
+        // Write translation questions in the json file
+        $file_lang = fopen($location_lang . 'languages.txt', 'r');
+        for ($j=1; $j<$_SESSION['nb_lang']; $j++) {
+            $temp_lang = substr(fgets($file_lang, 4096), 0, -1);
+
+            $file = fopen($location_lang . $temp_lang . '/questions.po', 'r');
+            // Go to the question translations
+            while (!feof($file)) {
+                $temp = fgets($file, 4096);
+                if ($temp == PHP_EOL) {$temp = fgets($file, 4096); break;}
+            }
+
+            $i = 1;
+            while ($max_quest >= $i) {
+                if (isset($questions_temp[$i])) {
+                    $temp = fgets($file, 4096);
+                    $questions_temp[$i]['translation_' . $temp_lang] = substr($temp, 8, -2);
+                    $temp = fgets($file, 4096);
+                    $temp = fgets($file, 4096);
+                    $temp = fgets($file, 4096);
+                    $questions_temp[$i]['translation_help_' . $temp_lang] = substr($temp, 8, -2);
+                    $temp = fgets($file, 4096);
+                    $temp = fgets($file, 4096);
+                }
+                $i++;
+            }
+            fclose($file);
+        }
+        fclose($file_lang);
+
+        // Write translation categories in the json file
+        $file_lang = fopen($location_lang . 'languages.txt', 'r');
+        for ($j=1; $j<$_SESSION['nb_lang']; $j++) {
+            $temp_lang = substr(fgets($file_lang, 4096), 0, -1);
+
+            $file = fopen($location_lang . $temp_lang . '/categories.po', 'r');
+            // Go to categories
+            while (!feof($file)) {
+                $temp = fgets($file, 4096);
+                if ($temp == PHP_EOL) {$temp = fgets($file, 4096); break;}
+            }
+
+            // Put translations of categories
+            $i = 1;
+            while ($max_categ >= $i) {
+                if (isset($categories_temp[$i])) {
+                    $temp = fgets($file, 4096);
+                    $categories_temp[$i] = (array)$categories_temp[$i];
+                    $categories_temp[$i]['translation_' . $temp_lang] = substr($temp, 8, -2);
+                    $categories_temp[$i] = (object)$categories_temp[$i];
+                    $temp = fgets($file, 4096);
+                    $temp = fgets($file, 4096);
+                }
+                $i++;
+            }
+            fclose($file);
+        }
+        fclose($file_lang);
+
+        // Put questions into categories
+        foreach ($categories_temp as $category) {
+            $j=1;
+            $question = [];
+            for ($i=1; $i<=$max_quest; $i++) {
+                if (isset($questions[$i])) {
+                    if ($questions[$i]->category_id == $category->id) {
+                        $question[$j] = $questions_temp[$i];
+                        $j++;
+                    }
+                }else {$j++;}
+            }
+            $category->questions = array_values($question);
+        }
+
+        // Encode in a file
+        $filename = 'questions_temp_' . date('YmdHis') . '.json';
+        $fichier = fopen($filename, 'w+');
+        fwrite($fichier, json_encode(array_values($categories_temp), JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES));
+        fclose($fichier);
+
+        // Ddl the file and delete it in the VM
+        header("Cache-Control: public");
+        header("Content-Description: File Transfer");
+        header("Content-Length: " . filesize("$filename") . ";");
+        header("Content-Disposition: attachment; filename=$filename");
+        header("Content-Type: application/octet-stream; ");
+        header("Content-Transfer-Encoding: binary");
+
+        readfile($filename);
+        unlink($filename);
+
+        $view = new ViewModel();
+        $view->setTerminal(true);
+
+        return $view;
+    }
+
     /**
      * Rapport
      *
@@ -797,8 +973,13 @@ class IndexController extends AbstractController
      */
     public function rapportAction()
     {
+        $_SESSION['average_activity'] = -1;
+        $_SESSION['average_diagnosis'] = -1;
+        $_SESSION['date'] = -1;
+
         //form
         $form = $this->get('linkDownloadForm');
+        $request = $this->getRequest();
 
         //retrieve results and questions
         $container = new Container('diagnostic');
@@ -839,13 +1020,13 @@ class IndexController extends AbstractController
             ['color' => '#555555', 'highlight' => '#666666'],
             ['color' => '#B266FF', 'highlight' => '#CC99FF'],
             ['color' => '#FF66FF', 'highlight' => '#FF99FF'],
-	    ['color' => '#498BFD', 'highlight' => '#74A7FE'],
-	    ['color' => '#37DE96', 'highlight' => '#44FEAD'],
-	    ['color' => '#E0F000', 'highlight' => '#EDFE00'],
-	    ['color' => '#75CE00', 'highlight' => '#91FE03'],
-	    ['color' => '#00ECE4', 'highlight' => '#00FEF6'],
-	    ['color' => '#BA7C00', 'highlight' => '#DC9300'],
-	    ['color' => '#E500DD', 'highlight' => '#FE00F6'],
+            ['color' => '#498BFD', 'highlight' => '#74A7FE'],
+            ['color' => '#37DE96', 'highlight' => '#44FEAD'],
+            ['color' => '#E0F000', 'highlight' => '#EDFE00'],
+            ['color' => '#75CE00', 'highlight' => '#91FE03'],
+            ['color' => '#00ECE4', 'highlight' => '#00FEF6'],
+            ['color' => '#BA7C00', 'highlight' => '#DC9300'],
+            ['color' => '#E500DD', 'highlight' => '#FE00F6'],
         ];
         $categoriesRepartition = [];
         $i = 0;
@@ -864,6 +1045,154 @@ class IndexController extends AbstractController
             $categoriesTarget[$key] = (array_key_exists($category, $calculResults['totalCategoryTarget'])) ? (int)$calculResults['totalCategoryTarget'][$category] : 0;
         }
 
+        if ($request->isPost()) {
+            $form->setData($request->getPost());
+            // Download statistics
+            if (isset($_POST['submit_stat'])) {
+
+                $stat_global = [];
+                $stat_categ = [];
+                $stat_quest = [];
+
+                $hash_categ = [];
+                $hash_quest = [];
+
+                $stat_global[0]['id_diagnostic'] = $_SESSION['id_diagnostic'];
+                $stat_global[0]['activity'] = $translator->translate($container->information['activity']);
+                $stat_global[0]['nb_employees'] = $translator->translate($container->information['nb_employees']);
+                $stat_global[0]['final_result'] = $calculResults['total'];
+
+                $i = 1;
+                $j = 1;
+                while ($i <= count($categories)) {
+                    if (isset($categories['__category' . $j])) {
+                        // Set category Uid
+                        $file = fopen('/var/www/diagnostic/language/en/categories.po', 'r');
+                        while (!feof($file)) {
+                            $temp = fgets($file, 4096);
+                            if (substr($temp, 7, -2) == '__category' . $j) {
+                                $temp = fgets($file, 4096);
+                                $hash_categ[$j]['translation_en'] = substr($temp, 8, -2);
+                                break;
+                            }
+                        }
+                        fclose($file);
+                        $stat_categ[$j]['uid'] = md5(serialize($hash_categ[$j]));
+
+                        $stat_categ[$j]['category'] = '__category' . $j;
+
+                        $stat_categ[$j]['category_maturity'] = $categories['__category' . $j];
+
+                        $i++;
+                        $j++;
+                    }else {$j++;}
+                }
+
+                $i = 1;
+                $j = 1;
+                while ($i <= count($results)) {
+                    if (isset($results[$j])) {
+                        // Set question Uid
+                        $file = fopen('/var/www/diagnostic/language/en/questions.po', 'r');
+                        while (!feof($file)) {
+                            $temp = fgets($file, 4096);
+                            if (substr($temp, 7, -2) == '__question' . $j) {
+                                $temp = fgets($file, 4096);
+                                $hash_quest[$j]['translation_en'] = substr($temp, 8, -2);
+                                break;
+                            }
+                        }
+                        fclose($file);
+
+                        $file = fopen('/var/www/diagnostic/language/en/categories.po', 'r');
+                        while (!feof($file)) {
+                            $temp = fgets($file, 4096);
+                            if (substr($temp, 7, -2) == '__category' . $questions[$j]->getCategoryId()) {
+                                $temp = fgets($file, 4096);
+                                $hash_quest[$j]['category_translation'] = substr($temp, 8, -2);
+                                break;
+                            }
+                        }
+                        fclose($file);
+
+                        $stat_quest[$j]['uid'] = md5(serialize($hash_quest[$j]));
+
+                        $stat_quest[$j]['question'] = $questions[$j]->getTranslationKey();
+
+                        if ($results[$j]['maturity'] == 0) {
+                            $maturity = $translator->translate('__maturity_none');
+                        }elseif ($results[$j]['maturity'] == 1) {
+                            $maturity = $translator->translate('__maturity_medium');
+                        }elseif ($results[$j]['maturity'] == 2) {
+                            $maturity = $translator->translate('__maturity_ok');
+                        }else {
+                            $maturity = $translator->translate('__maturity_NA');
+                        }
+                        $stat_quest[$j]['maturity'] = $maturity;
+
+                        if ($results[$j]['gravity'] == 1) {
+                            $gravity = $translator->translate('__low');
+                        }elseif ($results[$j]['gravity'] == 2) {
+                            $gravity = $translator->translate('__medium');
+                        }else {
+                            $gravity = $translator->translate('__strong');
+                        }
+                        $stat_quest[$j]['gravity'] = $gravity;
+
+                        $stat_quest[$j]['category'] = $questions[$j]->getCategoryTranslationKey();
+
+                        $i++;
+                        $j++;
+                    }else {$j++;}
+                }
+
+                $statistics = [];
+                $statistics[0] = array_values($stat_global);
+                $statistics[1] = array_values($stat_categ);
+                $statistics[2] = array_values($stat_quest);
+
+                // Encode in a file
+                $fichier = fopen('/var/www/diagnostic/stat_' . $_SESSION['id_diagnostic'] . '.json', 'w+');
+                fwrite($fichier, json_encode($statistics, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES));
+                fclose($fichier);
+
+                // Ddl the file and delete it in the VM
+                header('Content-Description: File Transfer');
+                header('Content-Type: application/octet-stream');
+                header('Content-Disposition: attachment; filename=stat_' . $_SESSION['id_diagnostic'] . '.json');
+                header('Expires: 0');
+                header('Cache-Control: must-revalidate');
+                header('Pragma: public');
+                header('Content-Length: ' . filesize('/var/www/diagnostic/stat_' . $_SESSION['id_diagnostic'] . '.json'));
+                readfile('/var/www/diagnostic/stat_' . $_SESSION['id_diagnostic'] . '.json');
+                unlink('/var/www/diagnostic/stat_' . $_SESSION['id_diagnostic'] . '.json');
+            }
+
+            // Choose the date for the statistic to display
+            if (isset($_POST['submit_date']) && file_exists('/var/www/diagnostic/data/resources/statistics_' . $request->getPost('date') . '.txt')) {
+                $file_bar = fopen('/var/www/diagnostic/data/resources/statistics_' . $request->getPost('date') . '.txt', 'r');
+                $contents = fread($file_bar, filesize('/var/www/diagnostic/data/resources/statistics_' . $request->getPost('date') . '.txt'));
+                fclose($file_bar);
+                $contents = explode(PHP_EOL, $contents); // PHP_EOL equals to /n in Linux
+                $contents[0] = explode(',', $contents[0]);
+                if (isset($contents[0][1])) {
+                    $_SESSION['average_diagnosis'] = $contents[0][count($contents[0])-1];
+                }
+                $contents[0] = implode(',', $contents[0]);
+                if (isset($_SESSION['activity'])) {
+                    for ($i=1; $i<count($contents); $i++) {
+                        $contents[$i] = explode(',', $contents[$i]);
+                        if ($contents[$i][0] == $_SESSION['activity']) {
+                                if (isset($contents[$i][1])) {$_SESSION['average_activity'] = $contents[$i][count($contents[$i])-1];}
+                        }
+                        $contents[$i] = implode(',', $contents[$i]);
+                    }
+                }
+                $_SESSION['date'] = $request->getPost('date');
+            }
+        }
+
+
         //send to view
         return new ViewModel([
             'form' => $form,
@@ -874,6 +1203,8 @@ class IndexController extends AbstractController
             'recommandations' => $calculResults['recommandations'],
             'categoriesRepartition' => $categoriesRepartition,
             'download' => (count($results)) ? true : false,
+            'questions' => $questions,
+            'results' => $results,
         ]);
     }
 
@@ -936,7 +1267,7 @@ class IndexController extends AbstractController
                     $calculService = $this->get('calculService');
                     $calculResults = $calculService->calcul();
 
-			//generating the deliverable according to the language
+                    //generating the deliverable according to the language
                     $word = new TemplateProcessorService('data/resources/model_'.$translator->getLocale().'.docx');
                     $word->generateWord($data, $questions, $calculResults, $information, $translator);
                 }
@@ -970,6 +1301,9 @@ class IndexController extends AbstractController
 
         $container = new Container('diagnostic');
         $container->language = $language;
+		
+		//Creation of an new UID
+		$_SESSION['id_diagnostic'] = bin2hex(random_bytes('10'));
 
         //redirection
         return $this->redirect()->toRoute('diagnostic', ['controller' => 'index', 'action' => 'diagnostic']);
@@ -984,14 +1318,15 @@ class IndexController extends AbstractController
 
         $container = new Container('diagnostic');
 
-	$file_lang = fopen('/var/www/diagnostic/language/languages.txt', 'r');
-	for ($i=1; $i<$_SESSION['nb_lang']; $i++) {
-	    $temp_lang = fgets($file_lang, 4096);
+        $location_lang = '/var/www/diagnostic/language/languages.txt';
+        $file_lang = fopen($location_lang, 'r');
+        for ($i=1; $i<$_SESSION['nb_lang']; $i++) {
+            $temp_lang = fgets($file_lang, 4096);
             if ($id == $i) {
                 $container->language = substr($temp_lang, 0, -1);
             }
         }
-	fclose($file_lang);
+        fclose($file_lang);
 
         //redirection
         $this->redirect()->toUrl($this->getRequest()->getHeader('Referer')->getUri());
