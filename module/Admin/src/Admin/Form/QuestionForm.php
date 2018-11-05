@@ -8,6 +8,7 @@ use Zend\Form\Form;
  *
  * @package Diagnostic\Form
  * @author Jerome De Almeida <jerome.dealmeida@vesperiagroup.com>
+ * @author Romain Desjardins
  */
 class QuestionForm extends Form
 {
@@ -41,12 +42,6 @@ class QuestionForm extends Form
      */
     public function init()
     {
-
-        $threshold = [];
-        for ($i = 1; $i <= 6; $i++) {
-            $threshold[$i * 5] = $i * 5;
-        }
-
         $this->add([
             'name' => 'translation_key',
             'type' => 'Text',
@@ -72,14 +67,60 @@ class QuestionForm extends Form
         ]);
 
         $this->add([
-            'name' => 'threshold',
+            'name' => 'threat',
             'type' => 'Select',
             'options' => [
-                'label' => '__threshold_max',
-                'value_options' => $threshold,
+                'label' => '__threat',
+                'value_options' => [
+                    '1' => 1,
+                    '2' => 2,
+                    '3' => 3,
+                    '4' => 4,
+                    '5' => 5,
+                ],
             ],
             'attributes' => [
                 'class' => 'form-control threshold',
+            ],
+        ]);
+
+        $this->add([
+            'name' => 'weight',
+            'type' => 'Select',
+            'options' => [
+                'label' => '__weight',
+                'value_options' => [
+                    '1' => 1,
+                    '2' => 2,
+                    '3' => 3,
+                    '4' => 4,
+                    '5' => 5,
+                    '6' => 6,
+                ],
+            ],
+            'attributes' => [
+                'class' => 'form-control threshold',
+            ],
+        ]);
+
+        $this->add([
+            'name' => 'blocking',
+            'type' => 'Checkbox',
+            'options' => [
+                'label' => '__blocking',
+                'checked_value' => '✓',
+                'unchecked_value' => '✕',
+            ],
+        ]);
+
+        $this->add([
+            'name' => 'file',
+            'type' => 'File',
+            'options' => [
+                'label' => '',
+            ],
+            'attributes' => [
+                'class' => 'form-control',
             ],
         ]);
 
@@ -99,6 +140,15 @@ class QuestionForm extends Form
             'attributes' => [
                 'value' => '__add',
                 'id' => 'submitbutton',
+                'class' => 'btn btn-success',
+            ],
+        ]);
+
+        $this->add([
+            'name' => 'submit_file',
+            'type' => 'Submit',
+            'attributes' => [
+                'value' => '__upload',
                 'class' => 'btn btn-success',
             ],
         ]);

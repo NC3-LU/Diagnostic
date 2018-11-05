@@ -124,3 +124,12 @@ virtual host accordingly and don’t forget to disable default web
 application by using :
 
     sudo a2dissite 000-default.conf
+    
+Early access
+------------
+
+### Access the test branch
+
+We have a test branch where we are testing new features. If you want,
+you can test them in an early access, before they be published in the master branch.
+This version might contain some bugs, there is no warranty.

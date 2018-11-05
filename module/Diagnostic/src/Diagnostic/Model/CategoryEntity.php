@@ -2,10 +2,10 @@
 namespace Diagnostic\Model;
 
 /**
- * Question Entity
+ * Category Entity
  *
  * @package Diagnostic\Model
- * @author Jerome De Almeida <jerome.dealmeida@vesperiagroup.com>
+ * @author Romain Desjardins
  */
 class CategoryEntity
 {
@@ -18,6 +18,11 @@ class CategoryEntity
      * Translation Key
      */
     public $translation_key;
+
+    /**
+     * Uid
+     */
+    public $uid;
 
     /**
      * New
@@ -34,7 +39,7 @@ class CategoryEntity
 
     /**
      * @param mixed $id
-     * @return QuestionEntity
+     * @return CategoryEntity
      */
     public function setId($id)
     {
@@ -52,11 +57,29 @@ class CategoryEntity
 
     /**
      * @param mixed $translation_key
-     * @return QuestionEntity
+     * @return CategoryEntity
      */
     public function setTranslationKey($translation_key)
     {
         $this->translation_key = $translation_key;
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getUid()
+    {
+        return $this->uid;
+    }
+
+    /**
+     * @param mixed $uid
+     * @return CategoryEntity
+     */
+    public function setUid($uid)
+    {
+        $this->uid = $uid;
         return $this;
     }
 
@@ -70,7 +93,7 @@ class CategoryEntity
 
     /**
      * @param mixed $new
-     * @return QuestionEntity
+     * @return CategoryEntity
      */
     public function setNew($new)
     {
@@ -95,6 +118,7 @@ class CategoryEntity
         }
 
         $this->translation_key = (isset($data['translation_key'])) ? $data['translation_key'] : null;
+        $this->uid = (isset($data['uid'])) ? $data['uid'] : null;
         $this->new = (isset($data['new'])) ? $data['new'] : false;
     }
 

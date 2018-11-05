@@ -4,7 +4,15 @@ $title = $this->translate('__category');
 $this->headTitle($title);
 
 $this->form->setAttribute('action', $this->url('admin', ['action' => 'add-category']));
-$this->form->prepare(); ?>
+$this->form->prepare();
+
+// Retrieve category max
+$categories_max = 1;
+foreach ($categories as $category) :
+    if (substr($category->getTranslationKey(), 10) > $categories_max) {$categories_max = substr($category->getTranslationKey(), 10);}
+endforeach;
+
+?>
 
 <div class="row">
     <div class="col-lg-3 text-center"></div>
@@ -18,24 +26,19 @@ $this->form->prepare(); ?>
             <tr>
                 <td><label><?= $this->translate($form->get('translation_key')->getLabel()) ?></label></td>
                 <td>
-                    <?= $this->formText($form->get('translation_key')->setValue('__category' . $_SESSION['nb_categories'])) ?>
+                    <?= $this->formText($form->get('translation_key')->setValue('__category' . ($categories_max+1))->setAttributes(['readonly' => 'true', 'style' => 'pointer-events: none'])) ?>
                 </td>
             </tr>
-            <tr>
-                <td colspan="2">
-                    <?= $this->formElementErrors($form->get('translation_key'), ['class' => 'bg-danger']) ?>
-                    <!-- // Display error if the translation key already exist -->
-                    <?php if($_SESSION['erreur_exist'] == 1){ echo "<ul class='bg-danger'> <li>" . $this->translate('__error_exist'). "</li></ul>"; } ?>
-                </td>
-            </tr>
-            <!-- // Translations label and form-text -->
-	    <?php
-            $file = fopen("/var/www/diagnostic/language/languages.txt", "r");
+
+            <!-- // Translation labels and form-text -->
+            <?php
+            $location_lang = '/var/www/diagnostic/language/languages.txt';
+            $file_lang = fopen($location_lang, 'r');
             for($i=1; $i<$_SESSION['nb_lang']; $i++) {
-                $temp = fgets($file, 4096);
+                $temp_lang = substr(fgets($file_lang, 4096), 0, -1); // substr is for deleting the /n
 
                 // Creation translation form
-                $translation = new Element('translation_' . substr($temp, 0, -1)); // substr is for deleting the /n
+                $translation = new Element('translation_' . $temp_lang);
                 $translation->setLabel('__translation');
                 $translation->setAttributes([
                     'type'  => 'text',
@@ -44,14 +47,14 @@ $this->form->prepare(); ?>
                 $form->add($translation);
                 ?>
                 <tr>
-                    <td><label><?= $this->translate($form->get('translation_' . substr($temp, 0, -1))->getLabel()) ?></label>&nbsp;<span class="flag-icon flag-icon-<?= $temp ?>"></span></td>
+                    <td><label><?= $this->translate($form->get('translation_' . $temp_lang)->getLabel()) ?></label>&nbsp;<span class="flag-icon flag-icon-<?= $temp_lang ?>"></span></td>
                     <td>
-                        <?= $this->formText($form->get('translation_' . substr($temp, 0, -1))) ?>
+                        <?= $this->formText($form->get('translation_' . $temp_lang)) ?>
                     </td>
                 </tr>
             <?php
             }
-            fclose($file);
+            fclose($file_lang);
             ?>
             <tr>
                 <td colspan="2">
@@ -62,4 +65,5 @@ $this->form->prepare(); ?>
         <?= $this->formHidden($form->get('csrf')) ?>
         <?= $this->form()->closeTag() ?>
     </div>
-    <div class="col-lg-3 text-center"></div> </div>
+    <div class="col-lg-3 text-center"></div>
+</div>

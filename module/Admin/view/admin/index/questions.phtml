@@ -1,13 +1,34 @@
 <?php
-$title = $this->translate('__users');
+
+$title = $this->translate('__questions');
 $this->headTitle($title);
-$_SESSION['nb_questions'] = 1; // Count number of question
+
+$this->form->setAttribute('action', $this->url('admin', ['action' => 'questions']));
+$this->form->prepare();
+
 ?>
+
+<?= $this->form()->openTag($form) ?>
+
+<!-- // Display confirmation when you want to delete a question. -->
+<script>var delete_question = <?php echo json_encode($this->translate('__delete_question')) ?></script>
 
 <div class="row">
     <div class="col-lg-12 text-left">
         <h2><?= $this->translate('__questions') ?></h2>
         <br/>
+
+        <!-- // Upload part -->
+        <div class="col-lg-3 text-left"><?= $this->formFile($form->get('file')); ?></div>
+        <?= $this->formSubmit($form->get('submit_file')); ?>
+        <?= $this->formSubmit($form->get('submit')); ?>
+        <br />
+        <div class="col-lg-3 text-left">
+            <?php if($error_upload == 1){ echo "<ul class='bg-danger'> <li>" . $this->translate('__error_file'). "</li></ul>"; }
+            if($error_id == 1){ echo "<ul class='bg-danger'> <li>" . $this->translate('__error_id'). "</li></ul>"; } ?>
+        </div>
+
+
         <?php
         $urlAdd = $this->url('admin', ['action' => 'add-question']);
         ?>
@@ -19,29 +40,34 @@ $_SESSION['nb_questions'] = 1; // Count number of question
         <table class="table">
             <tr>
                 <th width="50%"><?= $this->translate('__question'); ?></th>
-		<th><?= $this->translate('__translation_key'); ?></th>
+                <th><?= $this->translate('__translation_key'); ?></th>
                 <th style="text-align: center"><?= $this->translate('__category'); ?></th>
                 <th style="text-align: center;"><?= $this->translate('__threshold_max'); ?></th>
+                <th style="text-align: center;"><?= $this->translate('__blocking'); ?></th>
                 <th style="text-align: center;"><?= $this->translate('__action'); ?></th>
             </tr>
-            <?php foreach ($questions as $question) :
-		$_SESSION['nb_questions']++;
+            <?php
+            foreach ($questions as $question) :
                 $urlModify = $this->url('admin', ['action' => 'modify-question', 'id' => $question->getId()]);
                 $urlDelete = $this->url('admin', ['action' => 'delete-question', 'id' => $question->getId()]);
-                ?>
+            ?>
                 <tr>
                     <td><?= $this->translate($question->getTranslationKey()); ?></td>
-		    <td><?= $question->getTranslationKey(); ?></td>
+                    <td><?= $question->getTranslationKey(); ?></td>
                     <td align="center"><?= $this->translate($question->getCategoryTranslationKey()); ?></td>
-                    <td align="center"><?= $question->getThreshold(); ?></td>
+                    <td align="center"><?= $question->getThreat() * $question->getWeight(); ?></td>
+                    <td align="center"><?= $question->getBlocking() ?></td>
                     <td align="center">
                         <a href="<?= $urlModify ?>"><span class="glyphicon glyphicon-pencil"></span></a>
                         &nbsp;&nbsp;
-                        <a href="<?= $urlDelete ?>"><span class="glyphicon glyphicon-remove"></span></a>
+                        <a href="<?= $urlDelete ?>" onclick='return confirm(delete_question)'><span class="glyphicon glyphicon-remove"></span></a>
                     </td>
                 </tr>
-                <?php
-            endforeach; ?>
+            <?php
+            endforeach;
+            ?>
         </table>
     </div>
 </div>
+
+<?= $this->form()->closeTag() ?>

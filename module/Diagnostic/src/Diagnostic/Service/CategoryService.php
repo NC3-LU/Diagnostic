@@ -5,10 +5,10 @@ use Zend\Crypt\BlockCipher;
 use Zend\Session\Container;
 
 /**
- * QuestionService
+ * CategoryService
  *
  * @package Diagnostic\Service
- * @author Jerome De Almeida <jerome.dealmeida@vesperiagroup.com>
+ * @author Romain Desjardins
  */
 class CategoryService extends AbstractService
 {
@@ -28,7 +28,7 @@ class CategoryService extends AbstractService
     }
 
     /**
-     * Get question
+     * Get category
      *
      * @return array
      * @throws \Exception
@@ -37,26 +37,34 @@ class CategoryService extends AbstractService
     {
         $container = new Container('diagnostic');
         if ($container->offsetExists('categories')) {
-            $questions = $container->categories;
+            $categories = $container->categories;
         } else {
-            $questionsObject = $this->fetchAllWithCategories();
+            $categoriesObject = $this->fetchAllWithCategories();
 
-            $questions = [];
-            foreach ($questionsObject as $question) {
-                $questions[$question->getId()] = $question;
+            $categories = [];
+            foreach ($categoriesObject as $category) {
+                $categories[$category->getId()] = $category;
             }
 
-            $container->categories = $questions;
+            $container->categories = $categories;
         }
 
-        return $questions;
+        $tmpArray = [];
+        foreach ($categories as $category) {
+            $tmpArray[$category->getId()] = $category;
+        }
+
+        ksort($tmpArray);
+        $categories = [];
+        foreach ($tmpArray as $value) {
+            $categories[$value->getId()] = $value;
+        }
+
+        return $categories;
     }
 
-
-
-
-	 /**
-     * Get Bdd Questions
+    /**
+     * Get Bdd Categories
      *
      * @return array
      * @throws \Exception

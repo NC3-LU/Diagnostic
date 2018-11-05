@@ -7,10 +7,10 @@ use Zend\ServiceManager\FactoryInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
 
 /**
- * Question Form Factory
+ * Category Form Factory
  *
  * @package Admin\Factory
- * @author Jerome De Almeida <jerome.dealmeida@vesperiagroup.com>
+ * @author Romain Desjardins
  */
 class CategoryFormFactory implements FactoryInterface
 {
@@ -24,14 +24,14 @@ class CategoryFormFactory implements FactoryInterface
     {
         $categories = $serviceLocator->getServiceLocator()->get('Diagnostic\Service\CategoryService')->getCategories();
 
-	//retrieve categories
-        $questions = [];
+        //retrieve categories
+        $tab_categories = [];
         foreach ($categories as $category) {
-            $questions[$category->getId()] = $category->getTranslationKey();
+            $tab_categories[$category->getId()] = $category->getTranslationKey();
         }
 
         $form = new CategoryForm();
-        $form->setCategories($questions);
+        $form->setCategories($tab_categories);
 
         $categoryFormFilter = new CategoryFormFilter($serviceLocator->getServiceLocator()->get('Zend\Db\Adapter\Adapter'));
         $form->setInputFilter($categoryFormFilter);

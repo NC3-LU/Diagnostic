@@ -137,15 +137,6 @@ div.container a.brand {
 .matNA {
 	background-image:url(/img/mat_NA.png);
 }
-.gravity1 {
-	background-image:url(/img/gravity_1.png);
-}
-.gravity2 {
-	background-image:url(/img/gravity_2.png);
-}
-.gravity3 {
-	background-image:url(/img/gravity_3.png);
-}
 
 .notes-area {
 	height: 200px  !important;
@@ -155,11 +146,12 @@ div.container a.brand {
 	height: 100px  !important;
 }
 .information-area {
-	height: 560px  !important;
+	height: 350px  !important;
 }
 
 .threshold {
 	width: 40px;
+        display: inline;
 }
 
 #navbar a { color: #fff !important;}
