@@ -145,7 +145,7 @@ Changelogs
 - Translation files now divided between questions, categories and translations for more visibility.
 - Update documentation to match with new features.
 
-# CHANGE LOG VERSION 1.1 JUNE 2018
+## CHANGE LOG VERSION 1.1 JUNE 2018
 
 - Update Ubuntu from 17.04 to 18.04.
 - Update Php from 7.0 to 7.1.
