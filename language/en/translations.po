@@ -345,10 +345,10 @@ msgid "__employees"
 msgstr "Number of employees"
 
 msgid "__organization_help"
-msgstr "Organization help"
+msgstr "What does your job involves?<br />What do you do for your customers?<br />Who are your main customers and in which proportion (B2B, B2C...)?<br />How many employees are in the entity?<br />Have you met any incidents bound to the loss (or the leak) of some assets or data (Theft, targeted revenge, backup which not works, Social Engineering...)?"
 
 msgid "__synthesis_help"
-msgstr "Synthesis help"
+msgstr "Which grades correspond to the entity?<br />Do the diagnostic have been made without bypassing any questions?<br />What are the main focus that should be done for the entity?<br />What are the next steps?"
 
 msgid "__average_diagnosis"
 msgstr "Average_Diagnosis"
