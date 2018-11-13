@@ -15,190 +15,190 @@ msgid "__question1"
 msgstr "What security mechanisms already exist (other than technical mechanisms)?"
 
 msgid "__question1help"
-msgstr "Is there?<br><ul><li>a security policy</li><li>a user or administrator charter</li><li>procedures (e.g. back-up)</li><li>in-house instructions</li><li>etc</li></ul>"
+msgstr "Is there<br /><ul><li>a security policy?</li><li>a user or administrator charter?</li><li>some oral or wirtten procedures?</li><li>some oral instruction?</li></ul>"
 
 msgid "__question2"
 msgstr "What is the core business? The most sensitive processes/items of information?"
 
 msgid "__question2help"
-msgstr "Conscious of major assets? (services, processes, information, etc)"
+msgstr "What are your data or information which are sensible?<br />Which criterion is the most important between confidentiality or availability for those data or process?<br />Do users known those needs?"
 
 msgid "__question3"
 msgstr "What compliance obligations does the job involve?"
 
 msgid "__question3help"
-msgstr "Awareness and observance of compliance issues?"
+msgstr "Do you know applicable laws that the job involves?<br />Do some reminder is made about those laws at when users are hired?<br />Do the evolution of these laws are followed?"
 
 msgid "__question4"
 msgstr "Compliance with legislation on personal data?"
 
 msgid "__question4help"
-msgstr "Knowledge of the Law of 2 August 2002 or of the GDPR?"
+msgstr "Have you heard about the GDPR?<br />Do you have some register about the different treatment of personal data?<br />Concerning photography and copyright law, do you have the explicit right to take and publish pictures?"
 
 msgid "__question5"
 msgstr "Have staff members been on training courses recently?"
 
 msgid "__question5help"
-msgstr "Training culture?<br>Awareness of security issues?"
+msgstr "Do you reguraly follow some trainings about jobs?<br />Do you have some awareness of security issues?"
 
 msgid "__question6"
 msgstr "Management of staff turnover?"
 
 msgid "__question6help"
-msgstr "Rapid turnover?<br>HR and IT coordination?"
+msgstr "Is there a process when someone is hired?<br />Do the material provided is ready when someone arrives?<br />Do you have some intern? Do they have specific rules? Do those rules are explained and signed?"
 
 msgid "__question7"
 msgstr "Are IT responsibilities (and possibly security responsibilities) defined?"
 
 msgid "__question7help"
-msgstr "Internally? Externally?<br>Specific post?"
+msgstr "Do someone has been correctly defined as responsible in case of an IT problem?<br />In case of information security problem, is there a responsible?<br />Is there a redundancy, or at least some guidelines concerning the differents steps to resolves incidents? (IT, Information security, GDPR ...)"
 
 msgid "__question8"
 msgstr "Is any hardware supplied to certain employees for work purposes?"
 
 msgid "__question8help"
-msgstr "Hardware inventory?<br>Acknowledgement of receipt?"
+msgstr "Do you have a matérial list with the people who are responsible?<br />Do this list is correctly updated?"
 
 msgid "__question9"
 msgstr "Does tele-working exist?"
 
 msgid "__question9help"
-msgstr "No tele-working, or good management of tele-working environment?"
+msgstr "Do employees can work outside the network?<br />Is there any technical measure to protect data confidentiality (VPN, Second authentification Factor...)?<br />Is there any organisational measure to protect data confidentiality (Instructions, Description of best practices...)?"
 
 msgid "__question10"
 msgstr "Have service providers signed confidentiality agreements?"
 
 msgid "__question10help"
-msgstr "NDAs signed?"
+msgstr "Do NDA (Non-Disclosure Agreement) is signed with any third parties which access confidential data?<br />Do they are also signed during discussions with third parties when confidential information is mentioned?"
 
 msgid "__question11"
 msgstr "Do service providers give formal undertaking regarding quality of services?"
 
 msgid "__question11help"
-msgstr "SLAs signed for vital services?"
+msgstr "Do SLA (Service Level Agreement) are signed with third parties that make intervention that need to be fast as possible?<br />Do contracts are sometimes reviewed to ensure that they correspond to the needs?"
 
 msgid "__question12"
 msgstr "How is premises maintenance (cleaning) organised?"
 
 msgid "__question12help"
-msgstr "Access to sensitive areas?<br>During office hours?<br>External company?"
+msgstr "Do the employees who do the cleaning are intern or extern?<br />Is the cleaning is made during work hours?<br />Do some instructions are left to the employees who clean the company?<br />Do the access of the IT room or Archive room is impossible for them?"
 
 msgid "__question13"
 msgstr "Are visitors able to move freely throughout the buildings?"
 
 msgid "__question13help"
-msgstr "Accompanied movement?<br>Visitors' register?<br>Badge?"
+msgstr "Do the guests are welcomed and guided?<br />Do they are accompanied when they need to move inside the buildings?<br />Do private or accessible offices are well indicated?<br />Do the guests identities are taken at the reception? <br />Do guests have badges?"
 
 msgid "__question14"
 msgstr "How is physical access attributed?"
 
 msgid "__question14help"
-msgstr "Good management of authorisations? (need to know, four eyes principle, etc)"
+msgstr "Do physical access is decided on the need to know?<br />Do the person who decided the physical access and the one which apply these access are different?"
 
 msgid "__question15"
 msgstr "Are access points to the premises controlled?"
 
 msgid "__question15help"
-msgstr "Good management of access control? (key, badge, etc)"
+msgstr "What are the physical protections used to protect the company (keys, badges, fingerprints ...)?<br />Do the premises are under alarm?<br />Do the premises are under video surveillance?<br />Do the backdoors correctly stay closed?"
 
 msgid "__question16"
 msgstr "Are restricted-access premises protected?"
 
 msgid "__question16help"
-msgstr "IT area? Archive area?<br>Is security sufficient?"
+msgstr "Do the IT room and/or the archive room are correctly locked?<br />Do the authorised staff is restrained only to the persons who have the ability to get in those rooms?"
 
 msgid "__question17"
 msgstr "Is there an uninterruptible power supply?"
 
 msgid "__question17help"
-msgstr "Maintenance times?<br>Maintenance and testing?<br>Connected devices?"
+msgstr "Do an UPS (Uninterruptible Power Supply) protect equipment which the power cut could be dramatic (server...)?<br />Do UPS is verified to ensure that it's still functional?<br />Do UPS correspond to the need of alimentation which is necessary?"
 
 msgid "__question18"
 msgstr "How is logical access attributed?"
 
 msgid "__question18help"
-msgstr "Good management of authorisations?<br> (need to know, four eyes principle, etc)"
+msgstr "Do logical access is decided on the need to know?<br />Do the person who decided the logical access and the one which apply these access are different?"
 
 msgid "__question19"
 msgstr "How is user authentication managed? "
 
 msgid "__question19help"
-msgstr "Passwords? Strong authentication?<br>Good management?"
+msgstr "Do any strong authentication (double factor authentication) are used?<br />Do any rules exists about the password construction?<br />Do some tricks are given to the users to make password easier to remember, and enoughly complex ?<br />Do some rules are given about the password that should be kept personally?<br />Do passwords are yearly changed?"
 
 msgid "__question20"
 msgstr "How is the internal network constructed (LAN)?"
 
 msgid "__question20help"
-msgstr "Good network architecture? (segregation, DMZ, firewall, etc)"
+msgstr "Do the network is well protected behind a firewall?<br />Do a DMZ (DeMilitarized Zone) protect the internal network?"
 
 msgid "__question21"
 msgstr "How is the WiFi network managed?"
 
 msgid "__question21help"
-msgstr "Procedure for requesting access?<br>Segregated from internal local network?<br>Limited duration?"
+msgstr "Do WiFi used is needed?<br />Do WiFi for the staff and for visitors are different?<br />Do WiFi for staff is well protected (strong password...)?<br />Do public WiFi is given to people who are not bound to the company ? Do the users need to give their identity to access on the network ?"
 
 msgid "__question22"
 msgstr "Do suppliers have the possibility of carrying out tele-maintenance?"
 
 msgid "__question22help"
-msgstr "Tele-maintenance management non-existent or good?"
+msgstr "Do the remote maintenance is done (from company or for clients)?<br />Do the procedure about remote maintenance ask an authorisation before starting?<br />Do the program used for the remote maintenance is correctly off when it's not needed?<br />Do the program used for the remote maintenance is correct up to date?"
 
 msgid "__question23"
 msgstr "How are user work-stations managed?"
 
 msgid "__question23help"
-msgstr "Updating of operating system? Of software?<br>Admin rights?"
+msgstr "Do the work station are updated (operating system and software)?<br />Who have the admin rights on work station?<br />Do the work station are well locked, even when a short absence?"
 
 msgid "__question24"
 msgstr "What are the rules for managing server updates?"
 
 msgid "__question24help"
-msgstr "Good management of updates? Periodicity?"
+msgstr "Do the server is periodically updated?"
 
 msgid "__question25"
 msgstr "What is the anti-virus management method?"
 
 msgid "__question25help"
-msgstr "Anti-virus management good?"
+msgstr "Do an antivirus is correctly up and updated?"
 
 msgid "__question26"
 msgstr "How are back-ups managed?"
 
 msgid "__question26help"
-msgstr "Good practices regarding back-ups? <br><ul><li>Exhaustiveness</li><li>Periodicity</li><li>Retention</li><li>Off-line storage</li><li>Delocalisation</li><li>Test</li><li>etc</li></ul>"
+msgstr "Do the backup concerns all the data in the company (except private files)?<br />How much time is there between two backups?<br />How much time could you get back with your backups?<br />Do the backups are disconnected from the local network after being done?<br />Do the backups are outside the premises where data are replicated ? If yes, in which distance?<br />Do the backups are tested sometimes (for testing or for restoration purposes)?"
 
 msgid "__question27"
 msgstr "How do you manage the storage and the destruction of physical documents?"
 
 msgid "__question27help"
-msgstr "Where are they stored?<br>Is a shredder used?<br>Clean desk policy?"
+msgstr "Do physical documents are stored on closed shelves whenever they are not used anymore?<br />Do the office should be cleaned up outside the working hours, without any confidential data visible?<br />Do the confidential documents are correctly destroyed whenever they are trashed?"
 
 msgid "__question28"
 msgstr "Is personal use of tools provided regulated/tolerated?"
 
 msgid "__question28help"
-msgstr "Regulated use?"
+msgstr "Do the professional tools given to employees can be used in some personal interest?<br />Do rules are given when the use of these tools made for personal interest?"
 
 msgid "__question29"
 msgstr "Is e-mail a work tool?"
 
 msgid "__question29help"
-msgstr "Transfer of sensitive information?"
+msgstr "Do confidential data without being ciphering could be sent by mail?<br />Do the password tranfert for the ciphering is done on another way than the transfert of the confidential data?"
 
 msgid "__question30"
 msgstr "How do you manage the disposal of hardware?"
 
 msgid "__question30help"
-msgstr "User work-stations? Servers? etc"
+msgstr "Do the stuff which have already stored any confidential data are correctly destroyed/recycle before before being trashed?"
 
 msgid "__question31"
 msgstr "Is any incident management in place?"
 
 msgid "__question31help"
-msgstr "Have people been made aware?<br>Who to contact, and how?"
+msgstr "Do the user have one or more contact in a case of an incident?Is there some other contacts?<br />Do the user know som good practices in case of an attack?"
 
 msgid "__question32"
 msgstr "Is there a recovery plan ?"
 
 msgid "__question32help"
-msgstr "Outline or comprehensive ?"
+msgstr "In case of a major incident, which implies the loss of the premises, do any business continuity plan or data recovery plan is written or thought?<br />Do users known what they should do in that case?"

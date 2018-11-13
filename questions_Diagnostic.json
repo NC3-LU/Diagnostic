@@ -20,7 +20,7 @@
                 "weight": "1",
                 "blocking": "✕",
                 "translation_en": "What is the core business? The most sensitive processes/items of information?",
-                "translation_help_en": "What are your data or information which are sensible?<br />Which criterion is the most important between confidentiality or availability for those data or process?<<br />Do users known those needs?",
+                "translation_help_en": "What are your data or information which are sensible?<br />Which criterion is the most important between confidentiality or availability for those data or process?<br />Do users known those needs?",
                 "translation_fr": "Quel est le coeur de métier ? Processus/informations les plus sensibles ?",
                 "translation_help_fr": "Quelles sont vos informations les plus sensibles ?<br />D'après vous, nécessitez-vous plus de disponibilité, ou de confidentialité concernant ces informations ?<br />Les utilisateurs connaissent-ils ces sensibilités ?"
             },
@@ -79,7 +79,7 @@
                 "translation_en": "Are IT responsibilities (and possibly security responsibilities) defined?",
                 "translation_help_en": "Do someone has been correctly defined as responsible in case of an IT problem?<br />In case of information security problem, is there a responsible?<br />Is there a redundancy, or at least some guidelines concerning the differents steps to resolves incidents? (IT, Information security, GDPR ...)",
                 "translation_fr": "Les responsabilités IT et éventuellement sécurité sont-elles définies ?",
-                "translation_help_fr": "Une personne ou un organisme est correctement défini comme responsable IT de l'organisme ?<br />En cas d'incident de sécurité de l'information, une personne ou un organisme est-il défini comme responsable ?<br />Existe t-il une redondance, où des consignes concernant la marche à suivre en cas d'incident ? (IT, Securité de l'information, GDPR ...)<br />Existe t-il une redondance, où des consignes concernant la marche à suivre en cas d'incident ? (IT, Securité de l'information, GDPR ...)"
+                "translation_help_fr": "Une personne ou un organisme est correctement défini comme responsable IT de l'organisme ?<br />En cas d'incident de sécurité de l'information, une personne ou un organisme est-il défini comme responsable ?<br />Existe t-il une redondance, où des consignes concernant la marche à suivre en cas d'incident ? (IT, Securité de l'information, GDPR ...)"
             },
             {
                 "id": "8",
