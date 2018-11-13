@@ -127,7 +127,7 @@ You are good to go then !
 Changelogs
 ==========
 
-### CHANGE LOG VERSION 1.2 AUGUST 2018
+### CHANGE LOG VERSION 1.2 NOVEMBER 2018
 
 - Add language tab in the administration mode. It is now possible to add/modify/delete new languages and new translations.
 - Add confirmation before deleting something(questions, categories, languages, translations).
