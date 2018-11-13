@@ -15,190 +15,190 @@ msgid "__question1"
 msgstr "Quels sont les mécanismes de sécurité existants (autres que techniques) ?"
 
 msgid "__question1help"
-msgstr "Existe-t-il ?<br><ul><li>Une politique de sécurité</li><li>Une charte utilisateur ou administrateur</li><li>Des procédures (backup par ex.)</li><li>Des consignes internes</li><li>Etc.</li></ul>"
+msgstr "Existe-t-il<br /><ul><li>Une politique de sécurité</li><li>Une charte utilisateur ou administrateur</li><li>Des procédures écrites ? orales ?</li><li>Des consignes internes orales ?</li></ul>"
 
 msgid "__question2"
 msgstr "Quel est le coeur de métier ? Processus/informations les plus sensibles ?"
 
 msgid "__question2help"
-msgstr "Conscience des actifs importants ? (services, processus, information, etc.)"
+msgstr "Quelles sont vos informations les plus sensibles ?<br />D'après vous, nécessitez-vous plus de disponibilité, ou de confidentialité concernant ces informations ?<br />Les utilisateurs connaissent-ils ces sensibilités ?"
 
 msgid "__question3"
 msgstr "Quelles sont les obligations de conformité induites par le métier ?"
 
 msgid "__question3help"
-msgstr "Conscience et respect des aspects de conformité ?"
+msgstr "Connaissez-vous les lois supplémentaires du code du travail auxquelles votre métier vous expose ?<br />Avez-vous reçu des consignes ou un rappel de ces lois lors de votre arrivée, ou à travers une formation quelconque ?<br />Suivez-vous l'évolution de ces lois ?"
 
 msgid "__question4"
 msgstr "Conformité avec la législation sur les données à caractère personnel ?"
 
 msgid "__question4help"
-msgstr "Connaissance de la loi du 2 août 2002 ou GDPR ?"
+msgstr "Connaissez-vous la GDPR ou RGPD (General Data Protection Regulation) ?<br />Disposez-vous d'un ou plusieurs registres attestant du traitement de vos données à caractère personnel ?<br />Dans le cadre du droit à l'image, disposez-vous de l'autorisation explicite et écrite de prendre et diffuser les images récoltées ?"
 
 msgid "__question5"
 msgstr "Le personnel a-t-il suivi des formations récemment ?"
 
 msgid "__question5help"
-msgstr "Culture de la formation ?<br>Sensibilité à la sécurité ?"
+msgstr "Avez-vous suivi des formations métiers de façon régulière ?<br />Avez-vous déjà été sensibilisé à la sécurité de l'information, ou à diverses attaques existantes ?"
 
 msgid "__question6"
 msgstr "Gestion de la rotation de personnel ?"
 
 msgid "__question6help"
-msgstr "Rotation importante ?<br>Coordination RH et IT ?"
+msgstr "Avez-vous une procédure pour l'arrivée ou pour le départ d'un collaborateur ?<br />Le matériel nécessaire à l'arrivée d'un nouveau collaborateur est-il prêt dès son arrivée ?<br />Avez-vous des stagiaires ? Disposent-ils d'un ensemble de règles et d'accès spécifique ? Ces règles sont-elles bien expliquées, voire signées ?"
 
 msgid "__question7"
 msgstr "Les responsabilités IT et éventuellement sécurité sont-elles définies ?"
 
 msgid "__question7help"
-msgstr "En interne ? En externe ?<br>Poste spécifique ?"
+msgstr "Une personne ou un organisme est correctement défini comme responsable IT de l'organisme ?<br />En cas d'incident de sécurité de l'information, une personne ou un organisme est-il défini comme responsable ?<br />Existe t-il une redondance, où des consignes concernant la marche à suivre en cas d'incident ? (IT, Securité de l'information, GDPR ...)"
 
 msgid "__question8"
 msgstr "Du matériel est-il fourni à certains employés pour accomplir leur mission ?"
 
 msgid "__question8help"
-msgstr "Inventaire de matériel ?<br>Accusé de réception ?"
+msgstr "Avez-vous une liste du matériel avec les personnes qui en sont responsables ?<br />Cette liste est-elle mise à jour de façon régulière ?"
 
 msgid "__question9"
 msgstr "Le télétravail est-il pratiqué ?"
 
 msgid "__question9help"
-msgstr "Pas de télétravail, ou bonne gestion de l'environnement de télétravail ?"
+msgstr "Les collaborateurs peuvent-ils travailler de l'extérieur ?<br />Des précautions techniques sont-elles mises en oeuvre pour protéger la confidentialité des données (VPN, authentification forte...) ?<br />Des précautions organisationnelles sont-elles mises en oeuvre pour protéger la confidentialité des données (consignes, description de bonnes pratiques ou d'interdits...) ?"
 
 msgid "__question10"
 msgstr "Les fournisseurs de services ont-ils signé des engagements de confidentialité ?"
 
 msgid "__question10help"
-msgstr "NDA signés ?"
+msgstr "Des NDA (Non-Disclosure Agreement) sont-ils signés avec les prestataires manipulant des données confidentielles ?<br />Sont-ils aussi signés pour des discussions avec des tiers concernant des éventuelles failles de sécurité ?"
 
 msgid "__question11"
 msgstr "Les fournisseurs de services s'engagent-ils formellement sur la qualité des prestations ?"
 
 msgid "__question11help"
-msgstr "Signature de SLA sur les prestations vitales ?"
+msgstr "Des SLA (Service Level Agreement) sont-ils signés avec des tiers réalisant des prestations nécessitant une intervention rapide ?<br />Les contrats sont-ils revus de temps à autre pour s'assurer de leur bon proportionnément ?"
 
 msgid "__question12"
 msgstr "Comment s'organise l’entretien (nettoyage) des locaux ?"
 
 msgid "__question12help"
-msgstr "Accès aux zones sensibles ?<br>Pendant les heures de bureau ?<br>Société externe ?"
+msgstr "Le personnel assurant le nettoyage des locaux est-il interne à l'organisme ou externe ?<br />L'entretien des locaux est-il fait durant les heures de bureau ?<br />Des consignes sont-elles données concernant les choses à ne pas faire lors de l'entretien ?<br />Les accès aux salles IT ou aux archives sont-ils donnés au personnel d'entretien ?"
 
 msgid "__question13"
 msgstr "Les visiteurs peuvent-ils circuler librement dans les bâtiments ?"
 
 msgid "__question13help"
-msgstr "Circulation accompagnée ?<br>Registre de visiteurs ?<br>Badge ? "
+msgstr "Les visiteurs sont-ils accueillis et redirigés ?<br />Sont-ils accompagnés dès lors qu'ils doivent se déplacer dans les locaux ?<br />Les locaux privés et accessibles aux visiteurs sont-ils correctement indiqués ?<br />L'identité des visiteurs est-elle recueillie et notée ?<br />Les visiteurs disposent-ils de badges ?"
 
 msgid "__question14"
 msgstr "Comment sont attribués les accès physiques ?"
 
 msgid "__question14help"
-msgstr "Bonne gestion des autorisations ? (Besoin d'en connaître, respect du principe des 4 yeux, etc.)"
+msgstr "Les accès physiques sont-ils décidés au besoin uniquement (principe du moindre privilège) ?<br />La personne modifiant les accès physiques et les décidant est-elle différente ? "
 
 msgid "__question15"
 msgstr "Les accès aux locaux sont-ils contrôlés ?"
 
 msgid "__question15help"
-msgstr "Bonne gestion du contrôle d'accès ? (Clé, badge, etc.)"
+msgstr "Quels sont les moyens physiques utilisés pour protéger les locaux (Clé, Badge, Empreintes digitales ...) ?<br />Les locaux sont-ils sous alarme ?<br />Les locaux sont-ils sous vidéosurveillance ?<br />Les portes arrières sont-elles correctement fermées ?"
 
 msgid "__question16"
 msgstr "Les locaux à accès restreints sont-ils protégés ?"
 
 msgid "__question16help"
-msgstr "Salle informatique ? Salle d'archives ?<br>La sécurité est-elle suffisante ?"
+msgstr "La salle serveur et/ou la salle archive sont-elles correctement verrouillées <br />Le personnel autorisé est-il restreint aux personnes habilitées à pénétrer dans ses salles ?"
 
 msgid "__question17"
 msgstr "Y-a-t-il un système d'alimentation sans interruption ?"
 
 msgid "__question17help"
-msgstr "Temps de maintien ?<br>Maintenance et test ?<br>Équipements branchés ?"
+msgstr "Un UPS (Uninterruptible Power Supply) protège-t-il les équipements dont la coupure brutale pourrait-être catastrophique (serveur...) ?<br />L'UPS est-il vérifié pour s'assurer de son bon fonctionnement ?<br />L'UPS est-il proportionné dépendamment du besoin d'alimentation nécessaire ?"
 
 msgid "__question18"
 msgstr "Comment sont attribués les accès logiques ?"
 
 msgid "__question18help"
-msgstr "Bonne gestion des autorisations ?<br>(Besoin d'en connaître, respect du principe des 4 yeux, etc.)"
+msgstr "Les accès logiques sont-ils décidés au besoin uniquement (principe du moindre privilège) ?<br />La personne modifiant les accès physiques et les décidant est-elle différente ?"
 
 msgid "__question19"
 msgstr "Comment est gérée l'authentification des utilisateurs ?"
 
 msgid "__question19help"
-msgstr "Mots de passe ? Authentification forte ?<br>Bonne gestion ?"
+msgstr "Des moyens d'authentification forte (double authentification) sont-ils utilisés ?<br />Existe-t-il des règles concernant la construction et l'élaboration des mots de passe ?<br />Des astuces sont-elles données aux utilisateurs pour disposer de mots de passe simple à retenir, et suffisamment complexe ?<br />Des consignes sont-elles données concernant les mots de passe qui doivent rester personnels ?<br />Les mots de passe sont-ils changés au moins annuellement ?"
 
 msgid "__question20"
 msgstr "Comment est construit le réseau interne (LAN) ?"
 
 msgid "__question20help"
-msgstr "Bonne architecture réseau ? (Ségrégation, DMZ, firewall, etc.) "
+msgstr "Le réseau est-il correctement protégé par un firewall ?<br />Une DMZ (DeMilitarized Zone) protège-t-elle le réseau interne ?"
 
 msgid "__question21"
 msgstr "Comment est géré le réseau Wifi ?"
 
 msgid "__question21help"
-msgstr "Procédure de demande d’accès ?<br>Ségrégation du réseau local interne ?<br>Durée limitée?"
+msgstr "Le Wifi distribué est-il vraiment nécessaire ?<br />Le Wifi réservé pour les internes et pour les externes est-il correctement différencié ?<br />Le Wifi interne est-il correctement protégé (mot de passe fort...) ?<br />Le Wifi public est-il donné à des personnes qui ne sont pas spécifiquement liées à l'organisme ? Des coordonnées sont-elles relevées à l'utilisation du réseau sans fil ?"
 
 msgid "__question22"
 msgstr "Des fournisseurs ont-ils la possibilité d'effectuer de la télémaintenance ?"
 
 msgid "__question22help"
-msgstr "Pas ou bonne gestion de la télémaintenance ?"
+msgstr "La télémaintenance est-elle faite (en tant que dépanneur ou dépanné) dans l'entreprise ?<br />La procédure de télémaintenance nécessite-t-elle bien une autorisation avant de débuter ?<br />Le programme utilisé pour la télémaintenance est-il correctement désactivé dès lors qu'il n'est pas nécessaire ?<br />Le programme de télémaintenance est-il correctement mis à jour ?"
 
 msgid "__question23"
 msgstr "Comment sont gérés les postes de travail des utilisateurs ?"
 
 msgid "__question23help"
-msgstr "Mise à jour système d'exploitation ? logiciels ?<br>Droits admin ?"
+msgstr "Les postes de travail sont-ils mis à jour (Système d'Exploitation comme logiciels) ?<br />Qui possède les droits administrateur ?<br />Les postes de travail sont-ils correctement verrouillés dès lors d'une absence quelconque (même très courte) ?"
 
 msgid "__question24"
 msgstr "Quelles sont les règles pour la gestion des mises à jour des serveurs ?"
 
 msgid "__question24help"
-msgstr "Bonne gestion des mises à jour ? Périodicité ?"
+msgstr "Le serveur est-il correctement mis à jour, au moins périodiquement ?"
 
 msgid "__question25"
 msgstr "Quelle est la méthode de gestion antivirus ?"
 
 msgid "__question25help"
-msgstr "Bonne gestion de l'antivirus ?"
+msgstr "L'antivirus est-il correctement fonctionnel et mis à jour ?"
 
 msgid "__question26"
 msgstr "Comment sont gérés les backups ?"
 
 msgid "__question26help"
-msgstr "Bonnes pratiques concernant les backups ?<br><ul><li>Exhaustivité</li><li>Périodicité</li><li>Rétention</li><li>Stockage hors ligne</li><li>Délocalisation</li><li>Test</li><li>Etc.</li></ul>"
+msgstr "Les backups concernent-ils bien toutes les données (à l'exception des données privées) ?<br />Quelle est la périodicité des backups (journalier, hebdomadaire...) ?<br />Combien de temps au maximum est-il possible de remonter à l'aide des backups ?<br />Les backups sont-ils déconnectés du réseau local dès lors qu'ils sont faits ?<br />Les backups sont-ils physiquement hors des locaux de stockage des données ? Si oui, à quelle distance ?<br />Les backups sont-ils testés de temps à autre (de façon volontaire ou involontaire) ?"
 
 msgid "__question27"
 msgstr "Comment gérez-vous le stockage et la destruction des documents physiques ?"
 
 msgid "__question27help"
-msgstr "Où ils sont stockés ?<br>Utilisation de broyeur ?<br>Politique de bureau propre ?"
+msgstr "Les documents sont-ils stockés dans des armoires fermées à clé dès lors qu'ils ne sont plus utilisés ?<br />Existe-t-il une politique concernant le fait que les bureaux doivent être rangés hors des heures de bureau, sans données confidentielles visibles ?<br />Les documents confidentiels sont-ils correctement détruits avant mise au rebut ?"
 
 msgid "__question28"
 msgstr "L'utilisation à titre personnel des outils mis à disposition est-elle encadrée/tolérée ?"
 
 msgid "__question28help"
-msgstr "Utilisation encadrée ?"
+msgstr "Les outils mis à disposition des utilisateurs peuvent-ils être utilisés de façon personnelle ?<br />Des consignes sont-elles données en ce qui concerne l'utilisation personnelle du matériel fourni ?"
 
 msgid "__question29"
 msgstr "L'email est-il un outil de travail ?"
 
 msgid "__question29help"
-msgstr "Transfert d'information sensible ?"
+msgstr "Des données confidentielles non chiffrées sont-elles transmises par mail ?<br />Le transfert des mots de passe de chiffrement sont-ils transmis sur un moyen de communication différent des données confidentielles ?"
 
 msgid "__question30"
 msgstr "Comment gérez-vous la mise au rebut du matériel ?"
 
 msgid "__question30help"
-msgstr "Poste de travail des utilisateurs ? Serveurs ? etc."
+msgstr "Le matériel ayant contenu des données sensibles est-il correctement détruit/recyclé avant toute mise au rebut ?"
 
 msgid "__question31"
 msgstr "Y-a-t-il une gestion des incidents ?"
 
 msgid "__question31help"
-msgstr "Les personnes sont-elles sensibilisées ?<br>À qui s'adresser et comment ?"
+msgstr "Les utilisateurs disposent-ils d'un ou de plusieurs contacts en cas d'incident urgent ? Existe-t-il un autre contact en cas d'absence ?<br />Les utilisateurs connaissent-ils les bons réflexes à accomplir en cas de suspicion d'attaque ?"
 
 msgid "__question32"
 msgstr "Existe-t-il un plan de reprise ?"
 
 msgid "__question32help"
-msgstr "Ébauche ou complet ?"
+msgstr "En cas d'incident grave, impliquant la perte des locaux, existe-t-il une procédure sur la démarche à impliquer pour reprendre, même de façon dégradée, le travail ?<br />Les utilisateurs sont-ils conscients de la démarche à suivre ?"

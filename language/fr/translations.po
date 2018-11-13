@@ -345,10 +345,10 @@ msgid "__employees"
 msgstr "Nombre d'employés"
 
 msgid "__organization_help"
-msgstr "Aide pour l'organisation"
+msgstr "Quel est votre métier ?<br />Que réalisez-vous pour vos clients ?<br />Quel est le profil de votre clientèle, et dans quelle proportionnalité (B2B, B2C ...) ?<br />Combien d'employés environ sont dans l'organisme ?<br />Avez-vous vécu des incidents liés à la perte (ou la divulgation) d'actif ou de données (Vol opportuniste, Vengeance ciblée, Backup défectueux, Ingénérie Sociale...) ?"
 
 msgid "__synthesis_help"
-msgstr "Aide pour la synthèse"
+msgstr "Quelle est la note reçue ?<br />Le diagnostic a-t-il pu être fait sans éluder de questions ?<br />Quels sont les points de préoccupation majeurs ?<br />Quel est l'étape suivante après ce diagnostic ?"
 
 msgid "__average_diagnosis"
 msgstr "Moyenne_Diagnostic"

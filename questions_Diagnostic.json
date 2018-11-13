@@ -1,0 +1,378 @@
+[
+    {
+        "id": "1",
+        "translation_en": "Awareness of security and compliance",
+        "translation_fr": "Sensibilité à la sécurité et conformité",
+        "questions": [
+            {
+                "id": "1",
+                "threat": "5",
+                "weight": "1",
+                "blocking": "✕",
+                "translation_en": "What security mechanisms already exist (other than technical mechanisms)?",
+                "translation_help_en": "Is there<br /><ul><li>a security policy?</li><li>a user or administrator charter?</li><li>some oral or wirtten procedures?</li><li>some oral instruction?</li></ul>",
+                "translation_fr": "Quels sont les mécanismes de sécurité existants (autres que techniques) ?",
+                "translation_help_fr": "Existe-t-il<br /><ul><li>Une politique de sécurité</li><li>Une charte utilisateur ou administrateur</li><li>Des procédures écrites ? orales ?</li><li>Des consignes internes orales ?</li></ul>"
+            },
+            {
+                "id": "2",
+                "threat": "2",
+                "weight": "1",
+                "blocking": "✕",
+                "translation_en": "What is the core business? The most sensitive processes/items of information?",
+                "translation_help_en": "What are your data or information which are sensible?<br />Which criterion is the most important between confidentiality or availability for those data or process?<br />Do users known those needs?",
+                "translation_fr": "Quel est le coeur de métier ? Processus/informations les plus sensibles ?",
+                "translation_help_fr": "Quelles sont vos informations les plus sensibles ?<br />D'après vous, nécessitez-vous plus de disponibilité, ou de confidentialité concernant ces informations ?<br />Les utilisateurs connaissent-ils ces sensibilités ?"
+            },
+            {
+                "id": "3",
+                "threat": "3",
+                "weight": "1",
+                "blocking": "✕",
+                "translation_en": "What compliance obligations does the job involve?",
+                "translation_help_en": "Do you know applicable laws that the job involves?<br />Do some reminder is made about those laws at when users are hired?<br />Do the evolution of these laws are followed?",
+                "translation_fr": "Quelles sont les obligations de conformité induites par le métier ?",
+                "translation_help_fr": "Connaissez-vous les lois supplémentaires du code du travail auxquelles votre métier vous expose ?<br />Avez-vous reçu des consignes ou un rappel de ces lois lors de votre arrivée, ou à travers une formation quelconque ?<br />Suivez-vous l'évolution de ces lois ?"
+            },
+            {
+                "id": "4",
+                "threat": "4",
+                "weight": "1",
+                "blocking": "✕",
+                "translation_en": "Compliance with legislation on personal data?",
+                "translation_help_en": "Have you heard about the GDPR?<br />Do you have some register about the different treatment of personal data?<br />Concerning photography and copyright law, do you have the explicit right to take and publish pictures?",
+                "translation_fr": "Conformité avec la législation sur les données à caractère personnel ?",
+                "translation_help_fr": "Connaissez-vous la GDPR ou RGPD (General Data Protection Regulation) ?<br />Disposez-vous d'un ou plusieurs registres attestant du traitement de vos données à caractère personnel ?<br />Dans le cadre du droit à l'image, disposez-vous de l'autorisation explicite et écrite de prendre et diffuser les images récoltées ?"
+            }
+        ]
+    },
+    {
+        "id": "2",
+        "translation_en": "Employee management",
+        "translation_fr": "Gestion des employés",
+        "questions": [
+            {
+                "id": "5",
+                "threat": "5",
+                "weight": "1",
+                "blocking": "✕",
+                "translation_en": "Have staff members been on training courses recently?",
+                "translation_help_en": "Do you reguraly follow some trainings about jobs?<br />Do you have some awareness of security issues?",
+                "translation_fr": "Le personnel a-t-il suivi des formations récemment ?",
+                "translation_help_fr": "Avez-vous suivi des formations métiers de façon régulière ?<br />Avez-vous déjà été sensibilisé à la sécurité de l'information, ou à diverses attaques existantes ?"
+            },
+            {
+                "id": "6",
+                "threat": "2",
+                "weight": "1",
+                "blocking": "✕",
+                "translation_en": "Management of staff turnover?",
+                "translation_help_en": "Is there a process when someone is hired?<br />Do the material provided is ready when someone arrives?<br />Do you have some intern? Do they have specific rules? Do those rules are explained and signed?",
+                "translation_fr": "Gestion de la rotation de personnel ?",
+                "translation_help_fr": "Avez-vous une procédure pour l'arrivée ou pour le départ d'un collaborateur ?<br />Le matériel nécessaire à l'arrivée d'un nouveau collaborateur est-il prêt dès son arrivée ?<br />Avez-vous des stagiaires ? Disposent-ils d'un ensemble de règles et d'accès spécifique ? Ces règles sont-elles bien expliquées, voire signées ?"
+            },
+            {
+                "id": "7",
+                "threat": "3",
+                "weight": "1",
+                "blocking": "✕",
+                "translation_en": "Are IT responsibilities (and possibly security responsibilities) defined?",
+                "translation_help_en": "Do someone has been correctly defined as responsible in case of an IT problem?<br />In case of information security problem, is there a responsible?<br />Is there a redundancy, or at least some guidelines concerning the differents steps to resolves incidents? (IT, Information security, GDPR ...)",
+                "translation_fr": "Les responsabilités IT et éventuellement sécurité sont-elles définies ?",
+                "translation_help_fr": "Une personne ou un organisme est correctement défini comme responsable IT de l'organisme ?<br />En cas d'incident de sécurité de l'information, une personne ou un organisme est-il défini comme responsable ?<br />Existe t-il une redondance, où des consignes concernant la marche à suivre en cas d'incident ? (IT, Securité de l'information, GDPR ...)"
+            },
+            {
+                "id": "8",
+                "threat": "2",
+                "weight": "1",
+                "blocking": "✕",
+                "translation_en": "Is any hardware supplied to certain employees for work purposes?",
+                "translation_help_en": "Do you have a matérial list with the people who are responsible?<br />Do this list is correctly updated?",
+                "translation_fr": "Du matériel est-il fourni à certains employés pour accomplir leur mission ?",
+                "translation_help_fr": "Avez-vous une liste du matériel avec les personnes qui en sont responsables ?<br />Cette liste est-elle mise à jour de façon régulière ?"
+            },
+            {
+                "id": "9",
+                "threat": "3",
+                "weight": "1",
+                "blocking": "✕",
+                "translation_en": "Does tele-working exist?",
+                "translation_help_en": "Do employees can work outside the network?<br />Is there any technical measure to protect data confidentiality (VPN, Second authentification Factor...)?<br />Is there any organisational measure to protect data confidentiality (Instructions, Description of best practices...)?",
+                "translation_fr": "Le télétravail est-il pratiqué ?",
+                "translation_help_fr": "Les collaborateurs peuvent-ils travailler de l'extérieur ?<br />Des précautions techniques sont-elles mises en oeuvre pour protéger la confidentialité des données (VPN, authentification forte...) ?<br />Des précautions organisationnelles sont-elles mises en oeuvre pour protéger la confidentialité des données (consignes, description de bonnes pratiques ou d'interdits...) ?"
+            }
+        ]
+    },
+    {
+        "id": "3",
+        "translation_en": "Third-party management",
+        "translation_fr": "Gestion des tiers",
+        "questions": [
+            {
+                "id": "10",
+                "threat": "3",
+                "weight": "1",
+                "blocking": "✕",
+                "translation_en": "Have service providers signed confidentiality agreements?",
+                "translation_help_en": "Do NDA (Non-Disclosure Agreement) is signed with any third parties which access confidential data?<br />Do they are also signed during discussions with third parties when confidential information is mentioned?",
+                "translation_fr": "Les fournisseurs de services ont-ils signé des engagements de confidentialité ?",
+                "translation_help_fr": "Des NDA (Non-Disclosure Agreement) sont-ils signés avec les prestataires manipulant des données confidentielles ?<br />Sont-ils aussi signés pour des discussions avec des tiers concernant des éventuelles failles de sécurité ?"
+            },
+            {
+                "id": "11",
+                "threat": "4",
+                "weight": "1",
+                "blocking": "✕",
+                "translation_en": "Do service providers give formal undertaking regarding quality of services?",
+                "translation_help_en": "Do SLA (Service Level Agreement) are signed with third parties that make intervention that need to be fast as possible?<br />Do contracts are sometimes reviewed to ensure that they correspond to the needs?",
+                "translation_fr": "Les fournisseurs de services s'engagent-ils formellement sur la qualité des prestations ?",
+                "translation_help_fr": "Des SLA (Service Level Agreement) sont-ils signés avec des tiers réalisant des prestations nécessitant une intervention rapide ?<br />Les contrats sont-ils revus de temps à autre pour s'assurer de leur bon proportionnément ?"
+            },
+            {
+                "id": "12",
+                "threat": "4",
+                "weight": "1",
+                "blocking": "✕",
+                "translation_en": "How is premises maintenance (cleaning) organised?",
+                "translation_help_en": "Do the employees who do the cleaning are intern or extern?<br />Is the cleaning is made during work hours?<br />Do some instructions are left to the employees who clean the company?<br />Do the access of the IT room or Archive room is impossible for them?",
+                "translation_fr": "Comment s'organise l’entretien (nettoyage) des locaux ?",
+                "translation_help_fr": "Le personnel assurant le nettoyage des locaux est-il interne à l'organisme ou externe ?<br />L'entretien des locaux est-il fait durant les heures de bureau ?<br />Des consignes sont-elles données concernant les choses à ne pas faire lors de l'entretien ?<br />Les accès aux salles IT ou aux archives sont-ils donnés au personnel d'entretien ?"
+            },
+            {
+                "id": "13",
+                "threat": "5",
+                "weight": "1",
+                "blocking": "✕",
+                "translation_en": "Are visitors able to move freely throughout the buildings?",
+                "translation_help_en": "Do the guests are welcomed and guided?<br />Do they are accompanied when they need to move inside the buildings?<br />Do private or accessible offices are well indicated?<br />Do the guests identities are taken at the reception? <br />Do guests have badges?",
+                "translation_fr": "Les visiteurs peuvent-ils circuler librement dans les bâtiments ?",
+                "translation_help_fr": "Les visiteurs sont-ils accueillis et redirigés ?<br />Sont-ils accompagnés dès lors qu'ils doivent se déplacer dans les locaux ?<br />Les locaux privés et accessibles aux visiteurs sont-ils correctement indiqués ?<br />L'identité des visiteurs est-elle recueillie et notée ?<br />Les visiteurs disposent-ils de badges ?"
+            }
+        ]
+    },
+    {
+        "id": "4",
+        "translation_en": "Physical and environment security",
+        "translation_fr": "Sécurité physique et environnementale",
+        "questions": [
+            {
+                "id": "14",
+                "threat": "3",
+                "weight": "1",
+                "blocking": "✕",
+                "translation_en": "How is physical access attributed?",
+                "translation_help_en": "Do physical access is decided on the need to know?<br />Do the person who decided the physical access and the one which apply these access are different?",
+                "translation_fr": "Comment sont attribués les accès physiques ?",
+                "translation_help_fr": "Les accès physiques sont-ils décidés au besoin uniquement (principe du moindre privilège) ?<br />La personne modifiant les accès physiques et les décidant est-elle différente ? "
+            },
+            {
+                "id": "15",
+                "threat": "2",
+                "weight": "1",
+                "blocking": "✕",
+                "translation_en": "Are access points to the premises controlled?",
+                "translation_help_en": "What are the physical protections used to protect the company (keys, badges, fingerprints ...)?<br />Do the premises are under alarm?<br />Do the premises are under video surveillance?<br />Do the backdoors correctly stay closed?",
+                "translation_fr": "Les accès aux locaux sont-ils contrôlés ?",
+                "translation_help_fr": "Quels sont les moyens physiques utilisés pour protéger les locaux (Clé, Badge, Empreintes digitales ...) ?<br />Les locaux sont-ils sous alarme ?<br />Les locaux sont-ils sous vidéosurveillance ?<br />Les portes arrières sont-elles correctement fermées ?"
+            },
+            {
+                "id": "16",
+                "threat": "5",
+                "weight": "1",
+                "blocking": "✕",
+                "translation_en": "Are restricted-access premises protected?",
+                "translation_help_en": "Do the IT room and/or the archive room are correctly locked?<br />Do the authorised staff is restrained only to the persons who have the ability to get in those rooms?",
+                "translation_fr": "Les locaux à accès restreints sont-ils protégés ?",
+                "translation_help_fr": "La salle serveur et/ou la salle archive sont-elles correctement verrouillées <br />Le personnel autorisé est-il restreint aux personnes habilitées à pénétrer dans ses salles ?"
+            },
+            {
+                "id": "17",
+                "threat": "3",
+                "weight": "1",
+                "blocking": "✕",
+                "translation_en": "Is there an uninterruptible power supply?",
+                "translation_help_en": "Do an UPS (Uninterruptible Power Supply) protect equipment which the power cut could be dramatic (server...)?<br />Do UPS is verified to ensure that it's still functional?<br />Do UPS correspond to the need of alimentation which is necessary?",
+                "translation_fr": "Y-a-t-il un système d'alimentation sans interruption ?",
+                "translation_help_fr": "Un UPS (Uninterruptible Power Supply) protège-t-il les équipements dont la coupure brutale pourrait-être catastrophique (serveur...) ?<br />L'UPS est-il vérifié pour s'assurer de son bon fonctionnement ?<br />L'UPS est-il proportionné dépendamment du besoin d'alimentation nécessaire ?"
+            }
+        ]
+    },
+    {
+        "id": "5",
+        "translation_en": "Access control",
+        "translation_fr": "Contrôle d'accès",
+        "questions": [
+            {
+                "id": "18",
+                "threat": "4",
+                "weight": "1",
+                "blocking": "✕",
+                "translation_en": "How is logical access attributed?",
+                "translation_help_en": "Do logical access is decided on the need to know?<br />Do the person who decided the logical access and the one which apply these access are different?",
+                "translation_fr": "Comment sont attribués les accès logiques ?",
+                "translation_help_fr": "Les accès logiques sont-ils décidés au besoin uniquement (principe du moindre privilège) ?<br />La personne modifiant les accès physiques et les décidant est-elle différente ?"
+            },
+            {
+                "id": "19",
+                "threat": "5",
+                "weight": "1",
+                "blocking": "✕",
+                "translation_en": "How is user authentication managed? ",
+                "translation_help_en": "Do any strong authentication (double factor authentication) are used?<br />Do any rules exists about the password construction?<br />Do some tricks are given to the users to make password easier to remember, and enoughly complex ?<br />Do some rules are given about the password that should be kept personally?<br />Do passwords are yearly changed?",
+                "translation_fr": "Comment est gérée l'authentification des utilisateurs ?",
+                "translation_help_fr": "Des moyens d'authentification forte (double authentification) sont-ils utilisés ?<br />Existe-t-il des règles concernant la construction et l'élaboration des mots de passe ?<br />Des astuces sont-elles données aux utilisateurs pour disposer de mots de passe simple à retenir, et suffisamment complexe ?<br />Des consignes sont-elles données concernant les mots de passe qui doivent rester personnels ?<br />Les mots de passe sont-ils changés au moins annuellement ?"
+            }
+        ]
+    },
+    {
+        "id": "6",
+        "translation_en": "IS infrastructure and composition",
+        "translation_fr": "Infrastructure et composition du SI",
+        "questions": [
+            {
+                "id": "20",
+                "threat": "4",
+                "weight": "1",
+                "blocking": "✕",
+                "translation_en": "How is the internal network constructed (LAN)?",
+                "translation_help_en": "Do the network is well protected behind a firewall?<br />Do a DMZ (DeMilitarized Zone) protect the internal network?",
+                "translation_fr": "Comment est construit le réseau interne (LAN) ?",
+                "translation_help_fr": "Le réseau est-il correctement protégé par un firewall ?<br />Une DMZ (DeMilitarized Zone) protège-t-elle le réseau interne ?"
+            },
+            {
+                "id": "21",
+                "threat": "5",
+                "weight": "1",
+                "blocking": "✕",
+                "translation_en": "How is the WiFi network managed?",
+                "translation_help_en": "Do WiFi used is needed?<br />Do WiFi for the staff and for visitors are different?<br />Do WiFi for staff is well protected (strong password...)?<br />Do public WiFi is given to people who are not bound to the company ? Do the users need to give their identity to access on the network ?",
+                "translation_fr": "Comment est géré le réseau Wifi ?",
+                "translation_help_fr": "Le Wifi distribué est-il vraiment nécessaire ?<br />Le Wifi réservé pour les internes et pour les externes est-il correctement différencié ?<br />Le Wifi interne est-il correctement protégé (mot de passe fort...) ?<br />Le Wifi public est-il donné à des personnes qui ne sont pas spécifiquement liées à l'organisme ? Des coordonnées sont-elles relevées à l'utilisation du réseau sans fil ?"
+            },
+            {
+                "id": "22",
+                "threat": "3",
+                "weight": "1",
+                "blocking": "✕",
+                "translation_en": "Do suppliers have the possibility of carrying out tele-maintenance?",
+                "translation_help_en": "Do the remote maintenance is done (from company or for clients)?<br />Do the procedure about remote maintenance ask an authorisation before starting?<br />Do the program used for the remote maintenance is correctly off when it's not needed?<br />Do the program used for the remote maintenance is correct up to date?",
+                "translation_fr": "Des fournisseurs ont-ils la possibilité d'effectuer de la télémaintenance ?",
+                "translation_help_fr": "La télémaintenance est-elle faite (en tant que dépanneur ou dépanné) dans l'entreprise ?<br />La procédure de télémaintenance nécessite-t-elle bien une autorisation avant de débuter ?<br />Le programme utilisé pour la télémaintenance est-il correctement désactivé dès lors qu'il n'est pas nécessaire ?<br />Le programme de télémaintenance est-il correctement mis à jour ?"
+            }
+        ]
+    },
+    {
+        "id": "7",
+        "translation_en": "Information system",
+        "translation_fr": "Système d'information",
+        "questions": [
+            {
+                "id": "23",
+                "threat": "4",
+                "weight": "1",
+                "blocking": "✕",
+                "translation_en": "How are user work-stations managed?",
+                "translation_help_en": "Do the work station are updated (operating system and software)?<br />Who have the admin rights on work station?<br />Do the work station are well locked, even when a short absence?",
+                "translation_fr": "Comment sont gérés les postes de travail des utilisateurs ?",
+                "translation_help_fr": "Les postes de travail sont-ils mis à jour (Système d'Exploitation comme logiciels) ?<br />Qui possède les droits administrateur ?<br />Les postes de travail sont-ils correctement verrouillés dès lors d'une absence quelconque (même très courte) ?"
+            },
+            {
+                "id": "24",
+                "threat": "4",
+                "weight": "1",
+                "blocking": "✕",
+                "translation_en": "What are the rules for managing server updates?",
+                "translation_help_en": "Do the server is periodically updated?",
+                "translation_fr": "Quelles sont les règles pour la gestion des mises à jour des serveurs ?",
+                "translation_help_fr": "Le serveur est-il correctement mis à jour, au moins périodiquement ?"
+            },
+            {
+                "id": "25",
+                "threat": "3",
+                "weight": "1",
+                "blocking": "✕",
+                "translation_en": "What is the anti-virus management method?",
+                "translation_help_en": "Do an antivirus is correctly up and updated?",
+                "translation_fr": "Quelle est la méthode de gestion antivirus ?",
+                "translation_help_fr": "L'antivirus est-il correctement fonctionnel et mis à jour ?"
+            },
+            {
+                "id": "26",
+                "threat": "5",
+                "weight": "1",
+                "blocking": "✕",
+                "translation_en": "How are back-ups managed?",
+                "translation_help_en": "Do the backup concerns all the data in the company (except private files)?<br />How much time is there between two backups?<br />How much time could you get back with your backups?<br />Do the backups are disconnected from the local network after being done?<br />Do the backups are outside the premises where data are replicated ? If yes, in which distance?<br />Do the backups are tested sometimes (for testing or for restoration purposes)?",
+				"translation_fr": "Comment sont gérés les backups ?",
+                "translation_help_fr": "Les backups concernent-ils bien toutes les données (à l'exception des données privées) ?<br />Quelle est la périodicité des backups (journalier, hebdomadaire...) ?<br />Combien de temps au maximum est-il possible de remonter à l'aide des backups ?<br />Les backups sont-ils déconnectés du réseau local dès lors qu'ils sont faits ?<br />Les backups sont-ils physiquement hors des locaux de stockage des données ? Si oui, à quelle distance ?<br />Les backups sont-ils testés de temps à autre (de façon volontaire ou involontaire) ?"
+            },
+            {
+                "id": "27",
+                "threat": "3",
+                "weight": "1",
+                "blocking": "✕",
+                "translation_en": "How do you manage the storage and the destruction of physical documents?",
+                "translation_help_en": "Do physical documents are stored on closed shelves whenever they are not used anymore?<br />Do the office should be cleaned up outside the working hours, without any confidential data visible?<br />Do the confidential documents are correctly destroyed whenever they are trashed?",
+                "translation_fr": "Comment gérez-vous le stockage et la destruction des documents physiques ?",
+                "translation_help_fr": "Les documents sont-ils stockés dans des armoires fermées à clé dès lors qu'ils ne sont plus utilisés ?<br />Existe-t-il une politique concernant le fait que les bureaux doivent être rangés hors des heures de bureau, sans données confidentielles visibles ?<br />Les documents confidentiels sont-ils correctement détruits avant mise au rebut ?"
+            },
+            {
+                "id": "28",
+                "threat": "3",
+                "weight": "1",
+                "blocking": "✕",
+                "translation_en": "Is personal use of tools provided regulated/tolerated?",
+                "translation_help_en": "Do the professional tools given to employees can be used in some personal interest?<br />Do rules are given when the use of these tools made for personal interest?",
+                "translation_fr": "L'utilisation à titre personnel des outils mis à disposition est-elle encadrée/tolérée ?",
+                "translation_help_fr": "Les outils mis à disposition des utilisateurs peuvent-ils être utilisés de façon personnelle ?<br />Des consignes sont-elles données en ce qui concerne l'utilisation personnelle du matériel fourni ?"
+            },
+            {
+                "id": "29",
+                "threat": "4",
+                "weight": "1",
+                "blocking": "✕",
+                "translation_en": "Is e-mail a work tool?",
+                "translation_help_en": "Do confidential data without being ciphering could be sent by mail?<br />Do the password tranfert for the ciphering is done on another way than the transfert of the confidential data?",
+                "translation_fr": "L'email est-il un outil de travail ?",
+                "translation_help_fr": "Des données confidentielles non chiffrées sont-elles transmises par mail ?<br />Le transfert des mots de passe de chiffrement sont-ils transmis sur un moyen de communication différent des données confidentielles ?"
+            },
+            {
+                "id": "30",
+                "threat": "3",
+                "weight": "1",
+                "blocking": "✕",
+                "translation_en": "How do you manage the disposal of hardware?",
+                "translation_help_en": "Do the stuff which have already stored any confidential data are correctly destroyed/recycle before before being trashed?",
+                "translation_fr": "Comment gérez-vous la mise au rebut du matériel ?",
+                "translation_help_fr": "Le matériel ayant contenu des données sensibles est-il correctement détruit/recyclé avant toute mise au rebut ?"
+            }
+        ]
+    },
+    {
+        "id": "8",
+        "translation_en": "Incident and business continuity",
+        "translation_fr": "Incident et continuité d'activité",
+        "questions": [
+            {
+                "id": "31",
+                "threat": "2",
+                "weight": "1",
+                "blocking": "✕",
+                "translation_en": "Is any incident management in place?",
+                "translation_help_en": "Do the user have one or more contact in a case of an incident?Is there some other contacts?<br />Do the user know som good practices in case of an attack?",
+                "translation_fr": "Y-a-t-il une gestion des incidents ?",
+                "translation_help_fr": "Les utilisateurs disposent-ils d'un ou de plusieurs contacts en cas d'incident urgent ? Existe-t-il un autre contact en cas d'absence ?<br />Les utilisateurs connaissent-ils les bons réflexes à accomplir en cas de suspicion d'attaque ?"
+            },
+            {
+                "id": "32",
+                "threat": "3",
+                "weight": "1",
+                "blocking": "✕",
+                "translation_en": "Is there a recovery plan ?",
+                "translation_help_en": "In case of a major incident, which implies the loss of the premises, do any business continuity plan or data recovery plan is written or thought?<br />Do users known what they should do in that case?",
+                "translation_fr": "Existe-t-il un plan de reprise ?",
+                "translation_help_fr": "En cas d'incident grave, impliquant la perte des locaux, existe-t-il une procédure sur la démarche à impliquer pour reprendre, même de façon dégradée, le travail ?<br />Les utilisateurs sont-ils conscients de la démarche à suivre ?"
+            }
+        ]
+    }
+]

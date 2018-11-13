@@ -1,6 +1,6 @@
 {
   "name": "package_diagnostic",
-  "version": "1.2.0",
+  "version": "1.0.0",
   "description": "Diagnostic quick start guide\r ============================",
   "scripts": {
     "postintall": "node -e \"try { require('fs').symlinkSync(require('path').resolve('node_modules/'), 'public/npm_components', 'junction') } catch (e) { }\""
