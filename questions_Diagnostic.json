@@ -20,7 +20,7 @@
                 "weight": "1",
                 "blocking": "✕",
                 "translation_en": "What is the core business? The most sensitive processes/items of information?",
-                "translation_help_en": "What are your data or information which are sensible?<br />Which criterion is the most important between confidentiality or availability for those data or process?<br />Do users known those needs?",
+                "translation_help_en": "What are your data or information which are sensible?<br />Which criterion is the most important between confidentiality or availability for those data or process?<<br />Do users known those needs?",
                 "translation_fr": "Quel est le coeur de métier ? Processus/informations les plus sensibles ?",
                 "translation_help_fr": "Quelles sont vos informations les plus sensibles ?<br />D'après vous, nécessitez-vous plus de disponibilité, ou de confidentialité concernant ces informations ?<br />Les utilisateurs connaissent-ils ces sensibilités ?"
             },
@@ -79,7 +79,7 @@
                 "translation_en": "Are IT responsibilities (and possibly security responsibilities) defined?",
                 "translation_help_en": "Do someone has been correctly defined as responsible in case of an IT problem?<br />In case of information security problem, is there a responsible?<br />Is there a redundancy, or at least some guidelines concerning the differents steps to resolves incidents? (IT, Information security, GDPR ...)",
                 "translation_fr": "Les responsabilités IT et éventuellement sécurité sont-elles définies ?",
-                "translation_help_fr": "Une personne ou un organisme est correctement défini comme responsable IT de l'organisme ?<br />En cas d'incident de sécurité de l'information, une personne ou un organisme est-il défini comme responsable ?<br />Existe t-il une redondance, où des consignes concernant la marche à suivre en cas d'incident ? (IT, Securité de l'information, GDPR ...)"
+                "translation_help_fr": "Une personne ou un organisme est correctement défini comme responsable IT de l'organisme ?<br />En cas d'incident de sécurité de l'information, une personne ou un organisme est-il défini comme responsable ?<br />Existe t-il une redondance, où des consignes concernant la marche à suivre en cas d'incident ? (IT, Securité de l'information, GDPR ...)<br />Existe t-il une redondance, où des consignes concernant la marche à suivre en cas d'incident ? (IT, Securité de l'information, GDPR ...)"
             },
             {
                 "id": "8",
@@ -272,9 +272,9 @@
                 "weight": "1",
                 "blocking": "✕",
                 "translation_en": "How are user work-stations managed?",
-                "translation_help_en": "Do the work station are updated (operating system and software)?<br />Who have the admin rights on work station?<br />Do the work station are well locked, even when a short absence?",
+                "translation_help_en": "Do the work station are updated (operating system and software)?<br />How are managed the admin right?<br />Do some rules are set about the use of the informatics tool?<br />Do the work station are well locked, even when a short absence?",
                 "translation_fr": "Comment sont gérés les postes de travail des utilisateurs ?",
-                "translation_help_fr": "Les postes de travail sont-ils mis à jour (Système d'Exploitation comme logiciels) ?<br />Qui possède les droits administrateur ?<br />Les postes de travail sont-ils correctement verrouillés dès lors d'une absence quelconque (même très courte) ?"
+                "translation_help_fr": "Les postes de travail sont-ils mis à jour (Système d'Exploitation comme logiciels) ?<br />Comment sont gérés les droits d'adminitrateur ?<br />Des consignes sur l'utilisation de l'outil informatique sont-elles clairement définies ?<br />Les postes de travail sont-ils correctement verrouillés dès lors d'une absence quelconque (même très courte) ?"
             },
             {
                 "id": "24",
@@ -292,9 +292,9 @@
                 "weight": "1",
                 "blocking": "✕",
                 "translation_en": "What is the anti-virus management method?",
-                "translation_help_en": "Do an antivirus is correctly up and updated?",
+                "translation_help_en": "Do an anti-virus is correctly up and updated?<br />Do the mobile material (smartphones, laptops...) have an anti-virus?<br />Do some scans are periodically done?",
                 "translation_fr": "Quelle est la méthode de gestion antivirus ?",
-                "translation_help_fr": "L'antivirus est-il correctement fonctionnel et mis à jour ?"
+                "translation_help_fr": "L'antivirus est-il correctement fonctionnel et mis à jour ?<br />Les appareils mobiles sont bien concernés par cet antivirus ?<br />Des scans sont-ils faits de façon régulière ?"
             },
             {
                 "id": "26",
@@ -321,10 +321,10 @@
                 "threat": "3",
                 "weight": "1",
                 "blocking": "✕",
-                "translation_en": "Is personal use of tools provided regulated/tolerated?",
-                "translation_help_en": "Do the professional tools given to employees can be used in some personal interest?<br />Do rules are given when the use of these tools made for personal interest?",
-                "translation_fr": "L'utilisation à titre personnel des outils mis à disposition est-elle encadrée/tolérée ?",
-                "translation_help_fr": "Les outils mis à disposition des utilisateurs peuvent-ils être utilisés de façon personnelle ?<br />Des consignes sont-elles données en ce qui concerne l'utilisation personnelle du matériel fourni ?"
+                "translation_en": "Is the use of personal tools regulated/tolerated (BYOD)?",
+                "translation_help_en": "Do the bring and the use of the personal device is regulated/tolerated?<br />Do you have a material list of the personal tools which are authorised?",
+                "translation_fr": "L'utilisation des outils personnels est-elle encadrée/tolérée (BYOD) ?",
+                "translation_help_fr": "L'apport et la configuration de matériel personnel est-elle encadrée et respectée ?<br />Existe t-il un inventaire du matériel personnel amené voire autorisé ?"
             },
             {
                 "id": "29",
