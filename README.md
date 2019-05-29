@@ -28,7 +28,7 @@ Here would you find further Diagnostic related documentation :
 Quick start
 -----------
 
--   Download [**VM\_Diagnostic.ova**](https://github.com/CASES-LU/diagnostic/releases/tag/1.0) ready-to-use virtual machine file which can be imported directly into a virtualization tool
+-   Download [**VM\_Diagnostic.ova**](https://github.com/CASES-LU/diagnostic/releases) ready-to-use virtual machine file which can be imported directly into a virtualization tool
 
 -   Make use of the **installation scripts** provided in the [**Diagnostic repository**](https://github.com/CASES-LU/diagnostic/tree/master/scripts)
 
